@@ -216,11 +216,11 @@ def home():
              ("alb", "I work in an arm's length body", "i-building", "questions.html#q-alb-returns", "How your return fits with your department's.", False),
              ("change", "I run a project or a service", "i-branch", "people.html#p-prg", "Build the policy in from the start of a change.", False),
              ("new", "I am new to this", "i-sparkle", "policy.html", "The policy in five minutes, in plain English.", False)]
-    cards = "".join(f'<li class="card{" primary" if p else ""}"><a href="{h}">{ic(i, "ic big")}<span class="ct">{E(t)}</span><span class="cd">{E(d)}</span></a></li>'
+    cards = "".join(f'<li class="xcard{" primary" if p else ""}"><a href="{h}">{ic(i, "ic big")}<span class="ct">{E(t)}</span><span class="cd">{E(d)}</span></a></li>'
                     for _, t, i, h, d, p in roles)
     answered = sum(1 for n in C.NEEDS if next(q for q in C.QA if q["id"] == n["qa"])["prov"] != "open")
     return page("index.html", "Home", f'''
-<div class="hero">
+<div class="home-hero">
   <div class="hero-text">
     <p class="kicker">{ic("i-sparkle")} For DAM Policy coordinators, and everyone who helps them</p>
     <h1>Everything you need for the Data Asset Management Policy, in one place</h1>
@@ -260,7 +260,7 @@ def home():
 </div>
 
 <h2 id="who">What brings you here?</h2>
-<ul class="cards">{cards}</ul>
+<ul class="xcards">{cards}</ul>
 
 <p class="small">{ic("i-info")} <a href="guide.html">User guide, and how to get the explorer in Teams, Outlook, Copilot, on your intranet or on any device</a>.</p>
 
@@ -385,8 +385,8 @@ def questions():
             items += f'<h3 class="topic-h" id="topic-{slug(q["topic"])}">{E(q["topic"])}</h3>'; last = q["topic"]
         asked = needs_by_q.get(q["id"], [])
         n = sum(x["raised"] for x in asked)
-        items += (f'<article class="qa" id="q-{q["id"]}" data-topic="{E(q["topic"])}"><details><summary><span class="qtext">{E(q["q"])}</span> {badge(q["prov"])}'
-                  + (f' <span class="asked" title="Times raised in forums">asked {n}×</span>' if n else "") + f'</summary><div class="body">{q["a"]}{src_links(q["src"])}'
+        items += (f'<article class="qa" id="q-{q["id"]}" data-topic="{E(q["topic"])}"><details><summary><span class="qwrap"><span class="qtext">{E(q["q"])}</span> {badge(q["prov"])}'
+                  + (f' <span class="asked" title="Times raised in forums">asked {n}×</span>' if n else "") + f'</span></summary><div class="body">{q["a"]}{src_links(q["src"])}'
                   + (f'<p class="small muted">Answers needs {", ".join(x["id"] for x in asked)} below.</p>' if asked else "") + '</div></details></article>')
     themes = {}
     for nd in C.NEEDS: themes[nd["theme"]] = themes.get(nd["theme"], 0) + nd["raised"]
@@ -620,7 +620,7 @@ def track():
     <div class="field"><label for="tr-ref"><b>Your return reference</b> (optional)</label><span class="hint" id="tr-ref-h">GDS gives you this when it receives your return.</span><input id="tr-ref" type="text" maxlength="40" autocomplete="off" aria-describedby="tr-ref-h"></div>
     <div class="field"><label for="tr-date"><b>Date sent</b> (optional)</label><input id="tr-date" type="date"></div>
   </div>
-  <fieldset><legend>Current stage</legend><ol class="stages">{st}</ol></fieldset>
+  <fieldset><legend>Current stage</legend><ol class="trk-stages">{st}</ol></fieldset>
   <p class="small" data-tr-saved aria-live="polite"></p>
 </form>
 
@@ -652,7 +652,7 @@ def guide():
 <p class="lead">How to use the explorer, and every way to open it: in a browser on any device, installed like an app, in Microsoft Teams, Outlook and the Microsoft 365 app, in Copilot, or on your intranet.</p>
 
 <h2 id="quick">Quick start for coordinators</h2>
-<ol class="quick">{qs}</ol>
+<ol class="quickstart">{qs}</ol>
 <p>Stuck? Type your question in <b>Ask a question</b> at the top of any page, or browse <a href="questions.html">questions and answers</a>.</p>
 
 <h2 id="tutorials" data-count="5">Tours and tutorials</h2>
@@ -739,7 +739,7 @@ def glossary():
 ''', "What the words used in the Data Asset Management Policy mean.", contents=False)
 
 def about():
-    road = "".join(f'<li><span class="pill {w.lower()}">{w}</span> {E(t)}</li>' for w, t in C.ROADMAP)
+    road = "".join(f'<li><span class="pill {w.lower()}">{w}</span><span class="rm-t">{E(t)}</span></li>' for w, t in C.ROADMAP)
     srcs = "".join(f'<li><a href="{E(u)}">{E(t)}</a></li>' for t, u in C.GOVUK.values())
     return page("about.html", "About this app", f'''
 <h1>About the DAM Policy Explorer</h1>

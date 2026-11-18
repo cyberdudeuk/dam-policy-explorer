@@ -125,7 +125,7 @@
     var r = el.getBoundingClientRect(), w = Math.min(320, innerWidth - 16); tip.style.maxWidth = w + 'px';
     tip.style.left = Math.max(8, Math.min(r.left + scrollX, scrollX + innerWidth - w - 8)) + 'px';
     var below = r.bottom + scrollY + 6; tip.style.top = below + 'px';
-    var th = tip.offsetHeight; if (r.bottom + th + 12 > innerHeight && r.top > th + 12) tip.style.top = (r.top + scrollY - th - 6) + 'px'; }
+    var th = tip.offsetHeight, up = r.bottom + th + 12 > innerHeight && r.top > th + 12; if (up) tip.style.top = (r.top + scrollY - th - 6) + 'px'; tip.classList.toggle('above', up); }
   d.addEventListener('mouseover', function (e) { var el = e.target.closest && e.target.closest('[data-def],[data-tip]'); if (el && el !== tipFor) showAny(el); });
   d.addEventListener('mouseout', function (e) { var el = e.target.closest && e.target.closest('[data-def],[data-tip]'); if (el && !el.contains(e.relatedTarget) && !tip.contains(e.relatedTarget) && d.activeElement !== el) hideTip(); });
   d.addEventListener('focusin', function (e) { var el = e.target.closest && e.target.closest('[data-def],[data-tip]'); if (el) showAny(el); else hideTip(); });
@@ -326,8 +326,8 @@
     var STAGES = $$('input[name=stage]', trk).map(function (i) { return i.value; });
     var paintT = function () {
       var idx = STAGES.indexOf(T.stage);
-      $$('.stages li', trk).forEach(function (li, i) { li.classList.toggle('done', idx >= 0 && i < idx); li.classList.toggle('now', i === idx); });
-      $('[data-tr-saved]').textContent = T.stage ? 'Saved on this device: ' + $('.stages li.now b', trk).textContent + (T.ref ? ', reference ' + T.ref : '') + (T.date ? ', sent ' + T.date : '') + '.' : '';
+      $$('.trk-stages li', trk).forEach(function (li, i) { li.classList.toggle('done', idx >= 0 && i < idx); li.classList.toggle('now', i === idx); });
+      $('[data-tr-saved]').textContent = T.stage ? 'Saved on this device: ' + $('.trk-stages li.now b', trk).textContent + (T.ref ? ', reference ' + T.ref : '') + (T.date ? ', sent ' + T.date : '') + '.' : '';
     };
     $('#tr-ref').value = typeof T.ref === 'string' ? T.ref.slice(0, 40) : '';
     if (/^\d{4}-\d{2}-\d{2}$/.test(T.date || '')) $('#tr-date').value = T.date;
@@ -384,7 +384,7 @@
            ['.journey', 'Your path through the policy', 'Six stages, from understanding the policy to keeping your list current. Choose any stage.'],
            ['[data-countdown]', 'Key date', 'How long until GDS asks you to be ready.'],
            ['[data-progress-home]', 'Your progress', 'Mark steps done on Your return and your progress shows here.'],
-           ['.cards', 'Start from your role', 'Each card takes you to the route that fits what you do.'],
+           ['.xcards', 'Start from your role', 'Each card takes you to the route that fits what you do.'],
            ['.nextbest', 'What to do next', 'Every page ends with the next step and related pages.']],
     asset: [['#q-official', 'Five questions', 'Answer one question at a time. Not sure? Choose Not sure: the asset is included provisionally and flagged.'],
             ['.asset-test button[type=submit]', 'Get your result', 'You see whether it goes in your return, why, and what to do next.'],

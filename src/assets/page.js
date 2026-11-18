@@ -152,6 +152,7 @@
   'use strict';
   var d = document, heads = [].slice.call(d.querySelectorAll('main h2[id]'));
   if (heads.length < 3) return;
+  if (d.querySelector('[data-drawer]')) return;   /* D-21: the explorer already gives this page its contents drawer; two controls appeared on Your return and the GDS team page */
   var nav = d.createElement('nav'), btn = d.createElement('button');
   nav.className = 'drawer'; nav.id = 'drawer'; nav.setAttribute('aria-label', 'On this page'); nav.hidden = true;
   nav.innerHTML = '<div class="drawer-head"><p class="drawer-title">On this page</p><button type="button" class="drawer-close" data-drawer-close><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg>Close</button></div><ol>' +

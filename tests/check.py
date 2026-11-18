@@ -145,7 +145,37 @@ def s13_topics_grouped(out):
     return bad
 
 
-STATIC = [s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped]
+def s14_css_vars_defined(out):
+    """D-19: every CSS custom property used (var(--x)) is defined, so a misspelt colour cannot silently do nothing."""
+    css = "".join(f.read_text() for f in (out / "assets").glob("*.css"))
+    html = "".join(f.read_text() for f in pages(out))
+    defined = set(re.findall(r"(--[A-Za-z0-9-]+)\s*:", css + html))
+    used = set(re.findall(r"var\((--[A-Za-z0-9-]+)\s*[,)]", css))
+    return sorted(used - defined)
+
+# Class names both stylesheets define, each reviewed by eye on 18 Nov 2026 (D-19, D-22 to D-25 came from unreviewed ones).
+SHARED_CLASSES_REVIEWED = {
+    "colophon": "footer barcode and QR row, restyled on purpose", "count": "count badge, restyled on purpose", "crumbs": "breadcrumbs, restyled on purpose",
+    "hero": "explorer only styles the tour control inside the base dark band", "hint": "form hint text, same meaning", "ic": "icons, same meaning",
+    "kicker": "small heading over a title, same meaning", "knob": "switch knob; each rule is scoped to its own switch", "lane": "base rule is scoped to svg.pm",
+    "lead": "lead paragraph, same meaning", "legend": "explorer legend overrides layout; checked on Questions", "linkish": "button styled as a link, same meaning",
+    "next": "explorer only uses .pill.next", "phase": "prototype banner, restyled on purpose", "pill": "status pill, restyled on purpose",
+    "primary": "base rule is scoped to buttons; explorer to .xnav", "q": "base rule is scoped to .tree; explorer to .asset-test", "small": "small text, same meaning",
+    "source": "source line, same rule", "stage": "base .stage is on Your return; explorer only styles .lane .stage", "step": "explorer only adds the mark-done button to base steps",
+    "term": "glossary word, restyled on purpose", "tooltip": "the explorer tooltip has its own arrow rules (D-24)", "verdict": "asset-test result; checked by eye", "vh": "visually hidden text, same rule",
+}
+
+def s15_class_collisions(out):
+    """D-19, D-22 to D-25: a class name defined in both the base and the explorer stylesheet must be reviewed, because base rules leak into explorer components."""
+    def classes(css):
+        css = re.sub(r"/\*.*?\*/", "", css, flags=re.S); found = set()
+        for sel in re.findall(r"([^{}]+)\{", css):
+            if not sel.strip().startswith("@"): found |= set(re.findall(r"\.([A-Za-z][\w-]*)", sel))
+        return found
+    a = (out / "assets" / "style.css").read_text(); b = (out / "assets" / "explorer.css").read_text()
+    return sorted(c for c in classes(a) & classes(b) if c not in SHARED_CLASSES_REVIEWED)
+
+STATIC = [s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped, s14_css_vars_defined, s15_class_collisions]
 
 # ---------------- browser checks ----------------
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -158,6 +188,48 @@ def serve(out):
 
 WIDTHS = [320, 768, 1280]
 THEMES = ["light", "dark", "contrast"]
+
+
+def _lum(c):
+    def ch(v):
+        v = v / 255
+        return v / 12.92 if v <= 0.03928 else ((v + 0.055) / 1.055) ** 2.4
+    r, g, b = c[:3]; return 0.2126 * ch(r) + 0.7152 * ch(g) + 0.0722 * ch(b)
+
+def _ratio(a, b):
+    la, lb = sorted((_lum(a), _lum(b)), reverse=True); return (la + 0.05) / (lb + 0.05)
+
+B5_JS = """() => [...document.querySelectorAll('h1, main .lead, main .kicker, .tour-start, .hero a, .hero button, .home-hero a, .home-hero .lead')]
+  .filter(e => { const r = e.getBoundingClientRect(); return r.width > 4 && r.height > 4 && getComputedStyle(e).visibility !== 'hidden'; })
+  .slice(0, 10).map(e => { const r = e.getBoundingClientRect(), cs = getComputedStyle(e); const fs = parseFloat(cs.fontSize), bold = +cs.fontWeight >= 700;
+    return { sel: e.tagName.toLowerCase() + (e.className && e.className.baseVal === undefined ? '.' + String(e.className).split(' ')[0] : ''), x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height,
+             fg: cs.color.match(/[0-9.]+/g).slice(0, 3).map(Number), large: fs >= 24 || (bold && fs >= 18.66) }; })"""
+
+def b5_pixel_contrast(pg, label):
+    """B5 (D-19, D-20): text contrast measured against the pixels actually behind it, which axe cannot judge on gradients."""
+    from PIL import Image
+    import io
+    out = []
+    for el in pg.evaluate(B5_JS):
+        try:
+            png = pg.screenshot(clip={"x": el["x"], "y": el["y"], "width": max(1, el["w"]), "height": max(1, el["h"])}, full_page=True)
+        except Exception:
+            continue
+        im = Image.open(io.BytesIO(png)).convert("RGB")
+        fg = tuple(el["fg"])
+        allpx = list(im.getdata())
+        far = [c for c in allpx if _ratio(c, fg) > 1.15]
+        # Background: when most of the box is clearly unlike the text, take its commonest colour (coarse bins, so a gradient is one colour);
+        # when almost none is, the text is nearly invisible on its background (D-19), so compare with the whole box.
+        # (Taking the commonest colour of the whole box picked the text itself on gradients; filtering alone hid D-19.)
+        src = far if len(far) >= 0.3 * len(allpx) else allpx
+        q = {}
+        for c in src: k = (c[0] // 16, c[1] // 16, c[2] // 16); q[k] = q.get(k, 0) + 1
+        k = max(q, key=q.get); bg = tuple(v * 16 + 8 for v in k)
+        need = 3.0 if el["large"] else 4.5
+        r = _ratio(fg, bg)
+        if r < need: out.append(f"B5 {label}: {el['sel']} contrast {r:.2f} < {need} (text {fg} on {bg})")
+    return out
 
 def browser_checks(out, quick=False):
     from playwright.sync_api import sync_playwright
@@ -186,6 +258,25 @@ def browser_checks(out, quick=False):
                     pg.add_script_tag(content=axe)
                     res = pg.evaluate("axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']},resultTypes:['violations']}).then(r=>r.violations.map(v=>v.id+' x'+v.nodes.length+' '+(v.nodes[0]&&v.nodes[0].target.join(' '))))")
                     if res: fails.append(f"B4 {f.name} {theme} {w}px: {res[:3]}")
+                    fails += b5_pixel_contrast(pg, f"{f.name} {theme} {w}px")
+                    # B7 (D-26, D-27): roadmap text starts on its pill's line; glossary definitions keep a readable width
+                    if f.name == "about.html":
+                        off = pg.evaluate("Math.max(0,...[...document.querySelectorAll('.roadmap li')].map(li=>{const a=li.querySelector('.pill'),b=li.querySelector('.rm-t');return a&&b?Math.abs(a.getBoundingClientRect().top-b.getBoundingClientRect().top):999}))")
+                        if off > 8: fails.append(f"B7 {f.name} {theme} {w}px: roadmap text is {off:.0f}px off its pill's line")
+                    if f.name == "glossary.html":
+                        gw = pg.evaluate("(()=>{const g=document.querySelector('.glossary');return g?g.getBoundingClientRect().width:0})()")
+                        if gw > 48 * 16 + 2: fails.append(f"B7 {f.name} {theme} {w}px: glossary is {gw:.0f}px wide")
+                    # B8 (D-22): no word in a Track stage title is broken across lines
+                    if f.name == "track.html":
+                        broken = pg.evaluate("[...document.querySelectorAll('.st-opt b')].filter(b=>{const r=document.createRange();r.selectNodeContents(b);const lines=new Set([...r.getClientRects()].map(x=>Math.round(x.top)));return b.textContent.trim().split(/\\s+/).length < lines.size}).map(b=>b.textContent)")
+                        if broken: fails.append(f"B8 {f.name} {theme} {w}px: stage titles broken mid-word: {broken}")
+                    # B9 (D-28): every answer's question starts on the same line as its triangle
+                    if f.name == "questions.html":
+                        off = pg.evaluate("Math.max(0,...[...document.querySelectorAll('.qa summary')].map(s=>{const q=s.querySelector('.qtext');return q?q.getBoundingClientRect().top-s.getBoundingClientRect().top:0}))")
+                        if off > 24: fails.append(f"B9 {f.name} {theme} {w}px: a question starts {off:.0f}px below its triangle")
+                    # B6 (D-21): one contents control per page, never two
+                    nd = pg.evaluate("document.querySelectorAll('.drawer-toggle, .drawer-switch').length")
+                    if nd > 1: fails.append(f"B6 {f.name} {theme} {w}px: {nd} contents controls")
                     runs += 1
                 ctx.close()
         b.close()
@@ -336,6 +427,8 @@ def negatives(out):
         (s12_agent_open_sources, lambda o: None),
         (s11_no_unagreed_promises, lambda o: edit(o, "index.html", "<h1>", "<h1>We reply within 5 working days. ")),
         (s13_topics_grouped, lambda o: edit(o, "questions.html", '<h3 class="topic-h" id="topic-implementation">', '<h3 class="topic-h" id="topic-roles2">Roles and governance</h3><h3 class="topic-h" id="topic-implementation">')),
+        (s14_css_vars_defined, lambda o: (o / "assets" / "explorer.css").write_text((o / "assets" / "explorer.css").read_text() + ".x{color:var(--ink)}")),
+        (s15_class_collisions, lambda o: (o / "assets" / "explorer.css").write_text((o / "assets" / "explorer.css").read_text() + "\n.stages li { margin: 0; }")),
         (s10_class_collision, lambda o: (o / "assets" / "explorer.css").write_text((o / "assets" / "explorer.css").read_text() + "\n.bar { height: 1rem; }")),
     ]
     bad = []
@@ -354,12 +447,17 @@ def negatives(out):
     for label, breaker, needle in [
         ("B1", lambda o: edit(o, "index.html", "</main>", '<pre class="wide-test">' + "x" * 400 + "</pre></main>") or (o / "assets" / "explorer.css").write_text((o / "assets" / "explorer.css").read_text() + ".wide-test{white-space:pre;overflow:visible}"), "B1"),
         ("B4", lambda o: (o / "assets" / "explorer.css").write_text((o / "assets" / "explorer.css").read_text() + ".lead{color:#bbbbbb !important}"), "B4"),
+        ("B5", lambda o: (o / "assets" / "explorer.css").write_text((o / "assets" / "explorer.css").read_text() + ".home-hero h1{color:#fff}"), "B5"),
+        ("B6", lambda o: edit(o, "index.html", "</main>", '<button class="drawer-toggle" type="button">On this page</button></main>'), "B6"),
+        ("B7", lambda o: (o / "assets" / "explorer.css").write_text((o / "assets" / "explorer.css").read_text() + ".roadmap li{display:flex!important;flex-wrap:wrap}.rm-t{flex-basis:100%}"), "B7"),
+        ("B8", lambda o: (o / "assets" / "explorer.css").write_text((o / "assets" / "explorer.css").read_text() + ".st-opt b{grid-column:auto;overflow-wrap:anywhere;width:3.5rem}"), "B8"),
+        ("B9", lambda o: (o / "assets" / "explorer.css").write_text((o / "assets" / "explorer.css").read_text() + ".qa summary{display:flex!important;flex-wrap:wrap!important}.qa summary .qwrap{flex-basis:100%}"), "B9"),
         ("B3", lambda o: (o / "assets" / "explorer.js").write_text((o / "assets" / "explorer.js").read_text() + "\nundefinedFunctionCall();"), "B3"),
     ]:
         o = mutate(breaker); f, _ = browser_checks(o, quick=True)
         if not any(x.startswith(needle) for x in f): bad.append(f"NEGATIVE {label} did not fail on its broken copy")
         shutil.rmtree(o.parent)
-    return bad, len(cases) + 3
+    return bad, len(cases) + 8
 
 def main():
     out = Path(sys.argv[1]) if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else ROOT / "out"
