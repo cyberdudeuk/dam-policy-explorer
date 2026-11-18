@@ -387,3 +387,20 @@ input[type=date] { font: inherit; padding: 0.4rem; border: 2px solid var(--text)
 .qa summary::before { margin-top: 0.45em; }
 .qa summary .qwrap { min-width: 0; }
 td .pill { border-radius: 0.75rem; white-space: normal; text-align: center; }   /* long pills in tables wrap cleanly */
+/* worked examples */
+.ex-tiles { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.5rem; }
+.ex-tiles li { margin: 0; max-width: none; }
+.ex-tiles a { display: flex; gap: 0.6rem; align-items: center; padding: 0.6rem 0.8rem; background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--brand-2); border-radius: var(--radius); font-weight: 700; text-decoration: none; }
+.ex-tiles a:hover { text-decoration: underline; }
+.ex-tiles .ex-n { font-size: 1.4rem; min-width: 2ch; color: var(--brand-2); }
+.ex-q { width: 100%; max-width: 32rem; }
+.ex-list .ex { border-bottom: 1px solid var(--line); }
+.ex-list .ex summary { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 0.6rem; align-items: start; padding: 0.7rem 0; }
+.ex-list .ex summary::before { margin-top: 0.45em; }
+.ex-id { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.85rem; color: var(--muted); }
+.verdict-pill { display: inline-block; font-size: 0.85rem; font-weight: 700; padding: 0 0.5rem; border-radius: 999px; border: 2px solid var(--line); color: var(--text); }
+.verdict-pill.v-in { border-color: var(--ok); } .verdict-pill.v-out { border-color: var(--bad, #b3261e); } .verdict-pill.v-flag { border-color: var(--warn); } .verdict-pill.v-fill { border-color: var(--brand); }
+.ex-out { background: var(--soft); border-left: 4px solid var(--brand-2); padding: 0.5rem 0.75rem; border-radius: 6px; }
+.ex-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.extag { font-size: 0.85rem; border: 1px solid var(--line); border-radius: 999px; padding: 0 0.5rem; text-decoration: none; }
+.extag:hover { text-decoration: underline; }

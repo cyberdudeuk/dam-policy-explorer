@@ -101,7 +101,7 @@
   // Tooltips everywhere: glossary words, navigation, buttons, labels and badges. Each shows on hover and on keyboard focus,
   // and Escape hides it (WCAG 1.4.13). Native title attributes are moved into data-tip, so nothing shows twice.
   var NAVTIP = {'index.html': 'Start here: your path, your progress and routes by role', 'policy.html': 'What the policy asks, who it applies to and who does what',
-    'return.html': 'The twelve steps of the return, with your progress saved', 'asset-test.html': 'Check whether a possible asset is in scope',
+    'return.html': 'The twelve steps of the return, with your progress saved', 'asset-test.html': 'Check whether a possible asset is in scope', 'examples.html': 'Worked examples: what is in scope, what is not, and how to fill in the return',
     'track.html': 'Track where your return has got to, and analyse what you sent', 'questions.html': 'Answers to the questions coordinators asked, with sources',
     'people.html': 'Roles, user stories and journeys', 'capabilities.html': 'The 32 capabilities behind the policy, with playbooks',
     'guide.html': 'How to use the explorer, tours, tutorials and how to set it up', 'resources.html': 'Guidance, templates and tools in one list',
@@ -276,6 +276,17 @@
   }
   filterer({items: '.qa-list .qa', search: '#qa-search', groups: [{name: 'topic', attr: 'data-topic'}], count: '#qa-count', noun: 'question', headings: '.qa-list .topic-h'});
   filterer({items: '.caps .cap', groups: [{name: 'who', attr: 'data-who'}, {name: 'link', attr: 'data-link'}], count: '#cap-count', noun: 'capability'});
+  filterer({items: '.ex-list .ex', search: '#ex-q', groups: [{name: 'extopic', attr: 'data-topic'}, {name: 'exkind', attr: 'data-kind'}, {name: 'exstat', attr: 'data-stat'}], count: '#ex-count', noun: 'example'});
+  // examples: #topic-<slug> opens the page filtered to that topic; #ex-nnn opens that example
+  (function () {
+    if (!$('.ex-list')) return;
+    var apply = function () {
+      var h = location.hash.slice(1);
+      if (h.indexOf('topic-') === 0) { var r = $('input[name="extopic"][value="' + h.slice(6) + '"]'); if (r) { r.checked = true; r.dispatchEvent(new Event('change')); var f = $('#find'); if (f) f.scrollIntoView(); } }
+      else if (/^ex-\d+$/.test(h)) { var a = d.getElementById(h); if (a) { a.querySelector('details').open = true; a.scrollIntoView(); } }
+    };
+    apply(); window.addEventListener('hashchange', apply);
+  })();
   filterer({items: '.res-list .res', groups: [{name: 'rtype', attr: 'data-type'}, {name: 'raud', attr: 'data-aud'}], count: '#res-count', noun: 'resource'});
 
   // ---- forms that only work in the browser never submit to a server ----

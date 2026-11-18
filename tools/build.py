@@ -9,7 +9,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
-import content as C  # noqa: E402
+import content as C
+import examples as X  # noqa: E402
 
 SRC, OUT = ROOT / "src", ROOT / "out"
 E = html.escape
@@ -17,7 +18,7 @@ HOME_URL = sys.argv[sys.argv.index("--home-url") + 1] if "--home-url" in sys.arg
 PREVIEW = "--preview" in sys.argv   # claude.ai preview: cannot serve .ics or webmanifest files, and blocks downloads
 
 NAV = [("index.html", "Home", "i-home"), ("policy.html", "The policy", "i-book"), ("return.html", "Your return", "i-list"),
-       ("asset-test.html", "Asset test", "i-target"), ("track.html", "Track", "i-dashboard"), ("questions.html", "Questions", "i-help"), ("people.html", "Roles", "i-people"),
+       ("asset-test.html", "Asset test", "i-target"), ("examples.html", "Examples", "i-layers"), ("track.html", "Track", "i-dashboard"), ("questions.html", "Questions", "i-help"), ("people.html", "Roles", "i-people"),
        ("capabilities.html", "Capabilities", "i-map")]
 MORE = [("guide.html", "User guide and set-up", "i-book"), ("resources.html", "Resources", "i-folder"), ("ask.html", "Ask", "i-chat"), ("embed.html", "Embed it", "i-layers"), ("glossary.html", "Glossary", "i-tag"), ("team.html", "For the GDS team", "i-inbox"),
         ("about.html", "About this app", "i-info"), ("accessibility.html", "Accessibility", "i-shield")]
@@ -165,7 +166,8 @@ def journey(here=None):
 NEXT = {
     "index.html": (("Read the policy in plain English", "policy.html"), [("Test whether an asset is in scope", "asset-test.html"), ("Find an answer", "questions.html"), ("See all resources", "resources.html")]),
     "policy.html": (("Test whether an asset is in scope", "asset-test.html"), [("Start your return", "return.html"), ("Questions about scope", "questions.html#topic-scope"), ("Words explained", "glossary.html")]),
-    "asset-test.html": (("Go to step 5: agree the list across your organisation", "return.html#step-5"), [("The four scope principles explained", "questions.html#q-principles"), ("Judging potential value", "questions.html#q-potential-value"), ("What to report: data sets or APIs", "questions.html#q-what-to-report")]),
+    "examples.html": (("Test one of your own assets", "asset-test.html"), [("Questions and answers", "questions.html"), ("The hard cases still being decided", "questions.html#q-open-scenarios"), ("Start your return", "return.html")]),
+    "asset-test.html": (("Go to step 5: agree the list across your organisation", "return.html#step-5"), [("Worked examples", "examples.html"), ("The four scope principles explained", "questions.html#q-principles"), ("Judging potential value", "questions.html#q-potential-value"), ("What to report: data sets or APIs", "questions.html#q-what-to-report")]),
     "return.html": (("Check your list before you send it", "return.html#check"), [("Asset test", "asset-test.html"), ("Questions about the return", "questions.html#topic-reporting"), ("Templates", "resources.html")]),
     "questions.html": (("Still stuck? Ask us through the contact form", None), [("The policy in plain English", "policy.html"), ("Your return, step by step", "return.html"), ("Glossary", "glossary.html")]),
     "embed.html": (("Plan your annual review now", "return.html#step-11"), [("Roles: who does what", "policy.html#roles"), ("Data quality action plan guide", "https://www.gov.uk/government/publications/implement-a-data-quality-action-plan/data-quality-action-plan-implementation-guide"), ("Questions about embedding", "questions.html#topic-embedding")]),
@@ -494,6 +496,61 @@ def embed():
 <p>The return shows where your organisation's data management needs to grow: catalogues, ownership, metadata and quality. Start with the gaps the return reveals, and use the published guidance for each one.</p>
 <ul class="guide-list"><li><a href="{E(C.GOVUK["ownership"][1])}">Ownership: the data ownership model</a></li><li><a href="{E(C.GOVUK["metadata"][1])}">Metadata: recording metadata for critical data assets</a></li><li><a href="{E(C.GOVUK["dqap"][1])}">Quality: the data quality action plan guide</a></li><li><a href="{E(C.GOVUK["dqf"][1])}">Quality culture: the Government Data Quality Framework</a></li></ul>
 ''', "Make the Data Asset Management Policy part of business as usual and of every change project.")
+
+def examples():
+    slug = lambda s: re.sub(r"[^a-z]+", "-", s.lower()).strip("-")
+    KIND = {"in": ("In scope", "v-in"), "out": ("Out of scope", "v-out"), "depends": ("It depends", "v-flag"), "fill": ("How to fill it in", "v-fill"),
+            "role": ("Who does what", "v-fill"), "process": ("How it was done", "v-fill")}
+    agreed = [e for e in X.EXAMPLES if e[7] == X.A]; open_ = [e for e in X.EXAMPLES if e[7] == X.B]
+    tcount = {tp: sum(1 for e in X.EXAMPLES if tp in e[2]) for tp in X.TOPICS}
+    chips = lambda name, opts, first: (f'<label class="chip"><input type="radio" name="{name}" value="" checked> {first}</label>'
+                                       + "".join(f'<label class="chip"' + (f' id="topic-{v}"' if name == "extopic" else "") + f'><input type="radio" name="{name}" value="{v}"> {E(l)}</label>' for v, l in opts))
+    f_topic = chips("extopic", [(slug(tp), f"{tp} ({tcount[tp]})") for tp in X.TOPICS], "All topics")
+    f_kind = chips("exkind", [("in", "In scope"), ("out", "Out of scope"), ("depends", "It depends"), ("fill", "How to fill it in"), ("role", "Who does what"), ("process", "How it was done")], "Any outcome")
+    f_stat = chips("exstat", [("agreed", f"Agreed ({len(agreed)})"), ("being-agreed", f"Being agreed ({len(open_)})")], "Agreed and being agreed")
+    def card(e):
+        i, title, tops, sector, scen, outc, kind, st, links = e
+        rel = "".join(f'<li><a href="{E(h)}">{E(REL_LABEL(h))}</a></li>' for h in links)
+        tags = "".join(f'<a class="extag" href="#topic-{slug(tp)}">{E(tp)}</a>' for tp in tops)
+        if st == X.A:
+            k, cls = KIND[kind]
+            head = f'<span class="verdict-pill {cls}">{k}</span> <span class="prov prov-gds" title="Agreed by GDS or the DAM Policy Working Group.">Agreed</span>'
+            body = f'<p>{E(scen)}</p><p class="ex-out"><b>What to do:</b> {E(outc)}</p>'
+        else:
+            head = '<span class="prov prov-open" title="Still being agreed. The outcome is not published yet.">Being agreed</span>'
+            body = f'<p>{E(scen)}</p><p class="ex-out"><b>Outcome being agreed.</b> Meanwhile, test the asset against the four scope principles. If you are still not sure, include it in your return and flag it. Tell GDS about your case through <a href="{E(C.CONTACT)}">the contact form</a>.</p>'
+        return (f'<article class="ex" id="{i.lower()}" data-topic="{" ".join(slug(tp) for tp in tops)}" data-kind="{kind or "open"}" data-stat="{st}">'
+                f'<details><summary><span class="qwrap"><span class="ex-id">{i}</span> <span class="qtext">{E(title)}</span> {head}</span></summary>'
+                f'<div class="body"><p class="small muted">{E(sector)}</p>{body}<p class="ex-tags">{tags}</p>' + (f'<p class="small"><b>See also</b></p><ul class="ex-rel">{rel}</ul>' if rel else "") + '</div></details></article>')
+    order = sorted(X.EXAMPLES, key=lambda e: (e[7] != X.A, X.TOPICS.index(e[2][0]), e[0]))
+    cards = "".join(card(e) for e in order)
+    tiles = "".join(f'<li><a href="#topic-{slug(tp)}"><span class="ex-n">{tcount[tp]}</span> {E(tp)}</a></li>' for tp in X.TOPICS)
+    return page("examples.html", "Worked examples", f'''
+<h1>Worked examples</h1>
+<p class="lead">How the policy applies to real kinds of data, from flood warnings to fraud risk scores: what is in scope, what is not, and how to fill in the return. Choose a topic, search, or open any example.</p>
+<p class="small muted">From the GDS worked-examples register and the questions coordinators asked, as they stood on {long_date(C.BUILD_DATE)}. Examples are described by sector, never by person. <span class="prov prov-gds">Agreed</span> examples were agreed by GDS or the DAM Policy Working Group; <span class="prov prov-open">Being agreed</span> examples show the case but not yet the answer.</p>
+<h2 id="glance" data-count="{len(X.EXAMPLES)}">At a glance</h2>
+<ul class="ex-tiles">{tiles}</ul>
+<h2 id="find" data-count="{len(X.EXAMPLES)}">Find an example</h2>
+<div class="filters">
+<p><label for="ex-q">Search the examples</label> <span class="hint">For example "API", "licence", "statistics" or "arm's length".</span><input type="search" id="ex-q" class="ex-q"></p>
+<fieldset class="chips"><legend>Topic</legend>{f_topic}</fieldset>
+<fieldset class="chips"><legend>Outcome</legend>{f_kind}</fieldset>
+<fieldset class="chips"><legend>Status</legend>{f_stat}</fieldset>
+<p id="ex-count" class="small" aria-live="polite">{len(X.EXAMPLES)} examples</p></div>
+<div class="ex-list">{cards}</div>
+<h2 id="yours">Your own case</h2>
+<p>If none of these fits, <a href="asset-test.html">test your asset</a> against the four principles. If you are still not sure, include it in your return and flag it, and <a href="{E(C.CONTACT)}">tell us about it</a> so it can become an example.</p>
+''', "Worked examples of how the Data Asset Management Policy applies: scope, sources and products, third-party data, security, purposes, the return, roles, metadata and quality.")
+
+def REL_LABEL(h):
+    m = {"asset-test.html": "Test an asset", "return.html#step-7": "Step 7: fill in the details", "embed.html#owners": "Kit for owners and stewards",
+         "glossary.html#t-data-custodian": "Data custodian (glossary)", "people.html#p-own": "The data owner's journey", "people.html#p-stw": "The data steward's journey"}
+    if h in m: return m[h]
+    if h.startswith("questions.html#q-"):
+        q = next((x for x in C.QA if "questions.html#q-" + x["id"] == h), None)
+        return q["q"] if q else "Questions and answers"
+    return h
 
 def resources():
     types = sorted({r["type"] for r in C.RESOURCES})
@@ -902,7 +959,7 @@ def main():
     for f in (ROOT / "assets").iterdir(): shutil.copy(f, OUT / "assets" / f.name)
     pages = {
         "index.html": home(), "policy.html": policy(), "asset-test.html": asset_test(), "questions.html": questions(), "embed.html": embed(),
-        "resources.html": resources(), "glossary.html": glossary(), "people.html": people(), "capabilities.html": capabilities(), "ask.html": ask(), "track.html": track(), "guide.html": guide(), "about.html": about(), "accessibility.html": accessibility(),
+        "resources.html": resources(), "examples.html": examples(), "glossary.html": glossary(), "people.html": people(), "capabilities.html": capabilities(), "ask.html": ask(), "track.html": track(), "guide.html": guide(), "about.html": about(), "accessibility.html": accessibility(),
         "return.html": rewrap("return.html", "Your return", "Make your organisation's data asset return in twelve steps.", ("checker.js", "page.js", "explorer.js")),
         "team.html": rewrap("team.html", "For the GDS team", "How the GDS team processes returns and answers questions.", ("checker.js", "process.js", "process-ui.js", "page.js", "explorer.js")),
     }
@@ -935,6 +992,7 @@ def main():
     index += [{"t": f"{c} {n}", "x": f"{C.CAP_GROUPS[g]}. {C.CAP_LINK[l]}", "u": C.cap_url(c), "k": "Capability", "p": "practice"} for c, g, n, l in C.CAPS]
     index += [{"t": x["name"], "x": x["role"] + " " + " ".join(x["goals"]), "u": "people.html#p-" + x["id"], "k": "Role", "p": "practice"} for x in C.PERSONAS]
     index += [{"t": m, "x": f, "u": "policy.html#myths", "k": "Myth and fact", "p": pv} for m, f, pv in C.MYTHS]
+    index += [{"t": e[1], "x": e[3] + ". " + e[4] + " " + e[5], "u": "examples.html#" + e[0].lower(), "k": "Worked example", "p": "gds" if e[7] == X.A else "open"} for e in X.EXAMPLES]
     data = {"version": C.VERSION, "checked": C.CONTENT_CHECKED, "needs": C.NEEDS, "qa": [{k: v for k, v in q.items() if k != "a"} for q in C.QA], "index": index, "prov": {k: v[0] for k, v in C.PROV.items()},
             "glossary": [{"id": k, "term": t} for k, t, _ in C.GLOSSARY], "pages": list(pages)}
     (OUT / "explorer-data.json").write_text(json.dumps(data, indent=1))

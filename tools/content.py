@@ -296,6 +296,8 @@ GLOSSARY = [
     ("performance-framework", "Performance Framework", "A quarterly GDS commission on departments' digital and data capability. It asks for counts, not lists, of critical data assets."),
     ("metadata-minimum", "Metadata minimum", "The smallest set of details to record about each critical data asset. It is a floor, not a ceiling: keep any other fields you need."),
     ("data-custodian", "Data custodian", "The team that runs the systems where data is kept, on behalf of the data owner."),
+    ("worked-example", "Worked example", "A real kind of data used to show how the policy applies: whether it is in scope and how to fill in the return."),
+    ("system-of-record", "System of record", "The system that holds the authoritative version of some data. Copies and services built on it point back to it."),
     ("xg-cda", "XG_CDA", "The label GDS recommends for marking assets that are in scope of the DAM Policy in your data catalogue."),
     ("iar", "Information asset register", "A governance record of information assets, their owners (information asset owners), risks and controls."),
     ("iao", "Information asset owner", "The person accountable for managing, securing and complying with rules about an information asset. The role continues alongside the data owner."),
@@ -341,7 +343,7 @@ AUDIENCES = {"coordinator": "Coordinators", "cdo": "Chief data officers", "owner
 
 # What changed, newest first. Items flagged as new show a "New" marker for 30 days.
 CHANGES = [
-    ("2026-11-18", "1.2.0", "From the community forum and coordinators' questions: a practical kit for data owners and stewards, a briefing outline for arm's length bodies, answers on the Performance Framework, the metadata minimum, standards for new services, and arm's length bodies nobody has contacted. Track and analyse: record where your return has got to, see what you sent and how ready each asset is, and the measures GDS will report. Assets you are not sure about are now included provisionally and flagged. Contact by Microsoft Form. Version 3 of the return template confirmed."),
+    ("2026-11-18", "1.2.0", "Worked examples: 71 cases you can search and filter by topic, outcome and status, 35 of them agreed. From the community forum and coordinators' questions: a practical kit for data owners and stewards, a briefing outline for arm's length bodies, answers on the Performance Framework, the metadata minimum, standards for new services, and arm's length bodies nobody has contacted. Track and analyse: record where your return has got to, see what you sent and how ready each asset is, and the measures GDS will report. Assets you are not sure about are now included provisionally and flagged. Contact by Microsoft Form. Version 3 of the return template confirmed."),
     ("2026-11-18", "1.1.0", "The explorer: home for coordinators, the policy in plain English, asset test, questions and answers built from forum questions, embedding in business as usual and change, resources, glossary with definitions on hover, display settings, and Teams theme support."),
     ("2026-11-13", "1.0.0", "Return steps, list check and the GDS team pages (earlier build, now part of the explorer)."),
 ]
