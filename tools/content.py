@@ -12,7 +12,7 @@ Coordinators Working Group, Knowledge Hub, DCAP Working Group, email and meeting
 organisations are removed: each need is paraphrased and counted, never quoted.
 """
 
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 BUILD_DATE = "2026-11-18"
 CONTENT_CHECKED = "2026-11-18"          # date the GOV.UK sources were last re-read
 REGISTER_SNAPSHOT = "2026-11-13"        # Question and Insight Register snapshot used for the needs
@@ -269,6 +269,7 @@ AUDIENCES = {"coordinator": "Coordinators", "cdo": "Chief data officers", "owner
 
 # What changed, newest first. Items flagged as new show a "New" marker for 30 days.
 CHANGES = [
+    ("2026-11-18", "1.2.0", "Track and analyse: record where your return has got to, see what you sent and how ready each asset is, and the measures GDS will report. Assets you are not sure about are now included provisionally and flagged. Contact by Microsoft Form. Version 3 of the return template confirmed."),
     ("2026-11-18", "1.1.0", "The explorer: home for coordinators, the policy in plain English, asset test, questions and answers built from forum questions, embedding in business as usual and change, resources, glossary with definitions on hover, display settings, and Teams theme support."),
     ("2026-11-13", "1.0.0", "Return steps, list check and the GDS team pages (earlier build, now part of the explorer)."),
 ]

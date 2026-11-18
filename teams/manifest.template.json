@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.19/MicrosoftTeams.schema.json",
   "manifestVersion": "1.19",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "id": "62391348-f59f-420b-a834-0e2bcc33d2fc",
   "developer": {
     "name": "Government Digital Service",

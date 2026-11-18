@@ -27,9 +27,9 @@
         <rect x="15.200mm" y="1.000mm" width="0.200mm" height="12.000mm" style="fill:black;"/>
         <rect x="15.800mm" y="1.000mm" width="0.400mm" height="12.000mm" style="fill:black;"/>
         <rect x="16.600mm" y="1.000mm" width="0.600mm" height="12.000mm" style="fill:black;"/>
-        <rect x="17.400mm" y="1.000mm" width="0.200mm" height="12.000mm" style="fill:black;"/>
-        <rect x="18.000mm" y="1.000mm" width="0.600mm" height="12.000mm" style="fill:black;"/>
-        <rect x="19.000mm" y="1.000mm" width="0.400mm" height="12.000mm" style="fill:black;"/>
+        <rect x="17.400mm" y="1.000mm" width="0.400mm" height="12.000mm" style="fill:black;"/>
+        <rect x="18.200mm" y="1.000mm" width="0.600mm" height="12.000mm" style="fill:black;"/>
+        <rect x="19.200mm" y="1.000mm" width="0.200mm" height="12.000mm" style="fill:black;"/>
         <rect x="19.600mm" y="1.000mm" width="0.200mm" height="12.000mm" style="fill:black;"/>
         <rect x="20.200mm" y="1.000mm" width="0.400mm" height="12.000mm" style="fill:black;"/>
         <rect x="21.000mm" y="1.000mm" width="0.600mm" height="12.000mm" style="fill:black;"/>
@@ -37,12 +37,12 @@
         <rect x="22.400mm" y="1.000mm" width="0.600mm" height="12.000mm" style="fill:black;"/>
         <rect x="23.200mm" y="1.000mm" width="0.400mm" height="12.000mm" style="fill:black;"/>
         <rect x="24.000mm" y="1.000mm" width="0.200mm" height="12.000mm" style="fill:black;"/>
-        <rect x="25.000mm" y="1.000mm" width="0.200mm" height="12.000mm" style="fill:black;"/>
-        <rect x="25.400mm" y="1.000mm" width="0.400mm" height="12.000mm" style="fill:black;"/>
+        <rect x="25.000mm" y="1.000mm" width="0.400mm" height="12.000mm" style="fill:black;"/>
+        <rect x="25.800mm" y="1.000mm" width="0.200mm" height="12.000mm" style="fill:black;"/>
         <rect x="26.200mm" y="1.000mm" width="0.400mm" height="12.000mm" style="fill:black;"/>
         <rect x="27.200mm" y="1.000mm" width="0.600mm" height="12.000mm" style="fill:black;"/>
         <rect x="28.000mm" y="1.000mm" width="0.200mm" height="12.000mm" style="fill:black;"/>
         <rect x="28.400mm" y="1.000mm" width="0.400mm" height="12.000mm" style="fill:black;"/>
-        <text x="15.400mm" y="17.000mm" style="fill:black;font-size:8pt;text-anchor:middle;">DPE 1.1.0</text>
+        <text x="15.400mm" y="17.000mm" style="fill:black;font-size:8pt;text-anchor:middle;">DPE 1.2.0</text>
     </g>
 </svg>
