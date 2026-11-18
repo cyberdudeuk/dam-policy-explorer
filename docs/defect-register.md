@@ -19,3 +19,4 @@ Every defect has a root cause and a check that would have caught it. The check s
 | D-13 | 18 Nov 2026 | Countdown showed 31 days on 18 Nov for 18 Dec | Counted to the end of the target day, not calendar days | F13 with a fixed clock (negative-tested) |
 | D-14 | 18 Nov 2026 | The accessibility statement promised a reply "within 5 working days", which was never agreed | Written without a source | S11 no unagreed promises (negative-tested) |
 | D-15 | 18 Nov 2026 | Navigation wrapped onto two rows between 832 and 1100 px | Nine items with long labels; menu folded only below 832 px | Labels shortened, menu folds below 992 px; B2 nav width |
+| D-16 | 18 Nov 2026 | The Copilot agent was grounded on a SharePoint copy of the FAQ that people outside DSIT cannot open | Designed before access across departments was considered | S12 agent uses open sources only (negative-tested); package build refuses SharePoint |

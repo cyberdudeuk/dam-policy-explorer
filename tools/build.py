@@ -19,7 +19,7 @@ PREVIEW = "--preview" in sys.argv   # claude.ai preview: cannot serve .ics or we
 NAV = [("index.html", "Home", "i-home"), ("policy.html", "The policy", "i-book"), ("return.html", "Your return", "i-list"),
        ("asset-test.html", "Asset test", "i-target"), ("track.html", "Track", "i-dashboard"), ("questions.html", "Questions", "i-help"), ("people.html", "Roles", "i-people"),
        ("capabilities.html", "Capabilities", "i-map")]
-MORE = [("resources.html", "Resources", "i-folder"), ("ask.html", "Ask", "i-chat"), ("embed.html", "Embed it", "i-layers"), ("glossary.html", "Glossary", "i-tag"), ("team.html", "For the GDS team", "i-inbox"),
+MORE = [("guide.html", "User guide and set-up", "i-book"), ("resources.html", "Resources", "i-folder"), ("ask.html", "Ask", "i-chat"), ("embed.html", "Embed it", "i-layers"), ("glossary.html", "Glossary", "i-tag"), ("team.html", "For the GDS team", "i-inbox"),
         ("about.html", "About this app", "i-info"), ("accessibility.html", "Accessibility", "i-shield")]
 
 def sprite():
@@ -172,6 +172,7 @@ NEXT = {
     "resources.html": (("Start your return", "return.html"), [("Find an answer", "questions.html"), ("Asset test", "asset-test.html"), ("Glossary", "glossary.html")]),
     "people.html": (("Start your return", "return.html"), [("Capabilities and playbooks", "capabilities.html"), ("Find an answer", "questions.html"), ("Full personas in the playbooks", C.PLAYBOOKS + "personas.html")]),
     "capabilities.html": (("Open the capability playbooks", C.PLAYBOOKS), [("Roles and journeys", "people.html"), ("Embed it in business as usual and change", "embed.html"), ("The policy", "policy.html")]),
+    "guide.html": (("Start your return", "return.html"), [("Ask a question", "ask.html"), ("Accessibility", "accessibility.html"), ("About this app", "about.html")]),
     "track.html": (("Check your list before you send it", "return.html#check"), [("Sign off and send", "return.html#step-10"), ("Partial progress: how to report it", "questions.html#q-partial"), ("Embed it", "embed.html")]),
     "ask.html": (("Browse all questions and answers", "questions.html"), [("Glossary", "glossary.html"), ("Roles and journeys", "people.html")]),
     "glossary.html": (("Find an answer", "questions.html"), [("The policy in plain English", "policy.html"), ("Resources", "resources.html")]),
@@ -260,6 +261,8 @@ def home():
 
 <h2 id="who">What brings you here?</h2>
 <ul class="cards">{cards}</ul>
+
+<p class="small">{ic("i-info")} <a href="guide.html">User guide, and how to get the explorer in Teams, Outlook, Copilot, on your intranet or on any device</a>.</p>
 
 <h2 id="asked" data-count="{len(C.NEEDS)}">Built from your questions</h2>
 <p>This app answers the questions coordinators have raised in the working group, on the Knowledge Hub, by email and in meetings. {answered} of the {len(C.NEEDS)} needs we heard now have an answer here. The rest are being decided, and each one says what to do meanwhile.</p>
@@ -550,7 +553,7 @@ def ask():
 </form>
 <section aria-labelledby="ask-res-h"><h2 id="ask-res-h">Answers</h2><div data-ask aria-live="polite"><noscript><p>Searching needs JavaScript. Browse all <a href="questions.html">questions and answers</a> instead.</p></noscript><p>Ask a question, or try one of these:</p><ul class="starters">{chips}</ul></div></section>
 <h2 id="copilot">Ask the DAM Policy assistant in Copilot</h2>
-<p>If your organisation uses Microsoft 365 Copilot, the <b>DAM Policy assistant</b> answers in conversation, in Teams and in Copilot Chat. It uses only GOV.UK, this explorer and the GDS FAQs, and it shows its sources. It is an AI tool: check important answers against the source it gives. {badge("practice")}</p>
+<p>If your organisation uses Microsoft 365 Copilot, the <b>DAM Policy assistant</b> answers in conversation, in Teams and in Copilot Chat. It uses only GOV.UK, this explorer (which includes every answer in the GDS FAQs) and the capability playbooks, and it shows its sources. It is an AI tool: check important answers against the source it gives. {badge("practice")}</p>
 <p class="small">How the search on this page works: it matches the words in your question, and common alternatives such as ALB for arm's length body, against the explorer's content and ranks the closest matches. It is not generative AI and does not make up answers.</p>
 """, "Ask a question about the Data Asset Management Policy and get answers with their sources.", contents=False)
 
@@ -597,6 +600,84 @@ def track():
 <h2 id="next">Coming next: your organisation's live view in Teams</h2>
 <p>The next release will show each organisation its own return, status and measures, live, inside this app in Microsoft Teams. Return data will be kept in SharePoint, and Power BI will show each organisation only its own data, after you sign in with your work account. {badge("practice")}</p>
 """, "Track your DAM Policy return, see what you sent, and the measures GDS will report.", scripts=("checker.js", "explorer.js"))
+
+def guide():
+    site = HOME_URL.rstrip("/") + "/" if HOME_URL.startswith("https://") and "claude.ai" not in HOME_URL else "https://cyberdudeuk.github.io/dam-policy-explorer/"
+    pkg = "" if PREVIEW else '<p><a class="btn" href="downloads/dam-policy-explorer-teams.zip" download>' + ic("i-download") + ' Download the Microsoft 365 app package (.zip)</a></p>'
+    steps = [("Read the policy in plain English", "policy.html", "Five minutes on what the policy asks and who does what."),
+             ("Test your possible assets", "asset-test.html", "Five questions per asset. Anything you are not sure about is included and flagged."),
+             ("Work through your return", "return.html", "Twelve steps. Mark each one done; your progress is kept on your device."),
+             ("Check your list before you send it", "return.html#check", "Open the CSV of your workbook. It is read in your browser and never uploaded."),
+             ("Track it, and see what it shows", "track.html", "Record each stage, and see how ready each asset is.")]
+    qs = "".join(f'<li><a href="{h}"><b>{E(t)}</b></a><span>{E(d)}</span></li>' for t, h, d in steps)
+    return page("guide.html", "User guide and set-up", f"""
+<h1>User guide, and how to get the explorer in your organisation</h1>
+<p class="lead">How to use the explorer, and every way to open it: in a browser on any device, installed like an app, in Microsoft Teams, Outlook and the Microsoft 365 app, in Copilot, or on your intranet.</p>
+
+<h2 id="quick">Quick start for coordinators</h2>
+<ol class="quick">{qs}</ol>
+<p>Stuck? Type your question in <b>Ask a question</b> at the top of any page, or browse <a href="questions.html">questions and answers</a>.</p>
+
+<h2 id="tips">Finding your way around</h2>
+<ul>
+<li><b>The menu</b> at the top takes you between sections. On a narrow screen it folds behind the <b>Menu</b> button.</li>
+<li><b>Page contents</b>, on the left, lists the sections of the page you are on. Hide or show it with its switch.</li>
+<li><b>What to do next</b>, at the end of each page, suggests the next step and related pages.</li>
+<li><b>Words with a dotted underline</b> show their meaning when you point at them or tab to them. All of them are in the <a href="glossary.html">glossary</a>.</li>
+<li><b>Labels on answers</b> tell you how far to rely on them: Policy, GDS position, Suggested practice, Programme plan or Open.</li>
+<li><b>Display</b>, at the top, changes colours (including high contrast), text size, spacing, animation and link underlining.</li>
+</ul>
+
+<h2 id="browser">On any device, in a web browser</h2>
+<p>Open <b>{E(site)}</b> in Edge, Chrome, Safari or Firefox, on a computer, tablet or phone. You do not need an account or to sign in. Bookmark it, or install it:</p>
+<div class="tbl-scroll" tabindex="0" role="region" aria-label="How to install, scrollable table"><table class="tbl"><caption class="vh">How to install the explorer like an app</caption><thead><tr><th scope="col">Device</th><th scope="col">How to install it</th></tr></thead><tbody>
+<tr><th scope="row">Windows or Mac, Edge</th><td>Open the page, then <b>Settings and more</b> (…) › <b>Apps</b> › <b>Install this site as an app</b>.</td></tr>
+<tr><th scope="row">Windows, Mac or Chromebook, Chrome</th><td>Open the page, then the install icon in the address bar, or <b>Menu</b> › <b>Cast, save and share</b> › <b>Install page as app</b>.</td></tr>
+<tr><th scope="row">iPhone or iPad</th><td>Open the page in Safari, then <b>Share</b> › <b>Add to Home Screen</b>.</td></tr>
+<tr><th scope="row">Android</th><td>Open the page in Chrome, then <b>Menu</b> › <b>Add to home screen</b> or <b>Install app</b>.</td></tr>
+</tbody></table></div>
+<p>Once installed, the pages you have opened also work without a connection.</p>
+
+<h2 id="teams">In Microsoft Teams</h2>
+<h3>As a tab in a channel, today, with no administrator</h3>
+<ol><li>In the channel, select <b>+</b> (Add a tab).</li><li>Choose <b>Website</b>.</li><li>Name it "DAM Policy Explorer" and paste <b>{E(site)}</b>.</li><li>Select <b>Save</b>. Everyone in the channel can now open it.</li></ol>
+<h3>As an app in the Teams sidebar, in Outlook and in the Microsoft 365 app</h3>
+<p>The app adds Home, Your return, Track and Ask tabs, follows your Teams theme (including high contrast) and works on Teams desktop, web and mobile. Your Teams administrator adds it once for your organisation (see <a href="#admins">for IT administrators</a>). Then:</p>
+<ol><li>In Teams, select <b>Apps</b>, then <b>Built for your org</b>.</li><li>Choose <b>DAM Policy Explorer</b>, then <b>Add</b>.</li><li>Right-click its icon in the sidebar and choose <b>Pin</b>. It also appears in Outlook and the Microsoft 365 app under <b>Apps</b>.</li></ol>
+
+<h2 id="copilot">In Microsoft 365 Copilot</h2>
+<p>Where your organisation has Microsoft 365 Copilot and allows agents, the <b>DAM Policy assistant</b> comes with the app. Open Copilot Chat in Teams or at m365.cloud.microsoft, choose the assistant from the list of agents, and ask your question. It answers only from GOV.UK, this explorer and the capability playbooks, and shows where each answer comes from. It is an AI tool: check important answers against the source it gives.</p>
+
+<h2 id="intranet">On your intranet or SharePoint</h2>
+<ul>
+<li><b>Link to it</b> from a news post, a Quick links web part or your data pages: <b>{E(site)}</b>.</li>
+<li><b>Embed a page</b> using SharePoint's <b>Embed</b> web part. A SharePoint administrator may first need to allow <b>cyberdudeuk.github.io</b> under the site's <b>HTML Field Security</b> settings.</li>
+<li><b>Link to one answer</b>: open it on the questions page and choose <b>Copy a link to this answer</b>.</li>
+</ul>
+
+<h2 id="admins">For IT administrators: add it for your organisation</h2>
+<h3>Microsoft Teams, Outlook and the Microsoft 365 app</h3>
+{pkg}
+<ol>
+<li>Download the app package from this page.</li>
+<li>In the <b>Teams admin centre</b>, go to <b>Teams apps</b> › <b>Manage apps</b> › <b>Actions</b> › <b>Upload new app</b>, and upload the package.</li>
+<li>Check it is allowed in your app permission policies. To pin it for a group of people, add it to a <b>setup policy</b>.</li>
+<li>For the Copilot assistant, allow the app under <b>Integrated apps</b> in the Microsoft 365 admin centre. People need Microsoft 365 Copilot licences to use it.</li>
+</ol>
+<h3>What the app does and does not do</h3>
+<ul>
+<li>It is a set of web pages at <b>cyberdudeuk.github.io</b>. Allow that address through your web filter.</li>
+<li>No sign-in, no cookies, no tracking and no server storing anything about users. Settings, progress and tested assets stay in each person's browser.</li>
+<li>Files people check, such as a return workbook, are read in their browser and never uploaded.</li>
+<li>The pages use a strict content security policy: no inline scripts, and nothing loaded from other sites.</li>
+<li>The app asks Teams for no permissions to read user data. It only follows the Teams theme.</li>
+<li>Every release passes automated accessibility, security and content checks before it is published.</li>
+</ul>
+<p>The source code, checks and change history are public. <a href="about.html#transparency">How it was made</a>.</p>
+
+<h2 id="help">Getting help</h2>
+<p>Use the <a href="{E(C.CONTACT)}">contact form</a> for questions, problems or suggestions. For questions about your own return, speak to your organisation's lead DAM Policy coordinator.</p>
+""", "How to use the DAM Policy Explorer, and how to get it on your device, in Microsoft Teams, Outlook, Copilot or your intranet.")
 
 def glossary():
     items = "".join(f'<div class="term-row" id="t-{k}"><dt>{E(t)}</dt><dd>{E(d)}</dd></div>' for k, t, d in sorted(C.GLOSSARY, key=lambda x: x[1].lower()))
@@ -654,7 +735,7 @@ def about():
 <div data-selfcheck><p>The self-check needs JavaScript.</p></div>
 
 <h2 id="schedule">Updates</h2>
-<p>We re-read the GOV.UK sources and the question register at least every {C.STALE_AFTER_DAYS} days. If a page has not been checked for longer than that, it shows a warning at the top. Sources were last checked on {long_date(C.CONTENT_CHECKED)}.</p>
+<p>New or changed answers, including changes to the GDS FAQs, reach you, Teams and the Copilot assistant through a new release of this explorer, recorded under <a href="#changes">What changed</a>. We re-read the GOV.UK sources and the question register at least every {C.STALE_AFTER_DAYS} days. If a page has not been checked for longer than that, it shows a warning at the top. Sources were last checked on {long_date(C.CONTENT_CHECKED)}.</p>
 
 <h2 id="roadmap">Roadmap</h2>
 <ul class="roadmap">{road}</ul>
@@ -773,7 +854,7 @@ def main():
     for f in (ROOT / "assets").iterdir(): shutil.copy(f, OUT / "assets" / f.name)
     pages = {
         "index.html": home(), "policy.html": policy(), "asset-test.html": asset_test(), "questions.html": questions(), "embed.html": embed(),
-        "resources.html": resources(), "glossary.html": glossary(), "people.html": people(), "capabilities.html": capabilities(), "ask.html": ask(), "track.html": track(), "about.html": about(), "accessibility.html": accessibility(),
+        "resources.html": resources(), "glossary.html": glossary(), "people.html": people(), "capabilities.html": capabilities(), "ask.html": ask(), "track.html": track(), "guide.html": guide(), "about.html": about(), "accessibility.html": accessibility(),
         "return.html": rewrap("return.html", "Your return", "Make your organisation's data asset return in twelve steps.", ("checker.js", "page.js", "explorer.js")),
         "team.html": rewrap("team.html", "For the GDS team", "How the GDS team processes returns and answers questions.", ("checker.js", "process.js", "process-ui.js", "page.js", "explorer.js")),
     }
@@ -781,6 +862,10 @@ def main():
         doc = link_terms(externalise(doc), f)
         (OUT / f).write_text(doc)
     colophon()
+    if HOME_URL.startswith("https://") and "claude.ai" not in HOME_URL and not PREVIEW:
+        import subprocess
+        subprocess.run([sys.executable, "-I", str(ROOT / "tools" / "package_teams.py"), HOME_URL.rstrip("/")], check=True, capture_output=True)
+        (OUT / "downloads").mkdir(exist_ok=True); shutil.copy(ROOT / "dist" / "dam-policy-explorer-teams.zip", OUT / "downloads" / "dam-policy-explorer-teams.zip")
     # Azure Static Web Apps: security headers, and only Microsoft 365 hosts may embed the app (Teams, Outlook, Microsoft 365 app, SharePoint)
     fa = "'self' https://teams.microsoft.com https://*.teams.microsoft.com https://*.cloud.microsoft https://*.office.com https://outlook.office.com https://outlook.office365.com https://*.microsoft365.com https://*.sharepoint.com"
     (OUT / "staticwebapp.config.json").write_text(json.dumps({

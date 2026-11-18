@@ -7,7 +7,7 @@
 | Layer | Microsoft service | What it does | Status |
 |---|---|---|---|
 | Front door | Microsoft 365 app (one package) | Personal app in Teams (desktop, web, mobile), Outlook and the Microsoft 365 app | Package ready: `tools/package_teams.py` |
-| AI | Microsoft 365 Copilot declarative agent, "DAM Policy assistant" | Conversational answers grounded on GOV.UK, the explorer and the GDS FAQs, with citations | In the same package |
+| AI | Microsoft 365 Copilot declarative agent, "DAM Policy assistant" | Conversational answers grounded on GOV.UK, the explorer (with every FAQ answer) and the playbooks, with citations | In the same package |
 | Hosting | Azure Static Web Apps | Serves the explorer over HTTPS with the headers in `staticwebapp.config.json` | Needs a subscription and resource |
 | Content source | SharePoint Online lists and library | FAQ, question register, return log as the single source; the explorer rebuilt from them | Next: Graph export into `tools/content.py` |
 | Workflow | Power Automate | Returns into the shared mailbox, saved to the DAM Policy Library, appended to the master workbook | Existing operating model |
@@ -23,6 +23,6 @@
 5. Ask your Teams administrator to publish it to the organisation (Publish to org), and to allow the Copilot agent where Copilot licences exist.
 
 ## Notes
-- The Copilot agent's SharePoint knowledge is permission-trimmed: it uses the FAQ only for people who can open it. People in other departments get GOV.UK, the explorer and the playbooks.
+- The Copilot agent uses only sources everyone can open: the explorer (which carries every FAQ answer), GOV.UK and the playbooks. FAQ changes reach it through a new explorer release (decision, 18 Nov 2026).
 - Web search in a declarative agent allows up to four sites with at most two path segments, so GOV.UK is given as `www.gov.uk/government`. The instructions keep it to the DAM Policy pages.
 - The explorer stores nothing on a server. Progress, settings and tested assets stay in the user's browser.

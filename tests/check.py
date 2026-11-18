@@ -116,7 +116,12 @@ def s11_no_unagreed_promises(out):
     """D-14: no service level (reply times) is stated until one is agreed."""
     return [f.name for f in pages(out) if re.search(r"within \d+ working days", f.read_text())]
 
-STATIC = [s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording]
+def s12_agent_open_sources(out):
+    """D-16: the Copilot agent must use only sources everyone can open (no SharePoint knowledge, no internal addresses)."""
+    t = "".join(f.read_text() for f in (ROOT / "teams").glob("*.json"))
+    return [p for p in ("OneDriveAndSharePoint", "sharepoint.com", "{{FAQ_URL}}") if p in t]
+
+STATIC = [s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording]
 
 # ---------------- browser checks ----------------
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -280,10 +285,18 @@ def negatives(out):
         (s7_traceability, lambda o: (o / "explorer-data.json").write_text((o / "explorer-data.json").read_text().replace('"qa": "dqap"', '"qa": "nope"', 1))),
         (s8_contact, lambda o: edit(o, "index.html", 'href="https://forms.cloud.microsoft/e/SLBvuPX7jK"', 'href="https://forms.cloud.microsoft/e/WRONG1"')),
         (s9_wording, lambda o: edit(o, "policy.html", "<h1>", "<h1>The three tests ")),
+        (s12_agent_open_sources, lambda o: None),
         (s11_no_unagreed_promises, lambda o: edit(o, "index.html", "<h1>", "<h1>We reply within 5 working days. ")),
         (s10_class_collision, lambda o: (o / "assets" / "explorer.css").write_text((o / "assets" / "explorer.css").read_text() + "\n.bar { height: 1rem; }")),
     ]
     bad = []
+    tpl = ROOT / "teams" / "declarativeAgent.template.json"; orig = tpl.read_text()
+    try:
+        tpl.write_text(orig.replace('"name": "WebSearch"', '"name": "OneDriveAndSharePoint"'))
+        if not s12_agent_open_sources(out): bad.append("NEGATIVE s12_agent_open_sources did not fail on its broken copy")
+    finally:
+        tpl.write_text(orig)
+    cases = [c for c in cases if c[0] is not s12_agent_open_sources]
     for check, breaker in cases:
         o = mutate(breaker)
         if not check(o): bad.append(f"NEGATIVE {check.__name__} did not fail on its broken copy")

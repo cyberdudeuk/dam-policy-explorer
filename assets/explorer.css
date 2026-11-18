@@ -331,3 +331,9 @@ input[type=date] { font: inherit; padding: 0.4rem; border: 2px solid var(--text)
 .stages li.done .st-opt { border-color: var(--ok); } .stages li.done .st-n { background: var(--ok); color: var(--bg); }
 .stages li.now .st-opt { border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand); } .stages li.now .st-n { background: var(--brand); color: var(--brand-ink); }
 .st-opt:has(input:focus-visible) { outline: 3px solid var(--focus); }
+
+/* guide */
+.quick { counter-reset: q; list-style: none; padding: 0; display: grid; gap: 0.5rem; }
+.quick li { counter-increment: q; display: grid; grid-template-columns: 2.4rem 1fr; gap: 0 0.6rem; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 0.6rem 0.9rem; margin: 0; max-width: none; }
+.quick li::before { content: counter(q); grid-row: span 2; width: 2rem; height: 2rem; border-radius: 50%; background: var(--brand); color: var(--brand-ink); display: grid; place-items: center; font-weight: 700; }
+.quick span { font-size: 1rem; }
