@@ -256,6 +256,30 @@ def functional_checks(out):
         for want in ("3 assets", "67%", "33%"):
             if want not in txt: fails.append(f"F14 analysis missing '{want}'")
         if pg.evaluate("[...document.querySelectorAll('[data-tr-analytics] .fill')].some(f=>!f.style.width)"): fails.append("F14 chart bars have no width")
+        # F15: tours are offered once, open as a modal dialog, keep keyboard focus inside, and close with Escape
+        pg.set_viewport_size({"width": 1280, "height": 900}); pg.evaluate("localStorage.clear()"); pg.goto(base + "index.html")
+        if not pg.is_visible(".tour-offer"): fails.append("F15 first-visit tour offer not shown")
+        pg.click(".tour-offer [data-o=go]")
+        if not pg.is_visible(".tour[role=dialog][aria-modal=true]"): fails.append("F15 tour dialog not shown")
+        for _ in range(12): pg.keyboard.press("Tab")
+        if not pg.evaluate("!!document.activeElement.closest('.tour')"): fails.append("F15 focus escaped the tour dialog")
+        pg.keyboard.press("Escape")
+        if pg.is_visible(".tour"): fails.append("F15 Escape did not close the tour")
+        pg.reload()
+        if pg.is_visible(".tour-offer"): fails.append("F15 tour offered again after it was taken")
+        for name, pagef in (("asset", "asset-test.html"), ("check", "return.html"), ("track", "track.html"), ("answers", "questions.html")):
+            pg.goto(base + pagef + "#tour-" + name); pg.wait_for_timeout(600)
+            if not pg.is_visible(".tour"): fails.append(f"F15 tutorial {name} did not start on {pagef}")
+            n = pg.evaluate("parseInt((document.querySelector('.tour-n')||{}).textContent.split(' of ')[1]||'0')")
+            if n < 2: fails.append(f"F15 tutorial {name} has {n} steps on screen")
+            pg.keyboard.press("Escape")
+        # F16: tooltips everywhere: menu items, buttons and labels have one, and it shows on focus
+        pg.goto(base + "questions.html")
+        missing = pg.evaluate("[...document.querySelectorAll('.xnav a, .settings-btn, .hs-btn, .prov, .copy')].filter(e=>!e.getAttribute('data-tip')).length")
+        if missing: fails.append(f"F16 {missing} controls have no tooltip")
+        if pg.evaluate("document.querySelectorAll('[title]:not(svg *)').length"): fails.append("F16 native title attributes left (they would show twice)")
+        pg.focus(".prov")
+        if pg.is_hidden("#term-tip") or not pg.inner_text("#term-tip").strip(): fails.append("F16 badge tooltip not shown on focus")
         # F11: works with JavaScript turned off (content readable)
         ctx = b.new_context(java_script_enabled=False); p2 = ctx.new_page()
         for f in ("index.html", "questions.html", "people.html"):

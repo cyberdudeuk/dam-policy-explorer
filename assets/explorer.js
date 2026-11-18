@@ -90,7 +90,7 @@
   // ---- glossary words show their meaning on hover and on focus; Escape hides it (WCAG 1.4.13) ----
   var tip = d.createElement('div'); tip.className = 'tooltip'; tip.id = 'term-tip'; tip.setAttribute('role', 'tooltip'); tip.hidden = true; body.appendChild(tip);
   var tipFor = null;
-  function showTip(a) {
+  function showTip(a) { return showAny(a);
     tip.textContent = a.getAttribute('data-def'); tip.hidden = false; tipFor = a; a.setAttribute('aria-describedby', 'term-tip');
     var r = a.getBoundingClientRect(), w = Math.min(320, innerWidth - 16);
     tip.style.maxWidth = w + 'px';
@@ -98,11 +98,39 @@
     tip.style.left = left + 'px'; tip.style.top = (r.bottom + scrollY + 6) + 'px';
   }
   function hideTip() { if (tipFor) tipFor.removeAttribute('aria-describedby'); tip.hidden = true; tipFor = null; }
-  $$('a.term[data-def]').forEach(function (a) {
-    a.addEventListener('mouseenter', function () { showTip(a); }); a.addEventListener('focus', function () { showTip(a); });
-    a.addEventListener('mouseleave', function () { if (d.activeElement !== a) hideTip(); }); a.addEventListener('blur', hideTip);
-  });
-  tip.addEventListener('mouseleave', hideTip);
+  // Tooltips everywhere: glossary words, navigation, buttons, labels and badges. Each shows on hover and on keyboard focus,
+  // and Escape hides it (WCAG 1.4.13). Native title attributes are moved into data-tip, so nothing shows twice.
+  var NAVTIP = {'index.html': 'Start here: your path, your progress and routes by role', 'policy.html': 'What the policy asks, who it applies to and who does what',
+    'return.html': 'The twelve steps of the return, with your progress saved', 'asset-test.html': 'Check whether a possible asset is in scope',
+    'track.html': 'Track where your return has got to, and analyse what you sent', 'questions.html': 'Answers to the questions coordinators asked, with sources',
+    'people.html': 'Roles, user stories and journeys', 'capabilities.html': 'The 32 capabilities behind the policy, with playbooks',
+    'guide.html': 'How to use the explorer, tours, tutorials and how to set it up', 'resources.html': 'Guidance, templates and tools in one list',
+    'ask.html': 'Ask a question in your own words', 'embed.html': 'Make the policy part of business as usual and change',
+    'glossary.html': 'What the words mean', 'team.html': 'How GDS processes returns', 'about.html': 'Why it exists, how it was made, privacy and roadmap',
+    'accessibility.html': 'Accessibility and inclusion statement'};
+  $$('.xnav a').forEach(function (a) { var k = (a.getAttribute('href') || '').split('#')[0]; if (NAVTIP[k] && !a.hasAttribute('data-tip')) a.setAttribute('data-tip', NAVTIP[k]); });
+  var AUTOTIP = [['.menu-btn', 'Show or hide the menu'], ['.settings-btn', 'Colours, text size, spacing and animation'], ['.hs-btn', 'Search the explorer'],
+    ['.drawer-switch', 'Show or hide the list of sections on this page'], ['.mark', 'Mark this step as done or not done'], ['.copy', 'Copy a link you can paste into Teams or an email'],
+    ['[data-download]', 'Download the assets you left out, in the template layout'], ['[data-clear]', 'Remove every asset from this list'], ['.cap-chip', 'Open this capability in the playbooks'],
+    ['.journey a', 'Go to this stage of the journey'], ['.brand', 'Back to the home page'], ['.tour-start', 'A short guided tour of this page'], ['#tr-file', 'Choose the CSV copy of your return. It stays on your device']];
+  // D-17: tooltips were assigned once, before the script created some controls; applyTips runs again at the end for anything added later
+  function applyTips() {
+    AUTOTIP.forEach(function (p) { $$(p[0]).forEach(function (el) { if (!el.hasAttribute('data-tip')) el.setAttribute('data-tip', p[1]); }); });
+    $$('[title]').forEach(function (el) { if (el.tagName === 'svg' || el.closest('svg')) return; el.setAttribute('data-tip', el.getAttribute('title')); el.removeAttribute('title'); });
+    $$('.prov, .lk').forEach(function (el) { if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0'); });   // so keyboard users can reach the explanation
+  }
+  applyTips();
+  function tipText(el) { return el.getAttribute('data-def') || el.getAttribute('data-tip'); }
+  function showAny(el) { var t = tipText(el); if (!t) return; tip.textContent = t; tip.hidden = false; tipFor = el; el.setAttribute('aria-describedby', 'term-tip');
+    var r = el.getBoundingClientRect(), w = Math.min(320, innerWidth - 16); tip.style.maxWidth = w + 'px';
+    tip.style.left = Math.max(8, Math.min(r.left + scrollX, scrollX + innerWidth - w - 8)) + 'px';
+    var below = r.bottom + scrollY + 6; tip.style.top = below + 'px';
+    var th = tip.offsetHeight; if (r.bottom + th + 12 > innerHeight && r.top > th + 12) tip.style.top = (r.top + scrollY - th - 6) + 'px'; }
+  d.addEventListener('mouseover', function (e) { var el = e.target.closest && e.target.closest('[data-def],[data-tip]'); if (el && el !== tipFor) showAny(el); });
+  d.addEventListener('mouseout', function (e) { var el = e.target.closest && e.target.closest('[data-def],[data-tip]'); if (el && !el.contains(e.relatedTarget) && !tip.contains(e.relatedTarget) && d.activeElement !== el) hideTip(); });
+  d.addEventListener('focusin', function (e) { var el = e.target.closest && e.target.closest('[data-def],[data-tip]'); if (el) showAny(el); else hideTip(); });
+  d.addEventListener('focusout', function (e) { if (tipFor && e.target === tipFor) hideTip(); });
+  tip.addEventListener('mouseleave', function () { if (!tipFor || d.activeElement !== tipFor) hideTip(); });
   d.addEventListener('keydown', function (e) { if (e.key === 'Escape') hideTip(); });
 
   // ---- stale-content warning: says so if the sources have not been re-checked recently ----
@@ -283,7 +311,7 @@
         var snip = it.x.length > 320 ? it.x.slice(0, 317).replace(/\s+\S*$/, '') + '…' : it.x;
         return '<li class="' + (i === 0 ? 'best' : '') + '"><p class="small muted">' + esc(it.k) + badgeHtml + '</p><h3><a href="' + esc(it.u) + '"' + (ext ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' + esc(it.t) + (ext ? '<span class="vh"> (opens in a new tab)</span>' : '') + '</a></h3><p>' + esc(snip) + '</p></li>';
       }).join('') + '</ol>';
-      announce(res.length + ' answers found.');
+      applyTips(); announce(res.length + ' answers found.');
     }).catch(function () { askBox.innerHTML = '<p>Search is not available right now. Browse <a href="questions.html">all questions and answers</a>.</p>'; }); };
     if (q0) runAsk(q0);
     var af = $('form.askform');
@@ -347,6 +375,81 @@
   });
   window.DPE.analyse = analyse;
 
+  // ---- guided tours and tutorials ----
+  // A modal dialog that points at one part of the page at a time. Keyboard: Tab stays inside, Escape closes, focus returns.
+  var TOURS = {
+    home: [['.hsearch', 'Ask anything', 'Type a question here on any page. The explorer finds the best answers, with their sources.'],
+           ['#site-nav', 'Move between sections', 'The menu takes you to each part of the explorer. On narrow screens it folds behind the Menu button.'],
+           ['.settings-btn', 'Make it work for you', 'Change colours, including high contrast, text size, spacing and animation. Saved on this device.'],
+           ['.journey', 'Your path through the policy', 'Six stages, from understanding the policy to keeping your list current. Choose any stage.'],
+           ['[data-countdown]', 'Key date', 'How long until GDS asks you to be ready.'],
+           ['[data-progress-home]', 'Your progress', 'Mark steps done on Your return and your progress shows here.'],
+           ['.cards', 'Start from your role', 'Each card takes you to the route that fits what you do.'],
+           ['.nextbest', 'What to do next', 'Every page ends with the next step and related pages.']],
+    asset: [['#q-official', 'Five questions', 'Answer one question at a time. Not sure? Choose Not sure: the asset is included provisionally and flagged.'],
+            ['.asset-test button[type=submit]', 'Get your result', 'You see whether it goes in your return, why, and what to do next.'],
+            ['#result', 'Your result', 'Each asset you test is added to a list you can download or copy, in the template layout.']],
+    check: [['#return-check', 'Check before you send', 'Open the CSV copy of your workbook. It is read in your browser and never uploaded.'],
+            ['#steps', 'Twelve steps', 'Open any step, and mark it done when you finish. Your progress is kept on this device.']],
+    track: [['form.tracker', 'Where your return has got to', 'Record your reference, the date you sent it and the current stage.'],
+            ['#tr-file', 'What you sent', 'Open the CSV of the workbook you sent to see how ready each asset is, with charts.'],
+            ['#government', 'Across government', 'The measures GDS will report once returns arrive.']],
+    answers: [['#qa-search', 'Search the answers', 'Type a few words. Matching answers open as you type.'],
+              ['.chips', 'Filter by topic', 'Narrow the list to one topic.'],
+              ['.legend', 'How far to rely on an answer', 'Each answer carries a label: Policy, GDS position, Suggested practice, Programme plan or Open. Point at a label for its meaning.'],
+              ['#asked', 'Built from your questions', 'Every need raised in the forums, and where it is answered.']]
+  };
+  var PAGE_TOUR = {'index.html': 'home', '': 'home', 'asset-test.html': 'asset', 'return.html': 'check', 'track.html': 'track', 'questions.html': 'answers'};
+  var here = location.pathname.split('/').pop();
+  function runTour(name) {
+    var steps = (TOURS[name] || []).filter(function (s) { var el = $(s[0]); return el && el.getClientRects().length; });
+    if (!steps.length) return;
+    var back = d.activeElement, i = 0;
+    var dim = d.createElement('div'); dim.className = 'tour-dim';
+    var box = d.createElement('div'); box.className = 'tour'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-labelledby', 'tour-h');
+    body.appendChild(dim); body.appendChild(box);
+    var ring = d.createElement('div'); ring.className = 'tour-ring'; body.appendChild(ring);
+    function close() { box.remove(); dim.remove(); ring.remove(); d.removeEventListener('keydown', key, true); store.set('toured.' + name, true); if (back && back.focus) back.focus(); announce('Tour closed.'); }
+    function key(e) {
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      if (e.key === 'Tab') { var f = $$('button', box); if (e.shiftKey && d.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); } else if (!e.shiftKey && d.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); } }
+    }
+    d.addEventListener('keydown', key, true);
+    function show() {
+      var s = steps[i], el = $(s[0]);
+      el.scrollIntoView({block: 'center', behavior: motionOff() ? 'auto' : 'smooth'});
+      setTimeout(function () {
+        var r = el.getBoundingClientRect();
+        ring.style.left = (r.left + scrollX - 6) + 'px'; ring.style.top = (r.top + scrollY - 6) + 'px'; ring.style.width = (r.width + 12) + 'px'; ring.style.height = (Math.min(r.height, innerHeight * 0.6) + 12) + 'px';
+      }, motionOff() ? 0 : 350);
+      box.innerHTML = '<p class="tour-n">Step ' + (i + 1) + ' of ' + steps.length + '</p><h2 id="tour-h">' + esc(s[1]) + '</h2><p>' + esc(s[2]) + '</p><p class="tour-btns">' +
+        (i ? '<button type="button" class="btn secondary" data-t="back">Back</button> ' : '') +
+        (i < steps.length - 1 ? '<button type="button" class="btn" data-t="next">Next</button> ' : '<button type="button" class="btn" data-t="done">Finish</button> ') +
+        '<button type="button" class="linkish" data-t="close">Close the tour</button></p>';
+      $('h2', box).setAttribute('tabindex', '-1'); $('h2', box).focus();
+    }
+    box.addEventListener('click', function (e) { var t = e.target.getAttribute && e.target.getAttribute('data-t'); if (t === 'next') { i++; show(); } else if (t === 'back') { i--; show(); } else if (t === 'done' || t === 'close') close(); });
+    dim.addEventListener('click', close);
+    show();
+  }
+  window.DPE.runTour = runTour;
+  var tn = PAGE_TOUR[here];
+  if (tn) {
+    var tb = d.createElement('button'); tb.type = 'button'; tb.className = 'tour-start linkish'; tb.innerHTML = 'Take a short tour of this page';
+    tb.addEventListener('click', function () { runTour(tn); });
+    var h1 = $('main h1'); if (h1) h1.insertAdjacentElement('afterend', tb);
+    tb.setAttribute('data-tip', 'A short guided tour of this page');
+  }
+  $$('[data-tutorial]').forEach(function (b) { b.addEventListener('click', function () { location.href = b.getAttribute('data-page') + '#tour-' + b.getAttribute('data-tutorial'); }); });
+  var tm = /^#tour-([a-z]+)$/.exec(location.hash);
+  if (tm && TOURS[tm[1]]) setTimeout(function () { runTour(tm[1]); }, 300);
+  else if (tn && !store.get('toured.' + tn, false) && !store.get('tours-off', false) && tn === 'home') {
+    var offer = d.createElement('div'); offer.className = 'tour-offer'; offer.setAttribute('role', 'region'); offer.setAttribute('aria-label', 'Tour');
+    offer.innerHTML = '<p><b>New here?</b> Take a one-minute tour of the explorer.</p><p><button type="button" class="btn" data-o="go">Start the tour</button> <button type="button" class="linkish" data-o="no">No thanks</button></p>';
+    var mainEl = $('#main'); mainEl.insertBefore(offer, mainEl.firstChild);
+    offer.addEventListener('click', function (e) { var o = e.target.getAttribute && e.target.getAttribute('data-o'); if (o === 'go') { offer.remove(); runTour('home'); } if (o === 'no') { offer.remove(); store.set('tours-off', true); } });
+  }
+
   // ---- copy a link to an answer, to paste into Teams or an email ----
   $$('.qa').forEach(function (art) {
     var bodyEl = $('.body', art); if (!bodyEl) return;
@@ -392,6 +495,8 @@
     }).join('') + '</ul>';
   }
   window.DPE.selfCheck = selfCheck;
+  applyTips();   // after every control the script creates
+  window.DPE.applyTips = applyTips;
 
   // ---- works offline and can be installed, where the browser and host allow it ----
   if ('serviceWorker' in navigator && location.protocol === 'https:') {

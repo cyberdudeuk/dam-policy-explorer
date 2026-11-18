@@ -337,3 +337,18 @@ input[type=date] { font: inherit; padding: 0.4rem; border: 2px solid var(--text)
 .quick li { counter-increment: q; display: grid; grid-template-columns: 2.4rem 1fr; gap: 0 0.6rem; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 0.6rem 0.9rem; margin: 0; max-width: none; }
 .quick li::before { content: counter(q); grid-row: span 2; width: 2rem; height: 2rem; border-radius: 50%; background: var(--brand); color: var(--brand-ink); display: grid; place-items: center; font-weight: 700; }
 .quick span { font-size: 1rem; }
+
+/* tours */
+.tour-dim { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 60; }
+.tour-ring { position: absolute; z-index: 61; border: 4px solid var(--focus); border-radius: 12px; box-shadow: 0 0 0 4px var(--text); pointer-events: none; transition: all .3s; }
+.tour { position: fixed; z-index: 62; left: 50%; bottom: 1.25rem; transform: translateX(-50%); width: min(30rem, calc(100vw - 2rem)); background: var(--card); color: var(--text); border-radius: var(--radius); box-shadow: 0 8px 30px rgba(0,0,0,.35); padding: 0.25rem 1.25rem 1rem; border-top: 6px solid var(--brand); }
+.tour h2 { margin: 0.25rem 0 0.5rem; font-size: 1.3rem; outline: none; } .tour-n { margin: 0.5rem 0 0; font-size: 0.9rem; color: var(--muted); font-weight: 700; }
+.tour-btns { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; align-items: center; }
+.tour-start { margin: 0 0 1rem; font-size: 1rem; }
+.tour-offer { background: var(--soft); border: 2px solid var(--brand); border-radius: var(--radius); padding: 0.25rem 1rem; margin: 1rem 0 0; }
+.tour-offer p { margin: 0.5rem 0; }
+.prov:focus-visible, .lk:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.tutorials { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 0.75rem; }
+.tutorials li { display: flex; gap: 0.75rem; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 0.75rem 1rem; margin: 0; max-width: none; }
+.tutorials h3 { margin: 0 0 0.25rem; font-size: 1.1rem; } .tutorials p { margin: 0.25rem 0; font-size: 1rem; } .tutorials .ic { color: var(--brand-2); margin-top: 0.2rem; }

@@ -618,12 +618,23 @@ def guide():
 <ol class="quick">{qs}</ol>
 <p>Stuck? Type your question in <b>Ask a question</b> at the top of any page, or browse <a href="questions.html">questions and answers</a>.</p>
 
+<h2 id="tutorials" data-count="5">Tours and tutorials</h2>
+<p>Each tutorial opens the right page and walks you through it, one step at a time. You can stop at any point with <b>Close the tour</b> or the Escape key. Pages with a tour also have a <b>Take a short tour of this page</b> link under their title.</p>
+<ul class="tutorials">
+<li>{ic("i-home")}<div><h3>Find your way around</h3><p>The search box, menu, display settings, your path and your progress. One minute.</p><p><button type="button" class="btn secondary" data-tutorial="home" data-page="index.html">Start this tutorial</button></p></div></li>
+<li>{ic("i-target")}<div><h3>Test whether an asset is in scope</h3><p>The five questions, what happens when you are not sure, and how to export your list of assets left out.</p><p><button type="button" class="btn secondary" data-tutorial="asset" data-page="asset-test.html">Start this tutorial</button></p></div></li>
+<li>{ic("i-check")}<div><h3>Check your list before you send it</h3><p>Open your workbook as a CSV, read the result, and track the twelve steps.</p><p><button type="button" class="btn secondary" data-tutorial="check" data-page="return.html">Start this tutorial</button></p></div></li>
+<li>{ic("i-dashboard")}<div><h3>Track your return and see what it shows</h3><p>Record the stage, open what you sent, and see the measures GDS will report.</p><p><button type="button" class="btn secondary" data-tutorial="track" data-page="track.html">Start this tutorial</button></p></div></li>
+<li>{ic("i-help")}<div><h3>Find an answer and share it</h3><p>Search, filter by topic, read the labels, and copy a link to an answer for Teams or email.</p><p><button type="button" class="btn secondary" data-tutorial="answers" data-page="questions.html">Start this tutorial</button></p></div></li>
+</ul>
+<noscript><p>Tours need JavaScript. The quick start above works without it.</p></noscript>
+
 <h2 id="tips">Finding your way around</h2>
 <ul>
 <li><b>The menu</b> at the top takes you between sections. On a narrow screen it folds behind the <b>Menu</b> button.</li>
 <li><b>Page contents</b>, on the left, lists the sections of the page you are on. Hide or show it with its switch.</li>
 <li><b>What to do next</b>, at the end of each page, suggests the next step and related pages.</li>
-<li><b>Words with a dotted underline</b> show their meaning when you point at them or tab to them. All of them are in the <a href="glossary.html">glossary</a>.</li>
+<li><b>Tooltips</b>: point at, or tab to, menu items, buttons, labels and words with a dotted underline to see what they mean or do. Press Escape to hide one. Every word is also in the <a href="glossary.html">glossary</a>.</li>
 <li><b>Labels on answers</b> tell you how far to rely on them: Policy, GDS position, Suggested practice, Programme plan or Open.</li>
 <li><b>Display</b>, at the top, changes colours (including high contrast), text size, spacing, animation and link underlining.</li>
 </ul>
