@@ -121,7 +121,31 @@ def s12_agent_open_sources(out):
     t = "".join(f.read_text() for f in (ROOT / "teams").glob("*.json"))
     return [p for p in ("OneDriveAndSharePoint", "sharepoint.com", "{{FAQ_URL}}") if p in t]
 
-STATIC = [s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording]
+def s13_topics_grouped(out):
+    """questions.html: each topic heading appears once, in the agreed topic order, and the build groups answers whatever their order in the content file (D-18)."""
+    import importlib, random
+    sys.path.insert(0, str(ROOT / "tools"))
+    C = importlib.import_module("content")
+    bad = []
+    t = (out / "questions.html").read_text()
+    found = re.findall(r'<h3 class="topic-h" id="topic-[^"]+">([^<]+)</h3>', t)
+    found = [html.unescape(x) for x in found]
+    if len(found) != len(set(found)): bad.append(f"questions.html: repeated topic headings {found}")
+    if found != [x for x in C.TOPICS if x in found]: bad.append(f"questions.html: topics out of order {found}")
+    B = importlib.import_module("build")
+    orig = list(C.QA)
+    try:
+        random.Random(18).shuffle(C.QA)
+        heads = re.findall(r'class="topic-h"', B.questions())
+        if len(heads) != len({q["topic"] for q in C.QA}): bad.append("build does not group shuffled answers by topic")
+    except Exception as e:
+        bad.append(f"could not render questions with shuffled answers: {e}")
+    finally:
+        C.QA[:] = orig
+    return bad
+
+
+STATIC = [s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped]
 
 # ---------------- browser checks ----------------
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -311,6 +335,7 @@ def negatives(out):
         (s9_wording, lambda o: edit(o, "policy.html", "<h1>", "<h1>The three tests ")),
         (s12_agent_open_sources, lambda o: None),
         (s11_no_unagreed_promises, lambda o: edit(o, "index.html", "<h1>", "<h1>We reply within 5 working days. ")),
+        (s13_topics_grouped, lambda o: edit(o, "questions.html", '<h3 class="topic-h" id="topic-implementation">', '<h3 class="topic-h" id="topic-roles2">Roles and governance</h3><h3 class="topic-h" id="topic-implementation">')),
         (s10_class_collision, lambda o: (o / "assets" / "explorer.css").write_text((o / "assets" / "explorer.css").read_text() + "\n.bar { height: 1rem; }")),
     ]
     bad = []

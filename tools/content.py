@@ -49,6 +49,8 @@ PROV = {
 }
 
 FAQ = ("GDS DAM Policy FAQs, November 2026", None)
+GDSPF = ("GDS reply to coordinators on the Performance Framework commission, October 2026", None)
+GDSAUG = ("GDS clarification to coordinators on the metadata minimum, August 2026", None)
 
 # Forum needs, paraphrased. 'raised' counts separate register records for the same need.
 NEEDS = [
@@ -68,9 +70,17 @@ NEEDS = [
     {"id": "N14", "theme": "Data quality", "need": "What counts as a data quality action plan or equivalent, and where is the framework?", "raised": 3, "qa": "dqap"},
     {"id": "N15", "theme": "Embedding", "need": "How do we build the policy into a new digital service or transformation project from the start?", "raised": 1, "qa": "new-service"},
     {"id": "N16", "theme": "Embedding", "need": "How does the policy link to crisis and resilience data sharing?", "raised": 1, "qa": "resilience"},
+    {"id": "N18", "theme": "Embedding", "need": "Which standards, frameworks and playbooks should a new service that replaces a legacy system adopt from the start?", "raised": 1, "qa": "service-standards"},
+    {"id": "N19", "theme": "Making the return", "need": "Departments want material to brief their own arm's length bodies, and GDS at their sessions.", "raised": 1, "qa": "brief-albs"},
+    {"id": "N20", "theme": "Making the return", "need": "An arm's length body does not know who its contact is, the timescales or which template to use.", "raised": 1, "qa": "alb-not-contacted"},
+    {"id": "N21", "theme": "Roles", "need": "Practical help for data owners and stewards day to day: checklists, priorities, questions to ask, and conversation guides.", "raised": 5, "qa": "owner-kit"},
+    {"id": "N22", "theme": "Metadata and catalogues", "need": "If a field is not in the minimum, should we stop collecting it? Which sense of 'mandatory' applies?", "raised": 1, "qa": "mandatory-kinds"},
+    {"id": "N23", "theme": "Making the return", "need": "The quarterly Performance Framework commission asks for counts of critical data assets. Is that the same as the DAM return, or duplicate work?", "raised": 3, "qa": "performance-framework"},
+    {"id": "N24", "theme": "Scope", "need": "Are there now two kinds of critical data asset, internal and shared? The terms risk confusion about what is in scope.", "raised": 2, "qa": "internal-shared"},
     {"id": "N17", "theme": "Finding things", "need": "Materials are hard to find: the Knowledge Hub is hard to navigate and some recordings cannot be viewed.", "raised": 4, "qa": "find-materials"},
 ]
 
+PLAYBOOKS_URL = "https://cyberdudeuk.github.io/dam-capability-playbooks/"
 P, C, M, O, D, I, Q, F = (GOVUK[k] for k in ("policy", "cda", "metadata", "ownership", "dqap", "dqissues", "dqf", "tcop10"))
 
 # Topics follow the categories of the GDS FAQ, plus two this app adds.
@@ -101,6 +111,9 @@ QA = [
     {"id": "esda", "topic": S, "prov": "gds", "q": "How do Essential Shared Data Assets (ESDAs) relate to critical data assets?",
      "a": "<p>The DAM Policy grew out of the Essential Shared Data Assets policy. The name changed to critical data asset, but the definition is the same. The ESDA exercise was a test using a sample of assets. The DAM Policy applies across all of government.</p>",
      "src": [FAQ]},
+    {"id": "internal-shared", "topic": S, "prov": "open", "q": "Are there two kinds of critical data asset, internal and shared?",
+     "a": "<p>For the DAM Policy there is one kind: a critical data asset is OFFICIAL, meets a critical criterion, is shared or has value across government, is yours to account for, and is the source. That is what goes in your return.</p><p>Other exercises, such as the Performance Framework, also ask about data that is critical only inside your organisation. Keep your own list of those if it helps, and label the ones in scope of the DAM Policy <code>XG_CDA</code> so the two are never confused. Agreed wording for the two terms has been asked for and is not settled yet.</p>",
+     "src": [I, FAQ, GDSPF]},
     {"id": "own-definition", "topic": S, "prov": "gds", "q": "We already have our own definition of critical data assets. What do we do?",
      "a": "<p>Keep it for your own purposes. The DAM Policy definition covers data with value across government, so some assets you treat as critical will not be in scope. How you manage both is up to you. To keep catalogues consistent across government, label the ones in scope of the policy <code>XG_CDA</code>.</p>",
      "src": [FAQ]},
@@ -124,6 +137,12 @@ QA = [
     {"id": "minimum-metadata", "topic": DM, "prov": "policy", "q": "What metadata is mandatory?",
      "a": "<p>The minimum set is in <i>Recording metadata to describe critical data assets</i>. It recommends the Data Catalogue Vocabulary (DCAT) to describe data sets and data services. The UK Cross-Government Metadata Exchange Model is one practical way to apply it.</p><p>The return asks for less than this: a smaller set of details GDS uses to monitor the policy. Keep the full metadata in your own catalogue. See <a href=\"return.html#step-7\">step 7</a>.</p>",
      "src": [M, FAQ]},
+    {"id": "mandatory-kinds", "topic": DM, "prov": "gds", "q": "A field is not in the minimum. Should we stop collecting it?",
+     "a": "<p>No. The minimum is a floor, not a ceiling. Leaving a field out of the return is not an instruction to stop collecting it. GDS has described four senses of \"mandatory\":</p><ul><li><b>Policy mandatory</b>: what the DAM Policy requires you to identify, record, report and own.</li><li><b>Profile mandatory</b>: the metadata profile for exchange, built on DCAT and the UK Metadata Exchange Model.</li><li><b>Locally mandated</b>: extra fields your organisation requires for its own needs. Keep collecting them.</li><li><b>Future adoption</b>: direction of travel, not needed for today's return.</li></ul>",
+     "src": [M, FAQ, GDSAUG]},
+    {"id": "discovery-access", "topic": DM, "prov": "policy", "q": "Does recording metadata give others access to our data?",
+     "a": "<p>No. Describing an asset helps people find out that it exists and who owns it. Access to the data itself still depends on the law, agreements and controls that already apply. The policy does not create a duty to share. Even sensitive data can be described, so that people know whom to ask.</p>",
+     "src": [P, FAQ]},
     {"id": "richer-metadata", "topic": DM, "prov": "gds", "q": "Can we keep richer metadata than the minimum?",
      "a": "<p>Yes. The policy sets a minimum. Keep any extra metadata you need, and keep meeting any higher standards that already apply to you, such as internal rules, regulation or security policies.</p>",
      "src": [FAQ]},
@@ -136,6 +155,9 @@ QA = [
     {"id": "dqap", "topic": DM, "prov": "gds", "q": "What counts as a data quality action plan \"or equivalent\"?",
      "a": "<p>Every asset must have a data quality action plan or an equivalent. To count as equivalent, your own process must cover all seven steps of the GDS guide:</p><ol><li>Identify critical data</li><li>Identify data quality rules</li><li>Assess current data quality</li><li>Prioritise improvements and set goals</li><li>Find the root cause and act</li><li>Report on data quality</li><li>Measure again over time</li></ol><p>The policy does not require a particular document or tool. GDS is building a bank of examples.</p>",
      "src": [P, D, I, Q, FAQ]},
+    {"id": "owner-kit", "topic": R, "prov": "practice", "q": "Is there practical, day-to-day help for data owners and stewards?",
+     "a": "<p>Yes: see the <a href=\"embed.html#owners\">practical kit for data owners and stewards</a>. It has a checklist for each role, what to do first, questions to ask yourself each quarter, and a guide for the regular owner and steward conversation. It is built on the data ownership model and the capability playbooks.</p><p>GDS is also developing training for data owners.</p>",
+     "src": [O, FAQ]},
     # Implementation and support
     {"id": "resourcing", "topic": IS, "prov": "gds", "q": "This is a big task. Do we absorb it or set up a team?",
      "a": "<p>GDS is not prescriptive about how you organise the work, because organisations differ so much. It will work through the challenges with lead coordinators in the DAM Policy Working Group, and share how others are approaching it.</p>",
@@ -146,6 +168,9 @@ QA = [
     {"id": "test-return", "topic": IS, "prov": "practice", "q": "Can we get feedback on a test return?",
      "a": "<p>Yes. First run your list through <a href=\"return.html#check\">Is my list ready to send?</a>. It runs in your browser and finds the most common problems. Then ask for feedback through your lead coordinator or the <a href=\"" + CONTACT + "\">contact form</a>. Do not attach the file to the form.</p>",
      "src": []},
+    {"id": "brief-albs", "topic": IS, "prov": "gds", "q": "How do we brief our arm's length bodies, and can GDS help?",
+     "a": "<p>GDS is happy to support departments in conversations with their arm's length bodies, including answering questions about scope. Ask through the contact form.</p><p>To brief them yourself, use the <a href=\"embed.html#brief\">briefing outline</a>: the ask, the scope, why it matters, how the return works for them and the support available. Every point links to a page here they can read afterwards.</p>",
+     "src": [FAQ]},
     # Reporting and the return
     {"id": "later-returns", "topic": RR, "prov": "gds", "q": "When are the returns due?",
      "a": "<p>The first return, the Baseline Return, is due in January 2027. The next is due in October 2027. Aim to be ready by Friday 18 December 2026, before the Christmas break.</p><p>The policy itself asks you to maintain and review your list every year. In time, GDS expects to replace these returns with more frequent updates taken straight from your catalogue.</p>",
@@ -153,6 +178,12 @@ QA = [
     {"id": "alb-returns", "topic": RR, "prov": "gds", "q": "Do arm's length bodies send their own return, or one with their department?",
      "a": "<p>Arm's length bodies identify and record their own critical data assets using the return template. They send it to their parent department first, and the department forwards it to GDS. Departments coordinate and assure their arm's length bodies' returns, and send a combined return where that makes sense. Either one combined return or separate returns is fine, as long as the department knows about every one.</p><p>If your arm's length body has not heard from its department about the return, contact GDS.</p>",
      "src": [P, FAQ]},
+    {"id": "performance-framework", "topic": RR, "prov": "gds", "q": "Is the Performance Framework commission the same as the DAM return?",
+     "a": "<p>No, but they are aligned and you should not have to do the work twice.</p><ul><li><b>The GDS Performance Framework</b> is a quarterly commission. It looks at your organisation's data capability and maturity as a whole, and asks for counts, including of the critical data assets you manage internally.</li><li><b>The DAM Policy return</b> is about shared critical data assets, asset by asset, and how the policy is being put into practice for each one.</li></ul><p>Some questions deliberately match. GDS is looking at how evidence from the Performance Framework, for example on ownership, data quality and cataloguing, can support assurance of the Baseline Return. Use the same underlying evidence for both. GDS is also working with the team that runs the commission to align future rounds.</p>",
+     "src": [GDSPF]},
+    {"id": "alb-not-contacted", "topic": RR, "prov": "gds", "q": "We are an arm's length body and nobody has contacted us. What do we do?",
+     "a": "<p>Contact GDS through the contact form. GDS will help through the Chief Data Officer Council to connect you with your department. Your route for the return is your parent department's lead coordinator.</p><p>Who coordinates the work inside your own organisation is for you to decide. The return uses version 3 of the template and is due in January 2027.</p>",
+     "src": [FAQ]},
     {"id": "compliance-maturity", "topic": RR, "prov": "gds", "q": "Does the return assess compliance or maturity?",
      "a": "<p>Compliance with the DAM Policy. The Baseline Return shows which assets are in scope and how far they meet the data management requirements. Progress is reported to the Chief Data Officer Council and to ministers after each return. Data maturity is assessed separately, by the GDS Data Maturity Service.</p>",
      "src": [FAQ]},
@@ -197,6 +228,9 @@ QA = [
     {"id": "new-service", "topic": EM, "prov": "practice", "q": "How do we build the policy into a new service or project?",
      "a": "<p>Treat it as part of the design, not a task at the end. During discovery, name the data the service will create, use or share. Before live, give each critical asset an owner, describe it in your catalogue and start a quality plan, so it joins your next return without extra work. See <a href=\"embed.html#change\">embedding it in change</a>.</p><p>This matches point 10 of the Technology Code of Practice, which asks teams to plan for data across its whole lifecycle.</p>",
      "src": [F, P]},
+    {"id": "service-standards", "topic": EM, "prov": "practice", "q": "Which standards should a new service, or one replacing a legacy system, adopt from the start?",
+     "a": "<p>Build these in as architecture principles from discovery:</p><ul><li><b>The DAM Policy</b>, and its guidance on identifying critical data assets and recording metadata.</li><li><b>The data ownership model</b>, for named owners and stewards.</li><li><b>The data quality action plan guide</b> and the Government Data Quality Framework, for quality.</li><li><b>DCAT</b>, through the UK Cross-Government Metadata Exchange Model, for your catalogue.</li><li><b>Point 10 of the Technology Code of Practice</b>, for planning data across its lifecycle, including migration, retention and exit.</li><li><b>The Service Standard</b>, for how the service is built and assessed.</li></ul><p>For replacing a legacy system, the capability playbooks cover <a href=\"" + PLAYBOOKS_URL + "capabilities.html#CR-26\">legacy migration</a> and <a href=\"" + PLAYBOOKS_URL + "capabilities.html#CR-32\">avoiding future legacy</a>. GDS can talk your plans through: ask through the contact form.</p>",
+     "src": [P, C, M, O, D, F, GOVUK["standard"]]},
     {"id": "resilience", "topic": EM, "prov": "policy", "q": "How does the policy link to resilience data sharing?",
      "a": "<p>Defence, national security and resilience is one of the seven critical purposes. Data shared for resilience work can be a critical data asset if the other principles apply. Listing it records that it exists and who owns it. It does not change who may use it.</p>",
      "src": [C, P]},
@@ -224,6 +258,9 @@ GLOSSARY = [
     ("cdo-council", "Chief Data Officer Council", "The group of chief data officers that oversees how the policy is put into practice across government."),
     ("critical-data-asset", "Critical data asset", "A data asset that is OFFICIAL, serves at least one of seven critical purposes, has value across government through sharing, and that your organisation is accountable for. Called an Essential Shared Data Asset (ESDA) before the DAM Policy."),
     ("scope-principles", "Scope principles", "The four DAM Policy principles that decide whether an asset is in scope: critical criterion, shared, accountable, and prioritise the source."),
+    ("performance-framework", "Performance Framework", "A quarterly GDS commission on departments' digital and data capability. It asks for counts, not lists, of critical data assets."),
+    ("metadata-minimum", "Metadata minimum", "The smallest set of details to record about each critical data asset. It is a floor, not a ceiling: keep any other fields you need."),
+    ("data-custodian", "Data custodian", "The team that runs the systems where data is kept, on behalf of the data owner."),
     ("xg-cda", "XG_CDA", "The label GDS recommends for marking assets that are in scope of the DAM Policy in your data catalogue."),
     ("iar", "Information asset register", "A governance record of information assets, their owners (information asset owners), risks and controls."),
     ("iao", "Information asset owner", "The person accountable for managing, securing and complying with rules about an information asset. The role continues alongside the data owner."),
@@ -269,13 +306,14 @@ AUDIENCES = {"coordinator": "Coordinators", "cdo": "Chief data officers", "owner
 
 # What changed, newest first. Items flagged as new show a "New" marker for 30 days.
 CHANGES = [
-    ("2026-11-18", "1.2.0", "Track and analyse: record where your return has got to, see what you sent and how ready each asset is, and the measures GDS will report. Assets you are not sure about are now included provisionally and flagged. Contact by Microsoft Form. Version 3 of the return template confirmed."),
+    ("2026-11-18", "1.2.0", "From the community forum and coordinators' questions: a practical kit for data owners and stewards, a briefing outline for arm's length bodies, answers on the Performance Framework, the metadata minimum, standards for new services, and arm's length bodies nobody has contacted. Track and analyse: record where your return has got to, see what you sent and how ready each asset is, and the measures GDS will report. Assets you are not sure about are now included provisionally and flagged. Contact by Microsoft Form. Version 3 of the return template confirmed."),
     ("2026-11-18", "1.1.0", "The explorer: home for coordinators, the policy in plain English, asset test, questions and answers built from forum questions, embedding in business as usual and change, resources, glossary with definitions on hover, display settings, and Teams theme support."),
     ("2026-11-13", "1.0.0", "Return steps, list check and the GDS team pages (earlier build, now part of the explorer)."),
 ]
 
 ROADMAP = [
     ("Now", "Publish agreed answers on asset boundaries, the legal gateway field and quality plan evidence as soon as they are agreed."),
+    ("Now", "Worked examples and decision routes for hard cases (third-party data, restricted data, potential reuse), once the working group has agreed them."),
     ("Now", "User research with coordinators on the explorer, including people who use assistive technology."),
     ("Next", "Host the explorer inside Teams for everyone in the coordinators' group."),
     ("Next", "Show each organisation's return status once returns arrive, with their agreement."),
@@ -453,6 +491,8 @@ MYTHS = [
     ("Data owners replace information asset owners.", "No. Information asset owners keep their role. The data owner role adds to it.", "policy"),
     ("We need to buy a particular catalogue product.", "No. The policy does not name a product. Use what you have.", "policy"),
     ("The return needs the names of our data owners.", "No. It asks only whether each role is assigned. Keep names in your own records.", "gds"),
+    ("The return is our data catalogue.", "No. The return asks for a smaller, separate set of details. Your full metadata stays in your own catalogue.", "gds"),
+    ("If a field is not in the return, we can stop collecting it.", "No. The minimum is a floor, not a ceiling. Keep the fields your organisation needs.", "gds"),
     ("SECRET data has to be listed somewhere.", "No. Only OFFICIAL data is in scope.", "policy"),
     ("Anything not fully in place means we fail.", "No. The first return sets a baseline to improve from. Report your real position, including what is planned or in development.", "gds"),
 ]

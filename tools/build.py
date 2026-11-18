@@ -379,7 +379,8 @@ def questions():
     needs_by_q = {}
     for n in C.NEEDS: needs_by_q.setdefault(n["qa"], []).append(n)
     items = ""; last = None
-    for q in C.QA:
+    # D-18: group by topic order, so an answer added out of place cannot split a topic into two headings
+    for q in sorted(C.QA, key=lambda q: C.TOPICS.index(q["topic"])):
         if q["topic"] != last:
             items += f'<h3 class="topic-h" id="topic-{slug(q["topic"])}">{E(q["topic"])}</h3>'; last = q["topic"]
         asked = needs_by_q.get(q["id"], [])
@@ -452,6 +453,42 @@ def embed():
 <p>Build it in from the start, so a new service's data joins your list without extra work. This follows the Service Standard's delivery phases and point 10 of the Technology Code of Practice, which asks teams to plan for data across its lifecycle. {badge("practice")}</p>
 <ol class="phases">{"".join(f'<li><span class="ph">{E(p)}</span><p>{E(d)}</p></li>' for p, d in change)}</ol>
 {src_links([C.GOVUK["tcop10"], C.GOVUK["standard"]])}
+
+<h2 id="owners">Practical kit for data owners and stewards</h2>
+<p>Coordinators asked for practical help, not more policy. Use these as they are, or adapt them to your organisation. {badge("practice")}</p>
+<div class="kit">
+<section class="kit-card" aria-labelledby="k-own"><h3 id="k-own">{ic("i-key")} Data owner: what to do first</h3><ol class="checklist">
+<li>Accept the role in writing, and name a successor so the asset is never left without an owner.</li>
+<li>Know each asset: what it is for, who relies on it, and what it must not be used for.</li>
+<li>Agree quality targets with your steward, and approve the asset's quality plan.</li>
+<li>Decide which risks you accept, and record them on the risk register you already use.</li>
+<li>Before each return, check the asset's details in your catalogue are current.</li></ol></section>
+<section class="kit-card" aria-labelledby="k-stw"><h3 id="k-stw">{ic("i-gear")} Data steward: what to do first</h3><ol class="checklist">
+<li>Complete the catalogue record, and record each fact once, in one place.</li>
+<li>Write the quality rules and targets with the owner, and measure where you start.</li>
+<li>Fix problems where they start, not where they show up.</li>
+<li>Log issues using the data quality issues framework, and tell the owner what needs a decision.</li>
+<li>Keep a short handover note, so the next steward can carry on.</li></ol></section>
+<section class="kit-card" aria-labelledby="k-q"><h3 id="k-q">{ic("i-help")} Questions for the owner to ask each quarter</h3><ul>
+<li>Who relies on this data now, and for what?</li><li>Has anything changed: the system, a supplier, the law, the people?</li>
+<li>Are the known quality issues getting better?</li><li>Who would I call if it failed tomorrow?</li><li>Is my named successor still right?</li></ul></section>
+<section class="kit-card" aria-labelledby="k-c"><h3 id="k-c">{ic("i-chat")} Owner and steward conversation (30 minutes, each quarter)</h3><ol>
+<li>What changed since last time.</li><li>Quality against targets, and the top issues.</li><li>Decisions the owner needs to make, including risks to accept.</li>
+<li>Requests to share or reuse the data.</li><li>Anything for the next return.</li></ol></section>
+</div>
+<p><b>What works elsewhere:</b> one department found most stewards are not data specialists. It builds steward tasks into moments when they already deal with the data team, such as adding the data behind published analysis to the catalogue, rather than asking for separate work. {badge("practice")}</p>
+{src_links([C.GOVUK["ownership"], C.GOVUK["dqap"], C.GOVUK["dqissues"]])}
+<p>More: the <a href="{C.PLAYBOOKS}governance.html">data governance playbook</a> and the <a href="people.html#p-own">data owner</a> and <a href="people.html#p-stw">data steward</a> journeys. GDS is also developing training for data owners.</p>
+
+<h2 id="brief">Briefing your arm's length bodies</h2>
+<p>An outline for a 45-minute introduction, with a page here for each point that people can read afterwards. GDS is happy to support departments in these conversations: ask through the <a href="{E(C.CONTACT)}">contact form</a>. {badge("practice")}</p>
+<ol class="phases">
+<li><span class="ph">The ask (5 minutes)</span><p>Find, record and report your critical data assets, each with an owner and a quality plan. <a href="policy.html#must">What you must do</a></p></li>
+<li><span class="ph">The scope (10 minutes)</span><p>OFFICIAL, and the four scope principles. <a href="asset-test.html">Asset test</a></p></li>
+<li><span class="ph">Why it matters (5 minutes)</span><p>Government relies on data that passes between organisations. <a href="policy.html#why">Why it exists</a></p></li>
+<li><span class="ph">How your return works (10 minutes)</span><p>Version 3 of the template, through your department, due in January 2027. <a href="questions.html#q-alb-returns">Arm's length bodies and the return</a></p></li>
+<li><span class="ph">Support, and questions (15 minutes)</span><p>This explorer, the playbooks and GDS. <a href="questions.html">Questions and answers</a></p></li>
+</ol>
 
 <h2 id="capability">Build the capability behind it</h2>
 <p>The return shows where your organisation's data management needs to grow: catalogues, ownership, metadata and quality. Start with the gaps the return reveals, and use the published guidance for each one.</p>

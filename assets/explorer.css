@@ -352,3 +352,9 @@ input[type=date] { font: inherit; padding: 0.4rem; border: 2px solid var(--text)
 .tutorials { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 0.75rem; }
 .tutorials li { display: flex; gap: 0.75rem; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 0.75rem 1rem; margin: 0; max-width: none; }
 .tutorials h3 { margin: 0 0 0.25rem; font-size: 1.1rem; } .tutorials p { margin: 0.25rem 0; font-size: 1rem; } .tutorials .ic { color: var(--brand-2); margin-top: 0.2rem; }
+
+.kit { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 0.75rem; }
+.kit-card { background: var(--card); border: 1px solid var(--line); border-top: 5px solid var(--brand-2); border-radius: var(--radius); padding: 0.25rem 1rem 0.75rem; }
+.kit-card h3 { display: flex; gap: 0.5rem; align-items: center; font-size: 1.1rem; } .kit-card li { font-size: 1rem; }
+.checklist { list-style: none; padding: 0; } .checklist li { position: relative; padding-left: 1.8rem; }
+.checklist li::before { content: ""; position: absolute; left: 0; top: 0.3em; width: 1.05rem; height: 1.05rem; border: 2px solid var(--brand-2); border-radius: 3px; }
