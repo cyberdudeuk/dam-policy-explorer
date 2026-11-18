@@ -50,6 +50,8 @@ PROV = {
 
 FAQ = ("GDS DAM Policy FAQs, November 2026", None)
 GDSPF = ("GDS reply to coordinators on the Performance Framework commission, October 2026", None)
+V3 = ("DAM Policy Baseline Return template, version 3 (data dictionary and user guide)", None)
+MEET = ("DAM Policy coordinator meetings, September to November 2026", None)
 GDSAUG = ("GDS clarification to coordinators on the metadata minimum, August 2026", None)
 
 # Forum needs, paraphrased. 'raised' counts separate register records for the same need.
@@ -77,6 +79,13 @@ NEEDS = [
     {"id": "N22", "theme": "Metadata and catalogues", "need": "If a field is not in the minimum, should we stop collecting it? Which sense of 'mandatory' applies?", "raised": 1, "qa": "mandatory-kinds"},
     {"id": "N23", "theme": "Making the return", "need": "The quarterly Performance Framework commission asks for counts of critical data assets. Is that the same as the DAM return, or duplicate work?", "raised": 3, "qa": "performance-framework"},
     {"id": "N24", "theme": "Scope", "need": "Are there now two kinds of critical data asset, internal and shared? The terms risk confusion about what is in scope.", "raised": 2, "qa": "internal-shared"},
+    {"id": "N25", "theme": "Making the return", "need": "Who sets the unique identifier, is there a national format, and what happens when an asset is renamed?", "raised": 2, "qa": "identifier"},
+    {"id": "N26", "theme": "Making the return", "need": "Will named people get direct enquiries? Is there a contact email for each asset?", "raised": 3, "qa": "contact-enquiries"},
+    {"id": "N27", "theme": "Making the return", "need": "What does 'mandatory if applicable' mean, and can those fields be left blank?", "raised": 1, "qa": "if-applicable"},
+    {"id": "N28", "theme": "Making the return", "need": "Is there a naming convention, and how long can names, descriptions and other text be?", "raised": 3, "qa": "field-lengths"},
+    {"id": "N29", "theme": "Making the return", "need": "Does January 2027 mean the start or the end of the month, and when is the formal commission?", "raised": 2, "qa": "deadline"},
+    {"id": "N30", "theme": "Scope", "need": "If a team moves to another department, which department returns its assets?", "raised": 1, "qa": "machinery"},
+    {"id": "N31", "theme": "Scope", "need": "Does our kind of data fit one of the critical purposes, for example biosecurity under national security and resilience?", "raised": 1, "qa": "purpose-fit"},
     {"id": "N17", "theme": "Finding things", "need": "Materials are hard to find: the Knowledge Hub is hard to navigate and some recordings cannot be viewed.", "raised": 4, "qa": "find-materials"},
 ]
 
@@ -114,6 +123,12 @@ QA = [
     {"id": "internal-shared", "topic": S, "prov": "open", "q": "Are there two kinds of critical data asset, internal and shared?",
      "a": "<p>For the DAM Policy there is one kind: a critical data asset is OFFICIAL, meets a critical criterion, is shared or has value across government, is yours to account for, and is the source. That is what goes in your return.</p><p>Other exercises, such as the Performance Framework, also ask about data that is critical only inside your organisation. Keep your own list of those if it helps, and label the ones in scope of the DAM Policy <code>XG_CDA</code> so the two are never confused. Agreed wording for the two terms has been asked for and is not settled yet.</p>",
      "src": [I, FAQ, GDSPF]},
+    {"id": "purpose-fit", "topic": S, "prov": "gds", "q": "Does our kind of data fit one of the seven critical purposes?",
+     "a": "<p>Judge by what the data does, not what it is called. For example, biosecurity or biosurveillance data fits national security and resilience where it supports resilience, emergency response or critical functions, as long as it is OFFICIAL. You can give more than one purpose number for an asset.</p><p>Use the purposes and numbering in version 3 of the template, which match the published guidance.</p>",
+     "src": [I, V3]},
+    {"id": "machinery", "topic": S, "prov": "open", "q": "A team is moving to another department. Who returns its assets?",
+     "a": "<p>The department that receives the team, because it becomes accountable for the data. Keep each asset's unique identifier when it moves, so it can be traced from one return to the next. How follow-up questions are routed during a move is still being agreed. Meanwhile, tell GDS about the move through your lead coordinator.</p>",
+     "src": [P, MEET]},
     {"id": "own-definition", "topic": S, "prov": "gds", "q": "We already have our own definition of critical data assets. What do we do?",
      "a": "<p>Keep it for your own purposes. The DAM Policy definition covers data with value across government, so some assets you treat as critical will not be in scope. How you manage both is up to you. To keep catalogues consistent across government, label the ones in scope of the policy <code>XG_CDA</code>.</p>",
      "src": [FAQ]},
@@ -176,8 +191,23 @@ QA = [
      "a": "<p>The first return, the Baseline Return, is due in January 2027. The next is due in October 2027. Aim to be ready by Friday 18 December 2026, before the Christmas break.</p><p>The policy itself asks you to maintain and review your list every year. In time, GDS expects to replace these returns with more frequent updates taken straight from your catalogue.</p>",
      "src": [P, FAQ]},
     {"id": "alb-returns", "topic": RR, "prov": "gds", "q": "Do arm's length bodies send their own return, or one with their department?",
-     "a": "<p>Arm's length bodies identify and record their own critical data assets using the return template. They send it to their parent department first, and the department forwards it to GDS. Departments coordinate and assure their arm's length bodies' returns, and send a combined return where that makes sense. Either one combined return or separate returns is fine, as long as the department knows about every one.</p><p>If your arm's length body has not heard from its department about the return, contact GDS.</p>",
+     "a": "<p>Arm's length bodies identify and record their own critical data assets using the return template. They send it to their parent department first, and the department forwards it to GDS. Departments coordinate and assure their arm's length bodies' returns, and send a combined return where that makes sense. Either one combined return or separate returns is fine, as long as the department knows about every one. In a combined return, fill in the arm's length body or agency column on every row, so each body's assets stay distinct. Some bodies have asked to send returns straight to GDS; a common position on that is still being agreed.</p><p>If your arm's length body has not heard from its department about the return, contact GDS.</p>",
      "src": [P, FAQ]},
+    {"id": "deadline", "topic": RR, "prov": "plan", "q": "When exactly is the Baseline Return due?",
+     "a": "<p>By the end of January 2027. The Chief Data Officer Council will issue the formal commission in December 2026. Aim to be ready by Friday 18 December 2026, before the Christmas break, so there is time to check your return.</p>",
+     "src": [MEET]},
+    {"id": "identifier", "topic": RR, "prov": "gds", "q": "Who sets the unique identifier, and what if an asset is renamed?",
+     "a": "<p>You do. Use the stable identifier from your own data catalogue, or a local convention you document. There is no national format, and it can be up to 100 characters.</p><p>If an asset is renamed, change its name but keep its identifier, so it is not counted twice. The template's guide allows the same identifier on more than one row only for an approved version or licence variant. Its built-in check does not yet allow that, so tell GDS if it blocks you.</p>",
+     "src": [V3]},
+    {"id": "field-lengths", "topic": RR, "prov": "gds", "q": "Is there a naming convention, and how long can the text fields be?",
+     "a": "<p>There is no naming convention for government. Use the name the asset is known by in your organisation or catalogue. The template sets these lengths:</p><ul><li>Unique identifier: up to 100 characters.</li><li>Data asset name: up to 200 characters.</li><li>Description: 20 to 2,000 characters. Say what the data is, what it covers, what it is for and why it matters.</li><li>Legal gateway: up to 500 characters.</li><li>Source or provenance: up to 1,000 characters.</li></ul><p>If text seems to be cut off when you enter it, tell GDS through the contact form.</p>",
+     "src": [V3, MEET]},
+    {"id": "if-applicable", "topic": RR, "prov": "gds", "q": "What does 'mandatory if applicable' mean? Can we leave those fields blank?",
+     "a": "<p>Fill them in whenever they apply to the asset. Leave one blank only when it really does not apply. Five fields are like this:</p><ul><li>Arm's length body or agency</li><li>Source or provenance</li><li>Legal gateway or regulatory basis</li><li>Catalogue or metadata reference: needed whenever you answer In catalogue</li><li>Geospatial standard applied: choose Not applicable rather than leaving it blank</li></ul><p>The 13 mandatory fields always need an answer.</p>",
+     "src": [V3, MEET]},
+    {"id": "contact-enquiries", "topic": RR, "prov": "gds", "q": "Will named people be contacted directly about our assets?",
+     "a": "<p>No. The return has no contact name or email address for each asset, and asks only whether an owner and a steward are assigned. Questions about your return go through your lead coordinator. You can keep your own functional contact in your catalogue.</p>",
+     "src": [V3, FAQ]},
     {"id": "performance-framework", "topic": RR, "prov": "gds", "q": "Is the Performance Framework commission the same as the DAM return?",
      "a": "<p>No, but they are aligned and you should not have to do the work twice.</p><ul><li><b>The GDS Performance Framework</b> is a quarterly commission. It looks at your organisation's data capability and maturity as a whole, and asks for counts, including of the critical data assets you manage internally.</li><li><b>The DAM Policy return</b> is about shared critical data assets, asset by asset, and how the policy is being put into practice for each one.</li></ul><p>Some questions deliberately match. GDS is looking at how evidence from the Performance Framework, for example on ownership, data quality and cataloguing, can support assurance of the Baseline Return. Use the same underlying evidence for both. GDS is also working with the team that runs the commission to align future rounds.</p>",
      "src": [GDSPF]},
