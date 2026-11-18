@@ -17,9 +17,9 @@ HOME_URL = sys.argv[sys.argv.index("--home-url") + 1] if "--home-url" in sys.arg
 PREVIEW = "--preview" in sys.argv   # claude.ai preview: cannot serve .ics or webmanifest files, and blocks downloads
 
 NAV = [("index.html", "Home", "i-home"), ("policy.html", "The policy", "i-book"), ("return.html", "Your return", "i-list"),
-       ("asset-test.html", "Asset test", "i-target"), ("questions.html", "Questions", "i-help"), ("people.html", "Roles and journeys", "i-people"),
-       ("capabilities.html", "Capabilities", "i-map"), ("resources.html", "Resources", "i-folder")]
-MORE = [("ask.html", "Ask", "i-chat"), ("embed.html", "Embed it", "i-layers"), ("glossary.html", "Glossary", "i-tag"), ("team.html", "For the GDS team", "i-inbox"),
+       ("asset-test.html", "Asset test", "i-target"), ("track.html", "Track", "i-dashboard"), ("questions.html", "Questions", "i-help"), ("people.html", "Roles", "i-people"),
+       ("capabilities.html", "Capabilities", "i-map")]
+MORE = [("resources.html", "Resources", "i-folder"), ("ask.html", "Ask", "i-chat"), ("embed.html", "Embed it", "i-layers"), ("glossary.html", "Glossary", "i-tag"), ("team.html", "For the GDS team", "i-inbox"),
         ("about.html", "About this app", "i-info"), ("accessibility.html", "Accessibility", "i-shield")]
 
 def sprite():
@@ -150,7 +150,7 @@ def footer():
   <div class="xwrap notes small">
     <p><b>Disclaimer.</b> This prototype explains the policy in plain English. It is not the policy. The published guidance on GOV.UK always takes priority.</p>
     <p><b>Disclosure.</b> Built with the help of an AI assistant (Claude, made by Anthropic). Every fact about the policy was checked against GOV.UK, and every answer shows where it comes from.</p>
-    <p><b>Contact.</b> We use a contact form, which is on GitHub, so what you write can be seen by others. Do not include personal or sensitive information.</p>
+    <p><b>Contact.</b> We use a Microsoft Form. You do not need to sign in, and only GDS sees what you send. Do not include sensitive information.</p>
     <p><b>Licence.</b> Text is available under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>, except where otherwise stated. © Crown copyright.</p>
   </div>
 </footer>'''
@@ -172,6 +172,7 @@ NEXT = {
     "resources.html": (("Start your return", "return.html"), [("Find an answer", "questions.html"), ("Asset test", "asset-test.html"), ("Glossary", "glossary.html")]),
     "people.html": (("Start your return", "return.html"), [("Capabilities and playbooks", "capabilities.html"), ("Find an answer", "questions.html"), ("Full personas in the playbooks", C.PLAYBOOKS + "personas.html")]),
     "capabilities.html": (("Open the capability playbooks", C.PLAYBOOKS), [("Roles and journeys", "people.html"), ("Embed it in business as usual and change", "embed.html"), ("The policy", "policy.html")]),
+    "track.html": (("Check your list before you send it", "return.html#check"), [("Sign off and send", "return.html#step-10"), ("Partial progress: how to report it", "questions.html#q-partial"), ("Embed it", "embed.html")]),
     "ask.html": (("Browse all questions and answers", "questions.html"), [("Glossary", "glossary.html"), ("Roles and journeys", "people.html")]),
     "glossary.html": (("Find an answer", "questions.html"), [("The policy in plain English", "policy.html"), ("Resources", "resources.html")]),
     "team.html": (("See what coordinators are asking", "questions.html#asked"), [("Check a return", "return.html#check"), ("About this app", "about.html")]),
@@ -553,6 +554,50 @@ def ask():
 <p class="small">How the search on this page works: it matches the words in your question, and common alternatives such as ALB for arm's length body, against the explorer's content and ranks the closest matches. It is not generative AI and does not make up answers.</p>
 """, "Ask a question about the Data Asset Management Policy and get answers with their sources.", contents=False)
 
+def track():
+    stages = [("preparing", "Preparing", "You are building your list and checking it."), ("sent", "Sent", "Your chief data officer signed it off and your coordinator emailed it to GDS."),
+              ("received", "Received", "GDS has acknowledged it and given you a reference."), ("checked", "Checked", "GDS has checked the workbook and each asset."),
+              ("questions", "Questions", "GDS has asked you about anything unclear, once."), ("accepted", "Accepted", "Your return is accepted, with any policy gaps recorded."),
+              ("register", "In the register", "Your assets are in the cross-government register and the analytics.")]
+    st = "".join(f'<li data-stage="{k}"><label class="st-opt"><input type="radio" name="stage" value="{k}"> <span class="st-n">{i + 1}</span> <b>{E(n)}</b><span class="small">{E(d)}</span></label></li>' for i, (k, n, d) in enumerate(stages))
+    measures = [("Returns received", "Returns received against the organisations expected to send one.", "Department and arm's length body"),
+                ("Critical data assets reported", "Number of assets in returns.", "Sector, critical purpose"),
+                ("Owner and steward assigned", "Share of assets with a data owner and a data steward assigned.", "Organisation group"),
+                ("In a data catalogue", "Share of assets recorded in a catalogue, planned or not yet.", "Organisation group"),
+                ("Quality plan in place", "Share of assets with a data quality action plan or documented equivalent, in development or not yet.", "Organisation group"),
+                ("Discoverability of standards", "In place, partial or not in place.", "Organisation group"),
+                ("Policy gaps", "The most common gaps, to target support.", "Theme")]
+    mrows = "".join(f'<tr><th scope="row">{E(a)}</th><td>{E(b)}</td><td>{E(c)}</td><td><span class="pill later">After the Baseline Return</span></td></tr>' for a, b, c in measures)
+    return page("track.html", "Track and analyse", f"""
+<h1>Track your return, and see what it shows</h1>
+<p class="lead">For coordinators and chief data officers: where your return has got to, what you sent, and what the policy's measures will show across government.</p>
+<div class="facts"><p>{ic("i-lock")} <b>Your information stays with you.</b> Everything on this page is saved or read in your own browser. Nothing is uploaded or sent to anyone.</p></div>
+
+<h2 id="where">Where your return has got to</h2>
+<p>Record each stage as it happens, so you and your chief data officer can see it at a glance. GDS tells you each step by email to your coordinator.</p>
+<form class="tracker" action="#where" novalidate>
+  <div class="tr-fields">
+    <div class="field"><label for="tr-ref"><b>Your return reference</b> (optional)</label><span class="hint" id="tr-ref-h">GDS gives you this when it receives your return.</span><input id="tr-ref" type="text" maxlength="40" autocomplete="off" aria-describedby="tr-ref-h"></div>
+    <div class="field"><label for="tr-date"><b>Date sent</b> (optional)</label><input id="tr-date" type="date"></div>
+  </div>
+  <fieldset><legend>Current stage</legend><ol class="stages">{st}</ol></fieldset>
+  <p class="small" data-tr-saved aria-live="polite"></p>
+</form>
+
+<h2 id="sent">What you sent</h2>
+<p>Open the CSV copy of the version 3 workbook you sent (in Excel, choose <b>Save as</b>, then <b>CSV</b>). The page shows what is in it and how ready each asset is, using the same checks GDS uses first.</p>
+<div class="field"><label for="tr-file"><b>Your return as a CSV file</b></label><input id="tr-file" type="file" accept=".csv,text/csv"></div>
+<div data-tr-analytics aria-live="polite"><noscript><p>This needs JavaScript.</p></noscript></div>
+
+<h2 id="government">Across government</h2>
+<p>When returns arrive, GDS will report these measures to the Chief Data Officer Council and to ministers. No returns have arrived yet: the Baseline Return is due in January 2027, so nothing is shown here until then. {badge("plan")}</p>
+<div class="tbl-scroll" tabindex="0" role="region" aria-label="Planned measures, scrollable table"><table class="tbl"><caption class="vh">Planned cross-government measures</caption><thead><tr><th scope="col">Measure</th><th scope="col">What it shows</th><th scope="col">Broken down by</th><th scope="col">Available</th></tr></thead><tbody>{mrows}</tbody></table></div>
+<p class="small">To protect organisations, no group of fewer than five organisations will be shown on its own.</p>
+
+<h2 id="next">Coming next: your organisation's live view in Teams</h2>
+<p>The next release will show each organisation its own return, status and measures, live, inside this app in Microsoft Teams. Return data will be kept in SharePoint, and Power BI will show each organisation only its own data, after you sign in with your work account. {badge("practice")}</p>
+""", "Track your DAM Policy return, see what you sent, and the measures GDS will report.", scripts=("checker.js", "explorer.js"))
+
 def glossary():
     items = "".join(f'<div class="term-row" id="t-{k}"><dt>{E(t)}</dt><dd>{E(d)}</dd></div>' for k, t, d in sorted(C.GLOSSARY, key=lambda x: x[1].lower()))
     letters = sorted({t[0].upper() for _, t, _ in C.GLOSSARY})
@@ -595,6 +640,7 @@ def about():
 <ul>
 <li><b>Sources.</b> Facts about the policy come only from GOV.UK. Answers from GDS that are not yet published are labelled with the date they were given. Suggested practice is labelled as such.</li>
 <li><b>Needs.</b> The questions this app answers come from the GDS question register. Names and organisations are removed.</li>
+<li><b>Contact form.</b> Messages go to a Microsoft Form that only GDS can see. Your email address is asked for only if you want a reply, and is used only to reply.</li>
 <li><b>Use of AI.</b> Built with the help of an AI assistant (Claude, made by Anthropic), which also drew the icons and illustrations. A person is responsible for the content.</li>
 <li><b>Checks.</b> Every build is tested for accessibility (WCAG 2.2 AA) at phone, tablet and desktop widths, in light, dark and high contrast, and for broken links and out-of-date wording.</li>
 </ul>
@@ -617,7 +663,7 @@ def about():
 <ul class="changes">{"".join(f'<li><span class="when">{long_date(d)}</span> <b>Version {v}.</b> {E(t)}</li>' for d, v, t in C.CHANGES)}</ul>
 
 <h2 id="contact">Contact</h2>
-<p><a href="{E(C.CONTACT)}">Use our contact form</a> to ask a question, report a problem or suggest a change. The form is on GitHub, so do not include personal or sensitive information.</p>
+<p><a href="{E(C.CONTACT)}">Use our contact form</a> to ask a question, report a problem or suggest a change. It is a Microsoft Form: you do not need to sign in, and only GDS sees what you send. Give a work email address only if you want a reply.</p>
 ''', "About the DAM Policy Explorer: why it exists, how it was made, privacy, roadmap and changes.")
 
 def accessibility():
@@ -647,13 +693,13 @@ def accessibility():
 <p>This app aims to meet the <a href="https://www.w3.org/TR/WCAG22/">Web Content Accessibility Guidelines version 2.2</a> to level AA. Every build is checked with an automated tool (axe-core) at three screen widths and in light, dark and high contrast. Automated tools find only some problems, so we will also test with people who use assistive technology.</p>
 <h3 id="known">Known issues</h3>
 <ul>
-<li>The contact form is on GitHub, which we do not control. If it does not work for you, ask your organisation's DAM Policy coordinator to pass your message on.</li>
+<li>The contact form is a Microsoft Form. If it does not work with your assistive technology, ask your organisation's DAM Policy coordinator to pass your message on.</li>
 <li>Links to GOV.UK open in a new tab, because the app may be running inside Microsoft Teams. Each such link says so.</li>
 <li>We have not yet tested with users of assistive technology. This is on our <a href="about.html#roadmap">roadmap</a>.</li>
 </ul>
 
 <h2 id="feedback">Tell us about a problem</h2>
-<p>If something does not work for you, <a href="{E(C.CONTACT)}">use our contact form</a>. Tell us the page and what happened. We aim to reply within 5 working days.</p>
+<p>If something does not work for you, <a href="{E(C.CONTACT)}">use our contact form</a>. Tell us the page and what happened.</p>
 <h2 id="enforcement">Enforcement</h2>
 <p>The Equality and Human Rights Commission is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018. If you are not happy with how we respond to your complaint, contact the <a href="https://www.equalityadvisoryservice.com/">Equality Advisory and Support Service</a>.</p>
 <p class="small muted">This statement was prepared on {long_date(C.BUILD_DATE)}.</p>
@@ -727,7 +773,7 @@ def main():
     for f in (ROOT / "assets").iterdir(): shutil.copy(f, OUT / "assets" / f.name)
     pages = {
         "index.html": home(), "policy.html": policy(), "asset-test.html": asset_test(), "questions.html": questions(), "embed.html": embed(),
-        "resources.html": resources(), "glossary.html": glossary(), "people.html": people(), "capabilities.html": capabilities(), "ask.html": ask(), "about.html": about(), "accessibility.html": accessibility(),
+        "resources.html": resources(), "glossary.html": glossary(), "people.html": people(), "capabilities.html": capabilities(), "ask.html": ask(), "track.html": track(), "about.html": about(), "accessibility.html": accessibility(),
         "return.html": rewrap("return.html", "Your return", "Make your organisation's data asset return in twelve steps.", ("checker.js", "page.js", "explorer.js")),
         "team.html": rewrap("team.html", "For the GDS team", "How the GDS team processes returns and answers questions.", ("checker.js", "process.js", "process-ui.js", "page.js", "explorer.js")),
     }

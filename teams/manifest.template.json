@@ -19,6 +19,7 @@
   "staticTabs": [
     {"entityId": "home", "name": "Home", "contentUrl": "{{HOST}}/index.html?theme={theme}", "websiteUrl": "{{HOST}}/index.html", "scopes": ["personal"]},
     {"entityId": "return", "name": "Your return", "contentUrl": "{{HOST}}/return.html?theme={theme}", "websiteUrl": "{{HOST}}/return.html", "scopes": ["personal"]},
+    {"entityId": "track", "name": "Track", "contentUrl": "{{HOST}}/track.html?theme={theme}", "websiteUrl": "{{HOST}}/track.html", "scopes": ["personal"]},
     {"entityId": "ask", "name": "Ask", "contentUrl": "{{HOST}}/ask.html?theme={theme}", "websiteUrl": "{{HOST}}/ask.html", "scopes": ["personal"]},
     {"entityId": "about", "scopes": ["personal"]}
   ],

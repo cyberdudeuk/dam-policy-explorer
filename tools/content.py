@@ -17,7 +17,7 @@ BUILD_DATE = "2026-11-18"
 CONTENT_CHECKED = "2026-11-18"          # date the GOV.UK sources were last re-read
 REGISTER_SNAPSHOT = "2026-11-13"        # Question and Insight Register snapshot used for the needs
 STALE_AFTER_DAYS = 30
-CONTACT = "https://github.com/cyberdudeuk/dam-capability-playbooks/issues/new?template=contact.yml"
+CONTACT = "https://forms.cloud.microsoft/e/SLBvuPX7jK"   # Microsoft Form "DAM Policy Explorer: contact us", anyone can respond (owner decision, 18 Nov 2026)
 READY_BY = "2026-12-18"                  # programme plan: aim to be ready before the Christmas break
 
 GOVUK = {
@@ -180,8 +180,8 @@ QA = [
     {"id": "who-sees", "topic": RR, "prov": "gds", "q": "Will other departments see the metadata we send?",
      "a": "<p>Not for now. Returns go to GDS. Sharing metadata across government is being considered as part of the GDS discoverability service, and members will be able to help shape it. The policy says GDS is developing that service.</p>",
      "src": [P, FAQ]},
-    {"id": "template-changes", "topic": RR, "prov": "gds", "q": "How will changes to the template be managed?",
-     "a": "<p>The template for the Baseline Return is agreed. A change log starts when the first returns arrive. Unique identifiers on each row let GDS see what is new or changed between returns.</p>",
+    {"id": "template-changes", "topic": RR, "prov": "gds", "q": "Which template version do we use, and how will changes be managed?",
+     "a": "<p>Use version 3 of the Baseline Return template: it is the agreed template for the January 2027 return. A change log starts when the first returns arrive. Unique identifiers on each row let GDS see what is new or changed between returns.</p>",
      "src": [FAQ]},
     # Related initiatives
     {"id": "ndl", "topic": RI, "prov": "gds", "q": "How does this relate to the National Data Library?",

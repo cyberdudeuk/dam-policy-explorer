@@ -586,7 +586,7 @@
    "id": "template-changes",
    "topic": "Reporting and the return",
    "prov": "gds",
-   "q": "How will changes to the template be managed?",
+   "q": "Which template version do we use, and how will changes be managed?",
    "src": [
     [
      "GDS DAM Policy FAQs, November 2026",
@@ -900,8 +900,8 @@
    "p": "gds"
   },
   {
-   "t": "How will changes to the template be managed?",
-   "x": "The template for the Baseline Return is agreed. A change log starts when the first returns arrive. Unique identifiers on each row let GDS see what is new or changed between returns.",
+   "t": "Which template version do we use, and how will changes be managed?",
+   "x": "Use version 3 of the Baseline Return template: it is the agreed template for the January 2027 return. A change log starts when the first returns arrive. Unique identifiers on each row let GDS see what is new or changed between returns.",
    "u": "questions.html#q-template-changes",
    "k": "Answer",
    "p": "gds"
@@ -1595,6 +1595,7 @@
   "people.html",
   "capabilities.html",
   "ask.html",
+  "track.html",
   "about.html",
   "accessibility.html",
   "return.html",

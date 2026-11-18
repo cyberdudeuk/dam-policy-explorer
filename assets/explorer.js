@@ -57,7 +57,7 @@
   // ---- main menu folds behind a button on narrow screens, so it never runs off the screen ----
   var nav = $('#site-nav'), mbtn = $('.menu-btn');
   if (nav && mbtn) {
-    var mq = matchMedia('(max-width: 52rem)');
+    var mq = matchMedia('(max-width: 62rem)');   // folds before the menu would wrap onto a second row
     var sync = function () { var narrow = mq.matches; mbtn.hidden = !narrow; if (narrow) { nav.classList.add('folded'); mbtn.setAttribute('aria-expanded', 'false'); } else nav.classList.remove('folded', 'open'); };
     mq.addEventListener ? mq.addEventListener('change', sync) : mq.addListener(sync); sync();
     mbtn.addEventListener('click', function () { var open = !nav.classList.contains('open'); nav.classList.toggle('open', open); mbtn.setAttribute('aria-expanded', String(open)); });
@@ -164,7 +164,7 @@
   var form = $('form.asset-test');
   /* decideAsset: turn the five answers into a result.
      Each rule follows the policy (OFFICIAL) or the four DAM Policy scope principles (GDS FAQs, November 2026).
-     Returns {verdict: 'in' | 'in-later' | 'out' | 'check', reasons: [...], failed: {official, purpose, shared, accountable, source}} */
+     Returns {verdict: 'in' | 'in-later' | 'out' | 'flag', reasons: [...], failed: {official, purpose, shared, accountable, source}} */
   function decideAsset(a) {
     var r = [], failed = {}, unsure = [];
     if (a.official === 'no') { failed.official = true; r.push('It is SECRET or TOP SECRET. Only OFFICIAL data is in scope.'); }
@@ -179,14 +179,15 @@
     if (a.source === 'derived') { failed.source = true; r.push('It is drawn from source data. Report the source data set instead, even if the source itself is never shared.'); }
     else if (!a.source || a.source === 'unsure') unsure.push('whether it is the source data');
     if (Object.keys(failed).length) return {verdict: 'out', reasons: r, failed: failed};
-    if (unsure.length) return {verdict: 'check', reasons: ['Find out ' + unsure.join(', ') + '. Ask the people who know the data, or your lead coordinator.'], failed: failed};
+    // Owner's decision (18 Nov 2026): "not sure" means include it provisionally and flag it, so the baseline is not delayed (GDS FAQs: do not hold up the return)
+    if (unsure.length) return {verdict: 'flag', reasons: ['Include it for now and flag it. Before you send the return, confirm ' + unsure.join(', ') + ' with the people who know the data, or ask your lead coordinator.'], purposes: purposes, failed: failed, unsure: unsure};
     if (a.shared === 'potential') return {verdict: 'in-later', reasons: ['It is in scope, but it is not shared yet. For the Baseline Return, start with assets already shared or published, and add this one if you have time.'], purposes: purposes, failed: failed};
     return {verdict: 'in', reasons: ['It is OFFICIAL, serves purpose ' + purposes.join(', ') + ', is ' + (a.shared === 'open' ? 'published as open data' : 'shared under a data sharing agreement') + ', you are accountable for it, and it is ' + (a.source === 'product' ? 'a product managed and owned in its own right' : 'the source data') + '.'], purposes: purposes, failed: failed};
   }
   window.DPE = {decideAsset: decideAsset};   // exposed for the build's tests
   if (form) {
     var tested = store.get('tested', []) || [];
-    var HEAD = {in: 'Include it in your return', 'in-later': 'In scope: include it if you have time', out: 'Leave it out', check: 'Not sure yet'};
+    var HEAD = {in: 'Include it in your return', 'in-later': 'In scope: include it if you have time', out: 'Leave it out', flag: 'Include it provisionally, flagged'};
     var showTested = function () {
       var sec = $('.tested'); sec.hidden = !tested.length; if (!tested.length) return;
       $('[data-tested]').innerHTML = '<ul class="tested-list">' + tested.map(function (t) { return '<li class="v-' + esc(t.verdict) + '"><b>' + esc(t.name || 'Unnamed asset') + '</b>: ' + esc(HEAD[t.verdict] || '') + '</li>'; }).join('') + '</ul>';
@@ -200,7 +201,7 @@
       var nextHtml = {in: '<p>Next: give it an owner and a steward (<a href="return.html#step-6">step 6</a>) and fill in its details (<a href="return.html#step-7">step 7</a>).</p>',
         'in-later': '<p>Next: note it for the October 2027 return, or add it now if you have time. <a href="questions.html#q-potential-value">How to judge potential value</a>.</p>',
         out: '<p>Next: add it to your list of assets left out, with the reason. You can download that list below.</p>',
-        check: '<p>Next: answer the questions marked “Not sure”, then test it again. <a href="questions.html#q-principles">The four principles explained</a>.</p>'}[res.verdict];
+        flag: '<p>Next: add it to your list with a note in its description saying what still needs confirming, then test it again once you know. <a href="questions.html#q-principles">The four principles explained</a>.</p>'}[res.verdict];
       $('[data-result]').innerHTML = '<div class="verdict v-' + res.verdict + '"><h3>' + esc((name ? name + ': ' : '') + HEAD[res.verdict]) + '</h3><ul>' + res.reasons.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' + nextHtml + '</div>';
       tested.push({name: name, verdict: res.verdict, a: a, failed: res.failed, reason: res.reasons.join(' '), date: new Date().toISOString().slice(0, 10)});
       store.set('tested', tested.slice(-200)); showTested();
@@ -289,6 +290,62 @@
     if (af) af.addEventListener('submit', function (e) { e.preventDefault(); var q = qi.value.trim().slice(0, 200); if (q) runAsk(q); });
     $$('.starters a').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); var q = a.textContent; qi.value = q; runAsk(q); }); });
   }
+
+  // ---- Track and analyse: stage tracker and analysis of the return the person sent. All in this browser. ----
+  var trk = $('form.tracker');
+  if (trk) {
+    var T = store.get('track', {}) || {};
+    var STAGES = $$('input[name=stage]', trk).map(function (i) { return i.value; });
+    var paintT = function () {
+      var idx = STAGES.indexOf(T.stage);
+      $$('.stages li', trk).forEach(function (li, i) { li.classList.toggle('done', idx >= 0 && i < idx); li.classList.toggle('now', i === idx); });
+      $('[data-tr-saved]').textContent = T.stage ? 'Saved on this device: ' + $('.stages li.now b', trk).textContent + (T.ref ? ', reference ' + T.ref : '') + (T.date ? ', sent ' + T.date : '') + '.' : '';
+    };
+    $('#tr-ref').value = typeof T.ref === 'string' ? T.ref.slice(0, 40) : '';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(T.date || '')) $('#tr-date').value = T.date;
+    $$('input[name=stage]', trk).forEach(function (r) { r.checked = r.value === T.stage; r.addEventListener('change', function () { T.stage = r.value; store.set('track', T); paintT(); }); });
+    $('#tr-ref').addEventListener('change', function () { T.ref = this.value.trim().slice(0, 40); store.set('track', T); paintT(); });
+    $('#tr-date').addEventListener('change', function () { T.date = this.value; store.set('track', T); paintT(); });
+    trk.addEventListener('submit', function (e) { e.preventDefault(); });
+    paintT();
+  }
+  var trFile = $('#tr-file'), trOut = $('[data-tr-analytics]');
+  function bars(title, counts, total) {
+    var keys = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; });
+    if (!keys.length) return '';
+    return '<figure class="chart"><figcaption>' + esc(title) + '</figcaption><ul class="bars">' + keys.map(function (k) {
+      var pc = total ? Math.round(counts[k] / total * 100) : 0;
+      return '<li><span class="bl">' + esc(k || 'Blank') + '</span><span class="chartbar"><span class="fill" data-pc="' + pc + '"></span></span><span class="bv">' + counts[k] + '</span></li>';
+    }).join('') + '</ul></figure>';
+  }
+  function analyse(text, name) {
+    var api = window.DAMChecker; if (!api) return;
+    var res = api.check(text), rows = api.parseCSV(text), head = rows[0] || [], col = {};
+    head.forEach(function (h, i) { var k = api.key(h); api.FIELDS.forEach(function (f) { if (api.key(f[1]) === k && !(f[0] in col)) col[f[0]] = i; }); });
+    var recs = rows.slice(1).filter(function (r) { return r.some(function (x) { return String(x).trim(); }); });
+    var n = recs.length, get = function (r, L) { return L in col ? String(r[col[L]] || '').trim() : ''; };
+    var tally = function (L, split) { var o = {}; recs.forEach(function (r) { var v = get(r, L); (split ? v.split(/[,;]\s*/) : [v]).forEach(function (x) { x = x.trim(); if (split && !x) return; o[x] = (o[x] || 0) + 1; }); }); return o; };
+    var yes = function (L) { return recs.filter(function (r) { return /^y(es)?$/i.test(get(r, L)); }).length; };
+    var pct = function (x) { return n ? Math.round(x / n * 100) + '%' : '0%'; };
+    var c = res.counts;
+    var h = '<p class="small">' + esc(name) + ': ' + n + ' asset' + (n === 1 ? '' : 's') + '. Read in your browser only.</p>';
+    h += '<ul class="stats"><li><span class="num">' + n + '</span><span class="lbl">assets in your return</span></li><li><span class="num">' + c.ready + '</span><span class="lbl">ready</span></li><li><span class="num">' + c.gap + '</span><span class="lbl">with policy gaps only</span></li><li><span class="num">' + c.fix + '</span><span class="lbl">with something to fix</span></li></ul>';
+    h += '<ul class="stats"><li><span class="num">' + pct(yes('G')) + '</span><span class="lbl">have a data owner assigned</span></li><li><span class="num">' + pct(yes('H')) + '</span><span class="lbl">have a data steward assigned</span></li><li><span class="num">' + pct(tally('R')['In catalogue'] || 0) + '</span><span class="lbl">are in a data catalogue</span></li><li><span class="num">' + pct(yes('N')) + '</span><span class="lbl">contain personal data</span></li></ul>';
+    h += '<div class="duo">' + bars('Critical purposes served (an asset can serve several)', tally('J', true), n) + bars('In a data catalogue?', tally('R'), n) + bars('Data quality plan status', tally('T'), n) + bars('Primary sharing status', tally('K'), n) + '</div>';
+    if (n) h += '<div class="tbl-scroll" tabindex="0" role="region" aria-label="Your assets, scrollable table"><table class="tbl small"><caption class="vh">Your assets and how ready each one is</caption><thead><tr><th scope="col">Identifier</th><th scope="col">Asset</th><th scope="col">Ready?</th><th scope="col">What to look at</th></tr></thead><tbody>' + res.rows.map(function (r) {
+      var lab = {ready: 'Ready', gap: 'Policy gaps', ask: 'Questions', fix: 'Fix'}[r.state];
+      return '<tr><td>' + esc(r.identifier) + '</td><td>' + esc(r.title) + '</td><td><span class="pill ' + (r.state === 'ready' ? 'yes' : r.state === 'fix' ? 'no' : 'maybe') + '">' + lab + '</span></td><td>' + esc(r.issues.slice(0, 2).map(function (x) { return x.text; }).join(' ')) + '</td></tr>';
+    }).join('') + '</tbody></table></div>';
+    trOut.innerHTML = h;
+    $$('.fill[data-pc]', trOut).forEach(function (f) { f.style.width = Math.max(2, +f.getAttribute('data-pc')) + '%'; });   // CSSOM, allowed by the security policy
+    announce('Your return has ' + n + ' assets: ' + c.ready + ' ready.');
+  }
+  if (trFile && trOut) trFile.addEventListener('change', function () {
+    var f = trFile.files && trFile.files[0]; if (!f) return;
+    if (f.size > 5 * 1024 * 1024) { trOut.innerHTML = '<p>That file is larger than 5 MB. Save only the return sheet as CSV.</p>'; return; }
+    var rd = new FileReader(); rd.onload = function () { analyse(String(rd.result), f.name); }; rd.readAsText(f);
+  });
+  window.DPE.analyse = analyse;
 
   // ---- copy a link to an answer, to paste into Teams or an email ----
   $$('.qa').forEach(function (art) {

@@ -1,5 +1,7 @@
 # Delivering the DAM Policy Explorer on the Microsoft stack
 
+**Now (18 Nov 2026):** hosted on GitHub Pages (GitHub is part of Microsoft, and the GDS Way default) at https://cyberdudeuk.github.io/dam-policy-explorer/, published only when every check passes, and delivered through the Microsoft 365 app package (Teams, Outlook, Microsoft 365 app, Copilot agent). **Next:** move hosting to Azure Static Web Apps once DSIT provides a subscription (the DSIT directory has none today); nothing else changes.
+
 ## Target architecture
 
 | Layer | Microsoft service | What it does | Status |

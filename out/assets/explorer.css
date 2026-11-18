@@ -170,7 +170,7 @@ input[type=text]:focus, input[type=search]:focus { outline: 3px solid var(--focu
 .result { outline: none; }
 .verdict { border-radius: var(--radius); padding: 0.25rem 1.1rem 0.75rem; border-left: 8px solid var(--line); background: var(--soft); }
 .verdict.v-in { border-color: var(--ok); background: var(--ok-bg); } .verdict.v-in-later { border-color: var(--brand-2); }
-.verdict.v-out { border-color: var(--bad); background: var(--bad-bg); } .verdict.v-check { border-color: var(--warn); background: var(--warn-bg); }
+.verdict.v-out { border-color: var(--bad); background: var(--bad-bg); } .verdict.v-flag { border-color: var(--warn); background: var(--warn-bg); }
 .tested-list { padding-left: 1.2rem; }
 
 /* questions */
@@ -319,3 +319,15 @@ li.step.is-done > details > summary::after { content: "Done"; margin-left: 0.6re
 
 /* journey stays on one row where it fits, otherwise wraps in even rows */
 .journey ol { grid-template-columns: repeat(auto-fit, minmax(min(100%, 6.8rem), 1fr)); }
+
+/* track */
+.tr-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 0 1rem; }
+input[type=date] { font: inherit; padding: 0.4rem; border: 2px solid var(--text); border-radius: 4px; background: var(--bg); color: var(--text); min-height: 44px; }
+.stages { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 0.5rem; }
+.stages li { margin: 0; max-width: none; }
+.st-opt { display: grid; grid-template-columns: auto auto 1fr; gap: 0.2rem 0.5rem; align-items: center; height: 100%; background: var(--card); border: 2px solid var(--line); border-radius: 10px; padding: 0.6rem; cursor: pointer; }
+.st-opt .small { grid-column: 1 / -1; }
+.st-n { display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--soft); font-weight: 700; font-size: 0.9rem; }
+.stages li.done .st-opt { border-color: var(--ok); } .stages li.done .st-n { background: var(--ok); color: var(--bg); }
+.stages li.now .st-opt { border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand); } .stages li.now .st-n { background: var(--brand); color: var(--brand-ink); }
+.st-opt:has(input:focus-visible) { outline: 3px solid var(--focus); }

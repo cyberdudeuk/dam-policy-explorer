@@ -10,10 +10,10 @@ import html, json, re, shutil, sys, tempfile, threading, functools, http.server
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-AXE = Path("/home/claude/tooling/node_modules/axe-core/axe.min.js")
+AXE = next(p for p in [ROOT / "node_modules/axe-core/axe.min.js", Path("/home/claude/tooling/node_modules/axe-core/axe.min.js")] if p.exists())
 BANNED = [r"Office of the Chief Data Officer", r"\bOCDO\b", r"Data Management Team", r"Data Quality (?:&amp;|&) Management team", r"dam-return-and-desk",
           r"beisgov\.sharepoint\.com"]
-CONTACT = "https://github.com/cyberdudeuk/dam-capability-playbooks/issues/new?template=contact.yml"
+CONTACT = "https://forms.cloud.microsoft/e/SLBvuPX7jK"
 
 def pages(out): return sorted(out.glob("*.html"))
 
@@ -95,10 +95,10 @@ def s7_traceability(out):
     return bad
 
 def s8_contact(out):
-    """D-01: the contact form link is the one verified to exist (dam-capability-playbooks contact.yml)."""
+    """D-01: the contact form link is the one verified to exist (the Microsoft Form created 18 Nov 2026), and no other form is linked."""
     bad = []
     for f in pages(out):
-        for h in re.findall(r'(?:href|data-contact)="([^"]*issues/new[^"]*)"', f.read_text()):
+        for h in re.findall(r'(?:href|data-contact)="([^"]*(?:issues/new|forms\.(?:cloud\.microsoft|office\.com))[^"]*)"', f.read_text()):
             if html.unescape(h) != CONTACT: bad.append(f"{f.name}: {h}")
     return bad
 
@@ -112,7 +112,11 @@ def s10_class_collision(out):
     css = "".join(f.read_text() for f in (out / "assets").glob("*.css"))
     return [m for m in re.findall(r"(?m)^\s*\.bar\s*\{[^}]*height:[^}]*\}", css)]
 
-STATIC = [s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording]
+def s11_no_unagreed_promises(out):
+    """D-14: no service level (reply times) is stated until one is agreed."""
+    return [f.name for f in pages(out) if re.search(r"within \d+ working days", f.read_text())]
+
+STATIC = [s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording]
 
 # ---------------- browser checks ----------------
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -149,7 +153,7 @@ def browser_checks(out, quick=False):
                     # B3: no script errors or CSP violations
                     if errs: fails.append(f"B3 {f.name} {theme} {w}px: {errs[:2]}")
                     # B4: axe-core, WCAG 2.2 A and AA, with every collapsed section opened so hidden content is tested too
-                    pg.evaluate("document.querySelectorAll('details').forEach(d=>d.open=true)")
+                    pg.evaluate("document.querySelectorAll('main details').forEach(d=>d.open=true)")   # content sections only; the menu dropdown is meant to overlay the page
                     pg.add_script_tag(content=axe)
                     res = pg.evaluate("axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']},resultTypes:['violations']}).then(r=>r.violations.map(v=>v.id+' x'+v.nodes.length+' '+(v.nodes[0]&&v.nodes[0].target.join(' '))))")
                     if res: fails.append(f"B4 {f.name} {theme} {w}px: {res[:3]}")
@@ -175,8 +179,8 @@ def functional_checks(out):
             ({"official": "yes", "purpose": ["1"], "shared": "dsa", "accountable": "own", "source": "derived"}, "out"),
             ({"official": "yes", "purpose": ["1"], "shared": "dsa", "accountable": "enriched", "source": "product"}, "in"),
             ({"official": "yes", "purpose": ["2"], "shared": "potential", "accountable": "own", "source": "source"}, "in-later"),
-            ({"official": "unsure", "purpose": ["1"], "shared": "dsa", "accountable": "own", "source": "source"}, "check"),
-            ({"official": "yes", "purpose": ["unsure"], "shared": "unsure", "accountable": "own", "source": "source"}, "check"),
+            ({"official": "unsure", "purpose": ["1"], "shared": "dsa", "accountable": "own", "source": "source"}, "flag"),
+            ({"official": "yes", "purpose": ["unsure"], "shared": "unsure", "accountable": "own", "source": "source"}, "flag"),
             ({"official": "no", "purpose": ["unsure"], "shared": "unsure", "accountable": "own", "source": "source"}, "out"),
         ]
         for a, want in cases:
@@ -239,6 +243,14 @@ def functional_checks(out):
         p3.clock.set_fixed_time("2026-12-18T09:00:00"); p3.goto(base + "index.html")
         if "Today" not in p3.inner_text("[data-countdown]"): fails.append("F13 countdown on the day: " + p3.inner_text("[data-countdown]"))
         p3.close()
+        # F14: tracker keeps its stage; the return analysis reads an (invented) return correctly
+        pg.goto(base + "track.html"); pg.check("input[name=stage][value=received]"); pg.fill("#tr-ref", "REF-1"); pg.locator("#tr-ref").dispatch_event("change"); pg.reload()
+        if not pg.is_checked("input[name=stage][value=received]") or "REF-1" not in pg.inner_text("[data-tr-saved]"): fails.append("F14 tracker did not keep its stage and reference")
+        pg.set_input_files("#tr-file", str(ROOT / "tests" / "fixtures" / "invented-return.csv")); pg.wait_for_timeout(300)
+        txt = pg.inner_text("[data-tr-analytics]")
+        for want in ("3 assets", "67%", "33%"):
+            if want not in txt: fails.append(f"F14 analysis missing '{want}'")
+        if pg.evaluate("[...document.querySelectorAll('[data-tr-analytics] .fill')].some(f=>!f.style.width)"): fails.append("F14 chart bars have no width")
         # F11: works with JavaScript turned off (content readable)
         ctx = b.new_context(java_script_enabled=False); p2 = ctx.new_page()
         for f in ("index.html", "questions.html", "people.html"):
@@ -266,8 +278,9 @@ def negatives(out):
         (s6_structure, lambda o: edit(o, "index.html", "</main>", "<h1>Second</h1></main>")),
         (s6_structure, lambda o: edit(o, "index.html", 'alt=""', '')),
         (s7_traceability, lambda o: (o / "explorer-data.json").write_text((o / "explorer-data.json").read_text().replace('"qa": "dqap"', '"qa": "nope"', 1))),
-        (s8_contact, lambda o: edit(o, "index.html", "dam-capability-playbooks/issues/new", "elsewhere/issues/new")),
+        (s8_contact, lambda o: edit(o, "index.html", 'href="https://forms.cloud.microsoft/e/SLBvuPX7jK"', 'href="https://forms.cloud.microsoft/e/WRONG1"')),
         (s9_wording, lambda o: edit(o, "policy.html", "<h1>", "<h1>The three tests ")),
+        (s11_no_unagreed_promises, lambda o: edit(o, "index.html", "<h1>", "<h1>We reply within 5 working days. ")),
         (s10_class_collision, lambda o: (o / "assets" / "explorer.css").write_text((o / "assets" / "explorer.css").read_text() + "\n.bar { height: 1rem; }")),
     ]
     bad = []

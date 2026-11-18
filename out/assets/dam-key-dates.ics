@@ -1,0 +1,18 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//DAM Policy Explorer//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:dpe-ready-2026@dam-policy-explorer
+DTSTAMP:20261118T000000Z
+DTSTART;VALUE=DATE:20261218
+DTEND;VALUE=DATE:20261219
+SUMMARY:DAM Policy: aim to be ready for the Baseline Return
+DESCRIPTION:GDS asks organisations to be ready before the Christmas break. The Baseline Return is due in January 2027 (programme plan\; check the exact date with your lead coordinator).
+BEGIN:VALARM
+TRIGGER:-P14D
+ACTION:DISPLAY
+DESCRIPTION:Two weeks until the DAM Policy readiness date
+END:VALARM
+END:VEVENT
+END:VCALENDAR
