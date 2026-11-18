@@ -1,0 +1,30 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.19/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.19",
+  "version": "1.1.0",
+  "id": "62391348-f59f-420b-a834-0e2bcc33d2fc",
+  "developer": {
+    "name": "Government Digital Service",
+    "websiteUrl": "{{HOST}}/about.html",
+    "privacyUrl": "{{HOST}}/about.html#privacy",
+    "termsOfUseUrl": "{{HOST}}/about.html#transparency"
+  },
+  "name": {"short": "DAM Policy Explorer", "full": "DAM Policy Explorer: the Data Asset Management Policy in one place"},
+  "description": {
+    "short": "The DAM Policy, your return, and answers to coordinators' questions.",
+    "full": "Everything for the UK government Data Asset Management Policy in one place: the policy in plain English, an asset test for the four scope principles, the return step by step with saved progress, answers to the questions coordinators have asked with their sources, roles and journeys, the capabilities behind the policy and their playbooks, and the DAM Policy assistant in Copilot. Prototype: GOV.UK guidance always takes priority."
+  },
+  "icons": {"color": "color.png", "outline": "outline.png"},
+  "accentColor": "#0B55A3",
+  "staticTabs": [
+    {"entityId": "home", "name": "Home", "contentUrl": "{{HOST}}/index.html?theme={theme}", "websiteUrl": "{{HOST}}/index.html", "scopes": ["personal"]},
+    {"entityId": "return", "name": "Your return", "contentUrl": "{{HOST}}/return.html?theme={theme}", "websiteUrl": "{{HOST}}/return.html", "scopes": ["personal"]},
+    {"entityId": "ask", "name": "Ask", "contentUrl": "{{HOST}}/ask.html?theme={theme}", "websiteUrl": "{{HOST}}/ask.html", "scopes": ["personal"]},
+    {"entityId": "about", "scopes": ["personal"]}
+  ],
+  "copilotAgents": {"declarativeAgents": [{"id": "damPolicyAssistant", "file": "declarativeAgent.json"}]},
+  "permissions": ["identity"],
+  "validDomains": ["{{DOMAIN}}"],
+  "showLoadingIndicator": false,
+  "isFullScreen": false
+}

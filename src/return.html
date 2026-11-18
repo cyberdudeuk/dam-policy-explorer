@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Make your data asset return – Data asset returns</title>
+<meta name="description" content="Twelve steps to make your organisation’s data asset return, and a check of your list before you send it.">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/checker.js" defer></script>
+<script src="assets/page.js" defer></script>
+</head>
+<body data-contact="https://github.com/cyberdudeuk/dam-return-and-desk/issues/new?template=contact.yml">
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+<!-- One icon set for the whole site: 24 by 24, 1.8 stroke, round ends, drawn to match. Each icon is decorative: the text beside it carries the meaning. -->
+<defs>
+<symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></symbol>
+<symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.6-3.3 3-5.3 6-5.3s5.4 2 6 5.3"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.3c2.3.2 4 1.9 4.5 4.7"/></symbol>
+<symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 13l2.5-7.5A1.5 1.5 0 0 1 7.9 4.5h8.2a1.5 1.5 0 0 1 1.4 1L20 13"/><path d="M4 13v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-4.5l-1.5 2.5h-4L8.5 13z"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8-7.5 9.5-4.3-1.5-7.5-4.9-7.5-9.5V6z"/><path d="M8.7 12.2l2.3 2.3 4.4-4.6"/></symbol>
+<symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v13c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8v-13"/><path d="M4.5 12c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4"/><path d="M4 20h16"/><rect x="7" y="11" width="3" height="6" rx=".5"/><rect x="12" y="7" width="3" height="10" rx=".5"/><rect x="17" y="13" width="3" height="4" rx=".5"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.2"/><path d="M15.5 8.5L20 4M17 4h3v3"/></symbol>
+<symbol id="i-building" viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11"/><path d="M3 20h18"/><path d="M8 20v-6M12 20v-6M16 20v-6"/><path d="M6.5 11h11"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6 8.5-6"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.4M12 18.8v2.4M21.2 12h-2.4M5.2 12H2.8M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7M18.5 18.5l-1.7-1.7M7.2 7.2L5.5 5.5"/><circle cx="12" cy="12" r="6.6"/></symbol>
+<symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><rect x="10" y="11.5" width="5" height="4" rx=".8"/><path d="M11 11.5v-1.2a1.5 1.5 0 0 1 3 0v1.2"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="17" rx="2"/><path d="M8 9.5l1.8 1.8L13 8M8 15.5l1.8 1.8L13 14"/><path d="M15.5 10h1.5M15.5 16h1.5"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.8" cy="6" r="1.1"/><circle cx="4.8" cy="12" r="1.1"/><circle cx="4.8" cy="18" r="1.1"/></symbol>
+<symbol id="i-dashboard" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 16l3-3 2.5 2 4.5-4.5"/></symbol>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4.5h11l-2 3.5 2 3.5H5"/></symbol>
+<symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8M16 7l2.5 2.5M14 9l2 2"/></symbol>
+<symbol id="i-tag" viewBox="0 0 24 24"><path d="M3.5 12.5V4.5h8l9 9-8 8z"/><circle cx="8" cy="9" r="1.5"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h2M14 14h2M8 17h2"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.8" r=".6"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5"/><path d="M4.5 16.5V19a1.5 1.5 0 0 0 1.5 1.5h12a1.5 1.5 0 0 0 1.5-1.5v-2.5"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/><path d="M12 14.5v2.5"/></symbol>
+<symbol id="i-branch" viewBox="0 0 24 24"><circle cx="6" cy="5.5" r="2.2"/><circle cx="6" cy="18.5" r="2.2"/><circle cx="18" cy="9.5" r="2.2"/><path d="M6 7.7v8.6M6 13c0-3 2.2-3.5 5.5-3.5h4.3"/></symbol>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1.1.9-1.1 1.6v.6"/><circle cx="12" cy="16.9" r=".6"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10 5 7.3 4.5 4 4.8v13.5c3.3-.3 6 .2 8 1.7 2-1.5 4.7-2 8-1.7V4.8c-3.3-.3-6 .2-8 1.7z"/><path d="M12 6.5V20"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M20.5 3.5L10 14"/><path d="M20.5 3.5l-6.5 17-4-6.5-6.5-4z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24"><path d="M3.5 6.5l5.5-2.5 6 2.5 5.5-2.5v13.5l-5.5 2.5-6-2.5-5.5 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 4v-4h0A1.5 1.5 0 0 1 4 14.5z"/><path d="M8 9h8M8 12h5"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4v4.5H15"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3.5l8.5 4.5-8.5 4.5L3.5 8z"/><path d="M3.5 12.2L12 16.7l8.5-4.5M3.5 16.2L12 20.7l8.5-4.5"/></symbol>
+</defs>
+</svg>
+
+<a class="skip" href="#main">Skip to main content</a>
+<header class="banner">
+  <div class="wrap">
+    <a class="site" href="index.html">Data asset returns</a>
+    <nav class="global" aria-label="Main"><ul><li><a href="index.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-building"/></svg>Home</a></li><li><a href="return.html" aria-current="page"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-send"/></svg>Make a return</a></li><li><a href="team.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-people"/></svg>For the team</a></li></ul></nav>
+    <p class="phase"><span class="tag">Prototype</span> This is a test version, not an official government service. <a href="https://github.com/cyberdudeuk/dam-return-and-desk/issues/new?template=contact.yml">Tell us what you think</a>.</p>
+  </div>
+</header>
+<main id="main" class="page">
+<div class="full hero"><div class="inner">
+<nav class="crumbs" aria-label="You are here"><a href="index.html">Home</a> &rsaquo; <span aria-current="page">Make a return</span></nav>
+
+<span class="hero-icon"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-doc"/></svg></span>
+<h1>Make your organisation’s data asset return</h1>
+<p class="lead">Four parts and twelve steps, from getting ready to sending your list to GDS (the Government Digital Service). Each step says who does it, what you need and what you end up with.</p>
+</div></div>
+
+<div class="facts">
+  <p><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-calendar"/></svg> <b>When:</b> GDS plans to collect the first return, called the Baseline Return, in January 2027. Aim to be ready by Friday 18 December 2026, before the Christmas break.</p>
+  <p class="small muted">The January date comes from the programme plan. It is not yet written in the published policy, so check with us before you rely on it.</p>
+  <p><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-help"/></svg> <b>Help:</b> <a href="https://github.com/cyberdudeuk/dam-return-and-desk/issues/new?template=contact.yml">use our contact form</a>.</p>
+</div>
+
+<section class="full" aria-labelledby="glance">
+  <h2 id="glance" data-icon="i-map" data-count="4"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-map"/></svg>What do I need to do?</h2>
+  <p class="measure">Four parts, in order. Choose a step to open it. At the end of each step there is a link to the next one.</p>
+  <ol class="stages flow"><li><h3><span class="badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-flag"/></svg></span>1. Get ready</h3><ul><li><a href="#step-1">1. Name who is in charge</a></li><li><a href="#step-2">2. Agree who owns your data</a></li></ul></li><li><h3><span class="badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-list"/></svg></span>2. Make your list</h3><ul><li><a href="#step-3">3. Start a list of possible assets</a></li><li><a href="#step-4">4. Check each one against the scope principles</a></li><li><a href="#step-5">5. Agree the list across your organisation</a></li><li><a href="#step-6">6. Name an owner and a steward for each asset</a></li><li><a href="#step-7">7. Fill in the 24 details</a></li><li><a href="#step-8">8. Link a data quality plan</a></li></ul></li><li><h3><span class="badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-send"/></svg></span>3. Check and send</h3><ul><li><a href="#step-9">9. Check the returns from organisations that report to you</a></li><li><a href="#step-10">10. Sign off and send</a></li></ul></li><li><h3><span class="badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-refresh"/></svg></span>4. Keep it up to date</h3><ul><li><a href="#step-11">11. Keep it current</a></li><li><a href="#step-12">12. Share what you learned</a></li></ul></li></ol>
+</section>
+
+<h2 id="steps" data-icon="i-list" data-count="12"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-list"/></svg>The twelve steps</h2>
+<section class="stage" aria-labelledby="stage-1"><h3 id="stage-1">Get ready</h3><ol class="steps"><li class="step" id="step-1"><details><summary><span class="n">1.</span> Name who is in charge</summary><div class="body">
+<p>Your <button type="button" class="term" data-tip="The most senior person in your organisation who is in charge of data.">chief data officer</button> takes charge of the return. They name a coordinator and give them time to do the work.</p><dl><dt>Who does this</dt><dd>Your chief data officer leads. This is the most senior person in charge of data. The coordinator does the day-to-day work.</dd><dt>What you need</dt><dd><p>Your organisation chart, and a list of the organisations that report to your department (often called <button type="button" class="term" data-tip="Organisations that are part of government but work at a distance from their department, such as agencies.">arm’s length bodies</button>).</p></dd><dt>What you end up with</dt><dd>A person in charge, a coordinator, and a list of everyone who needs to take part.</dd></dl>
+<p class="source">Based on: <a href="https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government">Data Asset Management Policy (opens GOV.UK)</a></p><p class="next"><a href="#step-2">Next: 2. Agree who owns your data <span aria-hidden="true">→</span></a></p></div></details></li><li class="step" id="step-2"><details><summary><span class="n">2.</span> Agree who owns your data</summary><div class="body">
+<p>Agree how you will decide who owns each set of data. Then take it to your board (the senior group that runs your organisation).</p><dl><dt>Who does this</dt><dd>Your chief data officer, with your senior information risk owner (the person responsible for information risk).</dd><dt>What you need</dt><dd><p>The <a href="https://www.gov.uk/government/publications/data-ownership-in-government/data-ownership-model">data ownership model (opens GOV.UK)</a>.</p></dd><dt>What you end up with</dt><dd>An agreed way of naming owners. Where two people seem responsible for the same data, one of them is chosen.</dd></dl>
+<p class="source">Based on: <a href="https://www.gov.uk/government/publications/data-ownership-in-government/data-ownership-model">Data ownership model (opens GOV.UK)</a></p><p class="next"><a href="#step-3">Next: 3. Start a list of possible assets <span aria-hidden="true">→</span></a></p></div></details></li></ol></section><section class="stage" aria-labelledby="stage-3"><h3 id="stage-3">Make your list</h3><ol class="steps"><li class="step" id="step-3"><details><summary><span class="n">3.</span> Start a list of possible assets</summary><div class="body">
+<p>Gather what you already know about. You do not need to start from nothing.</p><dl><dt>Who does this</dt><dd>Your coordinator.</dd><dt>What you need</dt><dd><p>Use any lists you already have. GDS has made a starter list for each group of organisations: <a href="https://github.com/cyberdudeuk/dam-return-and-desk/issues/new?template=contact.yml">ask us for yours</a>. You may also have a list of your information, a <button type="button" class="term" data-tip="A list that describes the data an organisation holds, so people can find it.">data catalogue</button> or data sharing agreements. Include data you get from others, and data that suppliers hold for you.</p></dd><dt>What you end up with</dt><dd>A list of possible assets to test in the next step.</dd></dl>
+<p class="source">Based on: <a href="https://www.gov.uk/government/publications/identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets">Identifying and recording critical data assets (opens GOV.UK)</a></p><p class="next"><a href="#step-4">Next: 4. Check each one against the scope principles <span aria-hidden="true">→</span></a></p></div></details></li><li class="step" id="step-4"><details><summary><span class="n">4.</span> Check each one against the scope principles</summary><div class="body">
+<p>An asset goes in the return only if it is OFFICIAL and all four DAM Policy scope principles apply. Write down your answer to each one. The <a href="asset-test.html">asset test</a> walks you through them.</p><dl><dt>Who does this</dt><dd>Your coordinator, with the people who know each set of data.</dd><dt>What you need</dt><dd><p><b>First, it is OFFICIAL.</b> OFFICIAL with markings such as sensitive counts. SECRET and TOP SECRET do not go in.</p><p>Then the four principles:</p><ol><li><b>It meets a critical criterion.</b> It supports at least one of seven critical purposes, numbered 1 to 7: <ol class="purposes"><li>delivering public services</li><li>a legal, legislative or contractual requirement</li><li>defence, national security and resilience</li><li>developing and evaluating policy</li><li>official statistics</li><li>the public interest</li><li>fraud and error</li></ol></li><li><b>It is shared.</b> It has value across government through reuse: it is shared with a public sector organisation under a data sharing agreement, published as open data, or could create value if shared. For the Baseline Return, start with assets that are already shared or published.</li><li><b>You are accountable for it.</b> Your organisation manages or controls it. Data from someone else counts only if you have materially changed or enriched it.</li><li><b>It is the source.</b> If an extract, report, API or other product is critical, report the source data behind it, even if the source itself is never shared. Report a product separately only if it is managed and owned in its own right.</li></ol><p>For official statistics, include the data behind them (the administrative data, surveys and censuses), not the published figures.</p></dd><dt>What you end up with</dt><dd>An answer to each test, for each possible asset. Anything with a “no” goes on your list of assets left out, with the reason. In the workbook, the security marking (column M) shows the OFFICIAL check and the critical purpose numbers (column J) show the first principle.</dd></dl>
+<p class="source">Based on: <a href="https://www.gov.uk/government/publications/identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets">Identifying and recording critical data assets (opens GOV.UK)</a>, <a href="https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government">Data Asset Management Policy (opens GOV.UK)</a> and the GDS DAM Policy FAQs (November 2026).</p><p class="next"><a href="#step-5">Next: 5. Agree the list across your organisation <span aria-hidden="true">→</span></a></p></div></details></li><li class="step" id="step-5"><details><summary><span class="n">5.</span> Agree the list across your organisation</summary><div class="body">
+<p>Check the list with each part of your organisation.</p><dl><dt>Who does this</dt><dd>Your coordinator, with your <button type="button" class="term" data-tip="The person who makes sure personal data is handled lawfully.">data protection officer</button> (the person who makes sure personal data is handled lawfully).</dd><dt>What you need</dt><dd><p>The list from step 4.</p></dd><dt>What you end up with</dt><dd>An agreed list. Your data protection officer confirms that listing an asset does not create any new sharing or use of the data.</dd></dl>
+<p class="source">Based on: <a href="https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government">Data Asset Management Policy (opens GOV.UK)</a></p><p class="next"><a href="#step-6">Next: 6. Name an owner and a steward for each asset <span aria-hidden="true">→</span></a></p></div></details></li><li class="step" id="step-6"><details><summary><span class="n">6.</span> Name an owner and a steward for each asset</summary><div class="body">
+<p>Each asset needs an owner and a <button type="button" class="term" data-tip="The person who looks after a set of data day to day.">steward</button>. The owner agrees in writing. The steward looks after the data day to day.</p><dl><dt>Who does this</dt><dd>Data owners, with your coordinator.</dd><dt>What you need</dt><dd><p>Who each asset goes to and comes from.</p></dd><dt>What you end up with</dt><dd>An owner and a steward for each asset. Keep their names in your own records. The return only asks whether each one is assigned, Yes or No. It does not record names or email addresses.</dd></dl>
+<p class="source">Based on: <a href="https://www.gov.uk/government/publications/data-ownership-in-government/data-ownership-model">Data ownership model (opens GOV.UK)</a></p><p class="next"><a href="#step-7">Next: 7. Fill in the 24 details <span aria-hidden="true">→</span></a></p></div></details></li><li class="step" id="step-7"><details><summary><span class="n">7.</span> Fill in the 24 details</summary><div class="body">
+<p>Describe each asset in plain English in the version 3 Baseline Return workbook. It asks for 24 details. Some must always be filled in, some only when they apply.</p><dl><dt>Who does this</dt><dd>Stewards, and whoever manages your data catalogue.</dd><dt>What you need</dt><dd><p>Your data catalogue, if you have one. This is a list that describes your data. You can copy details from it rather than typing them again.</p></dd><dt>What you end up with</dt><dd>The 24 details for each asset. Where the workbook has a list of answers, choose from it. <a href="#template">See all 24 details</a>.</dd></dl>
+<p class="source">Based on: <a href="https://www.gov.uk/government/publications/record-metadata-to-describe-critical-data-assets/recording-metadata-to-describe-critical-data-assets">Recording metadata to describe critical data assets (opens GOV.UK)</a> and the version 3 Baseline Return workbook.</p><p class="next"><a href="#step-8">Next: 8. Link a data quality plan <span aria-hidden="true">→</span></a></p></div></details></li><li class="step" id="step-8"><details><summary><span class="n">8.</span> Link a data quality plan</summary><div class="body">
+<p>Each asset needs a plan to keep its data good enough to use. It also needs a date to look at it again.</p><dl><dt>Who does this</dt><dd>Data owners.</dd><dt>What you need</dt><dd><p>The <a href="https://www.gov.uk/government/publications/implement-a-data-quality-action-plan/data-quality-action-plan-implementation-guide">data quality action plan guide (opens GOV.UK)</a>. You may already have tools, processes or resources you can use.</p></dd><dt>What you end up with</dt><dd>The status of each asset’s quality plan (column T) and, if you have it, where the evidence is kept (column U). A gap is accepted, but the asset is not counted as ready until a plan is in place.</dd></dl>
+<p class="source">Based on: <a href="https://www.gov.uk/government/publications/implement-a-data-quality-action-plan/data-quality-action-plan-implementation-guide">Data quality action plan guide (opens GOV.UK)</a></p><p class="next"><a href="#step-9">Next: 9. Check the returns from organisations that report to you <span aria-hidden="true">→</span></a></p></div></details></li></ol></section><section class="stage" aria-labelledby="stage-9"><h3 id="stage-9">Check and send</h3><ol class="steps"><li class="step" id="step-9"><details><summary><span class="n">9.</span> Check the returns from organisations that report to you</summary><div class="body">
+<p>Departments only: check what the organisations that report to you have done before everything goes to GDS.</p><dl><dt>Who does this</dt><dd>Your department’s coordinator.</dd><dt>What you need</dt><dd><p>The returns from each organisation that reports to your department.</p></dd><dt>What you end up with</dt><dd>One view of what is ready, what has gaps and what still needs fixing.</dd></dl>
+<p class="source">Based on: <a href="https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government">Data Asset Management Policy (opens GOV.UK)</a></p><p class="next"><a href="#step-10">Next: 10. Sign off and send <span aria-hidden="true">→</span></a></p></div></details></li><li class="step" id="step-10"><details><summary><span class="n">10.</span> Sign off and send</summary><div class="body">
+<p>Your chief data officer signs off the return. Your coordinator fills in the Baseline Return workbook (version 3) and emails it to the team.</p><dl><dt>Who does this</dt><dd>Your chief data officer and your coordinator.</dd><dt>What you need</dt><dd><p>Your finished list, and the version 3 workbook the team sends you. Use the <a href="#check">list check below</a> to find common problems first.</p></dd><dt>What you end up with</dt><dd>A signed-off return, emailed to the team’s shared mailbox. The team gives you the address. You will get a reference number for your return.</dd></dl>
+<p class="source">Based on: <a href="https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government">Data Asset Management Policy (opens GOV.UK)</a></p><p class="next"><a href="#step-11">Next: 11. Keep it current <span aria-hidden="true">→</span></a></p></div></details></li></ol></section><section class="stage" aria-labelledby="stage-11"><h3 id="stage-11">Keep it up to date</h3><ol class="steps"><li class="step" id="step-11"><details><summary><span class="n">11.</span> Keep it current</summary><div class="body">
+<p>Review your list and its details at least once a year.</p><dl><dt>Who does this</dt><dd>Data owners and stewards.</dd><dt>What you need</dt><dd><p>This year’s return.</p></dd><dt>What you end up with</dt><dd>An up-to-date list. The workbook does not record the review, so note the date in your own records. Next year, start from this year’s list rather than from nothing.</dd></dl>
+<p class="source">Based on: <a href="https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government">Data Asset Management Policy (opens GOV.UK)</a></p><p class="next"><a href="#step-12">Next: 12. Share what you learned <span aria-hidden="true">→</span></a></p></div></details></li><li class="step" id="step-12"><details><summary><span class="n">12.</span> Share what you learned</summary><div class="body">
+<p>Tell GDS how it went and pass on what worked to other organisations.</p><dl><dt>Who does this</dt><dd>Your chief data officer and coordinator.</dd><dt>What you need</dt><dd><p>Your notes on what was hard and what helped.</p></dd><dt>What you end up with</dt><dd>Lessons that make the next return easier for everyone.</dd></dl>
+<p class="source">Based on: <a href="https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government">Data Asset Management Policy (opens GOV.UK)</a></p><p class="next"><a href="#after">That was the last step. Next: what happens after you send it <span aria-hidden="true">→</span></a></p></div></details></li></ol></section>
+
+
+
+<h2 id="check" data-icon="i-check"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Is my list ready to send?</h2>
+<p>This finds the most common problems, so your return can be accepted first time.</p>
+<p class="small muted">The check follows the version 3 workbook. First save the workbook’s return sheet as a CSV file.</p>
+<p id="return-check-nojs" class="facts">The file check needs JavaScript, which is switched off or blocked in your browser. You can still use the list of checks below to go through your file by hand.</p>
+<div data-checker="return-check" id="return-check" hidden>
+  <label for="return-check-file">Your return file <span class="hint">A CSV file. In a spreadsheet program, choose “Save as” and then “CSV UTF-8 (comma delimited)”.</span></label>
+  <input type="file" id="return-check-file" accept=".csv,text/csv" data-return>
+  <label for="return-check-excl">The list of assets you left out (if there is one) <span class="hint">Also a CSV file.</span></label>
+  <input type="file" id="return-check-excl" accept=".csv,text/csv" data-exclusions>
+  <div class="actions"><button type="button" class="primary" data-run>Check the file</button><button type="button" data-example>Try it with an example file</button></div>
+  <p class="small muted">Files are read by your own browser. Nothing is uploaded or sent anywhere.</p>
+  <div data-result></div>
+  
+</div>
+<details><summary>What the check looks for</summary><div class="body"><p><span class="kind fix">Must fix</span></p><ul><li>The file has all 24 columns of the version 3 template.</li><li>The 13 details that must be filled in are filled in.</li><li>Text fits the length the template allows.</li><li>Yes or No questions say Yes or No.</li><li>The security marking is OFFICIAL or OFFICIAL-SENSITIVE. SECRET and TOP SECRET data does not go in.</li><li>Critical purposes are numbers from 1 to 7, each used once.</li><li>Answers chosen from a list use one of the list’s values, where we have the list.</li><li>An asset recorded “In catalogue” gives its catalogue reference.</li><li>Geospatial standards come from the list, and “Not applicable” stands alone.</li><li>No asset is marked “Out of scope”.</li><li>There are no email addresses, in the return or in your list of assets left out. The return does not record people’s names or contact details.</li><li>The template’s worked example has been deleted.</li><li>No quote mark is left open, which would join rows together.</li></ul><p><span class="kind ask">We will ask</span></p><ul><li>An identifier used more than once, written in any mix of capitals. This is allowed only for an approved version or licence variant.</li><li>In your list of assets left out (our suggestion): which test each one failed, and why.</li></ul><p><span class="kind gap">Policy gap</span> These are accepted. They are not mistakes: they show us where to help.</p><ul><li>No data owner or no data steward assigned yet.</li><li>The asset is not in a data catalogue yet.</li><li>A gap in data quality assurance.</li></ul><p><span class="kind tip">Tips</span></p><ul><li>Recommended details are filled in: sharing status, version and discoverability.</li><li>The security marking is written exactly as OFFICIAL or OFFICIAL-SENSITIVE.</li><li>Asset names spell out abbreviations, and no two assets have almost the same name.</li></ul><p class="small muted">What the check cannot do: it cannot tell whether a detail marked “Fill in if it applies” applies to your asset. For sharing status, access rights, licence, quality status and discoverability, it checks that you answered, but not your answer, because we do not yet have the workbook’s full lists.</p></div></details>
+
+<details id="template"><summary>The 24 details, and a blank template</summary><div class="body">
+<p>The return is the version 3 Baseline Return workbook, with one row for each asset. The team sends you the workbook. To use the check on this page, save its return sheet as a CSV file, or start from the blank CSV template below, which has the same 24 headings. If you leave any assets out, we suggest listing them in a second file with the test each one failed and why. This list is our suggestion, not part of the workbook. Write roles, such as “data owner”, not people’s names.</p>
+<p><a class="button" href="templates/return-template.csv" download><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-download"/></svg> Download the blank list template (CSV)</a> <a class="button" href="templates/left-out-template.csv" download><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-download"/></svg> Download the blank template for assets left out (CSV)</a></p>
+<p>Keep the heading row of each template exactly as it is.</p>
+<div class="fields" data-fields>
+<p class="small muted" id="fields-intro">The 24 details, in the workbook’s order (columns A to X), in seven groups. 13 must be filled in, 5 when they apply, 3 are recommended and 3 are optional.</p>
+<div class="filter" role="group" aria-label="Show details" hidden><span class="small">Show:</span> <button type="button" aria-pressed="true" data-filter="">All 24</button> <button type="button" aria-pressed="false" data-filter="m">Must be filled in (13)</button> <button type="button" aria-pressed="false" data-filter="a">If it applies (5)</button> <button type="button" aria-pressed="false" data-filter="r">Recommended (3)</button> <button type="button" aria-pressed="false" data-filter="o">Optional (3)</button></div>
+<p class="small" data-filter-status aria-live="polite"></p>
+<section class="fgroup" aria-label="Asset identity"><h3><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-tag"/></svg>Asset identity</h3><ul class="fieldlist">
+<li data-ob="m"><p class="fhead"><span class="col"><span class="vh">Column </span>A</span> <b>Unique identifier</b> <span class="ob ob-m">Must be filled in</span></p><p>Your own reference for the asset. Up to 100 characters. Use it once, unless the row is an approved version or licence variant.</p></li>
+<li data-ob="m"><p class="fhead"><span class="col"><span class="vh">Column </span>B</span> <b>Data asset name</b> <span class="ob ob-m">Must be filled in</span></p><p>A short name people will recognise. Spell out abbreviations. Up to 200 characters.</p></li>
+<li data-ob="m"><p class="fhead"><span class="col"><span class="vh">Column </span>C</span> <b>Description</b> <span class="ob ob-m">Must be filled in</span></p><p>What the data is, in plain English. Between 20 and 2,000 characters.</p></li>
+</ul></section>
+<section class="fgroup" aria-label="Organisation and provenance"><h3><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-building"/></svg>Organisation and provenance</h3><ul class="fieldlist">
+<li data-ob="m"><p class="fhead"><span class="col"><span class="vh">Column </span>D</span> <b>Owning department / publisher</b> <span class="ob ob-m">Must be filled in</span></p><p>The one organisation accountable for the asset. Up to 200 characters.</p></li>
+<li data-ob="a"><p class="fhead"><span class="col"><span class="vh">Column </span>E</span> <b>ALB / agency</b> <span class="ob ob-a">Fill in if it applies</span></p><p>The arm’s length body or agency, if there is one. Up to 200 characters.</p></li>
+<li data-ob="a"><p class="fhead"><span class="col"><span class="vh">Column </span>F</span> <b>Source / provenance</b> <span class="ob ob-a">Fill in if it applies</span></p><p>Where the data comes from. You can summarise several sources in one statement. Up to 1,000 characters.</p></li>
+</ul></section>
+<section class="fgroup" aria-label="Accountability"><h3><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-key"/></svg>Accountability</h3><ul class="fieldlist">
+<li data-ob="m"><p class="fhead"><span class="col"><span class="vh">Column </span>G</span> <b>Data owner assigned?</b> <span class="ob ob-m">Must be filled in</span></p><p>Yes or No. Do not write the owner’s name. “No” is accepted and recorded as a policy gap.</p></li>
+<li data-ob="m"><p class="fhead"><span class="col"><span class="vh">Column </span>H</span> <b>Data steward assigned?</b> <span class="ob ob-m">Must be filled in</span></p><p>Yes or No. Do not write the steward’s name. “No” is accepted and recorded as a policy gap.</p></li>
+<li data-ob="o"><p class="fhead"><span class="col"><span class="vh">Column </span>I</span> <b>Stewardship model</b> <span class="ob ob-o">Optional</span></p><p>Central, Federated, Distributed, Shared service or Other.</p></li>
+</ul></section>
+<section class="fgroup" aria-label="Scope and classification"><h3><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-shield"/></svg>Scope and classification</h3><ul class="fieldlist">
+<li data-ob="m"><p class="fhead"><span class="col"><span class="vh">Column </span>J</span> <b>Critical purpose number(s)</b> <span class="ob ob-m">Must be filled in</span></p><p>The numbers of the purposes it serves, from 1 to 7, separated by commas, for example “1, 4”. Use the numbers from the workbook’s list.</p></li>
+<li data-ob="r"><p class="fhead"><span class="col"><span class="vh">Column </span>K</span> <b>Primary sharing status</b> <span class="ob ob-r">Recommended</span></p><p>Choose from the workbook’s list. An asset marked “Out of scope” does not go in the return.</p></li>
+<li data-ob="a"><p class="fhead"><span class="col"><span class="vh">Column </span>L</span> <b>Legal gateway / regulatory basis</b> <span class="ob ob-a">Fill in if it applies</span></p><p>The law or rule that allows the sharing, if there is one. You can summarise several. Up to 500 characters.</p></li>
+<li data-ob="m"><p class="fhead"><span class="col"><span class="vh">Column </span>M</span> <b>Security classification / marking</b> <span class="ob ob-m">Must be filled in</span></p><p>OFFICIAL or OFFICIAL-SENSITIVE, written exactly like that. SECRET and TOP SECRET data does not go in.</p></li>
+<li data-ob="m"><p class="fhead"><span class="col"><span class="vh">Column </span>N</span> <b>Contains personal data?</b> <span class="ob ob-m">Must be filled in</span></p><p>Yes or No.</p></li>
+<li data-ob="m"><p class="fhead"><span class="col"><span class="vh">Column </span>O</span> <b>Source-asset access rights</b> <span class="ob ob-m">Must be filled in</span></p><p>Choose one category from the workbook’s list.</p></li>
+</ul></section>
+<section class="fgroup" aria-label="Licence and version"><h3><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-doc"/></svg>Licence and version</h3><ul class="fieldlist">
+<li data-ob="m"><p class="fhead"><span class="col"><span class="vh">Column </span>P</span> <b>Primary licence / usage basis</b> <span class="ob ob-m">Must be filled in</span></p><p>Choose from the workbook’s list. If no one basis is the main one, choose “Multiple / varies”.</p></li>
+<li data-ob="r"><p class="fhead"><span class="col"><span class="vh">Column </span>Q</span> <b>Asset version / update status</b> <span class="ob ob-r">Recommended</span></p><p>The current version, or how often it is updated. Up to 100 characters.</p></li>
+</ul></section>
+<section class="fgroup" aria-label="Data management"><h3><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-database"/></svg>Data management</h3><ul class="fieldlist">
+<li data-ob="m"><p class="fhead"><span class="col"><span class="vh">Column </span>R</span> <b>Metadata recorded in catalogue?</b> <span class="ob ob-m">Must be filled in</span></p><p>In catalogue, Planned or Not in catalogue. “Not in catalogue” is accepted and recorded as a policy gap.</p></li>
+<li data-ob="a"><p class="fhead"><span class="col"><span class="vh">Column </span>S</span> <b>Catalogue / metadata reference</b> <span class="ob ob-a">Fill in if it applies</span></p><p>The catalogue reference. Needed when the answer to R is “In catalogue”. Up to 250 characters.</p></li>
+<li data-ob="m"><p class="fhead"><span class="col"><span class="vh">Column </span>T</span> <b>DQ assurance / action plan status</b> <span class="ob ob-m">Must be filled in</span></p><p>Choose from the workbook’s list. A “Gap” is accepted, but the asset is not counted as ready until a quality plan is in place. The check looks for an answer that starts with the word “Gap”.</p></li>
+<li data-ob="o"><p class="fhead"><span class="col"><span class="vh">Column </span>U</span> <b>Quality evidence reference</b> <span class="ob ob-o">Optional</span></p><p>Where the evidence of quality checks is kept. Up to 250 characters.</p></li>
+<li data-ob="r"><p class="fhead"><span class="col"><span class="vh">Column </span>V</span> <b>Discoverability / interoperability status</b> <span class="ob ob-r">Recommended</span></p><p>Choose from the workbook’s list.</p></li>
+</ul></section>
+<section class="fgroup" aria-label="Standards and continuity"><h3><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-layers"/></svg>Standards and continuity</h3><ul class="fieldlist">
+<li data-ob="a"><p class="fhead"><span class="col"><span class="vh">Column </span>W</span> <b>Geospatial standard applied</b> <span class="ob ob-a">Fill in if it applies</span></p><p>UPRN (Unique Property Reference Number), USRN (Unique Street Reference Number), GEMINI (the UK standard for describing geographic data), Other or Not applicable. You can list several, separated by commas. “Not applicable” goes on its own.</p></li>
+<li data-ob="o"><p class="fhead"><span class="col"><span class="vh">Column </span>X</span> <b>Previous ESDA return reference</b> <span class="ob ob-o">Optional</span></p><p>Your reference from the earlier Essential Shared Data Assets (ESDA) return, if the asset was in it. Up to 100 characters.</p></li>
+</ul></section>
+</div>
+<p class="source">Based on: <a href="https://www.gov.uk/government/publications/record-metadata-to-describe-critical-data-assets/recording-metadata-to-describe-critical-data-assets">Recording metadata to describe critical data assets (opens GOV.UK)</a> and the version 3 Baseline Return workbook.</p>
+</div></details>
+
+<section class="full" aria-labelledby="after">
+  <h2 id="after" data-icon="i-send" data-count="5" data-new><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-send"/></svg>What happens after I send it?</h2>
+  <ol class="stages flow"><li><h3><span class="badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-inbox"/></svg></span>We receive it</h3><p>You get a reference number. We keep your original file exactly as you sent it.</p></li><li><h3><span class="badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-shield"/></svg></span>We check it</h3><p>Automatic checks first, then a person looks at anything unclear.</p></li><li><h3><span class="badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chat"/></svg></span>We ask once, if we need to</h3><p>If something needs changing, we send one message listing everything.</p></li><li><h3><span class="badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-database"/></svg></span>It joins the register</h3><p>Your assets join one cross-government register, with a record of where each came from.</p></li><li><h3><span class="badge"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-target"/></svg></span>We use it to help</h3><p>The register shows where support is needed most.</p></li></ol>
+  <p class="measure tree-note"><b>An honest gap is not a mistake.</b> If your return says, for example, that an asset has no data quality plan yet, we accept it. It shows us where to offer support. We only ask you to change things that are wrong or unclear.</p>
+</section>
+
+<h2 id="help" data-icon="i-help"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-help"/></svg>Where can I get help?</h2>
+<p><a href="https://github.com/cyberdudeuk/dam-return-and-desk/issues/new?template=contact.yml">Use our contact form</a>. Tell us which step your question is about. We will add useful answers to our published answers, without your name or your organisation’s name.</p>
+<p>The form is on GitHub, so what you write can be seen by others. Do not include personal or sensitive information.</p>
+<p>If you need this information in a different format, such as large print, audio or Easy Read, use the same form and tell us what you need.</p>
+
+<h2 id="words" data-icon="i-book" data-count="14"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-book"/></svg>What do the words mean?</h2>
+<details><summary>Show the words and what they mean</summary><div class="body">
+<dl>
+<dt>Critical data asset</dt><dd>A set of data that goes to, or comes from, another part of government, and that important work depends on.</dd>
+<dt>Baseline Return</dt><dd>The first list of critical data assets each organisation sends to GDS.</dd>
+<dt>OFFICIAL</dt><dd>The lowest level of the government’s security classifications. Most government data is OFFICIAL.</dd>
+<dt>Data owner</dt><dd>The person who is responsible for a set of data and decides how it is used.</dd>
+<dt>Data steward</dt><dd>The person who looks after a set of data day to day.</dd>
+<dt>Arm’s length body</dt><dd>An organisation that is part of government but works at a distance from its department, such as an agency.</dd>
+<dt>Data quality action plan</dt><dd>A plan for keeping a set of data accurate and complete enough to use.</dd>
+<dt>CSV file</dt><dd>A simple file for table data that any spreadsheet program can open and save.</dd>
+<dt>DAM</dt><dd>Data Asset Management, the government policy this return is part of.</dd>
+<dt>Data catalogue</dt><dd>A list that describes the data an organisation holds, so people can find it.</dd>
+<dt>Data protection officer</dt><dd>The person in an organisation who makes sure personal data is handled lawfully.</dd>
+<dt>Policy gap</dt><dd>Something the policy expects that is not in place yet, such as an asset with no data owner. A policy gap is not a mistake. We accept it and use it to decide where to help.</dd>
+<dt>ESDA</dt><dd>Essential Shared Data Assets, an earlier government list of shared data. Column X asks for your reference from it.</dd>
+<dt>GDS</dt><dd>The Government Digital Service, which runs the Data Asset Management programme.</dd>
+</dl></div></details>
+
+<details><summary>All the published guidance</summary><div class="body"><ul>
+<li><a href="https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government">Data Asset Management Policy (opens GOV.UK)</a></li>
+<li><a href="https://www.gov.uk/government/publications/identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets">Identifying and recording critical data assets (opens GOV.UK)</a></li>
+<li><a href="https://www.gov.uk/government/publications/record-metadata-to-describe-critical-data-assets/recording-metadata-to-describe-critical-data-assets">Recording metadata to describe critical data assets (opens GOV.UK)</a></li>
+<li><a href="https://www.gov.uk/government/publications/implement-a-data-quality-action-plan/data-quality-action-plan-implementation-guide">Data quality action plan guide (opens GOV.UK)</a></li>
+<li><a href="https://www.gov.uk/government/publications/data-ownership-in-government/data-ownership-model">Data ownership model (opens GOV.UK)</a></li>
+</ul></div></details>
+
+</main>
+<footer>
+  <div class="wrap">
+    <h2 class="small">About this site</h2>
+    <ul>
+      <li><a href="accessibility.html">Accessibility and inclusion</a></li>
+      <li><a href="https://github.com/cyberdudeuk/dam-return-and-desk/issues/new?template=contact.yml">Contact us (form)</a></li>
+      <li><a href="https://github.com/cyberdudeuk/dam-return-and-desk">Source code</a></li>
+    </ul>
+    <details>
+      <summary>How this site was made, and what it does with your files</summary>
+      <div class="body">
+        <p><b>Your files stay with you.</b> When you check a file, it is read by your own browser. Nothing is uploaded, stored or sent anywhere. There are no cookies and no tracking.</p>
+        <p><b>Where the content comes from.</b> Facts about the policy come from the published Data Asset Management Policy and its guidance on GOV.UK. How the team processes returns is the team’s own proposed design, and the page says so. The full list of sources is in <a href="https://github.com/cyberdudeuk/dam-return-and-desk/blob/main/docs/sources.md">our sources list</a>.</p>
+        <p><b>How it was made.</b> Made for the GDS Government Data directorate - Data Quality &amp; Management team with the help of an AI assistant (Claude, made by Anthropic), which also drew the icons. Facts about the policy and its guidance were checked against the published pages on GOV.UK. The team is responsible for the content. Content last checked: 13 November 2026.</p>
+        <p><b>No guarantee.</b> This is a prototype. If anything here disagrees with the published guidance on GOV.UK, the guidance is right. Please tell us so we can fix it.</p>
+        <p><b>Contact.</b> We use a contact form so that messages reach whoever is on duty. The form is on GitHub and what you write there can be seen by others, so do not include personal or sensitive information.</p>
+        <p><b>Licence.</b> Text is available under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>. Code is under the MIT licence.</p>
+        <div class="colophon">
+          <img src="assets/qr.svg" width="112" height="112" alt="QR code linking to the source code of this site">
+          <img src="assets/barcode.svg" width="220" height="82" alt="Barcode of the version number, DAR 2026.11.13">
+          <p class="small">Version 2026.11.13<br><a href="https://github.com/cyberdudeuk/dam-return-and-desk">Source code on GitHub</a></p>
+        </div>
+      </div>
+    </details>
+  </div>
+</footer>
+<p id="announce" class="vh" aria-live="polite"></p>
+</body>
+</html>

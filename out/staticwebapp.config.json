@@ -1,0 +1,28 @@
+{
+ "globalHeaders": {
+  "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'self' https://teams.microsoft.com https://*.teams.microsoft.com https://*.cloud.microsoft https://*.office.com https://outlook.office.com https://outlook.office365.com https://*.microsoft365.com https://*.sharepoint.com",
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "no-referrer",
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+  "Cross-Origin-Opener-Policy": "same-origin"
+ },
+ "mimeTypes": {
+  ".webmanifest": "application/manifest+json",
+  ".ics": "text/calendar",
+  ".csv": "text/csv"
+ },
+ "routes": [
+  {
+   "route": "/sw.js",
+   "headers": {
+    "Cache-Control": "no-cache"
+   }
+  }
+ ],
+ "responseOverrides": {
+  "404": {
+   "rewrite": "/index.html"
+  }
+ }
+}

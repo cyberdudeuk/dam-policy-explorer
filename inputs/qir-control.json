@@ -1,0 +1,1527 @@
+{
+ "meta": {
+  "schema": 1,
+  "asOf": "2026-11-15 21:50 UTC",
+  "title": "Question and Insight Register: control layer",
+  "purpose": "Open matters, decisions, dated issues, follow-up actions, routing and the identifier crosswalk that sit around the team's Question and Insight Register (the SharePoint list). The list stays the system of record for individual questions; this layer holds what V9 and the cross-forum sweeps add. Since 15 Nov 2026 it also records how far the compendium's operating model is adopted, the weekly operating controls (OC-01 to OC-14) and the audit's own control record.",
+  "provenance": {
+   "V": "Read in the source on the date shown",
+   "S": "From an AI meeting summary or a Copilot document, not checked against a transcript",
+   "P": "Proposed in V9 or by the sweep; not approved",
+   "M": "Mapping or judgement made by Claude when building this page; check before acting"
+  },
+  "people": "People appear by role or organisation. Team roles: Head of Data Management; Data Governance Manager; Data Governance Advisor (metadata, catalogues and template); Data Governance Advisor (data quality); Data Management Lead (you)."
+ },
+ "coverage": [
+  {
+   "src": "Question and Insight Register (SharePoint list, Government Data Directorate site)",
+   "status": "Read in full",
+   "when": "15 Nov 20:40",
+   "note": "99 items; this run added audit findings to Q090, Q095, Q096 and Q097",
+   "prov": "V"
+  },
+  {
+   "src": "Government Data Directorate SharePoint site: all 40 lists, their columns, views and flows",
+   "status": "Read in full",
+   "when": "15 Nov",
+   "note": "Decisions Log, RAID log, Assurance Index, Automation Health Log and Register Backlog existed since May with 0 items, catalogued as Paused. 2 flows on the site, neither on the register.",
+   "prov": "V"
+  },
+  {
+   "src": "Government Data Portal intake lists: Hub contact form, Community discussions, Knowledge Hub activity",
+   "status": "Read",
+   "when": "15 Nov",
+   "note": "0 contact form items, 1 discussion, 20 Knowledge Hub threads (12 questions, all already in the register)",
+   "prov": "V"
+  },
+  {
+   "src": "Authoritative Interpretation and Knowledge Register V9 (OneDrive, Copilot)",
+   "status": "Read in part",
+   "when": "13 Nov",
+   "note": "Sensitivity-labelled; read in Excel for the web. Sheets 00, 01 (visible columns), 15 and 18 read; 02 to 07, 16 and 17 not read. Dated-issue questions are cut off in the grid",
+   "prov": "V"
+  },
+  {
+   "src": "Cross-Forum Questions and Follow-Ups (OneDrive, Copilot)",
+   "status": "Read in part",
+   "when": "13 Nov",
+   "note": "Open matters, response-time finding, operating model, MoSCoW backlog and priority actions read; theme sections skimmed",
+   "prov": "S"
+  },
+  {
+   "src": "Visual compendium and team guide deck (OneDrive, Copilot)",
+   "status": "Read in full",
+   "when": "15 Nov",
+   "note": "All 12 slides: text, speaker notes and the slide 8 image. The slide 8 image says V8 (the workbook is V9) and its footer uses the retired directorate name: logged in Register Backlog.",
+   "prov": "V"
+  },
+  {
+   "src": "Outlook: your mailbox",
+   "status": "Searched",
+   "when": "15 Nov",
+   "note": "All folders searched for replies to HS2 Ltd, NHSBSA and the National Crime Agency (Q095 to Q097): none found",
+   "prov": "V"
+  },
+  {
+   "src": "Outlook: team mailbox (all 89 messages)",
+   "status": "Listed; 9 read",
+   "when": "13 Nov",
+   "note": "Older threads with no visible reply flagged rather than read in full Retried 15 Nov: only pinned items load in this window, so unread threads are still not read.",
+   "prov": "V"
+  },
+  {
+   "src": "Outlook: Follow Ups and To respond folders",
+   "status": "Listed; 1 read",
+   "when": "13 Nov",
+   "note": "",
+   "prov": "V"
+  },
+  {
+   "src": "Teams: recent chats and the Project Compass recap",
+   "status": "Read",
+   "when": "13 Nov",
+   "note": "Chats active since 10 Nov opened; channels not searched",
+   "prov": "V"
+  },
+  {
+   "src": "Knowledge Hub: your notifications",
+   "status": "Read",
+   "when": "13 Nov",
+   "note": "No new questions since 9 Nov; DCAP documents added 12 Nov",
+   "prov": "V"
+  },
+  {
+   "src": "Jira (MGMT project)",
+   "status": "Read in full",
+   "when": "15 Nov",
+   "note": "100 issues updated in the last 21 days plus a keyword search for questions, queries, FAQs and interpretation. No new stakeholder questions; delivery links found (MGMT-247, MGMT-104, MGMT-140, MGMT-138, MGMT-263, MGMT-280)",
+   "prov": "V"
+  },
+  {
+   "src": "Jira (XDMH project)",
+   "status": "Not reachable",
+   "when": "15 Nov",
+   "note": "XDMH is not a project on the connected Atlassian site; its items are known only from notification emails",
+   "prov": "V"
+  },
+  {
+   "src": "Viva Engage",
+   "status": "Searched",
+   "when": "15 Nov",
+   "note": "\"DAM Policy\": only portal posts and unrelated threads; no stakeholder questions. Found a portal test page using the retired directorate name (backlog)",
+   "prov": "V"
+  },
+  {
+   "src": "Slack: UK Government Digital",
+   "status": "Searched",
+   "when": "15 Nov",
+   "note": "\"DAM Policy\" and \"critical data assets\": 0 messages, files or channels",
+   "prov": "V"
+  },
+  {
+   "src": "Copilot project xForum Comms/Collab scan",
+   "status": "Not checked",
+   "when": "",
+   "note": "Would not open on 11 Nov; not retried",
+   "prov": "V"
+  }
+ ],
+ "lifecycle": {
+  "stages": [
+   [
+    "Capture",
+    "New",
+    "Question logged once, with channel, forum and organisation"
+   ],
+   [
+    "Acknowledge",
+    "New",
+    "Asker told it is logged (target 2 working days)"
+   ],
+   [
+    "Triage",
+    "Triaged",
+    "Theme, priority and owner set (target 5 working days)"
+   ],
+   [
+    "Investigate",
+    "In progress",
+    "Evidence gathered; specialist input sought where needed"
+   ],
+   [
+    "Decide",
+    "Awaiting approval",
+    "Policy interpretation or decision taken by the accountable owner"
+   ],
+   [
+    "Respond",
+    "Answered",
+    "Answer sent and linked to its canonical source (target 10 working days)"
+   ],
+   [
+    "Publish",
+    "Answered",
+    "Answer reused in the FAQ, interpretation register, playbook or Knowledge Hub"
+   ],
+   [
+    "Deliver",
+    "In delivery",
+    "Follow-on work tracked in Jira or Planner under the same ID"
+   ],
+   [
+    "Close",
+    "Closed",
+    "Closed with a reason: answered, superseded, out of scope or unresolved"
+   ],
+   [
+    "Learn",
+    "Closed",
+    "Themes and repeats fed into forums, playbooks and the heat map"
+   ]
+  ],
+  "source": "V9 GOV-003 (agreed 15 Nov 2026); list statuses from the SharePoint list; mapping M",
+  "targets": [
+   [
+    "Acknowledge",
+    "2 working days"
+   ],
+   [
+    "Triage and assign an owner",
+    "5 working days"
+   ],
+   [
+    "Answer a straightforward question",
+    "10 working days"
+   ],
+   [
+    "Complex matter",
+    "Named owner, dependency and target date set within the same 10 working days"
+   ]
+  ],
+  "targetsNote": "Set out in the cross-forum document and V9, and agreed on 15 Nov 2026 (GOV-003). GOV-005 keeps relative targets until accountable owners accept dated commitments. Breaches recorded before 15 Nov were measured against the proposals."
+ },
+ "routing": {
+  "forums": [
+   [
+    "DAM Policy Coordinator Group",
+    "Policy implementation: scope, ALBs, interpretation, the return"
+   ],
+   [
+    "Data Catalogue and Analysis Platform (DCAP) Working Group",
+    "Catalogue and metadata implementation, tooling, commercial barriers"
+   ],
+   [
+    "Cross-Government Data Management Community",
+    "Awareness, learning and reusable case studies"
+   ],
+   [
+    "Specialist routes (legal, security, commercial)",
+    "Controlled advice; never community consensus"
+   ]
+  ],
+  "formats": [
+   [
+    "Simple factual clarification",
+    "Short Teams or forum answer linked to canonical guidance"
+   ],
+   [
+    "Repeated question",
+    "Published FAQ or playbook entry"
+   ],
+   [
+    "Tool or product comparison",
+    "Structured evidence repository and comparison matrix"
+   ],
+   [
+    "Role-based capability gap",
+    "Learning pathway with practical exercises"
+   ],
+   [
+    "Cross-department problem",
+    "Working-group session and reusable pattern"
+   ],
+   [
+    "Legal or security matter",
+    "Specialist-reviewed answer, not community consensus"
+   ],
+   [
+    "Emerging pattern",
+    "Community briefing, case study or show-and-tell"
+   ],
+   [
+    "Urgent template defect",
+    "Controlled release note, corrected artefact and direct notification"
+   ]
+  ],
+  "source": "Cross-Forum Questions and Follow-Ups (S); DCAP agreement 12 Nov to route Phase 2 through the Coordinator Group first (V)"
+ },
+ "openMatters": [
+  {
+   "id": "OM-01",
+   "alias": "QIR-2026-001",
+   "title": "Organisational and arm's-length-body coverage, and how returns are packaged",
+   "pri": "Critical",
+   "act": "ACT-001",
+   "acc": "DAM Policy owner and commission owner",
+   "lead": "Data Governance Manager; Head of Data Management; departmental coordinators",
+   "target": "Before commission launch",
+   "status": "Owner confirmation required",
+   "ki": [
+    "KI-01"
+   ],
+   "q": [
+    "Q063",
+    "Q084",
+    "Q085",
+    "N-02",
+    "N-06",
+    "N-08"
+   ],
+   "mc": [
+    "F21",
+    "DP-1",
+    "O4"
+   ],
+   "dec": [
+    "D-01"
+   ],
+   "latest": "An existing steer covers most of it: on 9 Oct the Head of Data Management told DBT the team is not prescriptive. Either one combined return or separate returns is fine, provided the home department knows about every ALB return and coordinates. It has not been written into the FAQ (F21) or the interpretation register, so DVLA (Q084), MOD (Q085) and DESNZ's ALB session (N-02) are still asking.",
+   "next": "Write the 9 Oct steer into F21 and the interpretation register; reply to DVLA and MOD with it; decide whether the denominator (DP-1) counts ALBs separately.",
+   "prov": "V"
+  },
+  {
+   "id": "OM-02",
+   "alias": "QIR-2026-002",
+   "title": "Legal-gateway field treatment",
+   "pri": "Critical",
+   "act": "ACT-002",
+   "acc": "DAM Policy owner with legal or assurance approver",
+   "lead": "Data Governance Advisor (metadata, catalogues and template); departmental legal specialists",
+   "target": "Before template freeze",
+   "status": "Owner confirmation required",
+   "ki": [
+    "KI-05"
+   ],
+   "q": [
+    "N-05",
+    "Q060"
+   ],
+   "mc": [
+    "F24",
+    "O4"
+   ],
+   "dec": [],
+   "latest": "The 28 Oct coordinator FAQ says the legal gateway concerns the asset as the reporting department shares it, not how it first acquired the data. DESNZ asked on 28 Oct whether the same framing applies to the 'Source access rights' and 'Primary licence / usage basis' fields. The team replied; the reply was not read in this sweep.",
+   "next": "Confirm the answer given to DESNZ, add it to the FAQ, and take the field treatment to legal approval.",
+   "prov": "V"
+  },
+  {
+   "id": "OM-03",
+   "alias": "QIR-2026-003",
+   "title": "Discoverability and interoperability field treatment, and whether collected metadata will be published",
+   "pri": "Critical",
+   "act": "ACT-003",
+   "acc": "Commission owner and metadata architecture owner",
+   "lead": "Data Governance Advisor (metadata, catalogues and template); Data Management Lead (you); DCAP Working Group",
+   "target": "Before template freeze",
+   "status": "Owner confirmation required",
+   "ki": [
+    "KI-08",
+    "KI-10"
+   ],
+   "q": [
+    "N-04",
+    "Q064",
+    "Q019",
+    "Q020",
+    "Q046"
+   ],
+   "mc": [],
+   "dec": [
+    "D-02"
+   ],
+   "latest": "Coordinators want the metadata they submit made discoverable, so their senior leaders can see it used. The Head of Data Management expects mixed views, as with ESDAs, and there is no mechanism to publish it yet (Teams, 27 Oct). XDMH-251 and XDMH-252 (created 12 Nov) carry related catalogue and discoverability work.",
+   "next": "Decide whether the commission asks each organisation if its metadata may be published; approve definitions and validation tests for the discoverability fields.",
+   "prov": "V"
+  },
+  {
+   "id": "OM-04",
+   "alias": "QIR-2026-004",
+   "title": "Evidence test for a data quality action plan (DQAP) or equivalent",
+   "pri": "Critical",
+   "act": "ACT-004",
+   "acc": "Data quality owner and assurance owner",
+   "lead": "Data Governance Advisor (data quality); Data Quality Community; policy team",
+   "target": "10 working days after owner acceptance",
+   "status": "Owner confirmation required",
+   "ki": [
+    "KI-05"
+   ],
+   "q": [
+    "Q069",
+    "Q088",
+    "Q087"
+   ],
+   "mc": [],
+   "dec": [],
+   "latest": "No new evidence in this sweep.",
+   "next": "Approve evidence types, currency rules and an equivalence checklist with worked examples.",
+   "prov": "V"
+  },
+  {
+   "id": "OM-05",
+   "alias": "QIR-2026-005",
+   "title": "Asset-boundary rule: dataset, data asset, product, API and service",
+   "pri": "High",
+   "act": "ACT-005",
+   "acc": "DAM Policy owner",
+   "lead": "Data Management Lead (you); Data Governance Manager; practitioner reviewers",
+   "target": "20 working days after owner acceptance",
+   "status": "Owner confirmation required",
+   "ki": [
+    "KI-06",
+    "KI-07"
+   ],
+   "q": [
+    "Q061",
+    "Q081",
+    "Q060"
+   ],
+   "mc": [
+    "F24"
+   ],
+   "dec": [],
+   "latest": "DESNZ still reads the principles differently on extracts of other departments' official statistics (Q061, 10 Nov).",
+   "next": "Publish a decision rule with edge cases, including the 'accountable versus holding a copy' example.",
+   "prov": "V"
+  },
+  {
+   "id": "OM-06",
+   "alias": "QIR-2026-006",
+   "title": "Maintained map of departmental data catalogues",
+   "pri": "High",
+   "act": "ACT-006",
+   "acc": "Data catalogue capability owner",
+   "lead": "Data Management Lead (you); departmental catalogue leads",
+   "target": "30 working days after owner acceptance",
+   "status": "Owner confirmation required",
+   "ki": [
+    "KI-08"
+   ],
+   "q": [
+    "Q073",
+    "Q011",
+    "Q089"
+   ],
+   "mc": [],
+   "dec": [
+    "D-03",
+    "D-04"
+   ],
+   "latest": "The 12 Nov DCAP session focused on where organisations still struggle with catalogues, including commercial barriers. Materials are on the Knowledge Hub and follow-ups are XDMH-250 to XDMH-254.",
+   "next": "Reuse the Directory of Data Catalogues evidence and confirm who maintains the map.",
+   "prov": "V"
+  },
+  {
+   "id": "OM-07",
+   "alias": "QIR-2026-007",
+   "title": "Catalogue and data-quality tool integration evidence",
+   "pri": "High",
+   "act": "ACT-007",
+   "acc": "Catalogue and data-quality capability owners",
+   "lead": "Data Management Lead (you); Data Governance Advisor (data quality); departmental contributors",
+   "target": "30 working days after owner acceptance",
+   "status": "Owner confirmation required",
+   "ki": [],
+   "q": [
+    "Q002",
+    "N-03",
+    "Q086"
+   ],
+   "mc": [],
+   "dec": [],
+   "latest": "MoJ's Data Management Hub team asked on 12 Nov for a session on DQ Commons after reading the Q002 thread. Defra's master data introduction call is at 14:30 today (Q086).",
+   "next": "Run the MoJ session with the data quality lead; capture both as comparable cases.",
+   "prov": "V"
+  },
+  {
+   "id": "OM-08",
+   "alias": "QIR-2026-008",
+   "title": "Crosswalk of DAM and Performance Commission requirements",
+   "pri": "High",
+   "act": "ACT-008",
+   "acc": "DAM and Performance commission owners",
+   "lead": "Data Governance Manager; Data Governance Advisor (data quality); performance-data representatives",
+   "target": "Before next design freeze",
+   "status": "Owner confirmation required",
+   "ki": [
+    "KI-11"
+   ],
+   "q": [
+    "Q003",
+    "Q067",
+    "Q062"
+   ],
+   "mc": [],
+   "dec": [],
+   "latest": "No new evidence in this sweep. The data-sharing agreement with the Performance Framework team (Q067) still has no response on record.",
+   "next": "Map requirements and reuse conditions; raise the unresolved dependency on the RAID log.",
+   "prov": "V"
+  },
+  {
+   "id": "OM-09",
+   "alias": "QIR-2026-009",
+   "title": "Every question captured once, triaged weekly and linked to its answer",
+   "pri": "Critical",
+   "act": "ACT-009",
+   "acc": "Question-register service owner",
+   "lead": "DAM team leads; forum facilitators",
+   "target": "Initial review 5 working days after owner acceptance",
+   "status": "Owner confirmation required",
+   "ki": [],
+   "q": [
+    "N-01",
+    "N-02",
+    "N-03",
+    "N-04",
+    "N-05",
+    "N-06",
+    "N-07",
+    "N-08",
+    "N-09",
+    "N-10"
+   ],
+   "mc": [
+    "CQ-01",
+    "DP-5"
+   ],
+   "dec": [
+    "GOV-001",
+    "GOV-002",
+    "GOV-004"
+   ],
+   "latest": "Not yet true. This sweep found 10 questions or findings that are not in the list, including four team-mailbox queries from August to October with no reply visible there, and one item (Q063) shown as unanswered that was answered on 9 Oct.",
+   "next": "Appoint the service owner (GOV-002), enter the 10 new items and the corrections into the list, and start the Monday triage.",
+   "prov": "V"
+  },
+  {
+   "id": "OM-10",
+   "alias": "QIR-2026-010",
+   "title": "Outstanding specialist-network questions (quantum seminar)",
+   "pri": "Medium",
+   "act": "ACT-010",
+   "acc": "Originating forum organiser or named expert",
+   "lead": "Government Futures Network organiser; relevant specialists",
+   "target": "10 working days after owner acceptance",
+   "status": "Owner confirmation required",
+   "ki": [],
+   "q": [],
+   "mc": [],
+   "dec": [],
+   "latest": "Not in the list. Covers near-term optimisation applications and confirmation about the Home Office Iris team.",
+   "next": "Confirm the questions with the organiser and close each one with an answer or an explicit reason.",
+   "prov": "S"
+  }
+ ],
+ "decisions": [
+  {
+   "id": "GOV-001",
+   "title": "Approve V9 as the controlled cross-forum Question and Insight Register",
+   "position": "Use V9 as the operational control surface; redirect legacy logs rather than deleting evidence.",
+   "owner": "DAM Policy and commission governance chair",
+   "by": "Before operational backfill",
+   "ifNot": "Continued fragmentation and duplicate case records.",
+   "status": "Agreed",
+   "note": "There are two candidate registers: the SharePoint list (89 questions) and V9 (10 open matters). This page treats the list as the record for questions and V9 as the record for open matters (M).",
+   "prov": "V",
+   "approved": "Approved 15 Nov 2026 by the Data Management Lead"
+  },
+  {
+   "id": "GOV-002",
+   "title": "Confirm the register's service owner and weekly triage chair",
+   "position": "One accountable service owner; forum facilitators responsible for capture.",
+   "owner": "DAM team leadership",
+   "by": "Before the first weekly triage",
+   "ifNot": "No accountable ownership or consistent service-level monitoring.",
+   "status": "Agreed (names to confirm)",
+   "prov": "V",
+   "approved": "Approved 15 Nov 2026 by the Data Management Lead in principle; the service owner and weekly triage chair are still to be named"
+  },
+  {
+   "id": "GOV-003",
+   "title": "Approve the lifecycle, service levels and authority boundaries",
+   "position": "Capture, acknowledge, triage, investigate, decide, respond, publish, deliver, close and learn.",
+   "owner": "Policy and commission governance chair",
+   "by": "Before workflow automation",
+   "ifNot": "Working interpretations may be misrepresented and overdue work hidden.",
+   "status": "Agreed",
+   "prov": "V",
+   "approved": "Approved 15 Nov 2026 by the Data Management Lead"
+  },
+  {
+   "id": "GOV-004",
+   "title": "Approve one ID across systems",
+   "position": "Use one QIR ID across Jira, Planner, RAID, FAQ, Canon, playbooks and dashboards.",
+   "owner": "Delivery and knowledge governance",
+   "by": "Before creating delivery records",
+   "ifNot": "Duplicated narratives and weak evidence lineage.",
+   "status": "Agreed",
+   "note": "The crosswalk on this page proposes how the two current ID schemes map (M).",
+   "prov": "V",
+   "approved": "Approved 15 Nov 2026 by the Data Management Lead"
+  },
+  {
+   "id": "GOV-005",
+   "title": "Approve the target-date approach",
+   "position": "Relative targets until accountable owners accept dated commitments.",
+   "owner": "Programme governance lead",
+   "by": "At owner assignment",
+   "ifNot": "Illustrative dates could be mistaken for agreed commitments.",
+   "status": "Agreed",
+   "prov": "V",
+   "approved": "Approved 15 Nov 2026 by the Data Management Lead"
+  },
+  {
+   "id": "D-01",
+   "title": "One return or several for ALBs and agencies",
+   "position": "Not prescriptive: one combined return or separate returns, whichever is easiest, provided the home department knows about all ALB returns and coordinates them.",
+   "owner": "Head of Data Management",
+   "by": "Stated 9 Oct 2026",
+   "ifNot": "",
+   "status": "Stated, not yet published",
+   "note": "Not yet in the FAQ (F21) or the interpretation register, so the same question keeps arriving (Q063, Q084, Q085, N-02, N-08).",
+   "prov": "V"
+  },
+  {
+   "id": "D-02",
+   "title": "Make the metadata collected in the commission discoverable?",
+   "position": "No publication mechanism yet. Option on the table: add a question to the commission asking whether each organisation is happy for its metadata to be shared or published.",
+   "owner": "Head of Data Management",
+   "by": "Before the December commission",
+   "ifNot": "Coordinators lose a lever to justify the return to their senior leaders.",
+   "status": "Open",
+   "prov": "V"
+  },
+  {
+   "id": "D-03",
+   "title": "December DCAP Working Group goes ahead",
+   "position": "Held as a recap and forward look, the last session of the quarter.",
+   "owner": "DCAP chair (Cabinet Office) with the Data Management Lead",
+   "by": "Agreed 12 Nov",
+   "ifNot": "",
+   "status": "Agreed",
+   "prov": "V"
+  },
+  {
+   "id": "D-04",
+   "title": "Where Phase 2 catalogue work (Jan to Oct 2027) is discussed first",
+   "position": "First through the DAM Policy Coordinators Working Group, not duplicated across forums; DCAP sessions freed for members to present their own work.",
+   "owner": "Data Management Lead",
+   "by": "Agreed 12 Nov",
+   "ifNot": "",
+   "status": "Agreed",
+   "prov": "V"
+  }
+ ],
+ "issues": [
+  [
+   "KI-01",
+   "ALB scope and submission packaging",
+   "Recurring",
+   "10 Aug",
+   "22 Oct",
+   "OM-01"
+  ],
+  [
+   "KI-02",
+   "Organisations and returns: how many to expect",
+   "Recurring",
+   "18 Sep",
+   "Oct",
+   "OM-01"
+  ],
+  [
+   "KI-03",
+   "CDA volume and expected magnitude",
+   "Recurring",
+   "18 Sep",
+   "Oct",
+   "OM-05"
+  ],
+  [
+   "KI-04",
+   "Baseline versus full implementation",
+   "Recurring",
+   "10 Aug",
+   "22 Oct",
+   "OM-08"
+  ],
+  [
+   "KI-05",
+   "Evidence standard and equivalence",
+   "Recurring",
+   "10 Aug",
+   "22 Oct",
+   "OM-04"
+  ],
+  [
+   "KI-06",
+   "Source dataset, product, API and service",
+   "Recurring",
+   "10 Aug",
+   "22 Oct",
+   "OM-05"
+  ],
+  [
+   "KI-07",
+   "Potential public-sector reuse threshold",
+   "Recurring",
+   "10 Aug",
+   "22 Oct",
+   "OM-05"
+  ],
+  [
+   "KI-08",
+   "Catalogue, IAR and metadata",
+   "Recurring",
+   "10 Aug",
+   "22 Oct",
+   "OM-03"
+  ],
+  [
+   "KI-09",
+   "Implementation operating model",
+   "Recurring",
+   "10 Aug",
+   "22 Oct",
+   "OM-09"
+  ],
+  [
+   "KI-10",
+   "Discoverability value and early surfacing of metadata",
+   "One-off",
+   "22 Oct",
+   "22 Oct",
+   "OM-03"
+  ],
+  [
+   "KI-11",
+   "Commission overlap and evidence",
+   "One-off",
+   "22 Oct",
+   "22 Oct",
+   "OM-08"
+  ],
+  [
+   "KI-12",
+   "Return-processing demonstration",
+   "One-off",
+   "23 Sep",
+   "23 Sep",
+   "Mission control"
+  ]
+ ],
+ "issuesNote": "From V9 sheet 01. KI-02 and KI-03 rest on planning assumptions (253 returns; 9 to 15 CDAs a return) that V9 itself says are not verified. The OM mapping is M.",
+ "newItems": [
+  {
+   "id": "N-01",
+   "q": "Are there standardised templates for the activities the playbooks describe?",
+   "org": "DHSC (Project Compass, via its delivery supplier)",
+   "ch": "Email and meeting",
+   "d": "2026-11-11",
+   "pri": "Should",
+   "st": "Answered",
+   "th": "Governance frameworks and operating models",
+   "pos": "Answered in the 11 Nov meeting: templates are the organisation's operational body of knowledge, and service assessments look for evidence that data management was considered, not every template. A combined management workbook was agreed as a useful addition.",
+   "links": "FU-01 to FU-08",
+   "prov": "V",
+   "entered": "Q090"
+  },
+  {
+   "id": "N-02",
+   "q": "Can GDS attend DESNZ's DAM Policy introduction session for its nominated ALB policy leads (probably next week)?",
+   "org": "DESNZ Central Data Office",
+   "ch": "Email (team mailbox)",
+   "d": "2026-11-11",
+   "pri": "Should",
+   "st": "New",
+   "th": "DAM Policy and critical data assets",
+   "pos": "No reply on record. The Head of Data Management is on leave until 16 Nov.",
+   "links": "OM-01, D-01, FU-10",
+   "prov": "V",
+   "entered": "Q091"
+  },
+  {
+   "id": "N-03",
+   "q": "Can we meet to discuss DQ Commons, the open-source tool linked from the Knowledge Hub thread?",
+   "org": "MoJ Data Management Hub team",
+   "ch": "Teams",
+   "d": "2026-11-12",
+   "pri": "Should",
+   "st": "In progress",
+   "th": "Data quality and events",
+   "pos": "Booking page sent 12 Nov; data quality lead to join.",
+   "links": "Q002, OM-07, FU-13",
+   "prov": "V",
+   "entered": "Q092"
+  },
+  {
+   "id": "N-04",
+   "q": "Will GDS make the metadata collected through the commission discoverable or published?",
+   "org": "DAM Policy Coordinator Group (several)",
+   "ch": "Teams (raised internally)",
+   "d": "2026-10-27",
+   "pri": "Should",
+   "st": "Awaiting approval",
+   "th": "Catalogues, metadata and tooling",
+   "pos": "Decision open (D-02).",
+   "links": "OM-03, KI-10, D-02",
+   "prov": "V",
+   "entered": "Q093"
+  },
+  {
+   "id": "N-05",
+   "q": "Does the legal-gateway framing also apply to the 'Source access rights' and 'Primary licence / usage basis' fields?",
+   "org": "DESNZ",
+   "ch": "Email (team mailbox)",
+   "d": "2026-10-28",
+   "pri": "Should",
+   "st": "Answered",
+   "th": "DAM Policy and critical data assets",
+   "pos": "Marked as replied in the team mailbox; the reply was not read here. Check it before adding to the FAQ.",
+   "links": "OM-02, ACT-002",
+   "prov": "V",
+   "entered": "Q094"
+  },
+  {
+   "id": "N-06",
+   "q": "Several interpretation queries on 'Identifying and recording critical data assets'; can we have a call?",
+   "org": "NHSBSA (DHSC ALB)",
+   "ch": "Email (team mailbox)",
+   "d": "2026-09-21",
+   "pri": "Should",
+   "st": "New",
+   "th": "DAM Policy and critical data assets",
+   "pos": "No reply visible in the team mailbox. It may have been answered from a personal mailbox: check before chasing.",
+   "links": "OM-01",
+   "prov": "V",
+   "entered": "Q095"
+  },
+  {
+   "id": "N-07",
+   "q": "Which data frameworks do justice teams use, and what does identifying and recording CDAs mean for us?",
+   "org": "National Crime Agency",
+   "ch": "Email (team mailbox)",
+   "d": "2026-09-03",
+   "pri": "Could",
+   "st": "New",
+   "th": "Governance frameworks and operating models",
+   "pos": "Flagged, no reply visible in the team mailbox. Check personal mailboxes first.",
+   "links": "",
+   "prov": "V",
+   "entered": "Q096"
+  },
+  {
+   "id": "N-08",
+   "q": "As an ALB coordinated by DfT: who is our contact, what are the timescales, and which template do we use?",
+   "org": "HS2 Ltd (DfT ALB)",
+   "ch": "Email (team mailbox)",
+   "d": "2026-08-27",
+   "pri": "Should",
+   "st": "New",
+   "th": "DAM Policy and critical data assets",
+   "pos": "No reply visible in the team mailbox. Much of it is now answered by published material (V3 template, end-of-January return, home-department coordination).",
+   "links": "OM-01, D-01, Q084",
+   "prov": "V",
+   "entered": "Q097"
+  },
+  {
+   "id": "N-09",
+   "q": "The DAM capability playbooks site is blocked by our cyber security; other departments may be blocked too.",
+   "org": "DESNZ",
+   "ch": "Teams",
+   "d": "2026-11-11",
+   "pri": "Must",
+   "st": "New",
+   "th": "Catalogues, metadata and tooling",
+   "pos": "The site is staged on a personal GitHub Pages account while the co-cddo organisation is retired and a home in alphagov or gds-dtx is chosen.",
+   "links": "FU-12",
+   "prov": "V",
+   "entered": "Q098"
+  },
+  {
+   "id": "N-10",
+   "q": "DESNZ has already started its internal commissioning for the baseline, so it can absorb little new material this cycle.",
+   "org": "DESNZ",
+   "ch": "Teams",
+   "d": "2026-11-11",
+   "pri": "Could",
+   "st": "Answered",
+   "th": "DAM Policy and critical data assets",
+   "pos": "An insight, not a question: guidance released after commissioning starts will mostly land in cycle 2.",
+   "links": "KI-02, KI-03",
+   "prov": "V",
+   "entered": "Q099"
+  }
+ ],
+ "corrections": [
+  {
+   "id": "Q063",
+   "was": "Triaged; 'no reply found in the sweep'",
+   "now": "Answered 9 Oct by the Head of Data Management (decision D-01)",
+   "action": "Set status to Answered; next action: publish in F21 and the interpretation register",
+   "prov": "V",
+   "recorded": "Recorded on the list as an audit finding on 15 Nov; the triage chair confirms or rejects it. Status not changed by the audit."
+  },
+  {
+   "id": "Q084",
+   "was": "Awaiting approval; routed to the Head of Data Management",
+   "now": "D-01 already answers the routing question in principle. The Head is on leave until 16 Nov; template queries are covered by the Data Governance Advisor and other DAM queries by the Data Governance Manager",
+   "action": "Reply to DVLA using D-01, or confirm the Head will reply on 16 Nov",
+   "prov": "V",
+   "recorded": "Recorded on the list as an audit finding on 15 Nov; the triage chair confirms or rejects it. Status not changed by the audit."
+  },
+  {
+   "id": "Q085",
+   "was": "Awaiting approval; 'ALB handling to be agreed across departments'",
+   "now": "D-01 applies",
+   "action": "Reply to MOD using D-01",
+   "prov": "V",
+   "recorded": "Recorded on the list as an audit finding on 15 Nov; the triage chair confirms or rejects it. Status not changed by the audit."
+  },
+  {
+   "id": "Q082",
+   "was": "Awaiting times from SSRO",
+   "now": "SSRO offered Tue 17 or Thu 19 Nov, 11:00 to 12:00 (11 Nov)",
+   "action": "Book one of the slots",
+   "prov": "V",
+   "recorded": "Recorded on the list as an audit finding on 15 Nov; the triage chair confirms or rejects it. Status not changed by the audit."
+  },
+  {
+   "id": "Q086",
+   "was": "Call offered",
+   "now": "Introduction call booked for 13 Nov, 14:30, with the data quality lead and you",
+   "action": "Record the outcome after the call",
+   "prov": "V",
+   "recorded": "Recorded on the list as an audit finding on 15 Nov; the triage chair confirms or rejects it. Status not changed by the audit."
+  },
+  {
+   "id": "Q074",
+   "was": "Contributor access to fix",
+   "now": "The 12 Nov and 14 Oct DCAP decks and the 12 Nov briefing note were uploaded on 12 Nov",
+   "action": "Check older recordings, then close",
+   "prov": "V",
+   "recorded": "Recorded on the list as an audit finding on 15 Nov; the triage chair confirms or rejects it. Status not changed by the audit."
+  },
+  {
+   "id": "Q073",
+   "was": "3 follow-up tasks open",
+   "now": "The 12 Nov session took place; follow-ups now sit in Jira as XDMH-250 to XDMH-254",
+   "action": "Link the Jira items to Q073",
+   "prov": "V",
+   "recorded": "Recorded on the list as an audit finding on 15 Nov; the triage chair confirms or rejects it. Status not changed by the audit."
+  },
+  {
+   "id": "Q002",
+   "was": "Partially answered",
+   "now": "A further peer reply came on 9 Nov, and MoJ asked for a DQ Commons session (N-03)",
+   "action": "Link N-03",
+   "prov": "V",
+   "recorded": "Recorded on the list as an audit finding on 15 Nov; the triage chair confirms or rejects it. Status not changed by the audit."
+  }
+ ],
+ "actions": [
+  {
+   "id": "FU-01",
+   "what": "Give the Head of Data Management a readout of the Project Compass meeting, and propose a wider DHSC meeting",
+   "owner": "You",
+   "due": "Overdue (Outlook task reported late on 13 Nov)",
+   "links": "N-01",
+   "prov": "V"
+  },
+  {
+   "id": "FU-02",
+   "what": "Agree with Project Compass whether DHSC's analytics capability, data protection, Atamis and digital business partner colleagues are briefed now or after the pilot, then send the update",
+   "owner": "You",
+   "due": "",
+   "links": "N-01",
+   "prov": "S"
+  },
+  {
+   "id": "FU-03",
+   "what": "Reword the templates: named people and email addresses stay out of published GitHub templates but are fine in internal working documents",
+   "owner": "You (playbooks backlog)",
+   "due": "",
+   "links": "N-01",
+   "prov": "S"
+  },
+  {
+   "id": "FU-04",
+   "what": "Add a combined management workbook template (RAID, decisions, assumptions, actions, issues, exceptions) as separate tabs",
+   "owner": "You (playbooks backlog)",
+   "due": "",
+   "links": "N-01",
+   "prov": "S"
+  },
+  {
+   "id": "FU-05",
+   "what": "Data dictionary: add data type, cardinality and format, and make controlled values clickable",
+   "owner": "You (playbooks backlog)",
+   "due": "",
+   "links": "N-01",
+   "prov": "S"
+  },
+  {
+   "id": "FU-06",
+   "what": "Sector supplements: signpost health frameworks (FHIR, HL7, DHSC cloud and data frameworks) alongside the Metadata Exchange Model and DCAT-UK",
+   "owner": "You (playbooks backlog)",
+   "due": "",
+   "links": "N-01",
+   "prov": "S"
+  },
+  {
+   "id": "FU-07",
+   "what": "Backlog for the next release: retention and archiving (including deviations from the standard period), data sharing and legal gateways; ER-diagram templates for a future data architecture resource",
+   "owner": "You (playbooks backlog)",
+   "due": "Next release",
+   "links": "N-01, OM-02",
+   "prov": "S"
+  },
+  {
+   "id": "FU-08",
+   "what": "Follow-up call with Project Compass once they have reviewed the hub and documents (about a week from 12 Nov)",
+   "owner": "You",
+   "due": "Week of 23 Nov (≈)",
+   "links": "N-01",
+   "prov": "V"
+  },
+  {
+   "id": "FU-09",
+   "what": "Book the SSRO introductory meeting: they offered Tue 17 or Thu 19 Nov, 11:00 to 12:00",
+   "owner": "You",
+   "due": "Before 17 Nov",
+   "links": "Q082",
+   "prov": "V"
+  },
+  {
+   "id": "FU-10",
+   "what": "Reply to DESNZ Central Data Office on whether GDS can attend its ALB introduction session",
+   "owner": "Data Governance Manager (Head on leave until 16 Nov)",
+   "due": "This week",
+   "links": "N-02, D-01",
+   "prov": "V"
+  },
+  {
+   "id": "FU-11",
+   "what": "Send DESNZ the baseline-effort modelling and the cataloguing playbook material, and propose times for the mid-November walkthrough, as promised on 11 Nov",
+   "owner": "You",
+   "due": "This week (committed)",
+   "links": "N-10, KI-02",
+   "prov": "V"
+  },
+  {
+   "id": "FU-12",
+   "what": "Give departments a route to the playbooks that their networks allow (a Knowledge Hub or SharePoint copy, or the organisation repository once chosen)",
+   "owner": "You",
+   "due": "",
+   "links": "N-09",
+   "prov": "V"
+  },
+  {
+   "id": "FU-13",
+   "what": "Hold the DQ Commons session with MoJ, with the data quality lead",
+   "owner": "You and the Data Governance Advisor (data quality)",
+   "due": "Next two weeks",
+   "links": "N-03",
+   "prov": "V"
+  },
+  {
+   "id": "FU-14",
+   "what": "Record the outcome of today's Defra master data introduction call",
+   "owner": "Data Governance Advisor (data quality) and you",
+   "due": "13 Nov",
+   "links": "Q086",
+   "prov": "V"
+  },
+  {
+   "id": "FU-15",
+   "what": "Publish D-01 in the FAQ (F21) and the interpretation register; answer DVLA and MOD with it",
+   "owner": "Data Governance Manager; Head of Data Management",
+   "due": "",
+   "links": "D-01, Q063, Q084, Q085",
+   "prov": "V"
+  },
+  {
+   "id": "FU-16",
+   "what": "Check personal mailboxes for replies to the NHSBSA, NCA and HS2 queries, then answer any still open",
+   "owner": "Team",
+   "due": "",
+   "links": "N-06, N-07, N-08",
+   "prov": "V"
+  },
+  {
+   "id": "FU-17",
+   "what": "Enter N-01 to N-10 and the corrections into the team list so the Monday refresh carries them",
+   "owner": "You or the service owner",
+   "due": "Before Monday's refresh",
+   "links": "OM-09",
+   "prov": "M"
+  }
+ ],
+ "jira": [
+  [
+   "XDMH-239",
+   "Document return intake checks, pass/fail outcomes and exception route",
+   "KI-12"
+  ],
+  [
+   "XDMH-241",
+   "Define exception-handling thresholds using worked failure scenarios",
+   "KI-12"
+  ],
+  [
+   "XDMH-242",
+   "Implement traceable return and register identifiers, timestamps and source lineage",
+   "GOV-004"
+  ],
+  [
+   "XDMH-243",
+   "Define tracker status model and receipt-confirmation control",
+   "DP-4"
+  ],
+  [
+   "XDMH-244",
+   "Configure and test automatic receipt confirmation for return emails",
+   "DP-4"
+  ],
+  [
+   "XDMH-246",
+   "Align tracker, register and dashboard measures across the three analytics lenses",
+   "KI-12"
+  ],
+  [
+   "XDMH-248",
+   "Hold collaborative process deep-dives using the granular playbook",
+   "OM-09"
+  ],
+  [
+   "XDMH-250",
+   "Publish DCAP 12 November session materials and accessible follow-up",
+   "Q073, Q074"
+  ],
+  [
+   "XDMH-251",
+   "Clarify technology-agnostic catalogue guidance and interoperability requirements",
+   "OM-03, OM-06"
+  ],
+  [
+   "XDMH-252",
+   "Arrange discoverability platform update for a future DCAP session",
+   "OM-03"
+  ],
+  [
+   "XDMH-253",
+   "Prepare reusable cross-government catalogue requirements and procurement pack",
+   "OM-06"
+  ],
+  [
+   "XDMH-254",
+   "Invite catalogue implementers to share practical lessons at DCAP",
+   "OM-07"
+  ]
+ ],
+ "jiraNote": "Created 12 Nov, status To Do, read from Jira notification emails (Jira itself was not reached). The link column is M.",
+ "backlog": {
+  "Must": [
+   "Establish the single Question and Insight Register",
+   "Import the existing DAM queries log and current open items",
+   "Assign accountable owners and review dates",
+   "Publish one controlled answer set for DAM Policy interpretation",
+   "Introduce acknowledgement and final-response timestamps",
+   "Link every repeated question to one maintained answer",
+   "Separate policy, legal, technical, operational and training routes",
+   "Close or explicitly replan the ten open matters"
+  ],
+  "Should": [
+   "Weekly triage chaired by the relevant capability lead",
+   "Worked examples for the highest-volume ambiguities",
+   "Monthly office hours for DAM Policy and catalogue implementation",
+   "Connect questions to playbook backlog items and release notes",
+   "Quarterly demand-and-capability heat map",
+   "Track whether a response resolved the issue or created another question",
+   "A common routing guide for forum moderators"
+  ],
+  "Could": [
+   "Copilot suggestions for themes, duplicates and owners",
+   "Draft FAQ entries from approved meeting answers",
+   "Department-specific digests",
+   "A lightweight dashboard of volume, age, response time, recurrence and unresolved risk",
+   "A 'questions people like me asked' view by role or maturity"
+  ],
+  "Won't (for now)": [
+   "A standalone portal detached from existing policy and playbook content",
+   "Treating every question as a training need",
+   "Unreviewed AI-generated answers becoming policy interpretation",
+   "Duplicating the same discussion across forums",
+   "Publishing average response times until questions and answers are reliably paired"
+  ],
+  "source": "Cross-Forum Questions and Follow-Ups (S)"
+ },
+ "crosswalkNote": "Two ID schemes exist today: the list's Q001 to Q089 (one per question) and V9's QIR-2026-001 to 010 (one per open matter). GOV-004 (one QIR ID across systems) was approved on 15 Nov 2026; this is how the page applies it (the mapping itself is M): keep Q numbers as the single question ID, call V9's records OM-01 to OM-10 with the old ID kept as an alias, and number new items in the list's sequence when they are entered (N-01 becomes the next free Q number). Applied 15 Nov 2026 for new items only: N-01 to N-10 are now Q090 to Q099. Open matters and decisions keep their IDs and are linked from the register's Open matter and Decision IDs columns.",
+ "caseAgainst": [
+  [
+   "This duplicates the SharePoint list and V9.",
+   "It holds no question records of its own: the list stays the record for questions and V9 for open matters. This page joins them and shows where they disagree. GOV-001 and GOV-004 were approved on 15 Nov 2026, and it follows them."
+  ],
+  [
+   "The sweep may have missed questions.",
+   "Yes. Jira, Slack and Viva Engage were not re-swept, Teams channels were not searched, and older team-mailbox threads were listed rather than read. The coverage table says what was and was not read; treat the new items as a floor."
+  ],
+  [
+   "Mapping questions to open matters is judgement.",
+   "Yes, and every mapping is marked M. The open matters and their accountable roles come from V9 and are themselves proposals awaiting owner confirmation."
+  ],
+  [
+   "Corrections from mail may be out of date.",
+   "Each correction cites the message it rests on. Q063 rests on a reply in your Follow Ups folder dated 9 Oct; nothing newer contradicts it."
+  ],
+  [
+   "Base rate: how often does the register drift from reality?",
+   "In this sweep, 1 of 89 list items had the wrong status (Q063), and 10 questions or findings were missing (about 11% against the list). Monday triage plus capture at source is the countermeasure (OM-09)."
+  ],
+  [
+   "Fourteen controls is too much for a five-person team.",
+   "The controls run themselves; people only see the IDs that fail. The weekly view needs one person for about half an hour, which is the cadence slide 11 already asks for."
+  ],
+  [
+   "Until 15 Nov the targets were not agreed, so those failures were not real.",
+   "True for breaches recorded before 15 Nov: they were measured against V9's proposals. GOV-003 was approved on 15 Nov 2026, so from that run the controls measure agreed targets, and each control's target label follows the Decisions Log rather than being fixed in the code."
+  ],
+  [
+   "Writing to the team list without a triage chair risks confusion.",
+   "The audit only added columns, new records with their source, and findings in a separate column. It changed no status, owner or answer; the version history keeps every edit."
+  ]
+ ],
+ "newItemsNote": "Entered in the team list on 15 Nov 2026 as Q090 to Q099, with the N number kept under Other IDs and a finding for triage to confirm. Shown here for traceability.",
+ "adoption": {
+  "asOf": "2026-11-15",
+  "source": "Compendium \"Question to insight to action\" (11 Nov 2026), all 12 slides, compared with the register, its site and this page on 15 Nov 2026",
+  "rows": [
+   [
+    "Many inputs, one door",
+    "3, 8",
+    "Partial",
+    "Adopted",
+    "Sweeps captured Knowledge Hub, mail and Teams by hand; the portal intake lists were not connected.",
+    "OC-01 checks every question thread, contact form item and discussion against the register each week: 12 of 12 captured. Automatic intake waits for the contact form to go live (backlog)."
+   ],
+   [
+    "One register, one QIR ID",
+    "3, 7, 12",
+    "Partial",
+    "Adopted",
+    "Two ID schemes; 10 sweep items sat outside the list.",
+    "Q090 to Q099 entered with their N numbers as aliases; Other IDs column; OC-09 resolves every cross-reference (120 records, 0 broken). GOV-001 and GOV-004 approved on 15 Nov 2026."
+   ],
+   [
+    "Lifecycle: capture to learn",
+    "5, 11",
+    "Partial",
+    "Adopted",
+    "Seven statuses only; no dates for acknowledge, triage, response or closure; a response looked the same as resolution.",
+    "Acknowledged, Triaged, Responded and Closed dates; Resolution; Closure reason; Learning captured; Did the answer work. OC-02, OC-03, OC-04 and OC-08 run weekly. Targets agreed on 15 Nov 2026 (GOV-003, GOV-005)."
+   ],
+   [
+    "Right question, right forum, right format",
+    "6",
+    "Partial",
+    "Adopted",
+    "\"Best way to answer\" was free text; the routing tables lived only on this page.",
+    "Question type, Impact, Urgency, Route to and Response format columns; OC-06. 53 older triaged matters need backfill, Must items first."
+   ],
+   [
+    "Authority before approval",
+    "5, 11",
+    "Missing",
+    "Adopted",
+    "Nothing recorded who approved an answer or stopped a working position being published.",
+    "Approval status, Approved by, Effective date, Affected artefacts and Canonical answer; OC-07 always on; view of unapproved working positions."
+   ],
+   [
+    "One job per artefact, one ID across them",
+    "7, 12",
+    "Missing",
+    "Adopted for SharePoint",
+    "The Decisions Log and RAID log were set up in May and never used (catalogued Paused); Jira links lived only on this page.",
+    "Decisions Log holds 9 decisions and the RAID log 12 issue families, each linked by QIR ID; the register carries Jira, decision and RAID IDs; catalogue entries now Active. Planner, FAQs, the interpretation register and playbooks still need the ID added by hand."
+   ],
+   [
+    "Five prompts in every forum",
+    "8",
+    "Missing",
+    "Adopted",
+    "The prompts existed only as a slide image (which said V8).",
+    "Quick reference on this page; the Weekly triage view shows the fields the prompts ask for."
+   ],
+   [
+    "Open matters priority map",
+    "9",
+    "Adopted",
+    "Adopted",
+    "Open matters on this page since 13 Nov.",
+    "Unchanged; the register's Open matter column now links each question to its matter."
+   ],
+   [
+    "Ten decisions roadmap",
+    "10",
+    "Partial",
+    "Adopted",
+    "Decisions were only on this page.",
+    "The Decisions Log is the record; OC-14 flags D-01, stated on 9 Oct but not yet published."
+   ],
+   [
+    "Weekly and monthly rhythm",
+    "11, 12",
+    "Missing",
+    "Adopted, needs a chair",
+    "No triage pack and no monthly review.",
+    "The weekly control run builds the triage queues and the monthly review figures (themes, ageing, whether answers worked). GOV-002 was approved on 15 Nov 2026; the triage chair is still to be named."
+   ],
+   [
+    "Adoption decisions",
+    "12",
+    "Not taken",
+    "Adopted, needs names",
+    "All five governance decisions proposed.",
+    "All five approved on 15 Nov 2026 by the Data Management Lead and recorded in the Decisions Log. GOV-002 stays open until the service owner and weekly triage chair are named."
+   ],
+   [
+    "The audit under its own control",
+    "Your requirement",
+    "Missing",
+    "Adopted",
+    "The sweep ran when asked; its findings lived on this page; nothing checked it was current or complete.",
+    "Findings go on the list as \"Audit finding (confirm at triage)\" and never overwrite a status; OC-12 checks they are dealt with in 5 working days; OC-13 checks the audit is current and covers every channel; each run is logged in the DAM Automation Health Log; the controls and the audit itself are registered in the DAM Assurance Index."
+   ],
+   [
+    "Automation (flows)",
+    "4, 11",
+    "Missing",
+    "Not built (backlog)",
+    "No flow on the register; two template flows on other lists (April and June).",
+    "The acknowledgement flow would send messages on the team's behalf, so it needs a named owner and approved wording first. The intake flow waits for the contact form. Both are P1 in the Register Backlog with a definition of done."
+   ]
+  ]
+ },
+ "operatingModel": {
+  "principle": "Ask once, record once, resolve once, then reuse the approved answer everywhere.",
+  "prompts": [
+   [
+    "Capture it",
+    "Log the question, query, issue, idea or insight once",
+    "Check for duplicates first; use clear, concise wording; include context; tag theme and urgency; attach links"
+   ],
+   [
+    "Route it",
+    "Send it to the right forum and owner",
+    "What type is it? Which forum should handle it? Assign an owner and specialists; set an expected response date"
+   ],
+   [
+    "Track it",
+    "Keep it moving to resolution",
+    "Monitor progress in the register; follow up if overdue; link to Jira, RAID or milestones; keep the asker informed"
+   ],
+   [
+    "Share it",
+    "Publish the answer so it can be reused",
+    "Once approved, publish it in the FAQ, playbook or guidance; link back to the QIR ID; notify interested stakeholders"
+   ],
+   [
+    "Learn from it",
+    "Turn insights into improvement",
+    "Capture key learning; identify new or updated guidance; highlight training or capability gaps; close the record (or mark superseded)"
+   ]
+  ],
+  "promptsSource": "Slide 8 image (read 15 Nov 2026); wording condensed",
+  "ecosystem": [
+   [
+    "Case history for every question",
+    "Question and Insight Register",
+    "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+    "Active"
+   ],
+   [
+    "Weekly triage",
+    "Register view: Weekly triage",
+    "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/Weekly%20triage.aspx",
+    "New view"
+   ],
+   [
+    "Acknowledgements due",
+    "Register view: To acknowledge",
+    "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/To%20acknowledge.aspx",
+    "New view"
+   ],
+   [
+    "Audit findings to confirm",
+    "Register view: Audit findings to confirm",
+    "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/Audit%20findings%20to%20confirm.aspx",
+    "New view"
+   ],
+   [
+    "Unapproved working positions",
+    "Register view: Unapproved working positions",
+    "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/Unapproved%20working%20positions.aspx",
+    "New view"
+   ],
+   [
+    "Monthly learning review",
+    "Register view: Monthly learning review",
+    "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/Monthly%20learning%20review.aspx",
+    "New view"
+   ],
+   [
+    "Decisions",
+    "DAM Policy Decisions Log",
+    "https://beisgov.sharepoint.com/sites/OCDO/Lists/DAM%20Policy%20Decisions%20Log/AllItems.aspx",
+    "Activated 15 Nov"
+   ],
+   [
+    "Systemic risks and issues",
+    "DAM Policy RAID & Dependencies",
+    "https://beisgov.sharepoint.com/sites/OCDO/Lists/DAM%20Policy%20RAID%20%20Dependencies/AllItems.aspx",
+    "Activated 15 Nov"
+   ],
+   [
+    "Assurance of the controls and the audit",
+    "DAM Assurance Index",
+    "https://beisgov.sharepoint.com/sites/OCDO/Lists/DAM%20Assurance%20Index/AllItems.aspx",
+    "Activated 15 Nov"
+   ],
+   [
+    "Run log of the controls and the audit",
+    "DAM Automation Health Log",
+    "https://beisgov.sharepoint.com/sites/OCDO/Lists/DAM%20Automation%20Health%20Log/AllItems.aspx",
+    "Activated 15 Nov"
+   ],
+   [
+    "Work that needs people or approvals",
+    "Register Backlog",
+    "https://beisgov.sharepoint.com/sites/OCDO/Lists/Register%20Backlog/AllItems.aspx",
+    "Activated 15 Nov"
+   ],
+   [
+    "Substantive delivery",
+    "Jira (MGMT, XDMH): keys in the register's Jira keys column",
+    "",
+    "Linked by ID"
+   ],
+   [
+    "Approved reusable answers",
+    "FAQs, playbooks, interpretation register: linked from Canonical answer",
+    "",
+    "Linked by column"
+   ],
+   [
+    "Short enabling tasks",
+    "Planner",
+    "",
+    "Not connected; add the QIR ID by hand"
+   ]
+  ],
+  "rhythm": [
+   [
+    "At every forum",
+    "Record the exact question, context and channel; check for duplicates; create or reuse the QIR ID."
+   ],
+   [
+    "Within 2 working days",
+    "Acknowledge: show the ID, name the route and say when the next update comes. Stamp Acknowledged on."
+   ],
+   [
+    "Within 5 working days",
+    "Triage: type, impact, urgency, evidence, best forum, accountable owner and delivery owner. Stamp Triaged on."
+   ],
+   [
+    "At decision or approval",
+    "Record authority, evidence, conditions, effective date and affected artefacts. Working positions stay visibly unapproved."
+   ],
+   [
+    "After the response",
+    "Link the answer; update Jira, Planner or RAID; publish reusable content; record whether the matter is resolved."
+   ],
+   [
+    "Monthly",
+    "Review repeated themes, ageing, response time, open dependencies, content gaps, learning needs and whether answers worked."
+   ]
+  ],
+  "rhythmSource": "Slide 11; targets agreed on 15 Nov 2026 (GOV-003)"
+ },
+ "auditControl": {
+  "how": [
+   "Each Monday the scheduled refresh pulls the register in your browser, rebuilds the live register (checks LR-01 to LR-07) and runs the operating controls in the browser (OC-01 to OC-14). Only the name-free result leaves the browser, and its checksum must reproduce before it is published (CT-01 to CT-05).",
+   "The cross-platform sweep (mail, Teams, Knowledge Hub, Jira, Slack, Viva Engage) enters new questions in the register and records corrections as findings for the triage chair. It never changes a status.",
+   "The audit is held to its own controls: OC-12 (findings dealt with within 5 working days) and OC-13 (the audit is current and every channel is covered).",
+   "Every run is logged in the DAM Automation Health Log, and each control and the audit itself carry their latest result in the DAM Assurance Index."
+  ],
+  "runs": [
+   [
+    "AUD-2026-11-13",
+    "13 Nov 2026",
+    "Cross-platform sweep: 10 questions not in the list, 8 corrections, 11 sources (see What was read)."
+   ],
+   [
+    "AUD-2026-11-15",
+    "15 Nov 2026",
+    "Operating model adopted: 27 columns and 5 views on the register; Q090 to Q099 entered; 33 findings recorded for triage; Decisions Log, RAID log, Assurance Index, Health Log and Register Backlog activated; first control run."
+   ],
+   [
+    "AUD-2026-11-15-S2",
+    "15 Nov 2026",
+    "Coverage sweep: Jira MGMT read (no new questions; MGMT-280 linked to Q090); XDMH unreachable; your mailbox confirms no reply on Q095 to Q097; Viva Engage and Slack show no DAM Policy questions; team mailbox unread threads still to read; draft replies prepared for approval."
+   ]
+  ]
+ },
+ "drafts": [
+  {
+   "id": "Q084",
+   "to": "DVLA (DfT)",
+   "subject": "Re: DVLA test CDA submission: route for agencies and arm's-length bodies (ref Q084)",
+   "body": "Thank you for your test submission, which we have received, and for checking the route with DfT.\n\nOn whether agencies and arm's-length bodies submit directly or through their parent department: we are not prescriptive. You can send your own return, or be included in one combined return from DfT, whichever is easier, provided DfT knows about every return from its agencies and arm's-length bodies and coordinates them.\n\nPlease agree the route with your DfT coordinator and let us know which you choose. Feedback on the assets in your test submission will follow separately.\n\nYour reference for this question is Q084.\n\nGovernment Data Directorate",
+   "check": "The last paragraph commits the team to sending asset feedback: keep it only if someone owns that.",
+   "basis": "D-01 (stated 9 Oct 2026, V)",
+   "gate": "Ready to send: no further sign-off is needed (Data Management Lead, 15 Nov 2026). Send from the team shared mailbox, then stamp Responded on and set the status in the register. Publish D-01 in FAQ F21 first or at the same time (BL-03).",
+   "status": "Saved unsent in the team shared mailbox Drafts folder, 15 Nov 2026 21:09 to 21:12 (V: Drafts folder holds 4; Sent Items has nothing after 11 Nov)"
+  },
+  {
+   "id": "Q085",
+   "to": "MOD",
+   "subject": "Re: MOD revised CDA return: arm's-length bodies (ref Q085)",
+   "body": "Further to our message of 11 November about the arm's-length bodies your revised return does not yet cover: we are not prescriptive. Each applicable arm's-length body can send its own return, or be included in MOD's, whichever is easier, provided MOD knows about every return from its arm's-length bodies and coordinates them.\n\nPlease let us know which route each applicable arm's-length body will take, so we can match their returns to yours.\n\nYour reference for this question is Q085.\n\nGovernment Data Directorate",
+   "check": "None beyond approval.",
+   "basis": "D-01 (stated 9 Oct 2026, V)",
+   "gate": "Ready to send: no further sign-off is needed (Data Management Lead, 15 Nov 2026). Send from the team shared mailbox, then stamp Responded on and set the status in the register. Publish D-01 in FAQ F21 first or at the same time (BL-03).",
+   "status": "Saved unsent in the team shared mailbox Drafts folder, 15 Nov 2026 21:09 to 21:12 (V: Drafts folder holds 4; Sent Items has nothing after 11 Nov)"
+  },
+  {
+   "id": "Q091",
+   "to": "DESNZ Central Data Office",
+   "subject": "Re: DAM Policy introduction session for DESNZ arm's-length bodies (ref Q091)",
+   "body": "Thank you for inviting us to your DAM Policy introduction session for the policy leads your arm's-length bodies have nominated. We would be glad to join; could you send the date and time once they are fixed?\n\nIn case it helps the session: on how arm's-length bodies submit, we are not prescriptive. Each can send its own return or be included in DESNZ's, whichever is easier, provided DESNZ knows about every return and coordinates them.\n\nYour reference for this request is Q091.\n\nGovernment Data Directorate",
+   "check": "Confirm who will attend before accepting.",
+   "basis": "D-01 (stated 9 Oct 2026, V)",
+   "gate": "Ready to send: no further sign-off is needed (Data Management Lead, 15 Nov 2026). Send from the team shared mailbox, then stamp Responded on and set the status in the register. Publish D-01 in FAQ F21 first or at the same time (BL-03).",
+   "status": "Saved unsent in the team shared mailbox Drafts folder, 15 Nov 2026 21:09 to 21:12 (V: Drafts folder holds 4; Sent Items has nothing after 11 Nov)"
+  },
+  {
+   "id": "Q097",
+   "to": "HS2 Ltd (DfT arm's-length body)",
+   "subject": "Re: DAM Policy return: contact, timescales and template (ref Q097)",
+   "body": "Thank you for your questions, and I am sorry for the delay in replying.\n\nContact: we do not appoint a contact inside HS2 Ltd; that is for HS2 to decide. For the return itself, your route is DfT's DAM Policy coordinator, who coordinates returns from DfT's arm's-length bodies. You can send your own return or be included in one combined DfT return, whichever is easier, provided DfT knows about it.\n\nTemplate and timescales: please use version 3 of the baseline return template. The return is due by the end of January.\n\nYour reference for this question is Q097.\n\nGovernment Data Directorate",
+   "check": "Check the deadline and attach or link the V3 template before sending; the sweep took both from published material, not from the commission letter.",
+   "basis": "D-01 (V); V3 template issued (Jira MGMT-218, Done); deadline from published material (S)",
+   "gate": "Ready to send: no further sign-off is needed (Data Management Lead, 15 Nov 2026). Send from the team shared mailbox, then stamp Responded on and set the status in the register. Publish D-01 in FAQ F21 first or at the same time (BL-03).",
+   "status": "Saved unsent in the team shared mailbox Drafts folder, 15 Nov 2026 21:09 to 21:12 (V: Drafts folder holds 4; Sent Items has nothing after 11 Nov)"
+  }
+ ]
+}

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta name="referrer" content="no-referrer">
+<title>Accessibility and inclusion – DAM Policy Explorer</title>
+<meta name="description" content="How accessible and inclusive the DAM Policy Explorer is, and how to tell us about a problem.">
+<meta name="theme-color" content="#0b55a3">
+<link rel="icon" href="assets/app-icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/explorer.css">
+<script src="assets/explorer.js" defer></script>
+</head>
+<body data-contact="https://github.com/cyberdudeuk/dam-capability-playbooks/issues/new?template=contact.yml" data-checked="2026-11-18" data-stale-days="30" data-ready-by="2026-12-18" data-version="1.1.0">
+<svg xmlns="http://www.w3.org/2000/svg" class="sprite" aria-hidden="true" focusable="false"><defs>
+<!-- One icon set for the whole site: 24 by 24, 1.8 stroke, round ends, drawn to match. Each icon is decorative: the text beside it carries the meaning. -->
+
+<symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></symbol>
+<symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.6-3.3 3-5.3 6-5.3s5.4 2 6 5.3"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.3c2.3.2 4 1.9 4.5 4.7"/></symbol>
+<symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 13l2.5-7.5A1.5 1.5 0 0 1 7.9 4.5h8.2a1.5 1.5 0 0 1 1.4 1L20 13"/><path d="M4 13v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-4.5l-1.5 2.5h-4L8.5 13z"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8-7.5 9.5-4.3-1.5-7.5-4.9-7.5-9.5V6z"/><path d="M8.7 12.2l2.3 2.3 4.4-4.6"/></symbol>
+<symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v13c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8v-13"/><path d="M4.5 12c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4"/><path d="M4 20h16"/><rect x="7" y="11" width="3" height="6" rx=".5"/><rect x="12" y="7" width="3" height="10" rx=".5"/><rect x="17" y="13" width="3" height="4" rx=".5"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.2"/><path d="M15.5 8.5L20 4M17 4h3v3"/></symbol>
+<symbol id="i-building" viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11"/><path d="M3 20h18"/><path d="M8 20v-6M12 20v-6M16 20v-6"/><path d="M6.5 11h11"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6 8.5-6"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.4M12 18.8v2.4M21.2 12h-2.4M5.2 12H2.8M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7M18.5 18.5l-1.7-1.7M7.2 7.2L5.5 5.5"/><circle cx="12" cy="12" r="6.6"/></symbol>
+<symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><rect x="10" y="11.5" width="5" height="4" rx=".8"/><path d="M11 11.5v-1.2a1.5 1.5 0 0 1 3 0v1.2"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="17" rx="2"/><path d="M8 9.5l1.8 1.8L13 8M8 15.5l1.8 1.8L13 14"/><path d="M15.5 10h1.5M15.5 16h1.5"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.8" cy="6" r="1.1"/><circle cx="4.8" cy="12" r="1.1"/><circle cx="4.8" cy="18" r="1.1"/></symbol>
+<symbol id="i-dashboard" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 16l3-3 2.5 2 4.5-4.5"/></symbol>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4"/><path d="M5 4.5h11l-2 3.5 2 3.5H5"/></symbol>
+<symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8M16 7l2.5 2.5M14 9l2 2"/></symbol>
+<symbol id="i-tag" viewBox="0 0 24 24"><path d="M3.5 12.5V4.5h8l9 9-8 8z"/><circle cx="8" cy="9" r="1.5"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h2M14 14h2M8 17h2"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.8" r=".6"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5"/><path d="M4.5 16.5V19a1.5 1.5 0 0 0 1.5 1.5h12a1.5 1.5 0 0 0 1.5-1.5v-2.5"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/><path d="M12 14.5v2.5"/></symbol>
+<symbol id="i-branch" viewBox="0 0 24 24"><circle cx="6" cy="5.5" r="2.2"/><circle cx="6" cy="18.5" r="2.2"/><circle cx="18" cy="9.5" r="2.2"/><path d="M6 7.7v8.6M6 13c0-3 2.2-3.5 5.5-3.5h4.3"/></symbol>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1.1.9-1.1 1.6v.6"/><circle cx="12" cy="16.9" r=".6"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10 5 7.3 4.5 4 4.8v13.5c3.3-.3 6 .2 8 1.7 2-1.5 4.7-2 8-1.7V4.8c-3.3-.3-6 .2-8 1.7z"/><path d="M12 6.5V20"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M20.5 3.5L10 14"/><path d="M20.5 3.5l-6.5 17-4-6.5-6.5-4z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24"><path d="M3.5 6.5l5.5-2.5 6 2.5 5.5-2.5v13.5l-5.5 2.5-6-2.5-5.5 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 4v-4h0A1.5 1.5 0 0 1 4 14.5z"/><path d="M8 9h8M8 12h5"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4v4.5H15"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3.5l8.5 4.5-8.5 4.5L3.5 8z"/><path d="M3.5 12.2L12 16.7l8.5-4.5M3.5 16.2L12 20.7l8.5-4.5"/></symbol>
+
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 11.5L12 4l8.5 7.5"/><path d="M6 10v10h12V10"/><path d="M10 20v-5h4v5"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 1.8 1.8.7-1.8.7L19 21l-.7-1.8-1.8-.7 1.8-.7z"/></symbol><symbol id="i-drawer" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/><path d="M5.5 8h1.5M5.5 11h1.5M5.5 14h1.5"/></symbol><symbol id="i-cycle" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-14 5.3"/><path d="M4 12a8 8 0 0 1 14-5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></symbol></defs></svg>
+<a class="skip" href="#main">Skip to main content</a>
+<header class="xbanner">
+  <div class="xwrap bar">
+    <a class="brand" href="index.html"><img src="assets/app-icon.svg" alt="" width="36" height="36"><span><b>DAM Policy Explorer</b><small>Data Asset Management Policy, in one place</small></span></a>
+    <form class="hsearch" action="ask.html" method="get" role="search"><label for="hq" class="vh">Ask a question about the DAM Policy</label><input id="hq" name="q" type="search" placeholder="Ask a question" autocomplete="off"><button type="submit" class="hs-btn"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-help"/></svg><span class="vh">Ask</span></button></form>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-nav" hidden><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg><span>Menu</span></button>
+    <button type="button" class="settings-btn" aria-expanded="false" aria-controls="settings" hidden><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-sliders"/></svg><span>Display</span></button>
+  </div>
+  <nav id="site-nav" class="xnav" aria-label="Main">
+    <div class="xwrap"><ul class="primary"><li><a href="index.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-home"/></svg><span>Home</span></a></li><li><a href="policy.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-book"/></svg><span>The policy</span></a></li><li><a href="return.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-list"/></svg><span>Your return</span></a></li><li><a href="asset-test.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-target"/></svg><span>Asset test</span></a></li><li><a href="questions.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-help"/></svg><span>Questions</span></a></li><li><a href="people.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-people"/></svg><span>Roles and journeys</span></a></li><li><a href="capabilities.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-map"/></svg><span>Capabilities</span></a></li><li><a href="resources.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-folder"/></svg><span>Resources</span></a></li><li class="more"><details><summary class="cur"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg><span>More</span></summary><ul><li><a href="ask.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chat"/></svg><span>Ask</span></a></li><li><a href="embed.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-layers"/></svg><span>Embed it</span></a></li><li><a href="glossary.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-tag"/></svg><span>Glossary</span></a></li><li><a href="team.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-inbox"/></svg><span>For the GDS team</span></a></li><li><a href="about.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><span>About this app</span></a></li><li><a href="accessibility.html" aria-current="page"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-shield"/></svg><span>Accessibility</span></a></li></ul></details></li></ul></div>
+  </nav>
+  <section id="settings" class="settings" aria-labelledby="settings-h" hidden>
+    <div class="xwrap">
+      <h2 id="settings-h" class="small-h">Display settings</h2>
+      <p class="small">Saved on this device only.</p>
+      <div class="set-grid">
+        <fieldset><legend>Colours</legend>
+          <label><input type="radio" name="theme" value="auto" checked> Match my device</label>
+          <label><input type="radio" name="theme" value="light"> Light</label>
+          <label><input type="radio" name="theme" value="dark"> Dark</label>
+          <label><input type="radio" name="theme" value="contrast"> High contrast</label></fieldset>
+        <fieldset><legend>Text size</legend>
+          <label><input type="radio" name="text" value="normal" checked> Standard</label>
+          <label><input type="radio" name="text" value="large"> Large</label>
+          <label><input type="radio" name="text" value="xlarge"> Larger</label></fieldset>
+        <fieldset><legend>Reading</legend>
+          <label><input type="checkbox" name="spacing" value="wide"> Wider letter and line spacing</label>
+          <label><input type="checkbox" name="motion" value="reduce"> Turn off animation</label>
+          <label><input type="checkbox" name="underline" value="all"> Underline every link</label></fieldset>
+      </div>
+      <p><button type="button" class="btn secondary" data-reset>Reset to standard</button></p>
+    </div>
+  </section>
+  <div class="xwrap phase"><span class="tag">Prototype</span> <span>This is a test version, not an official government service. If anything here disagrees with GOV.UK, GOV.UK is right. <a href="https://github.com/cyberdudeuk/dam-capability-playbooks/issues/new?template=contact.yml" target="_blank" rel="noopener noreferrer">Tell us what you think<span class="vh"> (opens in a new tab)</span></a>.</span></div>
+  <p class="stale" hidden></p>
+</header>
+<div class="xwrap layout">
+<nav class="contents" aria-labelledby="contents-h" data-drawer><h2 class="contents-h" id="contents-h">On this page</h2><ol><li><a href="#use">Using this app</a></li><li><a href="#inclusion">Inclusion</a></li><li><a href="#status">How accessible it is</a></li><li><a href="#feedback">Tell us about a problem</a></li><li><a href="#enforcement">Enforcement</a></li></ol></nav>
+<main id="main" class="xmain" tabindex="-1">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li><li aria-current="page">Accessibility and inclusion</li></ol></nav>
+
+<h1>Accessibility and inclusion</h1>
+<p class="lead">We want everyone to be able to use this app, whatever their needs, device or way of working.</p>
+
+<h2 id="use">Using this app</h2>
+<ul>
+<li>Change colours (including high contrast), text size, spacing and animation in <b>Display settings</b> at the top of every page.</li>
+<li>Zoom up to 400% without anything being cut off or needing sideways scrolling.</li>
+<li>Use the whole app with a keyboard, a screen reader, voice control or a switch.</li>
+<li>Read every page with JavaScript turned off. Only the interactive tools need it.</li>
+<li>Point at, or tab to, any word with a dotted underline to see what it means.</li>
+<li>Print any page: hidden sections open when you print.</li>
+</ul>
+
+<h2 id="inclusion">Inclusion</h2>
+<ul>
+<li>We write in plain English, test our pages for reading age, and explain every specialist term.</li>
+<li>We make no assumptions about where people work, their size of organisation or their maturity with data. Small <a class="term" href="glossary.html#t-arms-length-body" data-def="An organisation that is part of government but works at a distance from its department, such as an executive agency.">arm's length bodies</a> are as much our users as large departments.</li>
+<li>Answers do not depend on knowing who to ask. Everything we tell one coordinator, we publish for all.</li>
+<li>The app works on slow connections and older devices: there are no web fonts, no tracking and no large downloads.</li>
+</ul>
+
+<h2 id="status">How accessible it is</h2>
+<p>This app aims to meet the <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener noreferrer">Web Content Accessibility Guidelines version 2.2<span class="vh"> (opens in a new tab)</span></a> to level AA. Every build is checked with an automated tool (axe-core) at three screen widths and in light, dark and high contrast. Automated tools find only some problems, so we will also test with people who use assistive technology.</p>
+<h3 id="known">Known issues</h3>
+<ul>
+<li>The contact form is on GitHub, which we do not control. If it does not work for you, ask your organisation's DAM Policy coordinator to pass your message on.</li>
+<li>Links to GOV.UK open in a new tab, because the app may be running inside Microsoft Teams. Each such link says so.</li>
+<li>We have not yet tested with users of assistive technology. This is on our <a href="about.html#roadmap">roadmap</a>.</li>
+</ul>
+
+<h2 id="feedback">Tell us about a problem</h2>
+<p>If something does not work for you, <a href="https://github.com/cyberdudeuk/dam-capability-playbooks/issues/new?template=contact.yml" target="_blank" rel="noopener noreferrer">use our contact form<span class="vh"> (opens in a new tab)</span></a>. Tell us the page and what happened. We aim to reply within 5 working days.</p>
+<h2 id="enforcement">Enforcement</h2>
+<p>The Equality and Human Rights Commission is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018. If you are not happy with how we respond to your complaint, contact the <a href="https://www.equalityadvisoryservice.com/" target="_blank" rel="noopener noreferrer">Equality Advisory and Support Service<span class="vh"> (opens in a new tab)</span></a>.</p>
+<p class="small muted">This statement was prepared on 18 November 2026.</p>
+
+<aside class="nextbest" aria-labelledby="nb-h"><h2 id="nb-h" class="nb-h"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-flag"/></svg> What to do next</h2><p><a class="btn" href="#settings">Change the display settings <span aria-hidden="true">→</span></a></p><h3 class="rel-h">Related</h3><ul class="related"><li><a href="about.html">About this app</a></li></ul></aside>
+</main>
+</div>
+<footer class="xfoot">
+  <div class="xwrap cols">
+    <section aria-labelledby="f1"><h2 id="f1" class="small-h">About this app</h2><ul>
+      <li><a href="about.html">About, roadmap and what changed</a></li>
+      <li><a href="about.html#transparency">How it was made, and the use of AI</a></li>
+      <li><a href="about.html#privacy">Privacy: what stays on your device</a></li>
+      <li><a href="accessibility.html">Accessibility and inclusion</a></li>
+      <li><a href="https://github.com/cyberdudeuk/dam-capability-playbooks/issues/new?template=contact.yml" target="_blank" rel="noopener noreferrer">Contact us (form)<span class="vh"> (opens in a new tab)</span></a></li></ul></section>
+    <section aria-labelledby="f2"><h2 id="f2" class="small-h">Published guidance</h2><ul><li><a href="https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government" target="_blank" rel="noopener noreferrer">Data Asset Management Policy in government<span class="vh"> (opens in a new tab)</span></a></li><li><a href="https://www.gov.uk/government/publications/identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets" target="_blank" rel="noopener noreferrer">Identifying and recording critical data assets<span class="vh"> (opens in a new tab)</span></a></li><li><a href="https://www.gov.uk/government/publications/record-metadata-to-describe-critical-data-assets/recording-metadata-to-describe-critical-data-assets" target="_blank" rel="noopener noreferrer">Recording metadata to describe critical data assets<span class="vh"> (opens in a new tab)</span></a></li><li><a href="https://www.gov.uk/government/publications/data-ownership-in-government/data-ownership-model" target="_blank" rel="noopener noreferrer">Data ownership model<span class="vh"> (opens in a new tab)</span></a></li><li><a href="https://www.gov.uk/government/publications/implement-a-data-quality-action-plan/data-quality-action-plan-implementation-guide" target="_blank" rel="noopener noreferrer">Data quality action plan: implementation guide<span class="vh"> (opens in a new tab)</span></a></li></ul></section>
+    <section aria-labelledby="f3" class="colophon-col"><h2 id="f3" class="small-h">Version</h2>
+      <div class="colophon">
+        <img src="assets/qr.svg" width="104" height="104" alt="QR code of the app name and version">
+        <img src="assets/barcode.svg" width="200" height="72" alt="Barcode of the version number, DPE 1.1.0">
+      </div>
+      <p class="small">Version 1.1.0, built 18 November 2026.<br>Sources last checked 18 November 2026.</p></section>
+  </div>
+  <div class="xwrap notes small">
+    <p><b>Disclaimer.</b> This prototype explains the policy in plain English. It is not the policy. The published guidance on GOV.UK always takes priority.</p>
+    <p><b>Disclosure.</b> Built with the help of an AI assistant (Claude, made by Anthropic). Every fact about the policy was checked against GOV.UK, and every answer shows where it comes from.</p>
+    <p><b>Contact.</b> We use a contact form, which is on GitHub, so what you write can be seen by others. Do not include personal or sensitive information.</p>
+    <p><b>Licence.</b> Text is available under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" target="_blank" rel="noopener noreferrer">Open Government Licence v3.0<span class="vh"> (opens in a new tab)</span></a>, except where otherwise stated. © Crown copyright.</p>
+  </div>
+</footer>
+<p id="announce" class="vh" aria-live="polite"></p>
+</body>
+</html>

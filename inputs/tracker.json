@@ -1,0 +1,1736 @@
+{
+ "meta": {
+  "schema": 1,
+  "asOf": "2026-11-15 20:50 UTC",
+  "title": "Operating model tracker",
+  "source": "Compendium \"Question to insight to action\" (11 Nov 2026), the register and its site as read and changed on 15 Nov 2026",
+  "note": "The tracker joins this file (lineage) with controls.json, live-register.json and qir-control.json when the page loads, so results and items stay current after each weekly refresh."
+ },
+ "slides": {
+  "3": "Target architecture: ask once, resolve once, reuse everywhere",
+  "4": "Current and future state: connect what exists",
+  "5": "Question-to-impact lifecycle",
+  "6": "Forum and response routing",
+  "7": "Artefact ecosystem: one job each, one QIR ID",
+  "8": "Team quick reference: five prompts",
+  "9": "Open matters priority map",
+  "10": "Ten decisions and actions roadmap",
+  "11": "Operating instructions: the rhythm",
+  "12": "Adoption decisions and next steps"
+ },
+ "parts": [
+  {
+   "id": "P01",
+   "name": "Many inputs, one door",
+   "slides": "3, 8",
+   "found": "Partial",
+   "now": "Adopted",
+   "before": "Sweeps captured Knowledge Hub, mail and Teams by hand; the portal intake lists were not connected.",
+   "after": "OC-01 checks every question thread, contact form item and discussion against the register each week: 12 of 12 captured. Automatic intake waits for the contact form to go live (backlog).",
+   "controls": [
+    "OC-01"
+   ],
+   "decisions": [],
+   "backlog": [
+    "BL-05",
+    "BL-08"
+   ],
+   "mech": [
+    "LIST-HCF",
+    "LIST-CD",
+    "LIST-KH",
+    "SCRIPT-FETCHCTL"
+   ]
+  },
+  {
+   "id": "P02",
+   "name": "One register, one QIR ID",
+   "slides": "3, 7, 12",
+   "found": "Partial",
+   "now": "Adopted",
+   "before": "Two ID schemes; 10 sweep items sat outside the list.",
+   "after": "Q090 to Q099 entered with their N numbers as aliases; Other IDs column; OC-09 resolves every cross-reference (120 records, 0 broken). GOV-001 and GOV-004 approved on 15 Nov 2026.",
+   "controls": [
+    "OC-09",
+    "OC-10"
+   ],
+   "decisions": [
+    "GOV-001",
+    "GOV-004"
+   ],
+   "backlog": [
+    "BL-01"
+   ],
+   "mech": [
+    "COL-QOpenMatter",
+    "COL-QAliases",
+    "COL-QDuplicateOf",
+    "COL-QJira",
+    "COL-QDecision",
+    "COL-QRaid",
+    "LIST-QIR",
+    "PAGE-ADOPT"
+   ]
+  },
+  {
+   "id": "P03",
+   "name": "Lifecycle: capture to learn",
+   "slides": "5, 11",
+   "found": "Partial",
+   "now": "Adopted",
+   "before": "Seven statuses only; no dates for acknowledge, triage, response or closure; a response looked the same as resolution.",
+   "after": "Acknowledged, Triaged, Responded and Closed dates; Resolution; Closure reason; Learning captured; Did the answer work. OC-02, OC-03, OC-04 and OC-08 run weekly. Targets agreed on 15 Nov 2026 (GOV-003, GOV-005).",
+   "controls": [
+    "OC-02",
+    "OC-03",
+    "OC-04",
+    "OC-08",
+    "OC-11"
+   ],
+   "decisions": [
+    "GOV-003",
+    "GOV-005"
+   ],
+   "backlog": [
+    "BL-02"
+   ],
+   "mech": [
+    "COL-QAckOn",
+    "COL-QTriagedOn",
+    "COL-QRespondedOn",
+    "COL-QResolution",
+    "COL-QClosedOn",
+    "COL-QClosure",
+    "COL-QLearning",
+    "COL-QWorked",
+    "VIEW-Weekly-triage",
+    "VIEW-To-acknowledge",
+    "VIEW-Monthly-learning-review",
+    "SCRIPT-ENGINE"
+   ]
+  },
+  {
+   "id": "P04",
+   "name": "Right question, right forum, right format",
+   "slides": "6",
+   "found": "Partial",
+   "now": "Adopted",
+   "before": "\"Best way to answer\" was free text; the routing tables lived only on this page.",
+   "after": "Question type, Impact, Urgency, Route to and Response format columns; OC-06. 53 older triaged matters need backfill, Must items first.",
+   "controls": [
+    "OC-05",
+    "OC-06"
+   ],
+   "decisions": [],
+   "backlog": [
+    "BL-06"
+   ],
+   "mech": [
+    "COL-QType",
+    "COL-QImpact",
+    "COL-QUrgency",
+    "COL-QRoute",
+    "COL-QFormat",
+    "COL-QDeliveryOwner"
+   ]
+  },
+  {
+   "id": "P05",
+   "name": "Authority before approval",
+   "slides": "5, 11",
+   "found": "Missing",
+   "now": "Adopted",
+   "before": "Nothing recorded who approved an answer or stopped a working position being published.",
+   "after": "Approval status, Approved by, Effective date, Affected artefacts and Canonical answer; OC-07 always on; view of unapproved working positions.",
+   "controls": [
+    "OC-07"
+   ],
+   "decisions": [],
+   "backlog": [],
+   "mech": [
+    "COL-QApproval",
+    "COL-QAuthority",
+    "COL-QEffective",
+    "COL-QAffected",
+    "COL-QCanonical",
+    "VIEW-Unapproved-working-positions",
+    "JIRA-MGMT-247",
+    "JIRA-MGMT-104",
+    "JIRA-MGMT-263"
+   ]
+  },
+  {
+   "id": "P06",
+   "name": "One job per artefact, one ID across them",
+   "slides": "7, 12",
+   "found": "Missing",
+   "now": "Adopted for SharePoint",
+   "before": "The Decisions Log and RAID log were set up in May and never used (catalogued Paused); Jira links lived only on this page.",
+   "after": "Decisions Log holds 9 decisions and the RAID log 12 issue families, each linked by QIR ID; the register carries Jira, decision and RAID IDs; catalogue entries now Active. Planner, FAQs, the interpretation register and playbooks still need the ID added by hand.",
+   "controls": [
+    "OC-09",
+    "OC-14"
+   ],
+   "decisions": [],
+   "backlog": [],
+   "mech": [
+    "LIST-DEC",
+    "LIST-RAID",
+    "LIST-CAT",
+    "COL-DEC-DecisionID",
+    "COL-DEC-LinkedQIR",
+    "COL-RAID-LinkedQIR",
+    "PAGE-ECO",
+    "JIRA-MGMT-140",
+    "JIRA-MGMT-138",
+    "JIRA-MGMT-280"
+   ]
+  },
+  {
+   "id": "P07",
+   "name": "Five prompts in every forum",
+   "slides": "8",
+   "found": "Missing",
+   "now": "Adopted",
+   "before": "The prompts existed only as a slide image (which said V8).",
+   "after": "Quick reference on this page; the Weekly triage view shows the fields the prompts ask for.",
+   "controls": [],
+   "decisions": [],
+   "backlog": [
+    "BL-10"
+   ],
+   "mech": [
+    "VIEW-Weekly-triage",
+    "PAGE-PROMPTS"
+   ]
+  },
+  {
+   "id": "P08",
+   "name": "Open matters priority map",
+   "slides": "9",
+   "found": "Adopted",
+   "now": "Adopted",
+   "before": "Open matters on this page since 13 Nov.",
+   "after": "Unchanged; the register's Open matter column now links each question to its matter.",
+   "controls": [],
+   "decisions": [],
+   "backlog": [],
+   "mech": [
+    "PAGE-OM"
+   ]
+  },
+  {
+   "id": "P09",
+   "name": "Ten decisions roadmap",
+   "slides": "10",
+   "found": "Partial",
+   "now": "Adopted",
+   "before": "Decisions were only on this page.",
+   "after": "The Decisions Log is the record; OC-14 flags D-01, stated on 9 Oct but not yet published.",
+   "controls": [
+    "OC-14"
+   ],
+   "decisions": [
+    "D-01",
+    "D-02",
+    "D-03",
+    "D-04"
+   ],
+   "backlog": [
+    "BL-03"
+   ],
+   "mech": [
+    "LIST-DEC",
+    "COL-DEC-DecisionID",
+    "COL-DEC-DecisionState",
+    "JIRA-MGMT-247",
+    "JIRA-MGMT-104"
+   ]
+  },
+  {
+   "id": "P10",
+   "name": "Weekly and monthly rhythm",
+   "slides": "11, 12",
+   "found": "Missing",
+   "now": "Adopted, needs a chair",
+   "before": "No triage pack and no monthly review.",
+   "after": "The weekly control run builds the triage queues and the monthly review figures (themes, ageing, whether answers worked). GOV-002 was approved on 15 Nov 2026; the triage chair is still to be named.",
+   "controls": [
+    "OC-03",
+    "OC-11"
+   ],
+   "decisions": [
+    "GOV-002"
+   ],
+   "backlog": [
+    "BL-01",
+    "BL-07"
+   ],
+   "mech": [
+    "VIEW-Weekly-triage",
+    "VIEW-Monthly-learning-review",
+    "SCRIPT-ENGINE",
+    "PAGE-TRI",
+    "TASK-MON",
+    "JIRA-MGMT-138"
+   ]
+  },
+  {
+   "id": "P11",
+   "name": "Adoption decisions",
+   "slides": "12",
+   "found": "Not taken",
+   "now": "Adopted, needs names",
+   "before": "All five governance decisions proposed.",
+   "after": "All five approved on 15 Nov 2026 by the Data Management Lead and recorded in the Decisions Log. GOV-002 stays open until the service owner and weekly triage chair are named.",
+   "controls": [],
+   "decisions": [
+    "GOV-001",
+    "GOV-002",
+    "GOV-003",
+    "GOV-004",
+    "GOV-005"
+   ],
+   "backlog": [
+    "BL-01",
+    "BL-02"
+   ],
+   "mech": [
+    "LIST-DEC",
+    "LIST-BACK",
+    "PAGE-ADOPT",
+    "PAGE-TRACKER"
+   ]
+  },
+  {
+   "id": "P12",
+   "name": "The audit under its own control",
+   "slides": "Your requirement",
+   "found": "Missing",
+   "now": "Adopted",
+   "before": "The sweep ran when asked; its findings lived on this page; nothing checked it was current or complete.",
+   "after": "Findings go on the list as \"Audit finding (confirm at triage)\" and never overwrite a status; OC-12 checks they are dealt with in 5 working days; OC-13 checks the audit is current and covers every channel; each run is logged in the DAM Automation Health Log; the controls and the audit itself are registered in the DAM Assurance Index.",
+   "controls": [
+    "OC-12",
+    "OC-13"
+   ],
+   "decisions": [],
+   "backlog": [
+    "BL-07",
+    "BL-08",
+    "BL-11"
+   ],
+   "mech": [
+    "COL-QAudit",
+    "COL-QAuditRun",
+    "VIEW-Audit-findings-to-confirm",
+    "LIST-ASSUR",
+    "LIST-HEALTH",
+    "SCRIPT-ENGINE",
+    "SCRIPT-FETCHCTL",
+    "SCRIPT-FETCH",
+    "CHECK-LR",
+    "CHECK-CT",
+    "CHECK-SC16",
+    "PAGE-AUDIT",
+    "TASK-MON",
+    "PAGE-TRACKER",
+    "CHECK-EM"
+   ]
+  },
+  {
+   "id": "P13",
+   "name": "Automation (flows)",
+   "slides": "4, 11",
+   "found": "Missing",
+   "now": "Not built (backlog)",
+   "before": "No flow on the register; two template flows on other lists (April and June).",
+   "after": "The acknowledgement flow would send messages on the team's behalf, so it needs a named owner and approved wording first. The intake flow waits for the contact form. Both are P1 in the Register Backlog with a definition of done.",
+   "controls": [],
+   "decisions": [],
+   "backlog": [
+    "BL-04",
+    "BL-05",
+    "BL-09"
+   ],
+   "mech": [
+    "LIST-BACK",
+    "FLOW-EXIST-1",
+    "FLOW-EXIST-2"
+   ]
+  }
+ ],
+ "mech": [
+  {
+   "id": "COL-QType",
+   "kind": "Column",
+   "name": "Question type",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P04"
+   ],
+   "fill": "type",
+   "status": "Added 15 Nov",
+   "tech": "QType"
+  },
+  {
+   "id": "COL-QImpact",
+   "kind": "Column",
+   "name": "Impact",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P04"
+   ],
+   "fill": "impact",
+   "status": "Added 15 Nov",
+   "tech": "QImpact"
+  },
+  {
+   "id": "COL-QUrgency",
+   "kind": "Column",
+   "name": "Urgency",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P04"
+   ],
+   "fill": "urg",
+   "status": "Added 15 Nov",
+   "tech": "QUrgency"
+  },
+  {
+   "id": "COL-QRoute",
+   "kind": "Column",
+   "name": "Route to",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P04"
+   ],
+   "fill": "route",
+   "status": "Added 15 Nov",
+   "tech": "QRoute"
+  },
+  {
+   "id": "COL-QFormat",
+   "kind": "Column",
+   "name": "Response format",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P04"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QFormat"
+  },
+  {
+   "id": "COL-QDeliveryOwner",
+   "kind": "Column",
+   "name": "Delivery owner (role)",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P04"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QDeliveryOwner"
+  },
+  {
+   "id": "COL-QAckOn",
+   "kind": "Column",
+   "name": "Acknowledged on",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P03"
+   ],
+   "fill": "ack",
+   "status": "Added 15 Nov",
+   "tech": "QAckOn"
+  },
+  {
+   "id": "COL-QTriagedOn",
+   "kind": "Column",
+   "name": "Triaged on",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P03"
+   ],
+   "fill": "tri",
+   "status": "Added 15 Nov",
+   "tech": "QTriagedOn"
+  },
+  {
+   "id": "COL-QRespondedOn",
+   "kind": "Column",
+   "name": "Responded on",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P03"
+   ],
+   "fill": "resp",
+   "status": "Added 15 Nov",
+   "tech": "QRespondedOn"
+  },
+  {
+   "id": "COL-QResolution",
+   "kind": "Column",
+   "name": "Resolution",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P03"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QResolution"
+  },
+  {
+   "id": "COL-QClosedOn",
+   "kind": "Column",
+   "name": "Closed on",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P03"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QClosedOn"
+  },
+  {
+   "id": "COL-QClosure",
+   "kind": "Column",
+   "name": "Closure reason",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P03"
+   ],
+   "fill": "closure",
+   "status": "Added 15 Nov",
+   "tech": "QClosure"
+  },
+  {
+   "id": "COL-QLearning",
+   "kind": "Column",
+   "name": "Learning captured",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P03"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QLearning"
+  },
+  {
+   "id": "COL-QWorked",
+   "kind": "Column",
+   "name": "Did the answer work?",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P03"
+   ],
+   "fill": "worked",
+   "status": "Added 15 Nov",
+   "tech": "QWorked"
+  },
+  {
+   "id": "COL-QApproval",
+   "kind": "Column",
+   "name": "Approval status",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P05"
+   ],
+   "fill": "approval",
+   "status": "Added 15 Nov",
+   "tech": "QApproval"
+  },
+  {
+   "id": "COL-QAuthority",
+   "kind": "Column",
+   "name": "Approved by (role)",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P05"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QAuthority"
+  },
+  {
+   "id": "COL-QEffective",
+   "kind": "Column",
+   "name": "Effective date",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P05"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QEffective"
+  },
+  {
+   "id": "COL-QAffected",
+   "kind": "Column",
+   "name": "Affected artefacts",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P05"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QAffected"
+  },
+  {
+   "id": "COL-QCanonical",
+   "kind": "Column",
+   "name": "Canonical answer",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P05"
+   ],
+   "fill": "canonical",
+   "status": "Added 15 Nov",
+   "tech": "QCanonical"
+  },
+  {
+   "id": "COL-QOpenMatter",
+   "kind": "Column",
+   "name": "Open matter",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P02"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QOpenMatter"
+  },
+  {
+   "id": "COL-QAliases",
+   "kind": "Column",
+   "name": "Other IDs (aliases)",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P02"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QAliases"
+  },
+  {
+   "id": "COL-QDuplicateOf",
+   "kind": "Column",
+   "name": "Duplicate of",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P02"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QDuplicateOf"
+  },
+  {
+   "id": "COL-QJira",
+   "kind": "Column",
+   "name": "Jira keys",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P02"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QJira"
+  },
+  {
+   "id": "COL-QDecision",
+   "kind": "Column",
+   "name": "Decision IDs",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P02"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QDecision"
+  },
+  {
+   "id": "COL-QRaid",
+   "kind": "Column",
+   "name": "RAID IDs",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P02"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QRaid"
+  },
+  {
+   "id": "COL-QAudit",
+   "kind": "Column",
+   "name": "Audit finding (confirm at triage)",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P12"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QAudit"
+  },
+  {
+   "id": "COL-QAuditRun",
+   "kind": "Column",
+   "name": "Audit run",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P12"
+   ],
+   "fill": "",
+   "status": "Added 15 Nov",
+   "tech": "QAuditRun"
+  },
+  {
+   "id": "VIEW-Weekly-triage",
+   "kind": "View",
+   "name": "Weekly triage",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/Weekly%20triage.aspx",
+   "parts": [
+    "P03",
+    "P07",
+    "P10"
+   ],
+   "status": "Added 15 Nov"
+  },
+  {
+   "id": "VIEW-To-acknowledge",
+   "kind": "View",
+   "name": "To acknowledge",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/To%20acknowledge.aspx",
+   "parts": [
+    "P03"
+   ],
+   "status": "Added 15 Nov"
+  },
+  {
+   "id": "VIEW-Audit-findings-to-confirm",
+   "kind": "View",
+   "name": "Audit findings to confirm",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/Audit%20findings%20to%20confirm.aspx",
+   "parts": [
+    "P12"
+   ],
+   "status": "Added 15 Nov"
+  },
+  {
+   "id": "VIEW-Unapproved-working-positions",
+   "kind": "View",
+   "name": "Unapproved working positions",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/Unapproved%20working%20positions.aspx",
+   "parts": [
+    "P05"
+   ],
+   "status": "Added 15 Nov"
+  },
+  {
+   "id": "VIEW-Monthly-learning-review",
+   "kind": "View",
+   "name": "Monthly learning review",
+   "where": "Question and Insight Register",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/Monthly%20learning%20review.aspx",
+   "parts": [
+    "P03",
+    "P10"
+   ],
+   "status": "Added 15 Nov"
+  },
+  {
+   "id": "LIST-QIR",
+   "kind": "List",
+   "name": "Question and Insight Register",
+   "where": "SharePoint",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx",
+   "parts": [
+    "P02"
+   ],
+   "status": "Active (system of record; 99 items)"
+  },
+  {
+   "id": "LIST-DEC",
+   "kind": "List",
+   "name": "DAM Policy Decisions Log",
+   "where": "SharePoint",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/DAM%20Policy%20Decisions%20Log/AllItems.aspx",
+   "parts": [
+    "P06",
+    "P09",
+    "P11"
+   ],
+   "status": "Activated 15 Nov (was Paused, 0 items); 9 decisions"
+  },
+  {
+   "id": "LIST-RAID",
+   "kind": "List",
+   "name": "DAM Policy RAID & Dependencies",
+   "where": "SharePoint",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/DAM%20Policy%20RAID%20%20Dependencies/AllItems.aspx",
+   "parts": [
+    "P06"
+   ],
+   "status": "Activated 15 Nov (was Paused, 0 items); 12 issues"
+  },
+  {
+   "id": "LIST-ASSUR",
+   "kind": "List",
+   "name": "DAM Assurance Index",
+   "where": "SharePoint",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/DAM%20Assurance%20Index/AllItems.aspx",
+   "parts": [
+    "P12"
+   ],
+   "status": "Activated 15 Nov (was Paused, 0 items); 15 entries"
+  },
+  {
+   "id": "LIST-HEALTH",
+   "kind": "List",
+   "name": "DAM Automation Health Log",
+   "where": "SharePoint",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/DAM%20Automation%20Health%20Log/AllItems.aspx",
+   "parts": [
+    "P12"
+   ],
+   "status": "Activated 15 Nov (was Paused, 0 items); 1 run"
+  },
+  {
+   "id": "LIST-BACK",
+   "kind": "List",
+   "name": "Register Backlog",
+   "where": "SharePoint",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Register%20Backlog/AllItems.aspx",
+   "parts": [
+    "P11",
+    "P13"
+   ],
+   "status": "Activated 15 Nov (was Paused, 0 items); 10 items"
+  },
+  {
+   "id": "LIST-CAT",
+   "kind": "List",
+   "name": "List Catalogue",
+   "where": "SharePoint",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/List%20Catalogue/AllItems.aspx",
+   "parts": [
+    "P06"
+   ],
+   "status": "6 entries set Active"
+  },
+  {
+   "id": "LIST-HCF",
+   "kind": "List",
+   "name": "Hub contact form (Government Data Portal)",
+   "where": "SharePoint",
+   "url": "https://beisgov.sharepoint.com/sites/developingourdirectorate/Lists/Hub%20contact%20form/AllItems.aspx",
+   "parts": [
+    "P01"
+   ],
+   "status": "Existing intake; 0 items; read by OC-01"
+  },
+  {
+   "id": "LIST-CD",
+   "kind": "List",
+   "name": "Community discussions (Government Data Portal)",
+   "where": "SharePoint",
+   "url": "https://beisgov.sharepoint.com/sites/developingourdirectorate/Lists/Community%20discussions/AllItems.aspx",
+   "parts": [
+    "P01"
+   ],
+   "status": "Existing intake; 1 item; read by OC-01"
+  },
+  {
+   "id": "LIST-KH",
+   "kind": "List",
+   "name": "Knowledge Hub activity (Government Data Portal)",
+   "where": "SharePoint",
+   "url": "https://beisgov.sharepoint.com/sites/developingourdirectorate/Lists/Knowledge%20Hub%20activity/AllItems.aspx",
+   "parts": [
+    "P01"
+   ],
+   "status": "Existing intake; 20 threads (12 questions); read by OC-01"
+  },
+  {
+   "id": "COL-DEC-DecisionID",
+   "kind": "Column",
+   "name": "DecisionID (Decisions Log)",
+   "where": "DAM Policy Decisions Log",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/DAM%20Policy%20Decisions%20Log/AllItems.aspx",
+   "parts": [
+    "P06",
+    "P09"
+   ],
+   "status": "Added 15 Nov"
+  },
+  {
+   "id": "COL-DEC-DecisionState",
+   "kind": "Column",
+   "name": "DecisionState (Decisions Log)",
+   "where": "DAM Policy Decisions Log",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/DAM%20Policy%20Decisions%20Log/AllItems.aspx",
+   "parts": [
+    "P09"
+   ],
+   "status": "Added 15 Nov"
+  },
+  {
+   "id": "COL-DEC-LinkedQIR",
+   "kind": "Column",
+   "name": "LinkedQIR (Decisions Log)",
+   "where": "DAM Policy Decisions Log",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/DAM%20Policy%20Decisions%20Log/AllItems.aspx",
+   "parts": [
+    "P06"
+   ],
+   "status": "Added 15 Nov"
+  },
+  {
+   "id": "COL-RAID-LinkedQIR",
+   "kind": "Column",
+   "name": "Linked QIR IDs (RAID log)",
+   "where": "DAM Policy RAID & Dependencies",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/DAM%20Policy%20RAID%20%20Dependencies/AllItems.aspx",
+   "parts": [
+    "P06"
+   ],
+   "status": "Added 15 Nov"
+  },
+  {
+   "id": "SCRIPT-ENGINE",
+   "kind": "Code and checks",
+   "name": "control_engine.js: controls OC-01 to OC-14 (v1.1.0, fingerprint 8838046a)",
+   "where": "Mission control kit (tools/)",
+   "url": "",
+   "parts": [
+    "P12",
+    "P03",
+    "P10"
+   ],
+   "status": "Live, tested"
+  },
+  {
+   "id": "SCRIPT-FETCHCTL",
+   "kind": "Code and checks",
+   "name": "fetch_controls.js: full pull in the browser, name-free result out",
+   "where": "Mission control kit (tools/)",
+   "url": "",
+   "parts": [
+    "P12",
+    "P01"
+   ],
+   "status": "Live, tested"
+  },
+  {
+   "id": "SCRIPT-FETCH",
+   "kind": "Code and checks",
+   "name": "fetch_items.js: register pull with checksum",
+   "where": "Mission control kit (tools/)",
+   "url": "",
+   "parts": [
+    "P12"
+   ],
+   "status": "Live, tested"
+  },
+  {
+   "id": "CHECK-LR",
+   "kind": "Code and checks",
+   "name": "build_snapshot: checks LR-01 to LR-07 (LR-06 names, LR-07 full-copy checksum added 15 Nov)",
+   "where": "Mission control kit (tools/)",
+   "url": "",
+   "parts": [
+    "P12"
+   ],
+   "status": "Live, tested"
+  },
+  {
+   "id": "CHECK-CT",
+   "kind": "Code and checks",
+   "name": "check_controls: checks CT-01 to CT-05",
+   "where": "Mission control kit (tools/)",
+   "url": "",
+   "parts": [
+    "P12"
+   ],
+   "status": "Live, tested"
+  },
+  {
+   "id": "CHECK-SC16",
+   "kind": "Code and checks",
+   "name": "Page self-check SC-16 (operating controls) and SC-17 (tracker lineage)",
+   "where": "Mission control kit (tools/)",
+   "url": "",
+   "parts": [
+    "P12"
+   ],
+   "status": "Live, tested"
+  },
+  {
+   "id": "PAGE-ADOPT",
+   "kind": "Page",
+   "name": "QIR control: Is the blueprint in place?",
+   "where": "Mission control",
+   "url": "#qir",
+   "parts": [
+    "P02",
+    "P11"
+   ],
+   "status": "Published 15 Nov"
+  },
+  {
+   "id": "PAGE-PROMPTS",
+   "kind": "Page",
+   "name": "QIR control: Five prompts",
+   "where": "Mission control",
+   "url": "#qir",
+   "parts": [
+    "P07"
+   ],
+   "status": "Published 15 Nov"
+  },
+  {
+   "id": "PAGE-OM",
+   "kind": "Page",
+   "name": "QIR control: Open matters",
+   "where": "Mission control",
+   "url": "#qir",
+   "parts": [
+    "P08"
+   ],
+   "status": "Published 15 Nov"
+  },
+  {
+   "id": "PAGE-TRI",
+   "kind": "Page",
+   "name": "QIR control: Weekly triage pack",
+   "where": "Mission control",
+   "url": "#qir",
+   "parts": [
+    "P10"
+   ],
+   "status": "Published 15 Nov"
+  },
+  {
+   "id": "PAGE-AUDIT",
+   "kind": "Page",
+   "name": "QIR control: The audit under its own control",
+   "where": "Mission control",
+   "url": "#qir",
+   "parts": [
+    "P12"
+   ],
+   "status": "Published 15 Nov"
+  },
+  {
+   "id": "PAGE-ECO",
+   "kind": "Page",
+   "name": "QIR control: Where each job lives",
+   "where": "Mission control",
+   "url": "#qir",
+   "parts": [
+    "P06"
+   ],
+   "status": "Published 15 Nov"
+  },
+  {
+   "id": "TASK-MON",
+   "kind": "Scheduled task",
+   "name": "Monday 08:51 refresh and control run",
+   "where": "Your computer",
+   "url": "",
+   "parts": [
+    "P10",
+    "P12"
+   ],
+   "status": "Runs the register refresh; new instructions for the control run await your approval"
+  },
+  {
+   "id": "FLOW-EXIST-1",
+   "kind": "Flow",
+   "name": "\"Send a customized email when a new SharePoint list item is added\" (Artefact & Deliverables Tracker, April)",
+   "where": "Power Automate",
+   "url": "",
+   "parts": [
+    "P13"
+   ],
+   "status": "Started; not on the register; review owner (backlog)"
+  },
+  {
+   "id": "FLOW-EXIST-2",
+   "kind": "Flow",
+   "name": "Policy Intelligence Register new-item flow (June)",
+   "where": "Power Automate",
+   "url": "",
+   "parts": [
+    "P13"
+   ],
+   "status": "Started; not on the register; review owner (backlog)"
+  },
+  {
+   "id": "PAGE-TRACKER",
+   "kind": "Page",
+   "name": "Operating model tracker (this page)",
+   "where": "Mission control",
+   "url": "#tracker",
+   "parts": [
+    "P11",
+    "P12"
+   ],
+   "status": "Published 15 Nov"
+  },
+  {
+   "id": "JIRA-MGMT-247",
+   "kind": "Jira",
+   "name": "MGMT-247: DAM Policy interpretation register (single canonical source linked to policy text)",
+   "where": "Jira (MGMT)",
+   "url": "https://gds-digital-transformation.atlassian.net/browse/MGMT-247",
+   "parts": [
+    "P05",
+    "P09"
+   ],
+   "status": "Found by the 15 Nov sweep; delivers this part"
+  },
+  {
+   "id": "JIRA-MGMT-104",
+   "kind": "Jira",
+   "name": "MGMT-104: FAQs and worked examples",
+   "where": "Jira (MGMT)",
+   "url": "https://gds-digital-transformation.atlassian.net/browse/MGMT-104",
+   "parts": [
+    "P09",
+    "P05"
+   ],
+   "status": "Found by the 15 Nov sweep; delivers this part"
+  },
+  {
+   "id": "JIRA-MGMT-140",
+   "kind": "Jira",
+   "name": "MGMT-140: Cross-workstream RAID log (DAM Policy programme)",
+   "where": "Jira (MGMT)",
+   "url": "https://gds-digital-transformation.atlassian.net/browse/MGMT-140",
+   "parts": [
+    "P06"
+   ],
+   "status": "Found by the 15 Nov sweep; delivers this part"
+  },
+  {
+   "id": "JIRA-MGMT-138",
+   "kind": "Jira",
+   "name": "MGMT-138: Weekly RAID log review",
+   "where": "Jira (MGMT)",
+   "url": "https://gds-digital-transformation.atlassian.net/browse/MGMT-138",
+   "parts": [
+    "P06",
+    "P10"
+   ],
+   "status": "Found by the 15 Nov sweep; delivers this part"
+  },
+  {
+   "id": "JIRA-MGMT-263",
+   "kind": "Jira",
+   "name": "MGMT-263: Close or route baseline interpretation issues (PB-015)",
+   "where": "Jira (MGMT)",
+   "url": "https://gds-digital-transformation.atlassian.net/browse/MGMT-263",
+   "parts": [
+    "P05"
+   ],
+   "status": "Found by the 15 Nov sweep; delivers this part"
+  },
+  {
+   "id": "JIRA-MGMT-280",
+   "kind": "Jira",
+   "name": "MGMT-280: DHSC Project Compass: playbook and prototype feedback (Q090)",
+   "where": "Jira (MGMT)",
+   "url": "https://gds-digital-transformation.atlassian.net/browse/MGMT-280",
+   "parts": [
+    "P06"
+   ],
+   "status": "Found by the 15 Nov sweep; delivers this part"
+  },
+  {
+   "id": "CHECK-EM",
+   "kind": "Code and checks",
+   "name": "check_embeds: EM-01 every embedded fallback equals its published file (added 15 Nov, defect D-QIR-08)",
+   "where": "Mission control kit (tools/)",
+   "url": "",
+   "parts": [
+    "P12"
+   ],
+   "status": "Live, tested"
+  }
+ ],
+ "backlog": [
+  {
+   "id": "BL-01",
+   "pri": "P0",
+   "title": "Approve the register as the controlled cross-forum register; name service owner and triage chair (GOV-001, GOV-002)",
+   "owner": "DAM team leadership",
+   "parts": [
+    "P02",
+    "P10",
+    "P11"
+   ],
+   "status": "In progress",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Register%20Backlog/AllItems.aspx",
+   "note": "GOV-001 approved 15 Nov 2026; GOV-002 approved in principle, names outstanding"
+  },
+  {
+   "id": "BL-02",
+   "pri": "P0",
+   "title": "Approve lifecycle, service levels and authority boundaries (GOV-003) and target-date approach (GOV-005)",
+   "owner": "Policy and commission governance chair",
+   "parts": [
+    "P03",
+    "P11"
+   ],
+   "status": "Done",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Register%20Backlog/AllItems.aspx",
+   "note": "GOV-003 and GOV-005 approved 15 Nov 2026"
+  },
+  {
+   "id": "BL-03",
+   "pri": "P0",
+   "title": "Publish D-01 in FAQ F21 and the interpretation register; reply to Q084, Q085, Q091, Q097",
+   "owner": "Head of Data Management",
+   "parts": [
+    "P09"
+   ],
+   "status": "New",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Register%20Backlog/AllItems.aspx"
+  },
+  {
+   "id": "BL-04",
+   "pri": "P1",
+   "title": "Acknowledgement flow: send ID, route and next update; stamp Acknowledged on",
+   "owner": "Register service owner",
+   "parts": [
+    "P13",
+    "P03"
+   ],
+   "status": "New",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Register%20Backlog/AllItems.aspx"
+  },
+  {
+   "id": "BL-05",
+   "pri": "P1",
+   "title": "Intake flow: Hub contact form question topics create register items (HCF-n)",
+   "owner": "Register service owner",
+   "parts": [
+    "P13",
+    "P01"
+   ],
+   "status": "New",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Register%20Backlog/AllItems.aspx"
+  },
+  {
+   "id": "BL-06",
+   "pri": "P1",
+   "title": "Backfill type, impact, urgency and route, Must items first",
+   "owner": "Weekly triage chair",
+   "parts": [
+    "P04"
+   ],
+   "status": "New",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Register%20Backlog/AllItems.aspx"
+  },
+  {
+   "id": "BL-07",
+   "pri": "P1",
+   "title": "Confirm or reject the 33 audit findings at the next weekly triage",
+   "owner": "Weekly triage chair",
+   "parts": [
+    "P12",
+    "P10"
+   ],
+   "status": "New",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Register%20Backlog/AllItems.aspx"
+  },
+  {
+   "id": "BL-08",
+   "pri": "P1",
+   "title": "Close audit coverage gaps: Jira, Slack and Viva Engage, team mailbox threads",
+   "owner": "Data Management Lead",
+   "parts": [
+    "P12",
+    "P01"
+   ],
+   "status": "New",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Register%20Backlog/AllItems.aspx"
+  },
+  {
+   "id": "BL-09",
+   "pri": "P2",
+   "title": "Review the two existing flows: owner, purpose, keep or retire",
+   "owner": "Data Management Lead",
+   "parts": [
+    "P13"
+   ],
+   "status": "New",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Register%20Backlog/AllItems.aspx"
+  },
+  {
+   "id": "BL-10",
+   "pri": "P2",
+   "title": "Correct the compendium deck: V8 to V9; retired directorate name in the footer",
+   "owner": "Data Management Lead",
+   "parts": [
+    "P07"
+   ],
+   "status": "New",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Register%20Backlog/AllItems.aspx"
+  },
+  {
+   "id": "BL-11",
+   "pri": "P2",
+   "title": "Correct the retired directorate name on the Government Data Portal test page for the central broadcasting service",
+   "owner": "Data Management Lead",
+   "parts": [
+    "P12"
+   ],
+   "status": "New",
+   "url": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Register%20Backlog/AllItems.aspx"
+  }
+ ],
+ "changes": [
+  {
+   "seq": 1,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15",
+   "artefact": "Question and Insight Register",
+   "what": "Added 27 operating-model columns",
+   "kind": "COL",
+   "ids": [
+    "QType",
+    "QImpact",
+    "QUrgency",
+    "QRoute",
+    "QFormat",
+    "QDeliveryOwner",
+    "QAckOn",
+    "QTriagedOn",
+    "QRespondedOn",
+    "QResolution",
+    "QClosedOn",
+    "QClosure",
+    "QLearning",
+    "QWorked",
+    "QApproval",
+    "QAuthority",
+    "QEffective",
+    "QAffected",
+    "QCanonical",
+    "QOpenMatter",
+    "QAliases",
+    "QDuplicateOf",
+    "QJira",
+    "QDecision",
+    "QRaid",
+    "QAudit",
+    "QAuditRun"
+   ],
+   "undo": "SharePoint version history"
+  },
+  {
+   "seq": 2,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15",
+   "artefact": "Question and Insight Register",
+   "what": "Added 5 working views",
+   "kind": "VIEW",
+   "ids": [
+    "Weekly triage",
+    "To acknowledge",
+    "Audit findings to confirm",
+    "Unapproved working positions",
+    "Monthly learning review"
+   ],
+   "undo": "SharePoint version history"
+  },
+  {
+   "seq": 3,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15",
+   "artefact": "DAM Policy Decisions Log",
+   "what": "Added 9 columns; added 9 decisions",
+   "kind": "DEC",
+   "ids": [
+    "GOV-001",
+    "GOV-002",
+    "GOV-003",
+    "GOV-004",
+    "GOV-005",
+    "D-01",
+    "D-02",
+    "D-03",
+    "D-04"
+   ],
+   "undo": "SharePoint version history"
+  },
+  {
+   "seq": 4,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15",
+   "artefact": "DAM Policy RAID & Dependencies",
+   "what": "Added 4 columns; added 12 issue families",
+   "kind": "RAID",
+   "ids": [
+    "KI-01",
+    "KI-02",
+    "KI-03",
+    "KI-04",
+    "KI-05",
+    "KI-06",
+    "KI-07",
+    "KI-08",
+    "KI-09",
+    "KI-10",
+    "KI-11",
+    "KI-12"
+   ],
+   "undo": "SharePoint version history"
+  },
+  {
+   "seq": 5,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15",
+   "artefact": "Question and Insight Register",
+   "what": "Entered the audit's 10 pending items (N-01 to N-10)",
+   "kind": "ITEM",
+   "ids": [
+    "Q090",
+    "Q091",
+    "Q092",
+    "Q093",
+    "Q094",
+    "Q095",
+    "Q096",
+    "Q097",
+    "Q098",
+    "Q099"
+   ],
+   "undo": "SharePoint version history"
+  },
+  {
+   "seq": 6,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15",
+   "artefact": "Question and Insight Register",
+   "what": "Recorded 8 corrections and 23 open-matter or Jira links as audit findings (no status changed)",
+   "kind": "ITEM",
+   "ids": [
+    "Q002",
+    "Q003",
+    "Q011",
+    "Q019",
+    "Q020",
+    "Q046",
+    "Q060",
+    "Q061",
+    "Q062",
+    "Q063",
+    "Q064",
+    "Q067",
+    "Q069",
+    "Q073",
+    "Q074",
+    "Q081",
+    "Q082",
+    "Q084",
+    "Q085",
+    "Q086",
+    "Q087",
+    "Q088",
+    "Q089"
+   ],
+   "undo": "SharePoint version history"
+  },
+  {
+   "seq": 7,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15",
+   "artefact": "DAM Policy Decisions Log",
+   "what": "Linked GOV-003 and GOV-005 to OM-09 after control OC-14 found them unlinked",
+   "kind": "DEC",
+   "ids": [
+    "GOV-003",
+    "GOV-005"
+   ],
+   "undo": "SharePoint version history"
+  },
+  {
+   "seq": 8,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15",
+   "artefact": "Register Backlog",
+   "what": "Added 10 items that need people or approvals",
+   "kind": "BL",
+   "ids": [
+    "BL-01",
+    "BL-02",
+    "BL-03",
+    "BL-04",
+    "BL-05",
+    "BL-06",
+    "BL-07",
+    "BL-08",
+    "BL-09",
+    "BL-10"
+   ],
+   "undo": "SharePoint version history"
+  },
+  {
+   "seq": 9,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15",
+   "artefact": "DAM Assurance Index",
+   "what": "Registered controls OC-01 to OC-14 and the audit, with results",
+   "kind": "OC",
+   "ids": [
+    "OC-01",
+    "OC-02",
+    "OC-03",
+    "OC-04",
+    "OC-05",
+    "OC-06",
+    "OC-07",
+    "OC-08",
+    "OC-09",
+    "OC-10",
+    "OC-11",
+    "OC-12",
+    "OC-13",
+    "OC-14"
+   ],
+   "undo": "SharePoint version history"
+  },
+  {
+   "seq": 10,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15",
+   "artefact": "DAM Automation Health Log",
+   "what": "Logged run AUD-2026-11-15",
+   "kind": "RUN",
+   "ids": [
+    "AUD-2026-11-15"
+   ],
+   "undo": "SharePoint version history"
+  },
+  {
+   "seq": 11,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15",
+   "artefact": "List Catalogue",
+   "what": "Set 6 entries Active with a dated note",
+   "kind": "LIST",
+   "ids": [
+    "LIST-ASSUR",
+    "LIST-HEALTH",
+    "LIST-DEC",
+    "LIST-RAID",
+    "LIST-QIR",
+    "LIST-BACK"
+   ],
+   "undo": "SharePoint version history"
+  },
+  {
+   "seq": 12,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15",
+   "artefact": "Mission control",
+   "what": "Published QIR control sections, controls feed and refresh kit; fixed naming-rule breaches (LR-06)",
+   "kind": "PAGE",
+   "ids": [
+    "PAGE-ADOPT",
+    "PAGE-PROMPTS",
+    "PAGE-TRI",
+    "PAGE-AUDIT",
+    "PAGE-ECO"
+   ],
+   "undo": "Artifact version history"
+  },
+  {
+   "seq": 13,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15",
+   "artefact": "Scheduled task",
+   "what": "Update to run the controls weekly was blocked: needs your approval",
+   "kind": "TASK",
+   "ids": [
+    "TASK-MON"
+   ],
+   "undo": "Not applied"
+  },
+  {
+   "seq": 14,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15",
+   "artefact": "Mission control",
+   "what": "Added this tracker (lineage file tracker.json, check SC-17)",
+   "kind": "PAGE",
+   "ids": [
+    "PAGE-TRACKER"
+   ],
+   "undo": "Artifact version history"
+  },
+  {
+   "seq": 15,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15-S2",
+   "artefact": "Question and Insight Register",
+   "what": "Coverage sweep AUD-2026-11-15-S2: findings added after reading Jira, your mailbox, Viva Engage and Slack",
+   "kind": "ITEM",
+   "ids": [
+    "Q090",
+    "Q095",
+    "Q096",
+    "Q097"
+   ],
+   "undo": "SharePoint version history"
+  },
+  {
+   "seq": 16,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15-S2",
+   "artefact": "Register Backlog",
+   "what": "Linked BL-03 to Jira MGMT-247 and MGMT-104; added BL-11 (retired name on a portal test page)",
+   "kind": "BL",
+   "ids": [
+    "BL-03",
+    "BL-11"
+   ],
+   "undo": "SharePoint version history"
+  },
+  {
+   "seq": 17,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15-S2",
+   "artefact": "Mission control",
+   "what": "Draft replies for Q084, Q085, Q091 and Q097 prepared for approval (nothing sent)",
+   "kind": "ITEM",
+   "ids": [
+    "Q084",
+    "Q085",
+    "Q091",
+    "Q097"
+   ],
+   "undo": "Artifact version history"
+  },
+  {
+   "seq": 18,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15-S2",
+   "artefact": "Team shared mailbox",
+   "what": "Draft replies for Q084, Q085, Q091 and Q097 saved unsent in Drafts, from the team mailbox, for approval and sending",
+   "kind": "ITEM",
+   "ids": [
+    "Q084",
+    "Q085",
+    "Q091",
+    "Q097"
+   ],
+   "undo": "Delete the draft in Outlook"
+  },
+  {
+   "seq": 19,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15-S2",
+   "artefact": "Mission control",
+   "what": "Fixed D-QIR-08: the page's embedded control-layer copy predated the S2 sweep; rebuilt it and added check EM-01",
+   "kind": "CHK",
+   "ids": [
+    "CHECK-EM"
+   ],
+   "undo": "Artifact version history"
+  },
+  {
+   "seq": 20,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15-S2",
+   "artefact": "DAM Policy Decisions Log",
+   "what": "GOV-001, GOV-003, GOV-004 and GOV-005 set Agreed and Resolved; GOV-002 Agreed in principle and left open until the service owner and triage chair are named (approved by the Data Management Lead)",
+   "kind": "DEC",
+   "ids": [
+    "GOV-001",
+    "GOV-002",
+    "GOV-003",
+    "GOV-004",
+    "GOV-005"
+   ],
+   "undo": "SharePoint version history"
+  },
+  {
+   "seq": 21,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15-S2",
+   "artefact": "Register Backlog",
+   "what": "BL-02 Done; BL-01 In progress (names outstanding)",
+   "kind": "BL",
+   "ids": [
+    "BL-01",
+    "BL-02"
+   ],
+   "undo": "SharePoint version history"
+  },
+  {
+   "seq": 22,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15-S2",
+   "artefact": "Mission control",
+   "what": "Fixed D-QIR-09: target labels were hard-coded as proposed; the engine (v1.1.0) now reads GOV-003 from the Decisions Log, CT-05 checks consistency, controls rerun (same results, targets agreed)",
+   "kind": "CHK",
+   "ids": [
+    "SCRIPT-ENGINE",
+    "CHECK-CT"
+   ],
+   "undo": "Artifact version history"
+  },
+  {
+   "seq": 23,
+   "date": "2026-11-15",
+   "run": "AUD-2026-11-15-S2",
+   "artefact": "Mission control",
+   "what": "Draft replies for Q084, Q085, Q091 and Q097 marked ready to send: the Data Management Lead confirmed no Head of Data Management sign-off is needed",
+   "kind": "ITEM",
+   "ids": [
+    "Q084",
+    "Q085",
+    "Q091",
+    "Q097"
+   ],
+   "undo": "Artifact version history"
+  }
+ ],
+ "regItemUrl": "https://beisgov.sharepoint.com/sites/OCDO/Lists/Question%20and%20Insight%20Register/AllItems.aspx?FilterField1=QIRRef&FilterValue1="
+}

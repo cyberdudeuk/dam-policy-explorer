@@ -1,0 +1,1603 @@
+{
+ "version": "1.1.0",
+ "checked": "2026-11-18",
+ "needs": [
+  {
+   "id": "N01",
+   "theme": "Scope",
+   "need": "Does data we only use inside our own organisation count, or only data shared with others?",
+   "raised": 1,
+   "qa": "shared-only"
+  },
+  {
+   "id": "N02",
+   "theme": "Scope",
+   "need": "The criteria in the return template read differently from the published policy. Which do we follow?",
+   "raised": 1,
+   "qa": "principles"
+  },
+  {
+   "id": "N03",
+   "theme": "Scope",
+   "need": "Are our extracts of another department's official statistics our critical data assets?",
+   "raised": 1,
+   "qa": "official-stats"
+  },
+  {
+   "id": "N04",
+   "theme": "Scope",
+   "need": "Can defence and national security assets be listed without forcing classified data to be shared?",
+   "raised": 1,
+   "qa": "classified"
+  },
+  {
+   "id": "N05",
+   "theme": "Scope",
+   "need": "Where do the boundaries sit between a data set, a data asset, a product, an API and a service?",
+   "raised": 1,
+   "qa": "what-to-report"
+  },
+  {
+   "id": "N06",
+   "theme": "Making the return",
+   "need": "Do arm's length bodies and agencies send one combined return with their department, or their own?",
+   "raised": 3,
+   "qa": "alb-returns"
+  },
+  {
+   "id": "N07",
+   "theme": "Making the return",
+   "need": "Can GDS give feedback on our test return before we send the real one?",
+   "raised": 3,
+   "qa": "test-return"
+  },
+  {
+   "id": "N08",
+   "theme": "Making the return",
+   "need": "What is the scope and timing of later returns, after the first one?",
+   "raised": 2,
+   "qa": "later-returns"
+  },
+  {
+   "id": "N09",
+   "theme": "Making the return",
+   "need": "How should we fill in the legal gateway field?",
+   "raised": 1,
+   "qa": "legal-gateway"
+  },
+  {
+   "id": "N10",
+   "theme": "Roles",
+   "need": "Who should our coordinator be, and who is accountable?",
+   "raised": 1,
+   "qa": "who-accountable"
+  },
+  {
+   "id": "N11",
+   "theme": "Metadata and catalogues",
+   "need": "What is the minimum metadata we must record, and which standards set it?",
+   "raised": 1,
+   "qa": "minimum-metadata"
+  },
+  {
+   "id": "N12",
+   "theme": "Metadata and catalogues",
+   "need": "Do we need a particular catalogue product, and how do others publish metadata or tag it in their tools?",
+   "raised": 5,
+   "qa": "catalogue-tool"
+  },
+  {
+   "id": "N13",
+   "theme": "Sharing and access",
+   "need": "Who will see our return, and will the metadata be published?",
+   "raised": 2,
+   "qa": "who-sees"
+  },
+  {
+   "id": "N14",
+   "theme": "Data quality",
+   "need": "What counts as a data quality action plan or equivalent, and where is the framework?",
+   "raised": 3,
+   "qa": "dqap"
+  },
+  {
+   "id": "N15",
+   "theme": "Embedding",
+   "need": "How do we build the policy into a new digital service or transformation project from the start?",
+   "raised": 1,
+   "qa": "new-service"
+  },
+  {
+   "id": "N16",
+   "theme": "Embedding",
+   "need": "How does the policy link to crisis and resilience data sharing?",
+   "raised": 1,
+   "qa": "resilience"
+  },
+  {
+   "id": "N17",
+   "theme": "Finding things",
+   "need": "Materials are hard to find: the Knowledge Hub is hard to navigate and some recordings cannot be viewed.",
+   "raised": 4,
+   "qa": "find-materials"
+  }
+ ],
+ "qa": [
+  {
+   "id": "scope-orgs",
+   "topic": "Scope and critical data assets",
+   "prov": "policy",
+   "q": "Which organisations does the policy apply to?",
+   "src": [
+    [
+     "Data Asset Management Policy in government",
+     "https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "principles",
+   "topic": "Scope and critical data assets",
+   "prov": "gds",
+   "q": "Exactly what is in scope? (the four scope principles)",
+   "src": [
+    [
+     "Identifying and recording critical data assets",
+     "https://www.gov.uk/government/publications/identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "shared-only",
+   "topic": "Scope and critical data assets",
+   "prov": "gds",
+   "q": "Does data we only use inside our organisation count?",
+   "src": [
+    [
+     "Identifying and recording critical data assets",
+     "https://www.gov.uk/government/publications/identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "potential-value",
+   "topic": "Scope and critical data assets",
+   "prov": "gds",
+   "q": "How do we judge if data could create value if shared?",
+   "src": [
+    [
+     "Identifying and recording critical data assets",
+     "https://www.gov.uk/government/publications/identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "official-stats",
+   "topic": "Scope and critical data assets",
+   "prov": "policy",
+   "q": "Are official statistics, or our extracts of another department's statistics, in scope?",
+   "src": [
+    [
+     "Identifying and recording critical data assets",
+     "https://www.gov.uk/government/publications/identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "classified",
+   "topic": "Scope and critical data assets",
+   "prov": "policy",
+   "q": "Do we report SECRET or TOP SECRET data?",
+   "src": [
+    [
+     "Data Asset Management Policy in government",
+     "https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "esda",
+   "topic": "Scope and critical data assets",
+   "prov": "gds",
+   "q": "How do Essential Shared Data Assets (ESDAs) relate to critical data assets?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "own-definition",
+   "topic": "Scope and critical data assets",
+   "prov": "gds",
+   "q": "We already have our own definition of critical data assets. What do we do?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "not-identified",
+   "topic": "Scope and critical data assets",
+   "prov": "gds",
+   "q": "We have not formally identified our critical data assets yet. What now?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "only-cdas",
+   "topic": "Scope and critical data assets",
+   "prov": "gds",
+   "q": "Do we report all our data assets, or only critical ones?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "who-accountable",
+   "topic": "Roles and governance",
+   "prov": "policy",
+   "q": "Who is accountable, and who should our coordinator be?",
+   "src": [
+    [
+     "Data Asset Management Policy in government",
+     "https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government"
+    ],
+    [
+     "Data ownership model",
+     "https://www.gov.uk/government/publications/data-ownership-in-government/data-ownership-model"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "iao",
+   "topic": "Roles and governance",
+   "prov": "policy",
+   "q": "Does the data owner role replace information asset owners?",
+   "src": [
+    [
+     "Data ownership model",
+     "https://www.gov.uk/government/publications/data-ownership-in-government/data-ownership-model"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "shared-service",
+   "topic": "Roles and governance",
+   "prov": "gds",
+   "q": "Who reports an asset when ownership is shared or spread across teams?",
+   "src": [
+    [
+     "Data ownership model",
+     "https://www.gov.uk/government/publications/data-ownership-in-government/data-ownership-model"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "minimum-metadata",
+   "topic": "Data management requirements",
+   "prov": "policy",
+   "q": "What metadata is mandatory?",
+   "src": [
+    [
+     "Recording metadata to describe critical data assets",
+     "https://www.gov.uk/government/publications/record-metadata-to-describe-critical-data-assets/recording-metadata-to-describe-critical-data-assets"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "richer-metadata",
+   "topic": "Data management requirements",
+   "prov": "gds",
+   "q": "Can we keep richer metadata than the minimum?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "iar-catalogue",
+   "topic": "Data management requirements",
+   "prov": "gds",
+   "q": "How does a data catalogue relate to our information asset register?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "catalogue-tool",
+   "topic": "Data management requirements",
+   "prov": "policy",
+   "q": "Do we need a particular data catalogue product?",
+   "src": [
+    [
+     "Data Asset Management Policy in government",
+     "https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "dqap",
+   "topic": "Data management requirements",
+   "prov": "gds",
+   "q": "What counts as a data quality action plan \"or equivalent\"?",
+   "src": [
+    [
+     "Data Asset Management Policy in government",
+     "https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government"
+    ],
+    [
+     "Data quality action plan: implementation guide",
+     "https://www.gov.uk/government/publications/implement-a-data-quality-action-plan/data-quality-action-plan-implementation-guide"
+    ],
+    [
+     "Data quality issues framework",
+     "https://www.gov.uk/government/publications/implement-a-data-quality-action-plan/data-quality-issues-framework"
+    ],
+    [
+     "The Government Data Quality Framework",
+     "https://www.gov.uk/government/publications/the-government-data-quality-framework"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "resourcing",
+   "topic": "Implementation and support",
+   "prov": "gds",
+   "q": "This is a big task. Do we absorb it or set up a team?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "tranches",
+   "topic": "Implementation and support",
+   "prov": "gds",
+   "q": "Are the timings for prioritised support fixed?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "test-return",
+   "topic": "Implementation and support",
+   "prov": "practice",
+   "q": "Can we get feedback on a test return?",
+   "src": []
+  },
+  {
+   "id": "later-returns",
+   "topic": "Reporting and the return",
+   "prov": "gds",
+   "q": "When are the returns due?",
+   "src": [
+    [
+     "Data Asset Management Policy in government",
+     "https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "alb-returns",
+   "topic": "Reporting and the return",
+   "prov": "gds",
+   "q": "Do arm's length bodies send their own return, or one with their department?",
+   "src": [
+    [
+     "Data Asset Management Policy in government",
+     "https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "compliance-maturity",
+   "topic": "Reporting and the return",
+   "prov": "gds",
+   "q": "Does the return assess compliance or maturity?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "names",
+   "topic": "Reporting and the return",
+   "prov": "gds",
+   "q": "Do we give the names of data owners and stewards?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "evidence",
+   "topic": "Reporting and the return",
+   "prov": "gds",
+   "q": "What evidence should we keep?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "partial",
+   "topic": "Reporting and the return",
+   "prov": "gds",
+   "q": "How do we report something that is only partly in place?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "free-text",
+   "topic": "Reporting and the return",
+   "prov": "gds",
+   "q": "How much should we write in free-text fields?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "legal-gateway",
+   "topic": "Reporting and the return",
+   "prov": "gds",
+   "q": "What goes in the legal gateway field?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "discoverability",
+   "topic": "Reporting and the return",
+   "prov": "gds",
+   "q": "How do we answer the discoverability and interoperability field?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "what-to-report",
+   "topic": "Reporting and the return",
+   "prov": "gds",
+   "q": "Do we report data sets, data products or APIs?",
+   "src": [
+    [
+     "Data Asset Management Policy in government",
+     "https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "who-sees",
+   "topic": "Reporting and the return",
+   "prov": "gds",
+   "q": "Will other departments see the metadata we send?",
+   "src": [
+    [
+     "Data Asset Management Policy in government",
+     "https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "template-changes",
+   "topic": "Reporting and the return",
+   "prov": "gds",
+   "q": "How will changes to the template be managed?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "ndl",
+   "topic": "Related initiatives",
+   "prov": "gds",
+   "q": "How does this relate to the National Data Library?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "star",
+   "topic": "Related initiatives",
+   "prov": "gds",
+   "q": "How does this relate to HM Treasury's Strategic Asset Review?",
+   "src": [
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "mem",
+   "topic": "Related initiatives",
+   "prov": "gds",
+   "q": "How does this relate to the Metadata Exchange Model?",
+   "src": [
+    [
+     "Recording metadata to describe critical data assets",
+     "https://www.gov.uk/government/publications/record-metadata-to-describe-critical-data-assets/recording-metadata-to-describe-critical-data-assets"
+    ],
+    [
+     "GDS DAM Policy FAQs, November 2026",
+     null
+    ]
+   ]
+  },
+  {
+   "id": "new-service",
+   "topic": "Embedding the policy",
+   "prov": "practice",
+   "q": "How do we build the policy into a new service or project?",
+   "src": [
+    [
+     "Technology Code of Practice, point 10: make better use of data",
+     "https://www.gov.uk/guidance/make-better-use-of-data"
+    ],
+    [
+     "Data Asset Management Policy in government",
+     "https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government"
+    ]
+   ]
+  },
+  {
+   "id": "resilience",
+   "topic": "Embedding the policy",
+   "prov": "policy",
+   "q": "How does the policy link to resilience data sharing?",
+   "src": [
+    [
+     "Identifying and recording critical data assets",
+     "https://www.gov.uk/government/publications/identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets"
+    ],
+    [
+     "Data Asset Management Policy in government",
+     "https://www.gov.uk/government/publications/data-asset-management-policy-in-government/data-asset-management-policy-in-government"
+    ]
+   ]
+  },
+  {
+   "id": "find-materials",
+   "topic": "Finding things",
+   "prov": "practice",
+   "q": "Where do I find the guidance, templates and meeting materials?",
+   "src": []
+  }
+ ],
+ "index": [
+  {
+   "t": "Which organisations does the policy apply to?",
+   "x": "All UK government departments and their arm's length bodies: executive agencies, non-departmental public bodies and non-ministerial departments. It is optional for public corporations and for local government. The devolved governments use their own data sharing governance, though the principles are useful to anyone.",
+   "u": "questions.html#q-scope-orgs",
+   "k": "Answer",
+   "p": "policy"
+  },
+  {
+   "t": "Exactly what is in scope? (the four scope principles)",
+   "x": "An asset is in scope only if it is OFFICIAL and all four principles apply together: It meets a critical criterion : it supports at least one of the seven critical purposes. It is shared : it has value across government through reuse. It is shared with a public sector organisation under a data sharing agreement, published as open data, or could create value if shared. You are accountable for it : your organisation manages or controls it, including data from others that you have materially changed or enriched. It is the source : if an extract, report, API or product is critical, report the source data behind it. Report a product separately only if it is managed and owned in its own right. The principles were developed with the DAM Policy Working Group. They put the published guidance into practice, so use them where the template's wording seems to differ. Worked scenarios are being added. Test an asset against the principles .",
+   "u": "questions.html#q-principles",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "Does data we only use inside our organisation count?",
+   "x": "Not on its own. The policy is about data with value across government. Some data is critical inside your organisation, such as some workforce and finance data, but has no value across government, so it is out of scope. An extract of it that is shared for analysis may be in scope. GDS recommends labelling assets that are in scope as XG_CDA in your data catalogue, so they are easy to tell apart.",
+   "u": "questions.html#q-shared-only",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "How do we judge if data could create value if shared?",
+   "x": "It is a judgement, so be practical and do not hold up your return. For the Baseline Return, start with assets already shared under a data sharing agreement or published as open data. If you have time, add assets that could create value if they were easier to find and use. Signs of that include data that: supports needs that many organisations have is about common things such as people, places, organisations, businesses or services another organisation has asked for matters nationally, regionally or across sectors More guidance will follow after January 2027, ready for the October 2027 return.",
+   "u": "questions.html#q-potential-value",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "Are official statistics, or our extracts of another department's statistics, in scope?",
+   "x": "Do not list published official statistics themselves. List the data behind them: the administrative data, surveys and censuses. That data is listed by the organisation that is accountable for it. An extract you take from another department is yours to list only if you have materially changed or enriched it. Otherwise the source belongs to the other department.",
+   "u": "questions.html#q-official-stats",
+   "k": "Answer",
+   "p": "policy"
+  },
+  {
+   "t": "Do we report SECRET or TOP SECRET data?",
+   "x": "No. Only OFFICIAL data is in scope, including OFFICIAL with markings and descriptors such as sensitive. SECRET and TOP SECRET data is excluded. Listing an asset does not force you to share it. The policy does not create a duty to share data or remove any legal obligation.",
+   "u": "questions.html#q-classified",
+   "k": "Answer",
+   "p": "policy"
+  },
+  {
+   "t": "How do Essential Shared Data Assets (ESDAs) relate to critical data assets?",
+   "x": "The DAM Policy grew out of the Essential Shared Data Assets policy. The name changed to critical data asset, but the definition is the same. The ESDA exercise was a test using a sample of assets. The DAM Policy applies across all of government.",
+   "u": "questions.html#q-esda",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "We already have our own definition of critical data assets. What do we do?",
+   "x": "Keep it for your own purposes. The DAM Policy definition covers data with value across government, so some assets you treat as critical will not be in scope. How you manage both is up to you. To keep catalogues consistent across government, label the ones in scope of the policy XG_CDA .",
+   "u": "questions.html#q-own-definition",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "We have not formally identified our critical data assets yet. What now?",
+   "x": "Make a reasonable effort to identify and report them in line with the policy and guidance. The first return sets a baseline to improve from. If you cannot meet a deadline, tell GDS through your lead coordinator.",
+   "u": "questions.html#q-not-identified",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "Do we report all our data assets, or only critical ones?",
+   "x": "Only critical data assets as the policy defines them. You can catalogue anything else for your own purposes, but it does not go in the return.",
+   "u": "questions.html#q-only-cdas",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "Who is accountable, and who should our coordinator be?",
+   "x": "Your chief data officer is responsible for putting the policy into practice. If you have no chief data officer, the director responsible for data is accountable. Every asset must have a named data owner. The coordinator role comes from the programme, not the policy. Your chief data officer names someone who knows your organisation's data and gives them time for the work. See who does what .",
+   "u": "questions.html#q-who-accountable",
+   "k": "Answer",
+   "p": "policy"
+  },
+  {
+   "t": "Does the data owner role replace information asset owners?",
+   "x": "No. Information asset owners keep their role and their accountability for managing, securing and complying with rules about information assets. The data owner role adds to it by making clear who is accountable for how data is accessed, used, improved and governed. The data ownership model explains the difference. Training for data owners is being developed.",
+   "u": "questions.html#q-iao",
+   "k": "Answer",
+   "p": "policy"
+  },
+  {
+   "t": "Who reports an asset when ownership is shared or spread across teams?",
+   "x": "The organisation that holds data ownership accountability reports it. Where there is a shared service, agree between you which organisation that is. Others may have stewardship or operational roles, but each asset has one named data owner.",
+   "u": "questions.html#q-shared-service",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "What metadata is mandatory?",
+   "x": "The minimum set is in Recording metadata to describe critical data assets . It recommends the Data Catalogue Vocabulary (DCAT) to describe data sets and data services. The UK Cross-Government Metadata Exchange Model is one practical way to apply it. The return asks for less than this: a smaller set of details GDS uses to monitor the policy. Keep the full metadata in your own catalogue. See step 7 .",
+   "u": "questions.html#q-minimum-metadata",
+   "k": "Answer",
+   "p": "policy"
+  },
+  {
+   "t": "Can we keep richer metadata than the minimum?",
+   "x": "Yes. The policy sets a minimum. Keep any extra metadata you need, and keep meeting any higher standards that already apply to you, such as internal rules, regulation or security policies.",
+   "u": "questions.html#q-richer-metadata",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "How does a data catalogue relate to our information asset register?",
+   "x": "They overlap but do different jobs. An information asset register is mainly for governance: accountability, risk, security and compliance. A data catalogue helps people find, understand and use data, with richer details such as quality and lineage. A catalogue could replace a register only if it does the governance job as well. Avoid keeping the same details twice: agree one source for the shared fields and link the two.",
+   "u": "questions.html#q-iar-catalogue",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "Do we need a particular data catalogue product?",
+   "x": "No. The policy asks you to manage metadata about your assets in your data catalogue and report it to GDS. It does not name a product. GDS ran a catalogue pilot on Microsoft Purview because many organisations already use it, and would repeat the pilot with other tools if there is demand. Peers share how they use their tools at the Data Catalogue and Analysis Platform Working Group.",
+   "u": "questions.html#q-catalogue-tool",
+   "k": "Answer",
+   "p": "policy"
+  },
+  {
+   "t": "What counts as a data quality action plan \"or equivalent\"?",
+   "x": "Every asset must have a data quality action plan or an equivalent. To count as equivalent, your own process must cover all seven steps of the GDS guide: Identify critical data Identify data quality rules Assess current data quality Prioritise improvements and set goals Find the root cause and act Report on data quality Measure again over time The policy does not require a particular document or tool. GDS is building a bank of examples.",
+   "u": "questions.html#q-dqap",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "This is a big task. Do we absorb it or set up a team?",
+   "x": "GDS is not prescriptive about how you organise the work, because organisations differ so much. It will work through the challenges with lead coordinators in the DAM Policy Working Group, and share how others are approaching it.",
+   "u": "questions.html#q-resourcing",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "Are the timings for prioritised support fixed?",
+   "x": "No, they are indicative. They are based on how complex and widely used each department's data was in the ESDA returns. If the timing does not suit your capacity, or you need closer support, raise it through your lead coordinator.",
+   "u": "questions.html#q-tranches",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "Can we get feedback on a test return?",
+   "x": "Yes. First run your list through Is my list ready to send? . It runs in your browser and finds the most common problems. Then ask for feedback through your lead coordinator or the contact form . Do not attach the file to the form.",
+   "u": "questions.html#q-test-return",
+   "k": "Answer",
+   "p": "practice"
+  },
+  {
+   "t": "When are the returns due?",
+   "x": "The first return, the Baseline Return, is due in January 2027. The next is due in October 2027. Aim to be ready by Friday 18 December 2026, before the Christmas break. The policy itself asks you to maintain and review your list every year. In time, GDS expects to replace these returns with more frequent updates taken straight from your catalogue.",
+   "u": "questions.html#q-later-returns",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "Do arm's length bodies send their own return, or one with their department?",
+   "x": "Arm's length bodies identify and record their own critical data assets using the return template. They send it to their parent department first, and the department forwards it to GDS. Departments coordinate and assure their arm's length bodies' returns, and send a combined return where that makes sense. Either one combined return or separate returns is fine, as long as the department knows about every one. If your arm's length body has not heard from its department about the return, contact GDS.",
+   "u": "questions.html#q-alb-returns",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "Does the return assess compliance or maturity?",
+   "x": "Compliance with the DAM Policy. The Baseline Return shows which assets are in scope and how far they meet the data management requirements. Progress is reported to the Chief Data Officer Council and to ministers after each return. Data maturity is assessed separately, by the GDS Data Maturity Service.",
+   "u": "questions.html#q-compliance-maturity",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "Do we give the names of data owners and stewards?",
+   "x": "No. The return asks only whether each role has been assigned. Do not enter anyone's name. Keep names in your own catalogue or register.",
+   "u": "questions.html#q-names",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "What evidence should we keep?",
+   "x": "You do not send evidence with the return. Be able to trace each answer back to the system it came from, such as your data catalogue or information asset register. Give each row a unique identifier, so later returns can show what is new or changed.",
+   "u": "questions.html#q-evidence",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "How do we report something that is only partly in place?",
+   "x": "Choose the option in the template that matches where you really are. Use In development when work has started but is not finished, and Planned or No when it has not started. Do not overstate. For data quality, say whether you have a standard plan, a documented equivalent, or nothing in place yet.",
+   "u": "questions.html#q-partial",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "How much should we write in free-text fields?",
+   "x": "Keep it short. Use free text only for context the options cannot give: exceptions, partial progress, dependencies, risks, next steps or a non-sensitive evidence reference. Never include personal data, sensitive information, detailed quality scores or rules.",
+   "u": "questions.html#q-free-text",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "What goes in the legal gateway field?",
+   "x": "The law or agreement that allows the data to be shared or made available, not the basis on which you first collected it. If more than one applies, give the main one if you know it. If there is no clear main one, leave the field blank. You do not need to review several data sharing agreements to fill it in. Recording legal gateways in your catalogue is still good practice.",
+   "u": "questions.html#q-legal-gateway",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "How do we answer the discoverability and interoperability field?",
+   "x": "It asks whether information about the data standards the asset uses can be found, inside your organisation and across government, for example on data.gov.uk or a sector portal. In place : full details are available on every standard used. Partial : some details, but not complete. Not in place : no details are available.",
+   "u": "questions.html#q-discoverability",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "Do we report data sets, data products or APIs?",
+   "x": "Report the underlying source data set. Where a critical product, report or API draws on data sets, name those source data sets. You may add details of APIs if you already have them, but you do not need to look for them. If one data set is reached through several APIs, report the data set once. The policy defines a data asset as one or more data sets plus any data services, such as APIs, used to reach them.",
+   "u": "questions.html#q-what-to-report",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "Will other departments see the metadata we send?",
+   "x": "Not for now. Returns go to GDS. Sharing metadata across government is being considered as part of the GDS discoverability service, and members will be able to help shape it. The policy says GDS is developing that service.",
+   "u": "questions.html#q-who-sees",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "How will changes to the template be managed?",
+   "x": "The template for the Baseline Return is agreed. A change log starts when the first returns arrive. Unique identifiers on each row let GDS see what is new or changed between returns.",
+   "u": "questions.html#q-template-changes",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "How does this relate to the National Data Library?",
+   "x": "The two work closely together to avoid duplication. The National Data Library is focused on developing data.gov.uk. The DAM Policy makes sure good data management practice is applied to government data, which makes it more valuable to initiatives like the library.",
+   "u": "questions.html#q-ndl",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "How does this relate to HM Treasury's Strategic Asset Review?",
+   "x": "They ask different things. The Strategic Asset Review looks for assets of all kinds with high commercial potential. The DAM Policy is about critical data that is shared, and commercialisation is not its aim. Some assets may appear in both, but the returns will not be the same.",
+   "u": "questions.html#q-star",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "How does this relate to the Metadata Exchange Model?",
+   "x": "The metadata guidance recommends DCAT for describing data sets and data services. The UK Cross-Government Metadata Exchange Model is a practical way to apply DCAT, and can help you record and exchange metadata consistently.",
+   "u": "questions.html#q-mem",
+   "k": "Answer",
+   "p": "gds"
+  },
+  {
+   "t": "How do we build the policy into a new service or project?",
+   "x": "Treat it as part of the design, not a task at the end. During discovery, name the data the service will create, use or share. Before live, give each critical asset an owner, describe it in your catalogue and start a quality plan, so it joins your next return without extra work. See embedding it in change . This matches point 10 of the Technology Code of Practice, which asks teams to plan for data across its whole lifecycle.",
+   "u": "questions.html#q-new-service",
+   "k": "Answer",
+   "p": "practice"
+  },
+  {
+   "t": "How does the policy link to resilience data sharing?",
+   "x": "Defence, national security and resilience is one of the seven critical purposes. Data shared for resilience work can be a critical data asset if the other principles apply. Listing it records that it exists and who owns it. It does not change who may use it.",
+   "u": "questions.html#q-resilience",
+   "k": "Answer",
+   "p": "policy"
+  },
+  {
+   "t": "Where do I find the guidance, templates and meeting materials?",
+   "x": "Here. The resources page lists all the published guidance, templates and tools, and you can filter it by what you need. The coordinators' FAQ and meeting recordings are kept with the DAM Policy Working Group on the Knowledge Hub. If you cannot open something, tell us and we will send it another way.",
+   "u": "questions.html#q-find-materials",
+   "k": "Answer",
+   "p": "practice"
+  },
+  {
+   "t": "Arm's length body",
+   "x": "An organisation that is part of government but works at a distance from its department, such as an executive agency.",
+   "u": "glossary.html#t-arms-length-body",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Baseline Return",
+   "x": "The first list of critical data assets each organisation sends to GDS.",
+   "u": "glossary.html#t-baseline-return",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Chief data officer",
+   "x": "The most senior person in charge of data in an organisation. Responsible for putting the policy into practice there.",
+   "u": "glossary.html#t-cdo",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Chief Data Officer Council",
+   "x": "The group of chief data officers that oversees how the policy is put into practice across government.",
+   "u": "glossary.html#t-cdo-council",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Critical data asset",
+   "x": "A data asset that is OFFICIAL, serves at least one of seven critical purposes, has value across government through sharing, and that your organisation is accountable for. Called an Essential Shared Data Asset (ESDA) before the DAM Policy.",
+   "u": "glossary.html#t-critical-data-asset",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Scope principles",
+   "x": "The four DAM Policy principles that decide whether an asset is in scope: critical criterion, shared, accountable, and prioritise the source.",
+   "u": "glossary.html#t-scope-principles",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "XG_CDA",
+   "x": "The label GDS recommends for marking assets that are in scope of the DAM Policy in your data catalogue.",
+   "u": "glossary.html#t-xg-cda",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Information asset register",
+   "x": "A governance record of information assets, their owners (information asset owners), risks and controls.",
+   "u": "glossary.html#t-iar",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Information asset owner",
+   "x": "The person accountable for managing, securing and complying with rules about an information asset. The role continues alongside the data owner.",
+   "u": "glossary.html#t-iao",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "DCAT",
+   "x": "Data Catalogue Vocabulary, an open standard for describing data sets and data services. The metadata guidance recommends it.",
+   "u": "glossary.html#t-dcat",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Critical purpose",
+   "x": "One of seven reasons that make shared data critical, numbered 1 to 7 in the guidance, such as delivering public services.",
+   "u": "glossary.html#t-critical-purpose",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "CSV file",
+   "x": "A simple file for table data that any spreadsheet program can open and save.",
+   "u": "glossary.html#t-csv",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "DAM",
+   "x": "Data Asset Management, the government policy this app is about.",
+   "u": "glossary.html#t-dam",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Data asset",
+   "x": "One or more data sets, plus any data services used to reach them.",
+   "u": "glossary.html#t-data-asset",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Data catalogue",
+   "x": "A list that describes the data an organisation holds, so people can find it.",
+   "u": "glossary.html#t-data-catalogue",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Data owner",
+   "x": "The person named as accountable for decisions about a data asset.",
+   "u": "glossary.html#t-data-owner",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Data protection officer",
+   "x": "The person in an organisation who makes sure personal data is handled lawfully.",
+   "u": "glossary.html#t-data-protection-officer",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Data service",
+   "x": "Something that gives controlled access to one or more data sets, such as an API.",
+   "u": "glossary.html#t-data-service",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Data set",
+   "x": "A structured collection of data chosen to meet a defined need. It can be part of a larger system.",
+   "u": "glossary.html#t-data-set",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Data steward",
+   "x": "The person who looks after a set of data day to day.",
+   "u": "glossary.html#t-data-steward",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Data quality action plan",
+   "x": "A plan for keeping a data asset accurate and complete enough to use. Often shortened to DQAP.",
+   "u": "glossary.html#t-dqap",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "ESDA",
+   "x": "Essential Shared Data Asset, the earlier name for a critical data asset. The return asks for your reference from the ESDA exercise.",
+   "u": "glossary.html#t-esda",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "GDS",
+   "x": "The Government Digital Service, which runs the Data Asset Management programme.",
+   "u": "glossary.html#t-gds",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Legal gateway",
+   "x": "The law or agreement that allows data to be shared.",
+   "u": "glossary.html#t-legal-gateway",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Metadata",
+   "x": "Information that describes data: what it is, who owns it, where it comes from and how it can be used.",
+   "u": "glossary.html#t-metadata",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "OFFICIAL",
+   "x": "The lowest of the government's security classifications. Most government data is OFFICIAL.",
+   "u": "glossary.html#t-official",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "Policy gap",
+   "x": "Something the policy expects that is not in place yet, such as an asset with no data owner. A gap is not a mistake: GDS accepts it and uses it to decide where to help.",
+   "u": "glossary.html#t-policy-gap",
+   "k": "Glossary",
+   "p": ""
+  },
+  {
+   "t": "CR-01 Accountable leadership and policy oversight",
+   "x": "Direction and oversight. The policy names it as a requirement or responsibility.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/governance.html",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-02 Data strategy and prioritisation by reuse value",
+   "x": "Direction and oversight. The policy depends on it to meet a requirement, but does not name it.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capabilities.html#CR-02",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-03 Central reporting, assurance and arm's length body coordination",
+   "x": "Direction and oversight. The policy names it as a requirement or responsibility.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/governance.html",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-04 Performance measurement and annual review",
+   "x": "Direction and oversight. The policy names it as a requirement or responsibility.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/governance.html",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-05 Identify and scope critical data assets",
+   "x": "Core DAM capabilities. The policy names it as a requirement or responsibility.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/cataloguing.html",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-06 Data cataloguing and metadata management",
+   "x": "Core DAM capabilities. The policy names it as a requirement or responsibility.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/cataloguing.html",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-07 Data ownership and stewardship",
+   "x": "Core DAM capabilities. The policy names it as a requirement or responsibility.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/governance.html",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-08 Data quality management through action plans",
+   "x": "Core DAM capabilities. The policy names it as a requirement or responsibility.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/quality.html",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-09 Data quality issue management",
+   "x": "Core DAM capabilities. The policy depends on it to meet a requirement, but does not name it.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/quality.html",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-10 Data life cycle management",
+   "x": "Data management enablers. The policy names it as a requirement or responsibility.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capability-model.html#CR-10",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-11 Interoperability, data standards and identifiers",
+   "x": "Data management enablers. The policy names it as a requirement or responsibility.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/cataloguing.html",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-12 Data architecture and data services",
+   "x": "Data management enablers. The policy depends on it to meet a requirement, but does not name it.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capability-model.html#CR-12",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-13 Catalogue and quality tooling",
+   "x": "Data management enablers. The policy depends on it to meet a requirement, but does not name it.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capabilities.html#CR-13",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-14 Reference data, master data and authoritative sources",
+   "x": "Data management enablers. The policy depends on it to meet a requirement, but does not name it.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capability-model.html#CR-14",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-15 Records, retention and disposal",
+   "x": "Data management enablers. Not in the policy text. The playbooks' judgement from good practice and related guidance.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capability-model.html#CR-15",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-16 Security classification and protective controls",
+   "x": "Protection, ethics and trust. The policy names it as a requirement or responsibility.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capability-model.html#CR-16",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-17 Data protection and lawful sharing",
+   "x": "Protection, ethics and trust. The policy names it as a requirement or responsibility.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capability-model.html#CR-17",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-18 AI readiness and data and AI ethics",
+   "x": "Protection, ethics and trust. The policy names it as a requirement or responsibility.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capability-model.html#CR-18",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-19 Data risk management",
+   "x": "Protection, ethics and trust. The policy names it as a requirement or responsibility.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capabilities.html#CR-19",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-20 Third-party and supplier data",
+   "x": "Protection, ethics and trust. The policy depends on it to meet a requirement, but does not name it.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capabilities.html#CR-20",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-30 Equality and inclusion in data",
+   "x": "Protection, ethics and trust. Not in the policy text. The playbooks' judgement from good practice and related guidance.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capability-model.html#CR-30",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-31 Cyber resilience and incident response for data assets",
+   "x": "Protection, ethics and trust. The policy depends on it to meet a requirement, but does not name it.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capability-model.html#CR-31",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-21 Data skills, capability and literacy",
+   "x": "People and culture. The policy depends on it to meet a requirement, but does not name it.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capabilities.html#CR-21",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-22 Data culture and engagement with users",
+   "x": "People and culture. The policy depends on it to meet a requirement, but does not name it.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capabilities.html#CR-22",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-23 Maturity assessment and continuous improvement",
+   "x": "People and culture. The policy depends on it to meet a requirement, but does not name it.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capabilities.html#CR-23",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-24 Investment, business cases and value",
+   "x": "Delivery, change and value. The policy names it as a requirement or responsibility.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capabilities.html#CR-24",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-25 Integration with programmes, spend control and assurance",
+   "x": "Delivery, change and value. Not in the policy text. The playbooks' judgement from good practice and related guidance.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capabilities.html#CR-25",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-26 Legacy migration and decommissioning",
+   "x": "Delivery, change and value. Not in the policy text. The playbooks' judgement from good practice and related guidance.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capabilities.html#CR-26",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-27 Ownership transition and handover to business as usual",
+   "x": "Delivery, change and value. The policy depends on it to meet a requirement, but does not name it.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capabilities.html#CR-27",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-28 Cross-boundary collaboration",
+   "x": "Delivery, change and value. The policy names it as a requirement or responsibility.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/together.html",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-29 Benefits realisation and evaluation",
+   "x": "Delivery, change and value. Not in the policy text. The playbooks' judgement from good practice and related guidance.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capabilities.html#CR-29",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "CR-32 Avoiding future legacy: open standards, portability and exit",
+   "x": "Delivery, change and value. Not in the policy text. The playbooks' judgement from good practice and related guidance.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capabilities.html#CR-32",
+   "k": "Capability",
+   "p": "practice"
+  },
+  {
+   "t": "Lead policy coordinator",
+   "x": "Coordinates adoption day to day, collates and assures the return, and represents the organisation at the Working Group. Get the Baseline Return right first time Avoid retyping information that already exists Keep arm's length bodies in step",
+   "u": "people.html#p-coo",
+   "k": "Role",
+   "p": "practice"
+  },
+  {
+   "t": "Chief data officer",
+   "x": "Accountable for adopting the policy across the organisation and, in a department, its arm's length bodies. Adopt the policy once, without the three capabilities duplicating effort Know the organisation's position at any time Show credible progress to the CDO Council",
+   "u": "people.html#p-cdo",
+   "k": "Role",
+   "p": "practice"
+  },
+  {
+   "t": "Data owner",
+   "x": "The senior leader accountable for the meaning, content, quality and management of one or more critical data assets. Understand exactly what they are accountable for Make decisions quickly with the right evidence Name a successor so the asset is never orphaned",
+   "u": "people.html#p-own",
+   "k": "Role",
+   "p": "practice"
+  },
+  {
+   "t": "Data steward",
+   "x": "Runs critical data assets day to day: their standards, access, metadata and quality processes. Keep the catalogue record and quality plan current without heroics Find problems before users do Hand over cleanly when moving on",
+   "u": "people.html#p-stw",
+   "k": "Role",
+   "p": "practice"
+  },
+  {
+   "t": "Catalogue manager or data custodian",
+   "x": "Runs the catalogue and the systems behind it, so records can be found, harvested and kept accurate. Records that machines can harvest, not only people Conform to the cross-government metadata standard Avoid lock-in to one product",
+   "u": "people.html#p-cat",
+   "k": "Role",
+   "p": "practice"
+  },
+  {
+   "t": "Data quality lead or analyst",
+   "x": "Brings methods and tools for measuring and improving quality across many assets. Score issues the same way across assets Automate measurement across assets Show quality fairly for every group the data describes",
+   "u": "people.html#p-dql",
+   "k": "Role",
+   "p": "practice"
+  },
+  {
+   "t": "Programme or project lead",
+   "x": "Leads a change programme or project that creates, changes, migrates or retires critical data assets. Pass assurance gates without late data surprises Hand over assets with owners and quality plans in place Avoid creating the next legacy system",
+   "u": "people.html#p-prg",
+   "k": "Role",
+   "p": "practice"
+  },
+  {
+   "t": "Commercial or technology lead",
+   "x": "Chooses, buys or builds the tools that catalogue, check and govern critical data, and writes the contracts that keep the data yours. Buy what the DAM Policy actually needs Prove a tool works with our data before signing Keep the option to leave",
+   "u": "people.html#p-buy",
+   "k": "Role",
+   "p": "practice"
+  },
+  {
+   "t": "Listing data means we have to share it.",
+   "x": "No. The policy does not create a duty to share data or remove any legal obligation.",
+   "u": "policy.html#myths",
+   "k": "Myth and fact",
+   "p": "policy"
+  },
+  {
+   "t": "We have to report every data asset we hold.",
+   "x": "No. Only critical data assets, as the policy defines them, go in the return.",
+   "u": "policy.html#myths",
+   "k": "Myth and fact",
+   "p": "gds"
+  },
+  {
+   "t": "Data owners replace information asset owners.",
+   "x": "No. Information asset owners keep their role. The data owner role adds to it.",
+   "u": "policy.html#myths",
+   "k": "Myth and fact",
+   "p": "policy"
+  },
+  {
+   "t": "We need to buy a particular catalogue product.",
+   "x": "No. The policy does not name a product. Use what you have.",
+   "u": "policy.html#myths",
+   "k": "Myth and fact",
+   "p": "policy"
+  },
+  {
+   "t": "The return needs the names of our data owners.",
+   "x": "No. It asks only whether each role is assigned. Keep names in your own records.",
+   "u": "policy.html#myths",
+   "k": "Myth and fact",
+   "p": "gds"
+  },
+  {
+   "t": "SECRET data has to be listed somewhere.",
+   "x": "No. Only OFFICIAL data is in scope.",
+   "u": "policy.html#myths",
+   "k": "Myth and fact",
+   "p": "policy"
+  },
+  {
+   "t": "Anything not fully in place means we fail.",
+   "x": "No. The first return sets a baseline to improve from. Report your real position, including what is planned or in development.",
+   "u": "policy.html#myths",
+   "k": "Myth and fact",
+   "p": "gds"
+  }
+ ],
+ "prov": {
+  "policy": "Policy",
+  "gds": "GDS position",
+  "practice": "Suggested practice",
+  "plan": "Programme plan",
+  "open": "Open"
+ },
+ "glossary": [
+  {
+   "id": "arms-length-body",
+   "term": "Arm's length body"
+  },
+  {
+   "id": "baseline-return",
+   "term": "Baseline Return"
+  },
+  {
+   "id": "cdo",
+   "term": "Chief data officer"
+  },
+  {
+   "id": "cdo-council",
+   "term": "Chief Data Officer Council"
+  },
+  {
+   "id": "critical-data-asset",
+   "term": "Critical data asset"
+  },
+  {
+   "id": "scope-principles",
+   "term": "Scope principles"
+  },
+  {
+   "id": "xg-cda",
+   "term": "XG_CDA"
+  },
+  {
+   "id": "iar",
+   "term": "Information asset register"
+  },
+  {
+   "id": "iao",
+   "term": "Information asset owner"
+  },
+  {
+   "id": "dcat",
+   "term": "DCAT"
+  },
+  {
+   "id": "critical-purpose",
+   "term": "Critical purpose"
+  },
+  {
+   "id": "csv",
+   "term": "CSV file"
+  },
+  {
+   "id": "dam",
+   "term": "DAM"
+  },
+  {
+   "id": "data-asset",
+   "term": "Data asset"
+  },
+  {
+   "id": "data-catalogue",
+   "term": "Data catalogue"
+  },
+  {
+   "id": "data-owner",
+   "term": "Data owner"
+  },
+  {
+   "id": "data-protection-officer",
+   "term": "Data protection officer"
+  },
+  {
+   "id": "data-service",
+   "term": "Data service"
+  },
+  {
+   "id": "data-set",
+   "term": "Data set"
+  },
+  {
+   "id": "data-steward",
+   "term": "Data steward"
+  },
+  {
+   "id": "dqap",
+   "term": "Data quality action plan"
+  },
+  {
+   "id": "esda",
+   "term": "ESDA"
+  },
+  {
+   "id": "gds",
+   "term": "GDS"
+  },
+  {
+   "id": "legal-gateway",
+   "term": "Legal gateway"
+  },
+  {
+   "id": "metadata",
+   "term": "Metadata"
+  },
+  {
+   "id": "official",
+   "term": "OFFICIAL"
+  },
+  {
+   "id": "policy-gap",
+   "term": "Policy gap"
+  }
+ ],
+ "pages": [
+  "index.html",
+  "policy.html",
+  "asset-test.html",
+  "questions.html",
+  "embed.html",
+  "resources.html",
+  "glossary.html",
+  "people.html",
+  "capabilities.html",
+  "ask.html",
+  "about.html",
+  "accessibility.html",
+  "return.html",
+  "team.html"
+ ]
+}
