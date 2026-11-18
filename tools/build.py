@@ -417,7 +417,7 @@ def questions():
 <figure class="chart"><figcaption>Times each theme was raised</figcaption><ul class="bars">{bars}</ul></figure>
 <div class="tbl-scroll" tabindex="0" role="region" aria-label="Needs and where they are answered, scrollable table"><table class="tbl small"><caption class="vh">Needs and where they are answered</caption>
 <thead><tr><th scope="col">Need</th><th scope="col">What people asked</th><th scope="col">Theme</th><th scope="col">Times raised</th><th scope="col">Status</th><th scope="col">Answered in</th></tr></thead><tbody>{rows}</tbody></table></div>
-<p class="small muted">From the GDS question register, as it stood on {long_date(C.REGISTER_SNAPSHOT)}. Questions about other topics, such as AI, are handled elsewhere.</p>
+<p class="small muted">Built from questions raised since the policy was published on 27 May 2026: in the GDS question register, the cross-government Data Management Community, coordinator meetings, email and Teams, as they stood on {long_date(C.REGISTER_SNAPSHOT)}. Questions about other topics, such as AI, are handled elsewhere.</p>
 <p>Not here? <a href="{E(C.CONTACT)}">Ask us through the contact form</a>. We add repeated questions to this page.</p>
 ''', "Answers to the questions DAM Policy coordinators have asked, each with its source.")
 

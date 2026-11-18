@@ -15,7 +15,7 @@ organisations are removed: each need is paraphrased and counted, never quoted.
 VERSION = "1.2.0"
 BUILD_DATE = "2026-11-18"
 CONTENT_CHECKED = "2026-11-18"          # date the GOV.UK sources were last re-read
-REGISTER_SNAPSHOT = "2026-11-13"        # Question and Insight Register snapshot used for the needs
+REGISTER_SNAPSHOT = "2026-11-18"        # Question and Insight Register snapshot used for the needs
 STALE_AFTER_DAYS = 30
 CONTACT = "https://forms.cloud.microsoft/e/SLBvuPX7jK"   # Microsoft Form "DAM Policy Explorer: contact us", anyone can respond (owner decision, 18 Nov 2026)
 READY_BY = "2026-12-18"                  # programme plan: aim to be ready before the Christmas break
@@ -51,6 +51,7 @@ PROV = {
 FAQ = ("GDS DAM Policy FAQs, November 2026", None)
 GDSPF = ("GDS reply to coordinators on the Performance Framework commission, October 2026", None)
 V3 = ("DAM Policy Baseline Return template, version 3 (data dictionary and user guide)", None)
+INTERP = ("GDS interpretation register, August 2026", None)
 MEET = ("DAM Policy coordinator meetings, September to November 2026", None)
 GDSAUG = ("GDS clarification to coordinators on the metadata minimum, August 2026", None)
 
@@ -86,6 +87,7 @@ NEEDS = [
     {"id": "N29", "theme": "Making the return", "need": "Does January 2027 mean the start or the end of the month, and when is the formal commission?", "raised": 2, "qa": "deadline"},
     {"id": "N30", "theme": "Scope", "need": "If a team moves to another department, which department returns its assets?", "raised": 1, "qa": "machinery"},
     {"id": "N31", "theme": "Scope", "need": "Does our kind of data fit one of the critical purposes, for example biosecurity under national security and resilience?", "raised": 1, "qa": "purpose-fit"},
+    {"id": "N32", "theme": "Scope", "need": "Hard cases: enriched or licensed third-party data, jointly owned assets, AI-derived data, archived systems, routine exchanges and supply chains.", "raised": 9, "qa": "open-scenarios"},
     {"id": "N17", "theme": "Finding things", "need": "Materials are hard to find: the Knowledge Hub is hard to navigate and some recordings cannot be viewed.", "raised": 4, "qa": "find-materials"},
 ]
 
@@ -126,6 +128,9 @@ QA = [
     {"id": "purpose-fit", "topic": S, "prov": "gds", "q": "Does our kind of data fit one of the seven critical purposes?",
      "a": "<p>Judge by what the data does, not what it is called. For example, biosecurity or biosurveillance data fits national security and resilience where it supports resilience, emergency response or critical functions, as long as it is OFFICIAL. You can give more than one purpose number for an asset.</p><p>Use the purposes and numbering in version 3 of the template, which match the published guidance.</p>",
      "src": [I, V3]},
+    {"id": "open-scenarios", "topic": S, "prov": "open", "q": "Which hard cases are still being decided?",
+     "a": "<p>GDS is still agreeing how these cases should be handled, and will publish worked examples:</p><ul><li>Third-party data you have enriched, and commercially licensed data</li><li>Assets owned jointly by more than one organisation</li><li>Data sets, scores or predictions produced by AI</li><li>Data held in archived or legacy systems</li><li>Routine exchanges under umbrella agreements</li><li>Dependencies in a data supply chain</li></ul><p>Meanwhile, test each asset against the four scope principles. If you are still not sure, include it in your return and flag it, as the <a href=\"asset-test.html\">asset test</a> does. Tell GDS about the case through the contact form, so it can be covered by an example.</p>",
+     "src": [I, INTERP, MEET]},
     {"id": "machinery", "topic": S, "prov": "open", "q": "A team is moving to another department. Who returns its assets?",
      "a": "<p>The department that receives the team, because it becomes accountable for the data. Keep each asset's unique identifier when it moves, so it can be traced from one return to the next. How follow-up questions are routed during a move is still being agreed. Meanwhile, tell GDS about the move through your lead coordinator.</p>",
      "src": [P, MEET]},
