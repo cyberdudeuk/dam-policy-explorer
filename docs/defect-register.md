@@ -15,3 +15,5 @@ Every defect has a root cause and a check that would have caught it. The check s
 | D-09 | 18 Nov 2026 | Header search failed target size (WCAG 2.5.8) | Search box overlapped by the navigation (see D-10) | B4 axe |
 | D-10 | 18 Nov 2026 | Header collapsed to 21 px | Class `.bar` used for both the header row and the chart track, which has a fixed height | S10 class collision |
 | D-11 | 18 Nov 2026 | Contact check passed a wrong address in `data-contact` | Check looked at `href` only | S8, widened |
+| D-12 | 18 Nov 2026 | On narrow screens the page contents list came before the page's main content | Drawer opened by default at every width | F12 (negative-tested) |
+| D-13 | 18 Nov 2026 | Countdown showed 31 days on 18 Nov for 18 Dec | Counted to the end of the target day, not calendar days | F13 with a fixed clock (negative-tested) |

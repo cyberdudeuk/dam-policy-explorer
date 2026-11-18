@@ -313,3 +313,9 @@ li.step.is-done > details > summary::after { content: "Done"; margin-left: 0.6re
 /* D-09: the header search must keep a usable size (WCAG 2.5.8 target size) beside a growing brand */
 .hsearch { flex: 0 1 20rem; } .hsearch input { min-width: 9rem; } .brand { flex: 1 1 auto; }
 /* D-10: ".bar" was used for both the header row and the chart track; the chart's fixed height collapsed the header. Chart now uses .chartbar. */
+
+/* D-12: on narrow screens the drawer sits directly under its switch */
+@media (max-width: 52rem) { .contents { margin-top: 0.25rem; } .drawer-switch { margin-top: 0.75rem; } }
+
+/* journey stays on one row where it fits, otherwise wraps in even rows */
+.journey ol { grid-template-columns: repeat(auto-fit, minmax(min(100%, 6.8rem), 1fr)); }

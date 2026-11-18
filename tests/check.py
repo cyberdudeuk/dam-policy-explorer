@@ -228,6 +228,17 @@ def functional_checks(out):
         if not pg.is_visible(".menu-btn"): fails.append("F10 menu button not shown on narrow screen")
         pg.click(".menu-btn")
         if not pg.is_visible("#site-nav .primary"): fails.append("F10 menu does not open")
+        # F12 (D-12): on a narrow screen the page contents start closed, so the main content comes first
+        pg.evaluate("localStorage.removeItem('dpe.drawer')"); pg.set_viewport_size({"width": 360, "height": 800}); pg.goto(base + "policy.html")
+        if pg.is_visible(".contents"): fails.append("F12 page contents open by default on a narrow screen")
+        pg.set_viewport_size({"width": 1280, "height": 900}); pg.goto(base + "policy.html")
+        if not pg.is_visible(".contents"): fails.append("F12 page contents closed by default on a wide screen")
+        # F13 (D-13): the countdown counts calendar days (18 Nov to 18 Dec 2026 is 30)
+        p3 = b.new_page(); p3.clock.set_fixed_time("2026-11-18T12:00:00"); p3.goto(base + "index.html")
+        if "30 days" not in p3.inner_text("[data-countdown]"): fails.append("F13 countdown wrong: " + p3.inner_text("[data-countdown]"))
+        p3.clock.set_fixed_time("2026-12-18T09:00:00"); p3.goto(base + "index.html")
+        if "Today" not in p3.inner_text("[data-countdown]"): fails.append("F13 countdown on the day: " + p3.inner_text("[data-countdown]"))
+        p3.close()
         # F11: works with JavaScript turned off (content readable)
         ctx = b.new_context(java_script_enabled=False); p2 = ctx.new_page()
         for f in ("index.html", "questions.html", "people.html"):

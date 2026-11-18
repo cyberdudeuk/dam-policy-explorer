@@ -14,6 +14,7 @@ import content as C  # noqa: E402
 SRC, OUT = ROOT / "src", ROOT / "out"
 E = html.escape
 HOME_URL = sys.argv[sys.argv.index("--home-url") + 1] if "--home-url" in sys.argv else ""
+PREVIEW = "--preview" in sys.argv   # claude.ai preview: cannot serve .ics or webmanifest files, and blocks downloads
 
 NAV = [("index.html", "Home", "i-home"), ("policy.html", "The policy", "i-book"), ("return.html", "Your return", "i-list"),
        ("asset-test.html", "Asset test", "i-target"), ("questions.html", "Questions", "i-help"), ("people.html", "Roles and journeys", "i-people"),
@@ -246,7 +247,7 @@ def home():
     <p class="big-date"><span data-countdown>Aim to be ready by Friday 18 December 2026.</span></p>
     <p>GDS plans to collect the first return, the Baseline Return, in January 2027. {badge("plan")}</p>
     <p class="small">These dates are not yet in the published policy. The policy itself asks for a review every year. {badge("policy")}</p>
-    <p><a href="assets/dam-key-dates.ics" download>{ic("i-calendar")} Add the readiness date to Outlook</a></p>
+    {"" if PREVIEW else '<p><a href="assets/dam-key-dates.ics" download>' + ic("i-calendar") + ' Add the readiness date to Outlook</a></p>'}
   </section>
   <section class="panel" aria-labelledby="prog-h">
     <h2 id="prog-h">{ic("i-check")} Your progress</h2>
@@ -748,7 +749,7 @@ def main():
            "SUMMARY:DAM Policy: aim to be ready for the Baseline Return",
            "DESCRIPTION:GDS asks organisations to be ready before the Christmas break. The Baseline Return is due in January 2027 (programme plan\\; check the exact date with your lead coordinator).",
            "BEGIN:VALARM", "TRIGGER:-P14D", "ACTION:DISPLAY", "DESCRIPTION:Two weeks until the DAM Policy readiness date", "END:VALARM", "END:VEVENT", "END:VCALENDAR"]
-    (OUT / "assets" / "dam-key-dates.ics").write_text("\r\n".join(ics) + "\r\n")
+    if not PREVIEW: (OUT / "assets" / "dam-key-dates.ics").write_text("\r\n".join(ics) + "\r\n")
     plain = lambda h: re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", h))).strip()
     index = [{"t": q["q"], "x": plain(q["a"]), "u": "questions.html#q-" + q["id"], "k": "Answer", "p": q["prov"]} for q in C.QA]
     index += [{"t": t, "x": d, "u": "glossary.html#t-" + k, "k": "Glossary", "p": ""} for k, t, d in C.GLOSSARY]

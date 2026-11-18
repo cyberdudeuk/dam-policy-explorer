@@ -69,7 +69,8 @@
   if (toc) {
     var sw = d.createElement('button'); sw.type = 'button'; sw.className = 'drawer-switch'; sw.setAttribute('role', 'switch');
     sw.innerHTML = '<span class="track" aria-hidden="true"><span class="knob"></span></span><span>Page contents</span>';
-    var shown = store.get('drawer', true) !== false;
+    // D-12: on narrow screens the contents list pushed the page's main content down; it starts closed there unless the person opened it
+    var saved = store.get('drawer', null), shown = saved === null ? !matchMedia('(max-width: 52rem)').matches : saved !== false;
     var setD = function (on) { toc.classList.toggle('closed', !on); sw.setAttribute('aria-checked', String(on)); d.body.classList.toggle('drawer-closed', !on); };
     setD(shown);
     sw.addEventListener('click', function () { shown = !shown; setD(shown); store.set('drawer', shown); });
@@ -119,9 +120,12 @@
   });
   var cd = $('[data-countdown]'), ready = body.getAttribute('data-ready-by');
   if (cd && ready) {
-    var left = Math.ceil((Date.parse(ready + 'T23:59:59Z') - Date.now()) / 864e5);
+    // D-13: count whole calendar days in UK time, not to the end of the target day
+    var now = new Date(), today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+    var left = Math.round((Date.parse(ready + 'T00:00:00Z') - today) / 864e5);
     if (left > 1) cd.innerHTML = '<b>' + left + ' days</b> until Friday 18 December 2026, when GDS asks you to be ready.';
-    else if (left >= 0) cd.innerHTML = '<b>Today or tomorrow</b> is the date GDS asked you to be ready by: Friday 18 December 2026.';
+    else if (left === 1) cd.innerHTML = '<b>Tomorrow</b>, Friday 18 December 2026, is the date GDS asks you to be ready by.';
+    else if (left === 0) cd.innerHTML = '<b>Today</b>, Friday 18 December 2026, is the date GDS asks you to be ready by.';
     else cd.innerHTML = 'The date to be ready by, Friday 18 December 2026, has passed. The Baseline Return is due in January 2027.';
   }
 
@@ -210,7 +214,15 @@
       var blob = new Blob([rows.map(function (r) { return r.map(cell).join(','); }).join('\r\n') + '\r\n'], {type: 'text/csv'});
       var u = URL.createObjectURL(blob), l = d.createElement('a'); l.href = u; l.download = 'assets-left-out.csv'; d.body.appendChild(l); l.click(); l.remove(); setTimeout(function () { URL.revokeObjectURL(u); }, 1000);
       announce((rows.length - 1) + ' assets left out downloaded.');
+      window.__dpeCsv = rows.map(function (r) { return r.map(cell).join(','); }).join('\r\n');
     });
+    var cc = d.createElement('button'); cc.type = 'button'; cc.className = 'btn secondary'; cc.textContent = 'Copy the list as CSV';
+    cc.addEventListener('click', function () {
+      $('[data-download]').click();
+      var t = window.__dpeCsv || '';
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function () { announce('List copied. Paste it into Excel.'); cc.textContent = 'Copied'; setTimeout(function () { cc.textContent = 'Copy the list as CSV'; }, 2500); }, function () { announce('Copy was blocked by this browser.'); });
+    });
+    $('[data-download]').parentNode.insertBefore(cc, $('[data-clear]'));
     $('[data-clear]').addEventListener('click', function () { tested = []; store.del('tested'); showTested(); announce('List cleared.'); });
   }
 
@@ -259,7 +271,7 @@
     var q0 = new URLSearchParams(location.search).get('q') || '';
     var qi = $('#ask-q'); if (qi) qi.value = q0.slice(0, 200);
     var hq = $('#hq'); if (hq && q0) hq.value = q0.slice(0, 200);
-    if (q0) fetch('explorer-data.json').then(function (r) { return r.json(); }).then(function (data) {
+    var runAsk = function (q0) { fetch('explorer-data.json').then(function (r) { return r.json(); }).then(function (data) {
       var raw = toks(q0), qt = [];
       raw.forEach(function (w) { qt.push(stem(w)); if (SYN[w]) toks(SYN[w]).forEach(function (s) { qt.push(stem(s)); }); });
       var res = data.index.map(function (it) { return {it: it, s: scoreItem(qt, it)}; }).filter(function (r) { return r.s >= 3; }).sort(function (a, b) { return b.s - a.s; }).slice(0, 6);
@@ -271,7 +283,11 @@
         return '<li class="' + (i === 0 ? 'best' : '') + '"><p class="small muted">' + esc(it.k) + badgeHtml + '</p><h3><a href="' + esc(it.u) + '"' + (ext ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' + esc(it.t) + (ext ? '<span class="vh"> (opens in a new tab)</span>' : '') + '</a></h3><p>' + esc(snip) + '</p></li>';
       }).join('') + '</ol>';
       announce(res.length + ' answers found.');
-    }).catch(function () { askBox.innerHTML = '<p>Search is not available right now. Browse <a href="questions.html">all questions and answers</a>.</p>'; });
+    }).catch(function () { askBox.innerHTML = '<p>Search is not available right now. Browse <a href="questions.html">all questions and answers</a>.</p>'; }); };
+    if (q0) runAsk(q0);
+    var af = $('form.askform');
+    if (af) af.addEventListener('submit', function (e) { e.preventDefault(); var q = qi.value.trim().slice(0, 200); if (q) runAsk(q); });
+    $$('.starters a').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); var q = a.textContent; qi.value = q; runAsk(q); }); });
   }
 
   // ---- copy a link to an answer, to paste into Teams or an email ----
@@ -281,8 +297,8 @@
     cb.addEventListener('click', function () {
       var url = location.href.split('#')[0] + '#' + art.id;
       var done = function () { cb.textContent = 'Link copied'; announce('Link copied.'); setTimeout(function () { cb.textContent = 'Copy a link to this answer'; }, 2500); };
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () { prompt('Copy this link', url); });
-      else prompt('Copy this link', url);
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () { cb.textContent = url; });
+      else cb.textContent = url;
     });
     bodyEl.appendChild(cb);
   });
