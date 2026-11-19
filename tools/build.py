@@ -267,7 +267,7 @@ def home():
 <p class="small">{ic("i-info")} <a href="guide.html">User guide, and how to get the explorer in Teams, Outlook, Copilot, on your intranet or on any device</a>.</p>
 
 <h2 id="asked" data-count="{len(C.NEEDS)}">Built from your questions</h2>
-<p>This app answers the questions coordinators have raised in the working group, on the Knowledge Hub, by email and in meetings. {answered} of the {len(C.NEEDS)} needs we heard now have an answer here. The rest are being decided, and each one says what to do meanwhile.</p>
+<p>This app answers the questions coordinators have asked. {answered} of the {len(C.NEEDS)} needs we heard now have an answer here. The rest are being decided, and each one says what to do meanwhile.</p>
 <p><a href="questions.html#asked">See every need and where it is answered</a></p>
 
 <h2 id="plain">The policy in five sentences</h2>
@@ -388,7 +388,7 @@ def questions():
         asked = needs_by_q.get(q["id"], [])
         n = sum(x["raised"] for x in asked)
         items += (f'<article class="qa" id="q-{q["id"]}" data-topic="{E(q["topic"])}"><details><summary><span class="qwrap"><span class="qtext">{E(q["q"])}</span> {badge(q["prov"])}'
-                  + (f' <span class="asked" title="Times raised in forums">asked {n}×</span>' if n else "") + f'</span></summary><div class="body">{q["a"]}{src_links(q["src"])}'
+                  + (f' <span class="asked" title="Times asked">asked {n}×</span>' if n else "") + f'</span></summary><div class="body">{q["a"]}{src_links(q["src"])}'
                   + (f'<p class="small muted">Answers needs {", ".join(x["id"] for x in asked)} below.</p>' if asked else "") + '</div></details></article>')
     themes = {}
     for nd in C.NEEDS: themes[nd["theme"]] = themes.get(nd["theme"], 0) + nd["raised"]
@@ -415,11 +415,11 @@ def questions():
 <div class="qa-list">{items}</div>
 
 <h2 id="asked" data-count="{len(C.NEEDS)}">What coordinators asked us</h2>
-<p>We collect every question raised in the DAM Policy Coordinators Working Group, on the Knowledge Hub, at the Data Catalogue and Analysis Platform Working Group, by email and in meetings. Each need below is written in our own words, with names and organisations removed. The table shows where each one is answered. {badge("gds")}</p>
+<p>We collect the questions coordinators ask. Each need below is written in our own words, with names and organisations removed. The table shows where each one is answered. {badge("gds")}</p>
 <figure class="chart"><figcaption>Times each theme was raised</figcaption><ul class="bars">{bars}</ul></figure>
 <div class="tbl-scroll" tabindex="0" role="region" aria-label="Needs and where they are answered, scrollable table"><table class="tbl small"><caption class="vh">Needs and where they are answered</caption>
 <thead><tr><th scope="col">Need</th><th scope="col">What people asked</th><th scope="col">Theme</th><th scope="col">Times raised</th><th scope="col">Status</th><th scope="col">Answered in</th></tr></thead><tbody>{rows}</tbody></table></div>
-<p class="small muted">Built from questions raised since the policy was published on 27 May 2026: in the GDS question register, the cross-government Data Management Community, coordinator meetings, email and Teams, as they stood on {long_date(C.REGISTER_SNAPSHOT)}. Questions about other topics, such as AI, are handled elsewhere.</p>
+<p class="small muted">Built from questions asked since the policy was published on 27 May 2026, as they stood on {long_date(C.REGISTER_SNAPSHOT)}. Questions about other topics, such as AI, are handled elsewhere.</p>
 <p>Not here? <a href="{E(C.CONTACT)}">Ask us through the contact form</a>. We add repeated questions to this page.</p>
 ''', "Answers to the questions DAM Policy coordinators have asked, each with its source.")
 

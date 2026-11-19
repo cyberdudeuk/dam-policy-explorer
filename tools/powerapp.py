@@ -193,6 +193,14 @@ class Raw(str):
     """A Power Fx expression written into a table as-is (an icon or a colour), not as a string."""
 
 
+FORUM = re.compile(r"told coordinators|coordinators (shared|said|asked|raised)|coordinator (group|meetings?)|raised (at|in) the|in the forum|community forum", re.I)
+
+
+def forum_mentions(text):
+    """D-PA30: answers say what to do, not where a question was raised. The release log is the one place that names the forum and date."""
+    return FORUM.search(text_of(text) if "<" in text else text)
+
+
 STAMPS = [r"\b[Vv]ersion \d+\.\d+\.\d+\b", r"\b(prepared on|built|checked|last updated|updated on) \d{1,2} [A-Z][a-z]+ \d{4}"]
 
 
@@ -1259,6 +1267,10 @@ def main():
     for n, bottom, sy, th_ in CARD_GEOM:
         if sy < bottom or th_ < TITLE_2L: bad.append(f"card {n}: second line at {sy} overlaps a title ending {bottom}, or the title box {th_} is under two lines (D-PA12)")
     for u in sorted(set(UNGUARDED)): bad.append(f"top-level position not kept inside the design screen, Studio will replace it with a constant on paste (D-PA14): {u}")
+    if not forum_mentions("<p>GDS told coordinators in November 2026 that it would.</p>"):
+        bad.append("the check for answers that name where a question was raised cannot fail (D-PA30)")
+    for q in C.QA:
+        if forum_mentions(q["a"] + " " + q["q"]): bad.append(f"answer {q['id']} says where the question was raised; only the release log may (D-PA30)")
     if stamp_free("This statement was prepared on 18 November 2026. Version 1.2.0, built 18 November 2026.") != stamp_free("This statement was prepared on 19 November 2026. Version 1.3.0, built 19 November 2026."):
         bad.append("a new version number or build date alone flags a page UPDATED (D-PA29)")
     for u in sorted(set(UNSCALED)): bad.append(f"length next to * or / is not scaled, write pt(n): {u}")

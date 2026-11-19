@@ -74,6 +74,7 @@ mutated("focus going behind an open sheet (D-PA26)", 'children = modal_guard(lis
 mutated("page left in the tab order behind the contents list (D-PA26)", 'ROW_HIDE = {"ScrPage": "!gToc"}', 'ROW_HIDE = {}', "D-PA26")
 mutated("splash that moves on by itself (D-PA28)", '    ])   # D-PA28: no timer', '        ("SpTimer", TIMER, {"Duration": 4000, "AutoStart": "true", "Repeat": "false", "Visible": "false", "OnTimerEnd": go_nav}),\n    ])   # D-PA28: no timer', "D-PA28")
 mutated("version and date stamps counted as a change (D-PA29)", '    for pat in STAMPS: t = re.sub(pat, "", t)', '    pass', "D-PA29")
+mutated("answers allowed to name the forum (D-PA30)", 'told coordinators|coordinators (shared', 'xx-never-xx|coordinators (shared', "D-PA30")
 mutated("answer rows too short for a long answer (D-PA22)", '"TemplateSize": f"pt(38) + Min(raw(4)', '"TemplateSize": "pt(60)", "X2": f"pt(38) + Min(raw(4)', "D-PA22")
 mutated("long page squeezed into the window at the design size (D-PA23)", '"Parent.TemplateHeight" if guard else "Parent.Height"', '"Parent.Height"', "D-PA23")
 mutated("count does not match the source", 'f += table("nfSupTabs"', 'QA.pop(); f += table("nfSupTabs"', "")
