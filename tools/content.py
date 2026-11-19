@@ -52,6 +52,7 @@ FAQ = ("GDS DAM Policy FAQs, November 2026", None)
 GDSPF = ("GDS reply to coordinators on the Performance Framework commission, October 2026", None)
 V3 = ("DAM Policy Baseline Return template, version 3 (data dictionary and user guide)", None)
 INTERP = ("GDS interpretation register, August 2026", None)
+GDSUPD = ("GDS updates to DAM Policy coordinators, November 2026", None)
 GDSAUG = ("GDS clarification to coordinators on the metadata minimum, August 2026", None)
 
 # Forum needs, paraphrased. 'raised' counts separate register records for the same need.
@@ -204,7 +205,7 @@ QA = [
      "src": [P, FAQ]},
     {"id": "deadline", "topic": RR, "prov": "plan", "q": "When exactly is the Baseline Return due?",
      "a": "<p>By the end of January 2027. The Chief Data Officer Council will issue the formal commission in December 2026. Aim to be ready by Friday 18 December 2026, before the Christmas break, so there is time to check your return.</p>",
-     "src": []},
+     "src": [GDSUPD]},
     {"id": "identifier", "topic": RR, "prov": "gds", "q": "Who sets the unique identifier, and what if an asset is renamed?",
      "a": "<p>You do. Use the stable identifier from your own data catalogue, or a local convention you document. There is no national format, and it can be up to 100 characters.</p><p>If an asset is renamed, change its name but keep its identifier, so it is not counted twice. The template's guide allows the same identifier on more than one row only for an approved version or licence variant. Its built-in check does not yet allow that, so tell GDS if it blocks you.</p>",
      "src": [V3]},

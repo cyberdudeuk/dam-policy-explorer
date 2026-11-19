@@ -15,6 +15,6 @@ examples: 71 (35 agreed)
 glossary: 32
 release flags: 14 items new or updated since 1.2.0
 search index: 253
-formulas: 478155 chars
+formulas: 478371 chars
 screens: 01-ScrHome 92630, 02-ScrPage 53806, 03-ScrRead 29020, 04-ScrQuestions 47845, 05-ScrExamples 49393, 06-ScrGlossary 36319, 07-ScrSearch 38515, 08-ScrTest 70709, 00-ScrSplash 11281, 09-ScrMe 91848, 10-ScrMatch 82712, 11-ScrLearn 53363, 12-ScrSupport 84589, 13-ScrNew 39052
 ALL CHECKS PASS
