@@ -175,7 +175,22 @@ def s15_class_collisions(out):
     a = (out / "assets" / "style.css").read_text(); b = (out / "assets" / "explorer.css").read_text()
     return sorted(c for c in classes(a) & classes(b) if c not in SHARED_CLASSES_REVIEWED)
 
-STATIC = [s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped, s14_css_vars_defined, s15_class_collisions]
+def s16_repo_licences(out):
+    """D-25: the repository had no licence, so nobody had the right to reuse it; MIT code and OGL content must be stated and linked, with no unagreed reply times in the repository's own files (D-14)."""
+    bad = []
+    lic = ROOT / "LICENSE"
+    if not lic.exists() or "MIT License" not in lic.read_text(): bad.append("LICENSE missing or not MIT")
+    cl = ROOT / "docs" / "CONTENT-LICENCE.md"
+    if not cl.exists() or "Open Government Licence v3.0" not in cl.read_text(): bad.append("docs/CONTENT-LICENCE.md missing or not OGL v3.0")
+    readme = (ROOT / "README.md").read_text()
+    for target in ("(LICENSE)", "(docs/CONTENT-LICENCE.md)"):
+        if target not in readme: bad.append(f"README does not link {target}")
+    for name in ("README.md", "CONTRIBUTING.md", "SUPPORT.md", "SECURITY.md"):
+        f = ROOT / name
+        if f.exists() and re.search(r"within \d+ working days", f.read_text()): bad.append(f"{name} states a reply time")
+    return bad
+
+STATIC = [s16_repo_licences, s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped, s14_css_vars_defined, s15_class_collisions]
 
 # ---------------- browser checks ----------------
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -438,6 +453,12 @@ def negatives(out):
         if not s12_agent_open_sources(out): bad.append("NEGATIVE s12_agent_open_sources did not fail on its broken copy")
     finally:
         tpl.write_text(orig)
+    lic = ROOT / "LICENSE"; lic_orig = lic.read_text()
+    try:
+        lic.write_text("All rights reserved.\n")
+        if not s16_repo_licences(out): bad.append("NEGATIVE s16_repo_licences did not fail on its broken copy")
+    finally:
+        lic.write_text(lic_orig)
     cases = [c for c in cases if c[0] is not s12_agent_open_sources]
     for check, breaker in cases:
         o = mutate(breaker)
@@ -457,7 +478,7 @@ def negatives(out):
         o = mutate(breaker); f, _ = browser_checks(o, quick=True)
         if not any(x.startswith(needle) for x in f): bad.append(f"NEGATIVE {label} did not fail on its broken copy")
         shutil.rmtree(o.parent)
-    return bad, len(cases) + 8
+    return bad, len(cases) + 9
 
 def main():
     out = Path(sys.argv[1]) if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else ROOT / "out"
