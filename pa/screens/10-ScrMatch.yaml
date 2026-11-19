@@ -1,0 +1,2267 @@
+Screens:
+  ScrMatch:
+    Properties:
+      Fill: |-
+        =RGBA(255,255,255,1)
+      Height: |-
+        =App.Height
+      LoadingSpinnerColor: |-
+        =RGBA(11,85,163,1)
+      OnVisible: |-
+        =If(IsBlank(gMt), Set(gMt, 1); Set(gMtTopic, "Any"); Set(gMtFmt, "Any"))
+      Width: |-
+        =App.Width
+    Children:
+      - MtBg:
+          Control: Image@2.2.3
+          Properties:
+            AccessibleLabel: |-
+              =""
+            Height: |-
+              =Parent.Height
+            Image: |-
+              =nfBg2
+            ImagePosition: |-
+              =ImagePosition.Fill
+            TabIndex: |-
+              =-1
+            Width: |-
+              =Parent.Width
+            X: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
+            Y: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Height - Self.Height)), 0)
+      - MtBar:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Fill: |-
+              =RGBA(11,85,163,1)
+            Height: |-
+              =128
+            TabIndex: |-
+              =-1
+            Width: |-
+              =Parent.Width
+      - MtRib:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Fill: |-
+              =RGBA(0,105,92,1)
+            Height: |-
+              =8
+            TabIndex: |-
+              =-1
+            Width: |-
+              =Parent.Width
+            Y: |-
+              =If(nfDesign, Max(0, Min(128, Parent.Height - Self.Height)), 128)
+      - MtBack:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              ="Back"
+            Color: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Height: |-
+              =128
+            Icon: |-
+              =Icon.ChevronLeft
+            OnSelect: |-
+              =Back()
+            PaddingBottom: |-
+              =40
+            PaddingLeft: |-
+              =32
+            PaddingRight: |-
+              =32
+            PaddingTop: |-
+              =40
+            TabIndex: |-
+              =0
+            Width: |-
+              =112
+            X: |-
+              =If(nfDesign, Max(0, Min(nfPad, Parent.Width - Self.Width)), nfPad)
+      - MtTitle:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =false
+            Color: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =128
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Role: |-
+              =TextRole.Heading1
+            Size: |-
+              =32
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Matchmaker"
+            VerticalAlign: |-
+              =VerticalAlign.Middle
+            Width: |-
+              =If(nfWide, Parent.Width - (nfPad + 112) - nfPad - 1208, Parent.Width - (nfPad + 112) - 128)
+            Wrap: |-
+              =false
+            X: |-
+              =If(nfDesign, Max(0, Min(nfPad + 112, Parent.Width - Self.Width)), nfPad + 112)
+      - MtHelp:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              ="Tutorial for this screen"
+            Color: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Height: |-
+              =128
+            Icon: |-
+              =Icon.Lightbulb
+            OnSelect: |-
+              =Set(gTut, "match"); Set(gTutStep, 1); Navigate(ScrLearn, ScreenTransition.Fade)
+            PaddingBottom: |-
+              =40
+            PaddingLeft: |-
+              =32
+            PaddingRight: |-
+              =32
+            PaddingTop: |-
+              =40
+            TabIndex: |-
+              =0
+            Width: |-
+              =112
+            X: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, Parent.Width - nfPad - 1192, Parent.Width - 112), Parent.Width - Self.Width)), If(nfWide, Parent.Width - nfPad - 1192, Parent.Width - 112))
+      - MtNavBg:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: |-
+              =Font.'Open Sans'
+            Height: |-
+              =120
+            HtmlText: |-
+              ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:0px;background:linear-gradient(135deg,rgba(255,255,255,0.97),rgba(255,255,255,0.92));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
+            PaddingBottom: |-
+              =0
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =0
+            Size: |-
+              =2
+            Visible: |-
+              =!nfWide
+            Width: |-
+              =Parent.Width
+            X: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
+            Y: |-
+              =If(nfDesign, Max(0, Min(Parent.Height - 120, Parent.Height - Self.Height)), Parent.Height - 120)
+      - MtNavLine:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Fill: |-
+              =RGBA(138,144,149,1)
+            Height: |-
+              =2
+            TabIndex: |-
+              =-1
+            Visible: |-
+              =!nfWide
+            Width: |-
+              =Parent.Width
+            Y: |-
+              =If(nfDesign, Max(0, Min(Parent.Height - 120, Parent.Height - Self.Height)), Parent.Height - 120)
+      - MtNav0Ic:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              =""
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Height: |-
+              =44
+            Icon: |-
+              =Icon.Home
+            TabIndex: |-
+              =-1
+            Width: |-
+              =44
+            X: |-
+              =If(nfDesign, Max(0, Min(MtNav0.X + (MtNav0.Width - 44) / 2, Parent.Width - Self.Width)), MtNav0.X + (MtNav0.Width - 44) / 2)
+            Y: |-
+              =If(nfDesign, Max(0, Min(MtNav0.Y + If(nfWide, 24, 16), Parent.Height - Self.Height)), MtNav0.Y + If(nfWide, 24, 16))
+      - MtNav0:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(0,0,0,0)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Normal
+            Height: |-
+              =If(nfWide, 128, 120)
+            HoverColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            HoverFill: |-
+              =If(nfWide, RGBA(255,255,255,0.16), RGBA(242,243,244,1))
+            OnSelect: |-
+              =Navigate(ScrHome, ScreenTransition.None)
+            PaddingBottom: |-
+              =14
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PressedColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            PressedFill: |-
+              =If(nfWide, RGBA(255,255,255,0.24), RGBA(242,243,244,1))
+            RadiusBottomLeft: |-
+              =0
+            RadiusBottomRight: |-
+              =0
+            RadiusTopLeft: |-
+              =0
+            RadiusTopRight: |-
+              =0
+            Size: |-
+              =18
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Home"
+            VerticalAlign: |-
+              =VerticalAlign.Bottom
+            Width: |-
+              =If(nfWide, 216, Parent.Width / 5)
+            X: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, Parent.Width - nfPad - 1080, 0 * Parent.Width / 5), Parent.Width - Self.Width)), If(nfWide, Parent.Width - nfPad - 1080, 0 * Parent.Width / 5))
+            Y: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, 0, Parent.Height - 120), Parent.Height - Self.Height)), If(nfWide, 0, Parent.Height - 120))
+      - MtNav1Ic:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              =""
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Height: |-
+              =44
+            Icon: |-
+              =Icon.CheckBadge
+            TabIndex: |-
+              =-1
+            Width: |-
+              =44
+            X: |-
+              =If(nfDesign, Max(0, Min(MtNav1.X + (MtNav1.Width - 44) / 2, Parent.Width - Self.Width)), MtNav1.X + (MtNav1.Width - 44) / 2)
+            Y: |-
+              =If(nfDesign, Max(0, Min(MtNav1.Y + If(nfWide, 24, 16), Parent.Height - Self.Height)), MtNav1.Y + If(nfWide, 24, 16))
+      - MtNav1:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(0,0,0,0)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Normal
+            Height: |-
+              =If(nfWide, 128, 120)
+            HoverColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            HoverFill: |-
+              =If(nfWide, RGBA(255,255,255,0.16), RGBA(242,243,244,1))
+            OnSelect: |-
+              =Navigate(ScrTest, ScreenTransition.None)
+            PaddingBottom: |-
+              =14
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PressedColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            PressedFill: |-
+              =If(nfWide, RGBA(255,255,255,0.24), RGBA(242,243,244,1))
+            RadiusBottomLeft: |-
+              =0
+            RadiusBottomRight: |-
+              =0
+            RadiusTopLeft: |-
+              =0
+            RadiusTopRight: |-
+              =0
+            Size: |-
+              =18
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Asset test"
+            VerticalAlign: |-
+              =VerticalAlign.Bottom
+            Width: |-
+              =If(nfWide, 216, Parent.Width / 5)
+            X: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, Parent.Width - nfPad - 864, 1 * Parent.Width / 5), Parent.Width - Self.Width)), If(nfWide, Parent.Width - nfPad - 864, 1 * Parent.Width / 5))
+            Y: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, 0, Parent.Height - 120), Parent.Height - Self.Height)), If(nfWide, 0, Parent.Height - 120))
+      - MtNav2Ic:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              =""
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Height: |-
+              =44
+            Icon: |-
+              =Icon.QuestionMark
+            TabIndex: |-
+              =-1
+            Width: |-
+              =44
+            X: |-
+              =If(nfDesign, Max(0, Min(MtNav2.X + (MtNav2.Width - 44) / 2, Parent.Width - Self.Width)), MtNav2.X + (MtNav2.Width - 44) / 2)
+            Y: |-
+              =If(nfDesign, Max(0, Min(MtNav2.Y + If(nfWide, 24, 16), Parent.Height - Self.Height)), MtNav2.Y + If(nfWide, 24, 16))
+      - MtNav2:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(0,0,0,0)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Normal
+            Height: |-
+              =If(nfWide, 128, 120)
+            HoverColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            HoverFill: |-
+              =If(nfWide, RGBA(255,255,255,0.16), RGBA(242,243,244,1))
+            OnSelect: |-
+              =Navigate(ScrQuestions, ScreenTransition.None)
+            PaddingBottom: |-
+              =14
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PressedColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            PressedFill: |-
+              =If(nfWide, RGBA(255,255,255,0.24), RGBA(242,243,244,1))
+            RadiusBottomLeft: |-
+              =0
+            RadiusBottomRight: |-
+              =0
+            RadiusTopLeft: |-
+              =0
+            RadiusTopRight: |-
+              =0
+            Size: |-
+              =18
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Questions"
+            VerticalAlign: |-
+              =VerticalAlign.Bottom
+            Width: |-
+              =If(nfWide, 216, Parent.Width / 5)
+            X: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, Parent.Width - nfPad - 648, 2 * Parent.Width / 5), Parent.Width - Self.Width)), If(nfWide, Parent.Width - nfPad - 648, 2 * Parent.Width / 5))
+            Y: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, 0, Parent.Height - 120), Parent.Height - Self.Height)), If(nfWide, 0, Parent.Height - 120))
+      - MtNav3Ic:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              =""
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Height: |-
+              =44
+            Icon: |-
+              =Icon.LevelsLayersItems
+            TabIndex: |-
+              =-1
+            Width: |-
+              =44
+            X: |-
+              =If(nfDesign, Max(0, Min(MtNav3.X + (MtNav3.Width - 44) / 2, Parent.Width - Self.Width)), MtNav3.X + (MtNav3.Width - 44) / 2)
+            Y: |-
+              =If(nfDesign, Max(0, Min(MtNav3.Y + If(nfWide, 24, 16), Parent.Height - Self.Height)), MtNav3.Y + If(nfWide, 24, 16))
+      - MtNav3:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(0,0,0,0)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Normal
+            Height: |-
+              =If(nfWide, 128, 120)
+            HoverColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            HoverFill: |-
+              =If(nfWide, RGBA(255,255,255,0.16), RGBA(242,243,244,1))
+            OnSelect: |-
+              =Navigate(ScrExamples, ScreenTransition.None)
+            PaddingBottom: |-
+              =14
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PressedColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            PressedFill: |-
+              =If(nfWide, RGBA(255,255,255,0.24), RGBA(242,243,244,1))
+            RadiusBottomLeft: |-
+              =0
+            RadiusBottomRight: |-
+              =0
+            RadiusTopLeft: |-
+              =0
+            RadiusTopRight: |-
+              =0
+            Size: |-
+              =18
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Examples"
+            VerticalAlign: |-
+              =VerticalAlign.Bottom
+            Width: |-
+              =If(nfWide, 216, Parent.Width / 5)
+            X: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, Parent.Width - nfPad - 432, 3 * Parent.Width / 5), Parent.Width - Self.Width)), If(nfWide, Parent.Width - nfPad - 432, 3 * Parent.Width / 5))
+            Y: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, 0, Parent.Height - 120), Parent.Height - Self.Height)), If(nfWide, 0, Parent.Height - 120))
+      - MtNav4Ic:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              =""
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Height: |-
+              =44
+            Icon: |-
+              =Icon.Person
+            TabIndex: |-
+              =-1
+            Width: |-
+              =44
+            X: |-
+              =If(nfDesign, Max(0, Min(MtNav4.X + (MtNav4.Width - 44) / 2, Parent.Width - Self.Width)), MtNav4.X + (MtNav4.Width - 44) / 2)
+            Y: |-
+              =If(nfDesign, Max(0, Min(MtNav4.Y + If(nfWide, 24, 16), Parent.Height - Self.Height)), MtNav4.Y + If(nfWide, 24, 16))
+      - MtNav4:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(0,0,0,0)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Normal
+            Height: |-
+              =If(nfWide, 128, 120)
+            HoverColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            HoverFill: |-
+              =If(nfWide, RGBA(255,255,255,0.16), RGBA(242,243,244,1))
+            OnSelect: |-
+              =Navigate(ScrMe, ScreenTransition.None)
+            PaddingBottom: |-
+              =14
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PressedColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            PressedFill: |-
+              =If(nfWide, RGBA(255,255,255,0.24), RGBA(242,243,244,1))
+            RadiusBottomLeft: |-
+              =0
+            RadiusBottomRight: |-
+              =0
+            RadiusTopLeft: |-
+              =0
+            RadiusTopRight: |-
+              =0
+            Size: |-
+              =18
+            TabIndex: |-
+              =0
+            Text: |-
+              ="My area"
+            VerticalAlign: |-
+              =VerticalAlign.Bottom
+            Width: |-
+              =If(nfWide, 216, Parent.Width / 5)
+            X: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, Parent.Width - nfPad - 216, 4 * Parent.Width / 5), Parent.Width - Self.Width)), If(nfWide, Parent.Width - nfPad - 216, 4 * Parent.Width / 5))
+            Y: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, 0, Parent.Height - 120), Parent.Height - Self.Height)), If(nfWide, 0, Parent.Height - 120))
+      - MtPanel:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: |-
+              =Font.'Open Sans'
+            Height: |-
+              =(Parent.Height - nfNavH) - 128 - 32
+            HtmlText: |-
+              ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:36px;background:linear-gradient(135deg,rgba(255,255,255,0.94),rgba(255,255,255,0.78));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
+            PaddingBottom: |-
+              =0
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =0
+            Size: |-
+              =2
+            Width: |-
+              =nfRW + 48
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX - 24, Parent.Width - Self.Width)), nfRX - 24)
+            Y: |-
+              =If(nfDesign, Max(0, Min(144, Parent.Height - Self.Height)), 144)
+      - MtPos:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(74,79,84,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            LineHeight: |-
+              =1.35
+            Live: |-
+              =Live.Polite
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =22
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Step " & gMt & " of 3"
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(160, Parent.Height - Self.Height)), 160)
+      - MtTrk:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Fill: |-
+              =RGBA(242,243,244,1)
+            Height: |-
+              =12
+            TabIndex: |-
+              =-1
+            Visible: |-
+              =true
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(212, Parent.Height - Self.Height)), 212)
+      - MtBar2:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Fill: |-
+              =RGBA(11,85,163,1)
+            Height: |-
+              =12
+            TabIndex: |-
+              =-1
+            Visible: |-
+              =true
+            Width: |-
+              =nfRW * gMt / 3
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(212, Parent.Height - Self.Height)), 212)
+      - MtD1N:
+          Control: Label@2.5.1
+          Properties:
+            Align: |-
+              =Align.Center
+            AutoHeight: |-
+              =false
+            Color: |-
+              =RGBA(255,255,255,1)
+            Fill: |-
+              =RGBA(0,105,92,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Bold
+            Height: |-
+              =56
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =24
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="1"
+            VerticalAlign: |-
+              =VerticalAlign.Middle
+            Visible: |-
+              =gMt = 1
+            Width: |-
+              =56
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(248, Parent.Height - Self.Height)), 248)
+      - MtD1H:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =false
+            Color: |-
+              =RGBA(27,27,27,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =56
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Role: |-
+              =TextRole.Heading2
+            Size: |-
+              =30
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Describe the data asset"
+            VerticalAlign: |-
+              =VerticalAlign.Middle
+            Visible: |-
+              =gMt = 1
+            Width: |-
+              =nfRW - 76
+            Wrap: |-
+              =false
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX + 76, Parent.Width - Self.Width)), nfRX + 76)
+            Y: |-
+              =If(nfDesign, Max(0, Min(248, Parent.Height - Self.Height)), 248)
+      - MtD1R:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Fill: |-
+              =RGBA(0,105,92,1)
+            Height: |-
+              =4
+            TabIndex: |-
+              =-1
+            Visible: |-
+              =gMt = 1
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(248 + 68, Parent.Height - Self.Height)), 248 + 68)
+      - MtIntro:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(27,27,27,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =26
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Find out whether the same or a related data set is already listed in the National Data Library on data.gov.uk. Say what the data is about, in a sentence or two."
+            Visible: |-
+              =gMt = 1
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(340, Parent.Height - Self.Height)), 340)
+      - MtDesc:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            AccessibleLabel: |-
+              ="Describe the data asset"
+            BorderColor: |-
+              =RGBA(27,27,27,1)
+            BorderThickness: |-
+              =4
+            Clear: |-
+              =false
+            Color: |-
+              =RGBA(27,27,27,1)
+            Default: |-
+              =""
+            DelayOutput: |-
+              =false
+            Fill: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            Height: |-
+              =240
+            HintText: |-
+              ="For example, live and historical river levels and flood warnings for England"
+            HoverBorderColor: |-
+              =RGBA(11,85,163,1)
+            HoverFill: |-
+              =RGBA(255,255,255,1)
+            MaxLength: |-
+              =500
+            Mode: |-
+              =TextMode.MultiLine
+            PaddingLeft: |-
+              =24
+            RadiusBottomLeft: |-
+              =16
+            RadiusBottomRight: |-
+              =16
+            RadiusTopLeft: |-
+              =16
+            RadiusTopRight: |-
+              =16
+            Size: |-
+              =26
+            TabIndex: |-
+              =0
+            Visible: |-
+              =gMt = 1
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(MtIntro.Y + MtIntro.Height + 20, Parent.Height - Self.Height)), MtIntro.Y + MtIntro.Height + 20)
+      - MtSafe:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(74,79,84,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =22
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Leave out anything sensitive. Your search words go to data.gov.uk when you search."
+            Visible: |-
+              =gMt = 1
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(MtDesc.Y + MtDesc.Height + 16, Parent.Height - Self.Height)), MtDesc.Y + MtDesc.Height + 16)
+      - MtD2N:
+          Control: Label@2.5.1
+          Properties:
+            Align: |-
+              =Align.Center
+            AutoHeight: |-
+              =false
+            Color: |-
+              =RGBA(255,255,255,1)
+            Fill: |-
+              =RGBA(0,105,92,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Bold
+            Height: |-
+              =56
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =24
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="2"
+            VerticalAlign: |-
+              =VerticalAlign.Middle
+            Visible: |-
+              =gMt = 2
+            Width: |-
+              =56
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(248, Parent.Height - Self.Height)), 248)
+      - MtD2H:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =false
+            Color: |-
+              =RGBA(27,27,27,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =56
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Role: |-
+              =TextRole.Heading2
+            Size: |-
+              =30
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Narrow it down (optional)"
+            VerticalAlign: |-
+              =VerticalAlign.Middle
+            Visible: |-
+              =gMt = 2
+            Width: |-
+              =nfRW - 76
+            Wrap: |-
+              =false
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX + 76, Parent.Width - Self.Width)), nfRX + 76)
+            Y: |-
+              =If(nfDesign, Max(0, Min(248, Parent.Height - Self.Height)), 248)
+      - MtD2R:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Fill: |-
+              =RGBA(0,105,92,1)
+            Height: |-
+              =4
+            TabIndex: |-
+              =-1
+            Visible: |-
+              =gMt = 2
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(248 + 68, Parent.Height - Self.Height)), 248 + 68)
+      - MtPubL:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(27,27,27,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =26
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Publisher"
+            Visible: |-
+              =gMt = 2
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(340, Parent.Height - Self.Height)), 340)
+      - MtPub:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            AccessibleLabel: |-
+              ="Publisher (optional)"
+            BorderColor: |-
+              =RGBA(27,27,27,1)
+            BorderThickness: |-
+              =4
+            Clear: |-
+              =true
+            Color: |-
+              =RGBA(27,27,27,1)
+            Default: |-
+              =""
+            DelayOutput: |-
+              =true
+            Fill: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            Height: |-
+              =96
+            HintText: |-
+              ="For example, Environment Agency"
+            HoverBorderColor: |-
+              =RGBA(11,85,163,1)
+            HoverFill: |-
+              =RGBA(255,255,255,1)
+            PaddingLeft: |-
+              =24
+            RadiusBottomLeft: |-
+              =16
+            RadiusBottomRight: |-
+              =16
+            RadiusTopLeft: |-
+              =16
+            RadiusTopRight: |-
+              =16
+            Size: |-
+              =26
+            TabIndex: |-
+              =0
+            Visible: |-
+              =gMt = 2
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(392, Parent.Height - Self.Height)), 392)
+      - MtTopicBtn:
+          Control: Classic/Button@2.2.0
+          Properties:
+            Align: |-
+              =Align.Left
+            BorderColor: |-
+              =RGBA(11,85,163,1)
+            BorderThickness: |-
+              =4
+            Color: |-
+              =RGBA(11,85,163,1)
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =88
+            HoverColor: |-
+              =RGBA(11,85,163,1)
+            HoverFill: |-
+              =RGBA(242,243,244,1)
+            OnSelect: |-
+              =Set(gPick, "MtTopic")
+            PaddingLeft: |-
+              =32
+            PressedColor: |-
+              =RGBA(11,85,163,1)
+            PressedFill: |-
+              =RGBA(242,243,244,1)
+            RadiusBottomLeft: |-
+              =16
+            RadiusBottomRight: |-
+              =16
+            RadiusTopLeft: |-
+              =16
+            RadiusTopRight: |-
+              =16
+            Size: |-
+              =22
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Topic: " & gMtTopic & "  ▾"
+            Visible: |-
+              =gMt = 2
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(520, Parent.Height - Self.Height)), 520)
+      - MtFormatBtn:
+          Control: Classic/Button@2.2.0
+          Properties:
+            Align: |-
+              =Align.Left
+            BorderColor: |-
+              =RGBA(11,85,163,1)
+            BorderThickness: |-
+              =4
+            Color: |-
+              =RGBA(11,85,163,1)
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =88
+            HoverColor: |-
+              =RGBA(11,85,163,1)
+            HoverFill: |-
+              =RGBA(242,243,244,1)
+            OnSelect: |-
+              =Set(gPick, "MtFormat")
+            PaddingLeft: |-
+              =32
+            PressedColor: |-
+              =RGBA(11,85,163,1)
+            PressedFill: |-
+              =RGBA(242,243,244,1)
+            RadiusBottomLeft: |-
+              =16
+            RadiusBottomRight: |-
+              =16
+            RadiusTopLeft: |-
+              =16
+            RadiusTopRight: |-
+              =16
+            Size: |-
+              =22
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Format: " & gMtFmt & "  ▾"
+            Visible: |-
+              =gMt = 2
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(632, Parent.Height - Self.Height)), 632)
+      - MtD3N:
+          Control: Label@2.5.1
+          Properties:
+            Align: |-
+              =Align.Center
+            AutoHeight: |-
+              =false
+            Color: |-
+              =RGBA(255,255,255,1)
+            Fill: |-
+              =RGBA(0,105,92,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Bold
+            Height: |-
+              =56
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =24
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="3"
+            VerticalAlign: |-
+              =VerticalAlign.Middle
+            Visible: |-
+              =gMt = 3
+            Width: |-
+              =56
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(248, Parent.Height - Self.Height)), 248)
+      - MtD3H:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =false
+            Color: |-
+              =RGBA(27,27,27,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =56
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Role: |-
+              =TextRole.Heading2
+            Size: |-
+              =30
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Search data.gov.uk"
+            VerticalAlign: |-
+              =VerticalAlign.Middle
+            Visible: |-
+              =gMt = 3
+            Width: |-
+              =nfRW - 76
+            Wrap: |-
+              =false
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX + 76, Parent.Width - Self.Width)), nfRX + 76)
+            Y: |-
+              =If(nfDesign, Max(0, Min(248, Parent.Height - Self.Height)), 248)
+      - MtD3R:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Fill: |-
+              =RGBA(0,105,92,1)
+            Height: |-
+              =4
+            TabIndex: |-
+              =-1
+            Visible: |-
+              =gMt = 3
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(248 + 68, Parent.Height - Self.Height)), 248 + 68)
+      - MtTermsL:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(74,79,84,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =22
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="We will search for"
+            Visible: |-
+              =gMt = 3
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(340, Parent.Height - Self.Height)), 340)
+      - MtTerms:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(27,27,27,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            LineHeight: |-
+              =1.35
+            Live: |-
+              =Live.Polite
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =30
+            TabIndex: |-
+              =-1
+            Text: |-
+              =If(IsBlank(Trim(Concat(FirstN(Distinct(Filter(MatchAll(Lower(MtDesc.Text), "[a-z][a-z\-]{3,}"), !(FullMatch in nfStop.w)), FullMatch), 6), Value, " ") & " " & Trim(MtPub.Text) & " " & If(gMtTopic = "Any" || IsBlank(gMtTopic), "", gMtTopic) & " " & If(gMtFmt = "Any" || IsBlank(gMtFmt), "", gMtFmt))), "Go back and describe the data asset first.", Trim(Concat(FirstN(Distinct(Filter(MatchAll(Lower(MtDesc.Text), "[a-z][a-z\-]{3,}"), !(FullMatch in nfStop.w)), FullMatch), 6), Value, " ") & " " & Trim(MtPub.Text) & " " & If(gMtTopic = "Any" || IsBlank(gMtTopic), "", gMtTopic) & " " & If(gMtFmt = "Any" || IsBlank(gMtFmt), "", gMtFmt)))
+            Visible: |-
+              =gMt = 3
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(384, Parent.Height - Self.Height)), 384)
+      - MtGo:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =RGBA(255,255,255,1)
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            DisplayMode: |-
+              =If(IsBlank(Trim(Concat(FirstN(Distinct(Filter(MatchAll(Lower(MtDesc.Text), "[a-z][a-z\-]{3,}"), !(FullMatch in nfStop.w)), FullMatch), 6), Value, " ") & " " & Trim(MtPub.Text) & " " & If(gMtTopic = "Any" || IsBlank(gMtTopic), "", gMtTopic) & " " & If(gMtFmt = "Any" || IsBlank(gMtFmt), "", gMtFmt))), DisplayMode.Disabled, DisplayMode.Edit)
+            Fill: |-
+              =RGBA(0,105,92,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =96
+            HoverColor: |-
+              =RGBA(255,255,255,1)
+            HoverFill: |-
+              =RGBA(0,80,70,1)
+            OnSelect: |-
+              =Launch("https://www.data.gov.uk/search?q=" & EncodeUrl(Trim(Concat(FirstN(Distinct(Filter(MatchAll(Lower(MtDesc.Text), "[a-z][a-z\-]{3,}"), !(FullMatch in nfStop.w)), FullMatch), 6), Value, " ") & " " & Trim(MtPub.Text) & " " & If(gMtTopic = "Any" || IsBlank(gMtTopic), "", gMtTopic) & " " & If(gMtFmt = "Any" || IsBlank(gMtFmt), "", gMtFmt))))
+            PressedColor: |-
+              =RGBA(255,255,255,1)
+            PressedFill: |-
+              =RGBA(0,80,70,1)
+            RadiusBottomLeft: |-
+              =16
+            RadiusBottomRight: |-
+              =16
+            RadiusTopLeft: |-
+              =16
+            RadiusTopRight: |-
+              =16
+            Size: |-
+              =26
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Find matches on data.gov.uk"
+            Visible: |-
+              =gMt = 3
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(MtTerms.Y + MtTerms.Height + 32, Parent.Height - Self.Height)), MtTerms.Y + MtTerms.Height + 32)
+      - MtExact:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: |-
+              =RGBA(11,85,163,1)
+            BorderThickness: |-
+              =4
+            Color: |-
+              =RGBA(11,85,163,1)
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            DisplayMode: |-
+              =If(IsBlank(Trim(MtDesc.Text)), DisplayMode.Disabled, DisplayMode.Edit)
+            Fill: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =96
+            HoverColor: |-
+              =RGBA(11,85,163,1)
+            HoverFill: |-
+              =RGBA(242,243,244,1)
+            OnSelect: |-
+              =Launch("https://www.data.gov.uk/search?q=" & EncodeUrl(Left(Trim(MtDesc.Text), 150)))
+            PressedColor: |-
+              =RGBA(11,85,163,1)
+            PressedFill: |-
+              =RGBA(242,243,244,1)
+            RadiusBottomLeft: |-
+              =16
+            RadiusBottomRight: |-
+              =16
+            RadiusTopLeft: |-
+              =16
+            RadiusTopRight: |-
+              =16
+            Size: |-
+              =26
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Search with my exact words instead"
+            Visible: |-
+              =gMt = 3
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(MtGo.Y + MtGo.Height + 20, Parent.Height - Self.Height)), MtGo.Y + MtGo.Height + 20)
+      - MtNote:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(74,79,84,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =22
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Results open on data.gov.uk in your browser. Publisher, topic and format are added as search words; use the filters on the results page to narrow further. If you find the same data set, use its title and publisher so your return describes it the same way. If nothing matches, that is a useful finding too."
+            Visible: |-
+              =gMt = 3
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(MtExact.Y + MtExact.Height + 28, Parent.Height - Self.Height)), MtExact.Y + MtExact.Height + 28)
+      - MtFoot:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Fill: |-
+              =RGBA(242,243,244,1)
+            Height: |-
+              =136
+            TabIndex: |-
+              =-1
+            Width: |-
+              =Parent.Width
+            Y: |-
+              =If(nfDesign, Max(0, Min((Parent.Height - nfNavH) - 136, Parent.Height - Self.Height)), (Parent.Height - nfNavH) - 136)
+      - MtPrev:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: |-
+              =RGBA(11,85,163,1)
+            BorderThickness: |-
+              =4
+            Color: |-
+              =RGBA(11,85,163,1)
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            DisplayMode: |-
+              =If(gMt > 1, DisplayMode.Edit, DisplayMode.Disabled)
+            Fill: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =96
+            HoverColor: |-
+              =RGBA(11,85,163,1)
+            HoverFill: |-
+              =RGBA(242,243,244,1)
+            OnSelect: |-
+              =Set(gMt, gMt - 1)
+            PressedColor: |-
+              =RGBA(11,85,163,1)
+            PressedFill: |-
+              =RGBA(242,243,244,1)
+            RadiusBottomLeft: |-
+              =16
+            RadiusBottomRight: |-
+              =16
+            RadiusTopLeft: |-
+              =16
+            RadiusTopRight: |-
+              =16
+            Size: |-
+              =26
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Previous"
+            Width: |-
+              =(nfRW - 24) / 2
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min((Parent.Height - nfNavH) - 116, Parent.Height - Self.Height)), (Parent.Height - nfNavH) - 116)
+      - MtNext:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =RGBA(255,255,255,1)
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(0,105,92,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =96
+            HoverColor: |-
+              =RGBA(255,255,255,1)
+            HoverFill: |-
+              =RGBA(0,80,70,1)
+            OnSelect: |-
+              =If(gMt = 3, Reset(MtDesc); Reset(MtPub); Set(gMtTopic, "Any"); Set(gMtFmt, "Any"); Set(gMt, 1), Set(gMt, gMt + 1))
+            PressedColor: |-
+              =RGBA(255,255,255,1)
+            PressedFill: |-
+              =RGBA(0,80,70,1)
+            RadiusBottomLeft: |-
+              =16
+            RadiusBottomRight: |-
+              =16
+            RadiusTopLeft: |-
+              =16
+            RadiusTopRight: |-
+              =16
+            Size: |-
+              =26
+            TabIndex: |-
+              =0
+            Text: |-
+              =If(gMt = 3, "Start again", "Next")
+            Width: |-
+              =(nfRW - 24) / 2
+            X: |-
+              =If(nfDesign, Max(0, Min(MtPrev.X + MtPrev.Width + 24, Parent.Width - Self.Width)), MtPrev.X + MtPrev.Width + 24)
+            Y: |-
+              =If(nfDesign, Max(0, Min((Parent.Height - nfNavH) - 116, Parent.Height - Self.Height)), (Parent.Height - nfNavH) - 116)
+      - MtTopicShade:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =RGBA(0,0,0,0)
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(0,0,0,0.55)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =Parent.Height
+            HoverColor: |-
+              =RGBA(0,0,0,0)
+            HoverFill: |-
+              =RGBA(0,0,0,0.55)
+            OnSelect: |-
+              =Set(gPick, Blank())
+            PressedColor: |-
+              =RGBA(0,0,0,0)
+            PressedFill: |-
+              =RGBA(0,0,0,0.55)
+            RadiusBottomLeft: |-
+              =0
+            RadiusBottomRight: |-
+              =0
+            RadiusTopLeft: |-
+              =0
+            RadiusTopRight: |-
+              =0
+            Size: |-
+              =26
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Close the list"
+            Visible: |-
+              =gPick = "MtTopic"
+            Width: |-
+              =Parent.Width
+            X: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
+            Y: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Height - Self.Height)), 0)
+      - MtTopicSheet:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: |-
+              =Font.'Open Sans'
+            Height: |-
+              =Min(Parent.Height - 208, 144 + CountRows(nfNdlTopics) * 104)
+            HtmlText: |-
+              ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:40px;background:linear-gradient(135deg,rgba(255,255,255,0.99),rgba(255,255,255,0.97));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
+            PaddingBottom: |-
+              =0
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =0
+            Size: |-
+              =2
+            Visible: |-
+              =gPick = "MtTopic"
+            Width: |-
+              =Min(Parent.Width - 64, 840)
+            X: |-
+              =If(nfDesign, Max(0, Min((Parent.Width - Min(Parent.Width - 64, 840)) / 2, Parent.Width - Self.Width)), (Parent.Width - Min(Parent.Width - 64, 840)) / 2)
+            Y: |-
+              =If(nfDesign, Max(0, Min(168, Parent.Height - Self.Height)), 168)
+      - MtTopicSheetH:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(27,27,27,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Role: |-
+              =TextRole.Heading2
+            Size: |-
+              =30
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Topic"
+            Visible: |-
+              =gPick = "MtTopic"
+            Width: |-
+              =Min(Parent.Width - 64, 840) - 80
+            X: |-
+              =If(nfDesign, Max(0, Min((Parent.Width - Min(Parent.Width - 64, 840)) / 2 + 40, Parent.Width - Self.Width)), (Parent.Width - Min(Parent.Width - 64, 840)) / 2 + 40)
+            Y: |-
+              =If(nfDesign, Max(0, Min(200, Parent.Height - Self.Height)), 200)
+      - MtTopicOpts:
+          Control: Gallery@2.15.0
+          Variant: Vertical
+          Properties:
+            AccessibleLabel: |-
+              ="Topic"
+            Height: |-
+              =Min(Parent.Height - 344, CountRows(nfNdlTopics) * 104)
+            Items: |-
+              =nfNdlTopics
+            OnSelect: |-
+              =Set(gMtTopic, ThisItem.v); Set(gPick, Blank())
+            ShowScrollbar: |-
+              =true
+            TabIndex: |-
+              =-1
+            TemplatePadding: |-
+              =0
+            TemplateSize: |-
+              =104
+            Visible: |-
+              =gPick = "MtTopic"
+            Width: |-
+              =Min(Parent.Width - 64, 840) - 48
+            X: |-
+              =If(nfDesign, Max(0, Min((Parent.Width - Min(Parent.Width - 64, 840)) / 2 + 24, Parent.Width - Self.Width)), (Parent.Width - Min(Parent.Width - 64, 840)) / 2 + 24)
+            Y: |-
+              =If(nfDesign, Max(0, Min(280, Parent.Height - Self.Height)), 280)
+          Children:
+            - MtTopicOpt:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  Align: |-
+                    =Align.Left
+                  BorderColor: |-
+                    =RGBA(138,144,149,1)
+                  BorderThickness: |-
+                    =2
+                  Color: |-
+                    =If(gMtTopic = ThisItem.v, RGBA(255,255,255,1), RGBA(27,27,27,1))
+                  DisabledBorderColor: |-
+                    =RGBA(138,144,149,1)
+                  DisabledColor: |-
+                    =RGBA(74,79,84,1)
+                  DisabledFill: |-
+                    =RGBA(242,243,244,1)
+                  Fill: |-
+                    =If(gMtTopic = ThisItem.v, RGBA(11,85,163,1), RGBA(255,255,255,1))
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =8
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Normal
+                  Height: |-
+                    =92
+                  HoverColor: |-
+                    =If(gMtTopic = ThisItem.v, RGBA(255,255,255,1), RGBA(27,27,27,1))
+                  HoverFill: |-
+                    =If(gMtTopic = ThisItem.v, RGBA(11,85,163,1), RGBA(242,243,244,1))
+                  OnSelect: |-
+                    =Select(Parent)
+                  PaddingLeft: |-
+                    =32
+                  PressedColor: |-
+                    =RGBA(255,255,255,1)
+                  PressedFill: |-
+                    =RGBA(8,62,120,1)
+                  RadiusBottomLeft: |-
+                    =16
+                  RadiusBottomRight: |-
+                    =16
+                  RadiusTopLeft: |-
+                    =16
+                  RadiusTopRight: |-
+                    =16
+                  Size: |-
+                    =26
+                  TabIndex: |-
+                    =0
+                  Text: |-
+                    =If(gMtTopic = ThisItem.v, "✓  ", "") & ThisItem.v
+                  Width: |-
+                    =Parent.TemplateWidth - 20
+                  X: |-
+                    =0
+                  Y: |-
+                    =6
+      - MtFormatShade:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =RGBA(0,0,0,0)
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(0,0,0,0.55)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =Parent.Height
+            HoverColor: |-
+              =RGBA(0,0,0,0)
+            HoverFill: |-
+              =RGBA(0,0,0,0.55)
+            OnSelect: |-
+              =Set(gPick, Blank())
+            PressedColor: |-
+              =RGBA(0,0,0,0)
+            PressedFill: |-
+              =RGBA(0,0,0,0.55)
+            RadiusBottomLeft: |-
+              =0
+            RadiusBottomRight: |-
+              =0
+            RadiusTopLeft: |-
+              =0
+            RadiusTopRight: |-
+              =0
+            Size: |-
+              =26
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Close the list"
+            Visible: |-
+              =gPick = "MtFormat"
+            Width: |-
+              =Parent.Width
+            X: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
+            Y: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Height - Self.Height)), 0)
+      - MtFormatSheet:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: |-
+              =Font.'Open Sans'
+            Height: |-
+              =Min(Parent.Height - 208, 144 + CountRows(nfNdlFormats) * 104)
+            HtmlText: |-
+              ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:40px;background:linear-gradient(135deg,rgba(255,255,255,0.99),rgba(255,255,255,0.97));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
+            PaddingBottom: |-
+              =0
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =0
+            Size: |-
+              =2
+            Visible: |-
+              =gPick = "MtFormat"
+            Width: |-
+              =Min(Parent.Width - 64, 840)
+            X: |-
+              =If(nfDesign, Max(0, Min((Parent.Width - Min(Parent.Width - 64, 840)) / 2, Parent.Width - Self.Width)), (Parent.Width - Min(Parent.Width - 64, 840)) / 2)
+            Y: |-
+              =If(nfDesign, Max(0, Min(168, Parent.Height - Self.Height)), 168)
+      - MtFormatSheetH:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(27,27,27,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Role: |-
+              =TextRole.Heading2
+            Size: |-
+              =30
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Format"
+            Visible: |-
+              =gPick = "MtFormat"
+            Width: |-
+              =Min(Parent.Width - 64, 840) - 80
+            X: |-
+              =If(nfDesign, Max(0, Min((Parent.Width - Min(Parent.Width - 64, 840)) / 2 + 40, Parent.Width - Self.Width)), (Parent.Width - Min(Parent.Width - 64, 840)) / 2 + 40)
+            Y: |-
+              =If(nfDesign, Max(0, Min(200, Parent.Height - Self.Height)), 200)
+      - MtFormatOpts:
+          Control: Gallery@2.15.0
+          Variant: Vertical
+          Properties:
+            AccessibleLabel: |-
+              ="Format"
+            Height: |-
+              =Min(Parent.Height - 344, CountRows(nfNdlFormats) * 104)
+            Items: |-
+              =nfNdlFormats
+            OnSelect: |-
+              =Set(gMtFmt, ThisItem.v); Set(gPick, Blank())
+            ShowScrollbar: |-
+              =true
+            TabIndex: |-
+              =-1
+            TemplatePadding: |-
+              =0
+            TemplateSize: |-
+              =104
+            Visible: |-
+              =gPick = "MtFormat"
+            Width: |-
+              =Min(Parent.Width - 64, 840) - 48
+            X: |-
+              =If(nfDesign, Max(0, Min((Parent.Width - Min(Parent.Width - 64, 840)) / 2 + 24, Parent.Width - Self.Width)), (Parent.Width - Min(Parent.Width - 64, 840)) / 2 + 24)
+            Y: |-
+              =If(nfDesign, Max(0, Min(280, Parent.Height - Self.Height)), 280)
+          Children:
+            - MtFormatOpt:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  Align: |-
+                    =Align.Left
+                  BorderColor: |-
+                    =RGBA(138,144,149,1)
+                  BorderThickness: |-
+                    =2
+                  Color: |-
+                    =If(gMtFmt = ThisItem.v, RGBA(255,255,255,1), RGBA(27,27,27,1))
+                  DisabledBorderColor: |-
+                    =RGBA(138,144,149,1)
+                  DisabledColor: |-
+                    =RGBA(74,79,84,1)
+                  DisabledFill: |-
+                    =RGBA(242,243,244,1)
+                  Fill: |-
+                    =If(gMtFmt = ThisItem.v, RGBA(11,85,163,1), RGBA(255,255,255,1))
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =8
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Normal
+                  Height: |-
+                    =92
+                  HoverColor: |-
+                    =If(gMtFmt = ThisItem.v, RGBA(255,255,255,1), RGBA(27,27,27,1))
+                  HoverFill: |-
+                    =If(gMtFmt = ThisItem.v, RGBA(11,85,163,1), RGBA(242,243,244,1))
+                  OnSelect: |-
+                    =Select(Parent)
+                  PaddingLeft: |-
+                    =32
+                  PressedColor: |-
+                    =RGBA(255,255,255,1)
+                  PressedFill: |-
+                    =RGBA(8,62,120,1)
+                  RadiusBottomLeft: |-
+                    =16
+                  RadiusBottomRight: |-
+                    =16
+                  RadiusTopLeft: |-
+                    =16
+                  RadiusTopRight: |-
+                    =16
+                  Size: |-
+                    =26
+                  TabIndex: |-
+                    =0
+                  Text: |-
+                    =If(gMtFmt = ThisItem.v, "✓  ", "") & ThisItem.v
+                  Width: |-
+                    =Parent.TemplateWidth - 20
+                  X: |-
+                    =0
+                  Y: |-
+                    =6
+      - MaShortNote:
+          Control: Label@2.5.1
+          Properties:
+            Align: |-
+              =Align.Center
+            AutoHeight: |-
+              =false
+            Color: |-
+              =RGBA(27,27,27,1)
+            Fill: |-
+              =RGBA(255,221,0,1)
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =80
+            Live: |-
+              =Live.Polite
+            PaddingLeft: |-
+              =24
+            PaddingRight: |-
+              =24
+            Role: |-
+              =TextRole.Default
+            Size: |-
+              =22
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="This screen needs more height. Turn your device upright, or make the window taller, to reach all of it."
+            VerticalAlign: |-
+              =VerticalAlign.Middle
+            Visible: |-
+              =nfShort && (true)
+            Width: |-
+              =Parent.Width
+            X: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
+            Y: |-
+              =If(nfDesign, Max(0, Min(136, Parent.Height - Self.Height)), 136)

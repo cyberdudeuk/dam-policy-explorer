@@ -1,0 +1,1419 @@
+Screens:
+  ScrQuestions:
+    Properties:
+      Fill: |-
+        =RGBA(255,255,255,1)
+      Height: |-
+        =App.Height
+      LoadingSpinnerColor: |-
+        =RGBA(11,85,163,1)
+      OnVisible: |-
+        =If(IsBlank(gTopic), Set(gTopic, "All"))
+      Width: |-
+        =App.Width
+    Children:
+      - QsBg:
+          Control: Image@2.2.3
+          Properties:
+            AccessibleLabel: |-
+              =""
+            Height: |-
+              =Parent.Height
+            Image: |-
+              =nfBg4
+            ImagePosition: |-
+              =ImagePosition.Fill
+            TabIndex: |-
+              =-1
+            Width: |-
+              =Parent.Width
+            X: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
+            Y: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Height - Self.Height)), 0)
+      - QsBar:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Fill: |-
+              =RGBA(11,85,163,1)
+            Height: |-
+              =128
+            TabIndex: |-
+              =-1
+            Width: |-
+              =Parent.Width
+      - QsRib:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Fill: |-
+              =RGBA(90,47,138,1)
+            Height: |-
+              =8
+            TabIndex: |-
+              =-1
+            Width: |-
+              =Parent.Width
+            Y: |-
+              =If(nfDesign, Max(0, Min(128, Parent.Height - Self.Height)), 128)
+      - QsBack:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              ="Back"
+            Color: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Height: |-
+              =128
+            Icon: |-
+              =Icon.ChevronLeft
+            OnSelect: |-
+              =Back()
+            PaddingBottom: |-
+              =40
+            PaddingLeft: |-
+              =32
+            PaddingRight: |-
+              =32
+            PaddingTop: |-
+              =40
+            TabIndex: |-
+              =0
+            Width: |-
+              =112
+            X: |-
+              =If(nfDesign, Max(0, Min(nfPad, Parent.Width - Self.Width)), nfPad)
+      - QsTitle:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =false
+            Color: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =128
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Role: |-
+              =TextRole.Heading1
+            Size: |-
+              =32
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Questions and answers"
+            VerticalAlign: |-
+              =VerticalAlign.Middle
+            Width: |-
+              =If(nfWide, Parent.Width - (nfPad + 112) - nfPad - 1208, Parent.Width - (nfPad + 112) - 128)
+            Wrap: |-
+              =false
+            X: |-
+              =If(nfDesign, Max(0, Min(nfPad + 112, Parent.Width - Self.Width)), nfPad + 112)
+      - QsHelp:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              ="Tutorial for this screen"
+            Color: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Height: |-
+              =128
+            Icon: |-
+              =Icon.Lightbulb
+            OnSelect: |-
+              =Set(gTut, "answers"); Set(gTutStep, 1); Navigate(ScrLearn, ScreenTransition.Fade)
+            PaddingBottom: |-
+              =40
+            PaddingLeft: |-
+              =32
+            PaddingRight: |-
+              =32
+            PaddingTop: |-
+              =40
+            TabIndex: |-
+              =0
+            Width: |-
+              =112
+            X: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, Parent.Width - nfPad - 1192, Parent.Width - 112), Parent.Width - Self.Width)), If(nfWide, Parent.Width - nfPad - 1192, Parent.Width - 112))
+      - QsNavBg:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: |-
+              =Font.'Open Sans'
+            Height: |-
+              =120
+            HtmlText: |-
+              ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:0px;background:linear-gradient(135deg,rgba(255,255,255,0.97),rgba(255,255,255,0.92));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
+            PaddingBottom: |-
+              =0
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =0
+            Size: |-
+              =2
+            Visible: |-
+              =!nfWide
+            Width: |-
+              =Parent.Width
+            X: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
+            Y: |-
+              =If(nfDesign, Max(0, Min(Parent.Height - 120, Parent.Height - Self.Height)), Parent.Height - 120)
+      - QsNavLine:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Fill: |-
+              =RGBA(138,144,149,1)
+            Height: |-
+              =2
+            TabIndex: |-
+              =-1
+            Visible: |-
+              =!nfWide
+            Width: |-
+              =Parent.Width
+            Y: |-
+              =If(nfDesign, Max(0, Min(Parent.Height - 120, Parent.Height - Self.Height)), Parent.Height - 120)
+      - QsNav0Ic:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              =""
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Height: |-
+              =44
+            Icon: |-
+              =Icon.Home
+            TabIndex: |-
+              =-1
+            Width: |-
+              =44
+            X: |-
+              =If(nfDesign, Max(0, Min(QsNav0.X + (QsNav0.Width - 44) / 2, Parent.Width - Self.Width)), QsNav0.X + (QsNav0.Width - 44) / 2)
+            Y: |-
+              =If(nfDesign, Max(0, Min(QsNav0.Y + If(nfWide, 24, 16), Parent.Height - Self.Height)), QsNav0.Y + If(nfWide, 24, 16))
+      - QsNav0:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(0,0,0,0)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Normal
+            Height: |-
+              =If(nfWide, 128, 120)
+            HoverColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            HoverFill: |-
+              =If(nfWide, RGBA(255,255,255,0.16), RGBA(242,243,244,1))
+            OnSelect: |-
+              =Navigate(ScrHome, ScreenTransition.None)
+            PaddingBottom: |-
+              =14
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PressedColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            PressedFill: |-
+              =If(nfWide, RGBA(255,255,255,0.24), RGBA(242,243,244,1))
+            RadiusBottomLeft: |-
+              =0
+            RadiusBottomRight: |-
+              =0
+            RadiusTopLeft: |-
+              =0
+            RadiusTopRight: |-
+              =0
+            Size: |-
+              =18
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Home"
+            VerticalAlign: |-
+              =VerticalAlign.Bottom
+            Width: |-
+              =If(nfWide, 216, Parent.Width / 5)
+            X: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, Parent.Width - nfPad - 1080, 0 * Parent.Width / 5), Parent.Width - Self.Width)), If(nfWide, Parent.Width - nfPad - 1080, 0 * Parent.Width / 5))
+            Y: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, 0, Parent.Height - 120), Parent.Height - Self.Height)), If(nfWide, 0, Parent.Height - 120))
+      - QsNav1Ic:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              =""
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Height: |-
+              =44
+            Icon: |-
+              =Icon.CheckBadge
+            TabIndex: |-
+              =-1
+            Width: |-
+              =44
+            X: |-
+              =If(nfDesign, Max(0, Min(QsNav1.X + (QsNav1.Width - 44) / 2, Parent.Width - Self.Width)), QsNav1.X + (QsNav1.Width - 44) / 2)
+            Y: |-
+              =If(nfDesign, Max(0, Min(QsNav1.Y + If(nfWide, 24, 16), Parent.Height - Self.Height)), QsNav1.Y + If(nfWide, 24, 16))
+      - QsNav1:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(0,0,0,0)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Normal
+            Height: |-
+              =If(nfWide, 128, 120)
+            HoverColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            HoverFill: |-
+              =If(nfWide, RGBA(255,255,255,0.16), RGBA(242,243,244,1))
+            OnSelect: |-
+              =Navigate(ScrTest, ScreenTransition.None)
+            PaddingBottom: |-
+              =14
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PressedColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            PressedFill: |-
+              =If(nfWide, RGBA(255,255,255,0.24), RGBA(242,243,244,1))
+            RadiusBottomLeft: |-
+              =0
+            RadiusBottomRight: |-
+              =0
+            RadiusTopLeft: |-
+              =0
+            RadiusTopRight: |-
+              =0
+            Size: |-
+              =18
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Asset test"
+            VerticalAlign: |-
+              =VerticalAlign.Bottom
+            Width: |-
+              =If(nfWide, 216, Parent.Width / 5)
+            X: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, Parent.Width - nfPad - 864, 1 * Parent.Width / 5), Parent.Width - Self.Width)), If(nfWide, Parent.Width - nfPad - 864, 1 * Parent.Width / 5))
+            Y: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, 0, Parent.Height - 120), Parent.Height - Self.Height)), If(nfWide, 0, Parent.Height - 120))
+      - QsNav2Ic:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              =""
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(11,85,163,1))
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Height: |-
+              =44
+            Icon: |-
+              =Icon.QuestionMark
+            TabIndex: |-
+              =-1
+            Width: |-
+              =44
+            X: |-
+              =If(nfDesign, Max(0, Min(QsNav2.X + (QsNav2.Width - 44) / 2, Parent.Width - Self.Width)), QsNav2.X + (QsNav2.Width - 44) / 2)
+            Y: |-
+              =If(nfDesign, Max(0, Min(QsNav2.Y + If(nfWide, 24, 16), Parent.Height - Self.Height)), QsNav2.Y + If(nfWide, 24, 16))
+      - QsNav2On:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Fill: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(11,85,163,1))
+            Height: |-
+              =6
+            TabIndex: |-
+              =-1
+            Width: |-
+              =QsNav2.Width - 56
+            X: |-
+              =If(nfDesign, Max(0, Min(QsNav2.X + 28, Parent.Width - Self.Width)), QsNav2.X + 28)
+            Y: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, 122, Parent.Height - 120), Parent.Height - Self.Height)), If(nfWide, 122, Parent.Height - 120))
+      - QsNav2:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(11,85,163,1))
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(0,0,0,0)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =If(nfWide, 128, 120)
+            HoverColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(11,85,163,1))
+            HoverFill: |-
+              =If(nfWide, RGBA(255,255,255,0.16), RGBA(242,243,244,1))
+            OnSelect: |-
+              =Navigate(ScrQuestions, ScreenTransition.None)
+            PaddingBottom: |-
+              =14
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PressedColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(11,85,163,1))
+            PressedFill: |-
+              =If(nfWide, RGBA(255,255,255,0.24), RGBA(242,243,244,1))
+            RadiusBottomLeft: |-
+              =0
+            RadiusBottomRight: |-
+              =0
+            RadiusTopLeft: |-
+              =0
+            RadiusTopRight: |-
+              =0
+            Size: |-
+              =18
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Questions"
+            VerticalAlign: |-
+              =VerticalAlign.Bottom
+            Width: |-
+              =If(nfWide, 216, Parent.Width / 5)
+            X: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, Parent.Width - nfPad - 648, 2 * Parent.Width / 5), Parent.Width - Self.Width)), If(nfWide, Parent.Width - nfPad - 648, 2 * Parent.Width / 5))
+            Y: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, 0, Parent.Height - 120), Parent.Height - Self.Height)), If(nfWide, 0, Parent.Height - 120))
+      - QsNav3Ic:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              =""
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Height: |-
+              =44
+            Icon: |-
+              =Icon.LevelsLayersItems
+            TabIndex: |-
+              =-1
+            Width: |-
+              =44
+            X: |-
+              =If(nfDesign, Max(0, Min(QsNav3.X + (QsNav3.Width - 44) / 2, Parent.Width - Self.Width)), QsNav3.X + (QsNav3.Width - 44) / 2)
+            Y: |-
+              =If(nfDesign, Max(0, Min(QsNav3.Y + If(nfWide, 24, 16), Parent.Height - Self.Height)), QsNav3.Y + If(nfWide, 24, 16))
+      - QsNav3:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(0,0,0,0)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Normal
+            Height: |-
+              =If(nfWide, 128, 120)
+            HoverColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            HoverFill: |-
+              =If(nfWide, RGBA(255,255,255,0.16), RGBA(242,243,244,1))
+            OnSelect: |-
+              =Navigate(ScrExamples, ScreenTransition.None)
+            PaddingBottom: |-
+              =14
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PressedColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            PressedFill: |-
+              =If(nfWide, RGBA(255,255,255,0.24), RGBA(242,243,244,1))
+            RadiusBottomLeft: |-
+              =0
+            RadiusBottomRight: |-
+              =0
+            RadiusTopLeft: |-
+              =0
+            RadiusTopRight: |-
+              =0
+            Size: |-
+              =18
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Examples"
+            VerticalAlign: |-
+              =VerticalAlign.Bottom
+            Width: |-
+              =If(nfWide, 216, Parent.Width / 5)
+            X: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, Parent.Width - nfPad - 432, 3 * Parent.Width / 5), Parent.Width - Self.Width)), If(nfWide, Parent.Width - nfPad - 432, 3 * Parent.Width / 5))
+            Y: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, 0, Parent.Height - 120), Parent.Height - Self.Height)), If(nfWide, 0, Parent.Height - 120))
+      - QsNav4Ic:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              =""
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Height: |-
+              =44
+            Icon: |-
+              =Icon.Person
+            TabIndex: |-
+              =-1
+            Width: |-
+              =44
+            X: |-
+              =If(nfDesign, Max(0, Min(QsNav4.X + (QsNav4.Width - 44) / 2, Parent.Width - Self.Width)), QsNav4.X + (QsNav4.Width - 44) / 2)
+            Y: |-
+              =If(nfDesign, Max(0, Min(QsNav4.Y + If(nfWide, 24, 16), Parent.Height - Self.Height)), QsNav4.Y + If(nfWide, 24, 16))
+      - QsNav4:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(0,0,0,0)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Normal
+            Height: |-
+              =If(nfWide, 128, 120)
+            HoverColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            HoverFill: |-
+              =If(nfWide, RGBA(255,255,255,0.16), RGBA(242,243,244,1))
+            OnSelect: |-
+              =Navigate(ScrMe, ScreenTransition.None)
+            PaddingBottom: |-
+              =14
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PressedColor: |-
+              =If(nfWide, RGBA(255,255,255,1), RGBA(74,79,84,1))
+            PressedFill: |-
+              =If(nfWide, RGBA(255,255,255,0.24), RGBA(242,243,244,1))
+            RadiusBottomLeft: |-
+              =0
+            RadiusBottomRight: |-
+              =0
+            RadiusTopLeft: |-
+              =0
+            RadiusTopRight: |-
+              =0
+            Size: |-
+              =18
+            TabIndex: |-
+              =0
+            Text: |-
+              ="My area"
+            VerticalAlign: |-
+              =VerticalAlign.Bottom
+            Width: |-
+              =If(nfWide, 216, Parent.Width / 5)
+            X: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, Parent.Width - nfPad - 216, 4 * Parent.Width / 5), Parent.Width - Self.Width)), If(nfWide, Parent.Width - nfPad - 216, 4 * Parent.Width / 5))
+            Y: |-
+              =If(nfDesign, Max(0, Min(If(nfWide, 0, Parent.Height - 120), Parent.Height - Self.Height)), If(nfWide, 0, Parent.Height - 120))
+      - QsSearchIc:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              =""
+            Color: |-
+              =RGBA(11,85,163,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Height: |-
+              =44
+            Icon: |-
+              =Icon.Search
+            TabIndex: |-
+              =-1
+            Width: |-
+              =44
+            X: |-
+              =If(nfDesign, Max(0, Min(QsSearch.X + 24, Parent.Width - Self.Width)), QsSearch.X + 24)
+            Y: |-
+              =If(nfDesign, Max(0, Min(QsSearch.Y + 26, Parent.Height - Self.Height)), QsSearch.Y + 26)
+      - QsSearch:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            AccessibleLabel: |-
+              ="Search questions and answers"
+            BorderColor: |-
+              =RGBA(27,27,27,1)
+            BorderThickness: |-
+              =4
+            Clear: |-
+              =true
+            Color: |-
+              =RGBA(27,27,27,1)
+            Default: |-
+              =""
+            DelayOutput: |-
+              =true
+            Fill: |-
+              =RGBA(0,0,0,0)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            Height: |-
+              =96
+            HintText: |-
+              ="Search questions and answers"
+            HoverBorderColor: |-
+              =RGBA(11,85,163,1)
+            HoverFill: |-
+              =RGBA(0,0,0,0)
+            PaddingLeft: |-
+              =88
+            RadiusBottomLeft: |-
+              =16
+            RadiusBottomRight: |-
+              =16
+            RadiusTopLeft: |-
+              =16
+            RadiusTopRight: |-
+              =16
+            Size: |-
+              =26
+            TabIndex: |-
+              =0
+            Width: |-
+              =Min(nfCW, 1520)
+            X: |-
+              =If(nfDesign, Max(0, Min(nfCX, Parent.Width - Self.Width)), nfCX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(152, Parent.Height - Self.Height)), 152)
+      - QsTopicBtn:
+          Control: Classic/Button@2.2.0
+          Properties:
+            Align: |-
+              =Align.Left
+            BorderColor: |-
+              =RGBA(11,85,163,1)
+            BorderThickness: |-
+              =4
+            Color: |-
+              =RGBA(11,85,163,1)
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =88
+            HoverColor: |-
+              =RGBA(11,85,163,1)
+            HoverFill: |-
+              =RGBA(242,243,244,1)
+            OnSelect: |-
+              =Set(gPick, "QsTopic")
+            PaddingLeft: |-
+              =32
+            PressedColor: |-
+              =RGBA(11,85,163,1)
+            PressedFill: |-
+              =RGBA(242,243,244,1)
+            RadiusBottomLeft: |-
+              =16
+            RadiusBottomRight: |-
+              =16
+            RadiusTopLeft: |-
+              =16
+            RadiusTopRight: |-
+              =16
+            Size: |-
+              =22
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Topic: " & gTopic & "  ▾"
+            Width: |-
+              =Min(nfCW, 760)
+            X: |-
+              =If(nfDesign, Max(0, Min(nfCX, Parent.Width - Self.Width)), nfCX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(264, Parent.Height - Self.Height)), 264)
+      - QsCount:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(74,79,84,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            LineHeight: |-
+              =1.35
+            Live: |-
+              =Live.Polite
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =22
+            TabIndex: |-
+              =-1
+            Text: |-
+              =CountRows(Filter(nfQA, (gTopic = "All" || topic = gTopic) && (IsBlank(QsSearch.Text) || QsSearch.Text in q || QsSearch.Text in t))) & " of " & CountRows(nfQA) & " answers"
+            Width: |-
+              =nfCW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfCX, Parent.Width - Self.Width)), nfCX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(364, Parent.Height - Self.Height)), 364)
+      - QsList:
+          Control: Gallery@2.15.0
+          Variant: Vertical
+          Properties:
+            AccessibleLabel: |-
+              ="QsList"
+            Height: |-
+              =(Parent.Height - nfNavH) - (416)
+            Items: |-
+              =Filter(nfQA, (gTopic = "All" || topic = gTopic) && (IsBlank(QsSearch.Text) || QsSearch.Text in q || QsSearch.Text in t))
+            OnSelect: |-
+              =Set(gReadKind, "Answer"); Set(gReadTitle, ThisItem.q); Set(gReadHtml, ThisItem.x); Set(gReadK, "qa"); Set(gReadRef, ThisItem.id); Navigate(ScrRead, ScreenTransition.Fade)
+            ShowScrollbar: |-
+              =true
+            TabIndex: |-
+              =-1
+            TemplatePadding: |-
+              =0
+            TemplateSize: |-
+              =240
+            Width: |-
+              =nfCW + 20
+            WrapCount: |-
+              =nfCols2
+            X: |-
+              =If(nfDesign, Max(0, Min(nfCX - 10, Parent.Width - Self.Width)), nfCX - 10)
+            Y: |-
+              =If(nfDesign, Max(0, Min(416, Parent.Height - Self.Height)), 416)
+          Children:
+            - QsListPl:
+                Control: HtmlViewer@2.1.0
+                Properties:
+                  Font: |-
+                    =Font.'Open Sans'
+                  Height: |-
+                    =220
+                  HtmlText: |-
+                    ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:28px;background:linear-gradient(135deg,rgba(255,255,255,0.94),rgba(255,255,255,0.78));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
+                  PaddingBottom: |-
+                    =0
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =0
+                  Size: |-
+                    =2
+                  Width: |-
+                    =Parent.TemplateWidth - 20
+                  X: |-
+                    =10
+                  Y: |-
+                    =10
+            - QsListAcc:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderThickness: |-
+                    =0
+                  Fill: |-
+                    =ThisItem.col
+                  Height: |-
+                    =Parent.TemplateHeight - 76
+                  TabIndex: |-
+                    =-1
+                  Width: |-
+                    =8
+                  X: |-
+                    =10
+                  Y: |-
+                    =38
+            - QsListIc:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  AccessibleLabel: |-
+                    =""
+                  Color: |-
+                    =ThisItem.col
+                  Fill: |-
+                    =ThisItem.tint
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Height: |-
+                    =84
+                  Icon: |-
+                    =Icon.QuestionMark
+                  PaddingBottom: |-
+                    =20
+                  PaddingLeft: |-
+                    =20
+                  PaddingRight: |-
+                    =20
+                  PaddingTop: |-
+                    =20
+                  TabIndex: |-
+                    =-1
+                  Width: |-
+                    =84
+                  X: |-
+                    =40
+                  Y: |-
+                    =78
+            - QsListFlag:
+                Control: Label@2.5.1
+                Properties:
+                  Align: |-
+                    =Align.Center
+                  AutoHeight: |-
+                    =false
+                  Color: |-
+                    =RGBA(27,27,27,1)
+                  Fill: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Bold
+                  Height: |-
+                    =40
+                  LineHeight: |-
+                    =1.35
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Size: |-
+                    =16
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    =Upper(ThisItem.flag)
+                  VerticalAlign: |-
+                    =VerticalAlign.Middle
+                  Visible: |-
+                    =!IsBlank(ThisItem.flag)
+                  Width: |-
+                    =144
+                  X: |-
+                    =Parent.TemplateWidth - 232
+                  Y: |-
+                    =168
+            - QsListT:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: |-
+                    =false
+                  Color: |-
+                    =RGBA(27,27,27,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  Height: |-
+                    =148
+                  LineHeight: |-
+                    =1.2
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Size: |-
+                    =26
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    =ThisItem.q
+                  VerticalAlign: |-
+                    =VerticalAlign.Top
+                  Width: |-
+                    =Parent.TemplateWidth - 236
+                  Wrap: |-
+                    =true
+                  X: |-
+                    =148
+                  Y: |-
+                    =20
+            - QsListS:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: |-
+                    =false
+                  Color: |-
+                    =RGBA(74,79,84,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  Height: |-
+                    =48
+                  LineHeight: |-
+                    =1.35
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Size: |-
+                    =22
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    =ThisItem.prov & " · " & ThisItem.topic
+                  Width: |-
+                    =Parent.TemplateWidth - 236 - If(IsBlank(ThisItem.flag), 0, 160)
+                  Wrap: |-
+                    =false
+                  X: |-
+                    =148
+                  Y: |-
+                    =168
+            - QsListChev:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  AccessibleLabel: |-
+                    =""
+                  Color: |-
+                    =RGBA(74,79,84,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Height: |-
+                    =40
+                  Icon: |-
+                    =Icon.ChevronRight
+                  TabIndex: |-
+                    =-1
+                  Width: |-
+                    =40
+                  X: |-
+                    =Parent.TemplateWidth - 72
+                  Y: |-
+                    =100
+            - QsListCard:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: |-
+                    =RGBA(138,144,149,0.55)
+                  BorderThickness: |-
+                    =2
+                  Color: |-
+                    =RGBA(0,0,0,0)
+                  Fill: |-
+                    =RGBA(0,0,0,0)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =8
+                  Font: |-
+                    =Font.'Open Sans'
+                  Height: |-
+                    =Parent.TemplateHeight - 20
+                  HoverBorderColor: |-
+                    =ThisItem.col
+                  HoverColor: |-
+                    =RGBA(0,0,0,0)
+                  HoverFill: |-
+                    =RGBA(11,85,163,0.06)
+                  OnSelect: |-
+                    =Select(Parent)
+                  PressedColor: |-
+                    =RGBA(0,0,0,0)
+                  PressedFill: |-
+                    =RGBA(11,85,163,0.14)
+                  RadiusBottomLeft: |-
+                    =28
+                  RadiusBottomRight: |-
+                    =28
+                  RadiusTopLeft: |-
+                    =28
+                  RadiusTopRight: |-
+                    =28
+                  Size: |-
+                    =16
+                  TabIndex: |-
+                    =0
+                  Text: |-
+                    =ThisItem.q & ". " & ThisItem.prov & " · " & ThisItem.topic & If(IsBlank(ThisItem.flag), "", ". " & ThisItem.flag & " in this version")
+                  Width: |-
+                    =Parent.TemplateWidth - 20
+                  X: |-
+                    =10
+                  Y: |-
+                    =10
+      - QsNoneIc:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            AccessibleLabel: |-
+              =""
+            Color: |-
+              =RGBA(138,144,149,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Height: |-
+              =80
+            Icon: |-
+              =Icon.Search
+            TabIndex: |-
+              =-1
+            Visible: |-
+              =CountRows(QsList.AllItems) = 0 && true
+            Width: |-
+              =80
+            X: |-
+              =If(nfDesign, Max(0, Min((Parent.Width - 80) / 2, Parent.Width - Self.Width)), (Parent.Width - 80) / 2)
+            Y: |-
+              =If(nfDesign, Max(0, Min(QsList.Y + 56, Parent.Height - Self.Height)), QsList.Y + 56)
+      - QsNone:
+          Control: Label@2.5.1
+          Properties:
+            Align: |-
+              =Align.Center
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(74,79,84,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            LineHeight: |-
+              =1.35
+            Live: |-
+              =Live.Polite
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =26
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="No answers match. Try a different word, or choose All."
+            Visible: |-
+              =CountRows(QsList.AllItems) = 0 && true
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(QsList.Y + 152, Parent.Height - Self.Height)), QsList.Y + 152)
+      - QsTopicShade:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =RGBA(0,0,0,0)
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(0,0,0,0.55)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =Parent.Height
+            HoverColor: |-
+              =RGBA(0,0,0,0)
+            HoverFill: |-
+              =RGBA(0,0,0,0.55)
+            OnSelect: |-
+              =Set(gPick, Blank())
+            PressedColor: |-
+              =RGBA(0,0,0,0)
+            PressedFill: |-
+              =RGBA(0,0,0,0.55)
+            RadiusBottomLeft: |-
+              =0
+            RadiusBottomRight: |-
+              =0
+            RadiusTopLeft: |-
+              =0
+            RadiusTopRight: |-
+              =0
+            Size: |-
+              =26
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Close the list"
+            Visible: |-
+              =gPick = "QsTopic"
+            Width: |-
+              =Parent.Width
+            X: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
+            Y: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Height - Self.Height)), 0)
+      - QsTopicSheet:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: |-
+              =Font.'Open Sans'
+            Height: |-
+              =Min(Parent.Height - 208, 144 + CountRows(nfTopics) * 104)
+            HtmlText: |-
+              ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:40px;background:linear-gradient(135deg,rgba(255,255,255,0.99),rgba(255,255,255,0.97));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
+            PaddingBottom: |-
+              =0
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =0
+            Size: |-
+              =2
+            Visible: |-
+              =gPick = "QsTopic"
+            Width: |-
+              =Min(Parent.Width - 64, 840)
+            X: |-
+              =If(nfDesign, Max(0, Min((Parent.Width - Min(Parent.Width - 64, 840)) / 2, Parent.Width - Self.Width)), (Parent.Width - Min(Parent.Width - 64, 840)) / 2)
+            Y: |-
+              =If(nfDesign, Max(0, Min(168, Parent.Height - Self.Height)), 168)
+      - QsTopicSheetH:
+          Control: Label@2.5.1
+          Properties:
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(27,27,27,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Role: |-
+              =TextRole.Heading2
+            Size: |-
+              =30
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Topic"
+            Visible: |-
+              =gPick = "QsTopic"
+            Width: |-
+              =Min(Parent.Width - 64, 840) - 80
+            X: |-
+              =If(nfDesign, Max(0, Min((Parent.Width - Min(Parent.Width - 64, 840)) / 2 + 40, Parent.Width - Self.Width)), (Parent.Width - Min(Parent.Width - 64, 840)) / 2 + 40)
+            Y: |-
+              =If(nfDesign, Max(0, Min(200, Parent.Height - Self.Height)), 200)
+      - QsTopicOpts:
+          Control: Gallery@2.15.0
+          Variant: Vertical
+          Properties:
+            AccessibleLabel: |-
+              ="Topic"
+            Height: |-
+              =Min(Parent.Height - 344, CountRows(nfTopics) * 104)
+            Items: |-
+              =nfTopics
+            OnSelect: |-
+              =Set(gTopic, ThisItem.topic); Set(gPick, Blank())
+            ShowScrollbar: |-
+              =true
+            TabIndex: |-
+              =-1
+            TemplatePadding: |-
+              =0
+            TemplateSize: |-
+              =104
+            Visible: |-
+              =gPick = "QsTopic"
+            Width: |-
+              =Min(Parent.Width - 64, 840) - 48
+            X: |-
+              =If(nfDesign, Max(0, Min((Parent.Width - Min(Parent.Width - 64, 840)) / 2 + 24, Parent.Width - Self.Width)), (Parent.Width - Min(Parent.Width - 64, 840)) / 2 + 24)
+            Y: |-
+              =If(nfDesign, Max(0, Min(280, Parent.Height - Self.Height)), 280)
+          Children:
+            - QsTopicOpt:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  Align: |-
+                    =Align.Left
+                  BorderColor: |-
+                    =RGBA(138,144,149,1)
+                  BorderThickness: |-
+                    =2
+                  Color: |-
+                    =If(gTopic = ThisItem.topic, RGBA(255,255,255,1), RGBA(27,27,27,1))
+                  DisabledBorderColor: |-
+                    =RGBA(138,144,149,1)
+                  DisabledColor: |-
+                    =RGBA(74,79,84,1)
+                  DisabledFill: |-
+                    =RGBA(242,243,244,1)
+                  Fill: |-
+                    =If(gTopic = ThisItem.topic, RGBA(11,85,163,1), RGBA(255,255,255,1))
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =8
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Normal
+                  Height: |-
+                    =92
+                  HoverColor: |-
+                    =If(gTopic = ThisItem.topic, RGBA(255,255,255,1), RGBA(27,27,27,1))
+                  HoverFill: |-
+                    =If(gTopic = ThisItem.topic, RGBA(11,85,163,1), RGBA(242,243,244,1))
+                  OnSelect: |-
+                    =Select(Parent)
+                  PaddingLeft: |-
+                    =32
+                  PressedColor: |-
+                    =RGBA(255,255,255,1)
+                  PressedFill: |-
+                    =RGBA(8,62,120,1)
+                  RadiusBottomLeft: |-
+                    =16
+                  RadiusBottomRight: |-
+                    =16
+                  RadiusTopLeft: |-
+                    =16
+                  RadiusTopRight: |-
+                    =16
+                  Size: |-
+                    =26
+                  TabIndex: |-
+                    =0
+                  Text: |-
+                    =If(gTopic = ThisItem.topic, "✓  ", "") & ThisItem.topic
+                  Width: |-
+                    =Parent.TemplateWidth - 20
+                  X: |-
+                    =0
+                  Y: |-
+                    =6

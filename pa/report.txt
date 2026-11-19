@@ -1,0 +1,20 @@
+page policy: 11 sections, 12859 chars
+page return: 7 sections, 26017 chars
+page track: 5 sections, 3357 chars
+page people: 10 sections, 34557 chars
+page capabilities: 8 sections, 13678 chars
+page embed: 7 sections, 8544 chars
+page resources: 3 sections, 5286 chars
+page guide: 10 sections, 7985 chars
+page ask: 3 sections, 1833 chars
+page team: 7 sections, 31630 chars
+page about: 12 sections, 8906 chars
+page accessibility: 6 sections, 2714 chars
+questions: 55
+examples: 71 (35 agreed)
+glossary: 32
+release flags: 110 items new or updated since 1.1.0
+search index: 247
+formulas: 462700 chars
+screens: 01-ScrHome 91635, 02-ScrPage 49009, 03-ScrRead 26296, 04-ScrQuestions 46807, 05-ScrExamples 48231, 06-ScrGlossary 35641, 07-ScrSearch 37697, 08-ScrTest 62459, 00-ScrSplash 11878, 09-ScrMe 78532, 10-ScrMatch 72671, 11-ScrLearn 47189, 12-ScrSupport 61894, 13-ScrNew 38427
+ALL CHECKS PASS

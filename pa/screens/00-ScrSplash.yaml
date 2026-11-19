@@ -1,0 +1,342 @@
+Screens:
+  ScrSplash:
+    Properties:
+      Fill: |-
+        =RGBA(8,62,120,1)
+      Height: |-
+        =App.Height
+      LoadingSpinnerColor: |-
+        =RGBA(255,255,255,1)
+      OnVisible: |-
+        =If(IsBlank(gLoaded), Set(gLoaded, true); IfError(LoadData(colSaved, "dpeSaved", true), Blank()); IfError(LoadData(colDone, "dpeDone", true), Blank()); IfError(LoadData(colTested, "dpeTested", true), Blank()); IfError(LoadData(colPrefs, "dpePrefs", true), Blank()); IfError(LoadData(colTut, "dpeTut", true), Blank()); Set(gRole, First(colPrefs).role)); Set(gTour, 0); Set(gGo, Lower(Coalesce(Param("go"), "")))
+      Width: |-
+        =App.Width
+    Children:
+      - SpArt:
+          Control: Image@2.2.3
+          Properties:
+            AccessibleLabel: |-
+              =""
+            Height: |-
+              =Parent.Height
+            Image: |-
+              =nfSplashArt
+            ImagePosition: |-
+              =ImagePosition.Fill
+            TabIndex: |-
+              =-1
+            Width: |-
+              =Parent.Width
+            X: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
+            Y: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Height - Self.Height)), 0)
+      - SpDisc:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: |-
+              =Font.'Open Sans'
+            Height: |-
+              =240
+            HtmlText: |-
+              ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:120px;background:linear-gradient(135deg,rgba(255,255,255,0.3),rgba(255,255,255,0.12));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
+            PaddingBottom: |-
+              =0
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =0
+            Size: |-
+              =2
+            Width: |-
+              =240
+            X: |-
+              =If(nfDesign, Max(0, Min(Parent.Width / 2 - 120, Parent.Width - Self.Width)), Parent.Width / 2 - 120)
+            Y: |-
+              =If(nfDesign, Max(0, Min(SpLogo.Y - 24, Parent.Height - Self.Height)), SpLogo.Y - 24)
+      - SpLogo:
+          Control: Image@2.2.3
+          Properties:
+            AccessibleLabel: |-
+              ="DAM Policy Explorer logo: a data store with a compass"
+            Height: |-
+              =192
+            Image: |-
+              =nfLogo
+            ImagePosition: |-
+              =ImagePosition.Fit
+            TabIndex: |-
+              =-1
+            Width: |-
+              =192
+            X: |-
+              =If(nfDesign, Max(0, Min(Parent.Width / 2 - 96, Parent.Width - Self.Width)), Parent.Width / 2 - 96)
+            Y: |-
+              =If(nfDesign, Max(0, Min(Max(If(nfShort, 28, 48), (Parent.Height - 880) * 0.5), Parent.Height - Self.Height)), Max(If(nfShort, 28, 48), (Parent.Height - 880) * 0.5))
+      - SpTitle:
+          Control: Label@2.5.1
+          Properties:
+            Align: |-
+              =Align.Center
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Bold
+            LineHeight: |-
+              =1.2
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Role: |-
+              =TextRole.Heading1
+            Size: |-
+              =If(nfWide, 60, 48)
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="DAM Policy Explorer"
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(SpLogo.Y + 244, Parent.Height - Self.Height)), SpLogo.Y + 244)
+      - SpStrap:
+          Control: Label@2.5.1
+          Properties:
+            Align: |-
+              =Align.Center
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =30
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Everything you need for the Data Asset Management Policy, in one place."
+            Visible: |-
+              =!nfShort
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(SpTitle.Y + SpTitle.Height + 16, Parent.Height - Self.Height)), SpTitle.Y + SpTitle.Height + 16)
+      - SpHello:
+          Control: Label@2.5.1
+          Properties:
+            Align: |-
+              =Align.Center
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =36
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Hello, " & nfFirst & "."
+            Visible: |-
+              =!nfShort
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(SpStrap.Y + SpStrap.Height + 32, Parent.Height - Self.Height)), SpStrap.Y + SpStrap.Height + 32)
+      - SpStats:
+          Control: Label@2.5.1
+          Properties:
+            Align: |-
+              =Align.Center
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =22
+            TabIndex: |-
+              =-1
+            Text: |-
+              =nfStats
+            Visible: |-
+              =!nfShort
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(SpHello.Y + SpHello.Height + 12, Parent.Height - Self.Height)), SpHello.Y + SpHello.Height + 12)
+      - SpGo:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderThickness: |-
+              =0
+            Color: |-
+              =RGBA(8,62,120,1)
+            DisabledBorderColor: |-
+              =RGBA(138,144,149,1)
+            DisabledColor: |-
+              =RGBA(74,79,84,1)
+            DisabledFill: |-
+              =RGBA(242,243,244,1)
+            Fill: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =8
+            Font: |-
+              =Font.'Open Sans'
+            FontWeight: |-
+              =FontWeight.Semibold
+            Height: |-
+              =96
+            HoverColor: |-
+              =RGBA(8,62,120,1)
+            HoverFill: |-
+              =RGBA(242,243,244,1)
+            OnSelect: |-
+              =Switch(gGo, "test", Navigate(ScrTest, ScreenTransition.Fade), "match", Navigate(ScrMatch, ScreenTransition.Fade), "questions", Navigate(ScrQuestions, ScreenTransition.Fade), "examples", Navigate(ScrExamples, ScreenTransition.Fade), "me", Navigate(ScrMe, ScreenTransition.Fade), "learn", Navigate(ScrLearn, ScreenTransition.Fade), "support", Navigate(ScrSupport, ScreenTransition.Fade), "search", Navigate(ScrSearch, ScreenTransition.Fade), "glossary", Navigate(ScrGlossary, ScreenTransition.Fade), Navigate(ScrHome, ScreenTransition.Fade))
+            PressedColor: |-
+              =RGBA(8,62,120,1)
+            PressedFill: |-
+              =RGBA(242,243,244,1)
+            RadiusBottomLeft: |-
+              =16
+            RadiusBottomRight: |-
+              =16
+            RadiusTopLeft: |-
+              =16
+            RadiusTopRight: |-
+              =16
+            Size: |-
+              =26
+            TabIndex: |-
+              =0
+            Text: |-
+              ="Open the explorer"
+            Width: |-
+              =520
+            X: |-
+              =If(nfDesign, Max(0, Min(Parent.Width / 2 - 260, Parent.Width - Self.Width)), Parent.Width / 2 - 260)
+            Y: |-
+              =If(nfDesign, Max(0, Min(Min(SpStats.Y + SpStats.Height + 40, Parent.Height - 248), Parent.Height - Self.Height)), Min(SpStats.Y + SpStats.Height + 40, Parent.Height - 248))
+      - SpProto:
+          Control: Label@2.5.1
+          Properties:
+            Align: |-
+              =Align.Center
+            AutoHeight: |-
+              =true
+            Color: |-
+              =RGBA(255,255,255,1)
+            FocusedBorderColor: |-
+              =RGBA(255,221,0,1)
+            FocusedBorderThickness: |-
+              =4
+            Font: |-
+              =Font.'Open Sans'
+            LineHeight: |-
+              =1.35
+            PaddingBottom: |-
+              =4
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =4
+            Size: |-
+              =22
+            TabIndex: |-
+              =-1
+            Text: |-
+              ="Prototype. GOV.UK is right if anything differs. Version " & nfVersion & "."
+            Width: |-
+              =nfRW
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+            Y: |-
+              =If(nfDesign, Max(0, Min(SpGo.Y + SpGo.Height + 24, Parent.Height - Self.Height)), SpGo.Y + SpGo.Height + 24)
+      - SpTimer:
+          Control: Timer@2.1.0
+          Properties:
+            AutoStart: |-
+              =true
+            Duration: |-
+              =4000
+            OnTimerEnd: |-
+              =Switch(gGo, "test", Navigate(ScrTest, ScreenTransition.Fade), "match", Navigate(ScrMatch, ScreenTransition.Fade), "questions", Navigate(ScrQuestions, ScreenTransition.Fade), "examples", Navigate(ScrExamples, ScreenTransition.Fade), "me", Navigate(ScrMe, ScreenTransition.Fade), "learn", Navigate(ScrLearn, ScreenTransition.Fade), "support", Navigate(ScrSupport, ScreenTransition.Fade), "search", Navigate(ScrSearch, ScreenTransition.Fade), "glossary", Navigate(ScrGlossary, ScreenTransition.Fade), Navigate(ScrHome, ScreenTransition.Fade))
+            Repeat: |-
+              =false
+            Visible: |-
+              =false
