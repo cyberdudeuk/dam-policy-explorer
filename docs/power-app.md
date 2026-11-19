@@ -6,7 +6,7 @@ Status on 19 November 2026: **published** at 14:17 (Power Apps reported "Publish
 
 ## What is in it
 
-Fourteen screens: splash, Home, page, reader, questions, worked examples, glossary, search, asset test, My area, Matchmaker, tutorials, support and contact, What is new.
+Fourteen screens: splash (it stays until "Open the explorer" is pressed), Home, page, reader, questions, worked examples, glossary, search, asset test, My area, Matchmaker, tutorials, support and contact, What is new.
 
 - **Six numbered sections on Home**, in the order a coordinator meets them: understand, decide what is in scope, make your return, find an answer, get help, your area.
 - **Matchmaker** builds a search of the National Data Library at data.gov.uk from a description and optional publisher, topic and format. It opens data.gov.uk in the browser; only the `q` search parameter is confirmed, so the options are added as search words.

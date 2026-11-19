@@ -742,7 +742,7 @@ Screens:
             TabIndex: |-
               =-1
             Text: |-
-              =If(Len(Trim(SrSearch.Text)) < 2, "Type two or more letters to search 247 pages, answers, examples and words.", CountRows(If(Len(Trim(SrSearch.Text)) < 2, Blank(), Filter(nfIndex, SrSearch.Text in title || SrSearch.Text in t))) & " results")
+              =If(Len(Trim(SrSearch.Text)) < 2, "Type two or more letters to search 253 pages, answers, examples and words.", CountRows(If(Len(Trim(SrSearch.Text)) < 2, Blank(), Filter(nfIndex, SrSearch.Text in title || SrSearch.Text in t))) & " results")
             Width: |-
               =nfCW
             X: |-

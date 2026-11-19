@@ -327,16 +327,3 @@ Screens:
               =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
             Y: |-
               =If(nfDesign, Max(0, Min(SpGo.Y + SpGo.Height + 24, Parent.Height - Self.Height)), SpGo.Y + SpGo.Height + 24)
-      - SpTimer:
-          Control: Timer@2.1.0
-          Properties:
-            AutoStart: |-
-              =true
-            Duration: |-
-              =4000
-            OnTimerEnd: |-
-              =Switch(gGo, "test", Navigate(ScrTest, ScreenTransition.Fade), "match", Navigate(ScrMatch, ScreenTransition.Fade), "questions", Navigate(ScrQuestions, ScreenTransition.Fade), "examples", Navigate(ScrExamples, ScreenTransition.Fade), "me", Navigate(ScrMe, ScreenTransition.Fade), "learn", Navigate(ScrLearn, ScreenTransition.Fade), "support", Navigate(ScrSupport, ScreenTransition.Fade), "search", Navigate(ScrSearch, ScreenTransition.Fade), "glossary", Navigate(ScrGlossary, ScreenTransition.Fade), Navigate(ScrHome, ScreenTransition.Fade))
-            Repeat: |-
-              =false
-            Visible: |-
-              =false

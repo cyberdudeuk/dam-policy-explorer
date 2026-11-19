@@ -193,9 +193,18 @@ class Raw(str):
     """A Power Fx expression written into a table as-is (an icon or a colour), not as a string."""
 
 
+STAMPS = [r"\b[Vv]ersion \d+\.\d+\.\d+\b", r"\b(prepared on|built|checked|last updated|updated on) \d{1,2} [A-Z][a-z]+ \d{4}"]
+
+
+def stamp_free(t):
+    """D-PA29: the version number and build date change every release. Left in, they flag a page UPDATED when nothing a reader needs has changed."""
+    for pat in STAMPS: t = re.sub(pat, "", t)
+    return re.sub(r"\s+", " ", t).strip()
+
+
 def manifest(sections, qas, exs, glo):
     """One hash per item a reader can open. Comparing two manifests says what is new and what has changed."""
-    h = lambda t: hashlib.sha1(re.sub(r"\s+", " ", text_of(t) if "<" in t else t).strip().encode()).hexdigest()[:12]
+    h = lambda t: hashlib.sha1(stamp_free(text_of(t) if "<" in t else t).encode()).hexdigest()[:12]
     m = {f"sec:{s[0]}:{s[2]}": h(s[3]) for s in sections}
     m.update({f"qa:{q[0]}": h(q[3] + " " + q[4]) for q in qas})
     m.update({f"ex:{e[0]}": h(e[1] + " " + e[6]) for e in exs})
@@ -1054,7 +1063,7 @@ def screens():
         button("TsAgain", '"Test another asset"', "Reset(TsName); Clear(colAns); Clear(colPurp); Set(gStep, 0)", X="nfRX", Y=foot_y, Width=b2, Visible=isres),
         secondary("TsToReturn", '"Go to Your return"', f'Set(gPid, "return"); Set(gSec, 1); Navigate(ScrPage, {FADE})', X="TsAgain.X + TsAgain.Width + 12", Y=foot_y, Width=b2, Visible=isres),
     ])
-    # --- Splash: who you are signed in as, what the app is, one clear way in. Moves on by itself after 4 seconds. ---
+    # --- Splash: who you are signed in as, what the app is, one clear way in. It stays until the button is pressed (D-PA28). ---
     load = "; ".join(f'IfError(LoadData({c}, "dpe{c[3:]}", true), Blank())' for c in SAVE)
     cxm = "Parent.Width / 2"
     go_nav = "Switch(gGo, " + ", ".join(f'"{k}", Navigate({v}, {FADE})' for k, v in GO.items()) + f", Navigate(ScrHome, {FADE}))"
@@ -1068,8 +1077,7 @@ def screens():
         label("SpStats", "nfStats", X="nfRX", Width="nfRW", Y="SpHello.Y + SpHello.Height + 6", Align="Align.Center", Color=WHITE, Size=S_SMALL, Visible="Parent.Height >= 1300"),
         button("SpGo", '"Open the explorer"', go_nav, X=f"{cxm} - 130", Width=260, Y="Min(If(SpStats.Visible, SpStats.Y + SpStats.Height, If(SpHello.Visible, SpHello.Y + SpHello.Height, SpTitle.Y + SpTitle.Height)) + 20, Parent.Height - 124)", Fill=WHITE, Color=BRAND_D, HoverFill=SOFT, HoverColor=BRAND_D, PressedFill=SOFT, PressedColor=BRAND_D),
         label("SpProto", '"Prototype. GOV.UK is right if anything differs. Version " & nfVersion & "."', X="nfRX", Width="nfRW", Y="SpGo.Y + SpGo.Height + 12", Align="Align.Center", Color=WHITE, Size=S_SMALL),
-        ("SpTimer", TIMER, {"Duration": 4000, "AutoStart": "true", "Repeat": "false", "Visible": "false", "OnTimerEnd": go_nav}),
-    ])
+    ])   # D-PA28: no timer; the splash stays until "Open the explorer" is pressed
     # --- My area: progress, saved items, tested assets, settings. Identity comes from the organisation's sign-in; data stays on the device. ---
     tab = lambda t: f'gMeTab = "{t}"'
     done = "ThisItem.n in colDone.n"
@@ -1251,6 +1259,8 @@ def main():
     for n, bottom, sy, th_ in CARD_GEOM:
         if sy < bottom or th_ < TITLE_2L: bad.append(f"card {n}: second line at {sy} overlaps a title ending {bottom}, or the title box {th_} is under two lines (D-PA12)")
     for u in sorted(set(UNGUARDED)): bad.append(f"top-level position not kept inside the design screen, Studio will replace it with a constant on paste (D-PA14): {u}")
+    if stamp_free("This statement was prepared on 18 November 2026. Version 1.2.0, built 18 November 2026.") != stamp_free("This statement was prepared on 19 November 2026. Version 1.3.0, built 19 November 2026."):
+        bad.append("a new version number or build date alone flags a page UPDATED (D-PA29)")
     for u in sorted(set(UNSCALED)): bad.append(f"length next to * or / is not scaled, write pt(n): {u}")
     import yaml
     def walk(name, node, k):
@@ -1293,6 +1303,8 @@ def main():
             for cn, cv in top:
                 if covers and cn.endswith("Scroll") and cv.get("Properties", {}).get("Visible", "").strip() != "=!" + covers[0]:
                     bad.append(f"{k}/{cn}: the page stays in the tab order behind the contents list (D-PA26)")
+        if ctl.startswith("Timer") and pr.get("AutoStart", "").strip() == "=true" and "Navigate(" in pr.get("OnTimerEnd", ""):
+            bad.append(f"{k}/{name}: a screen that moves on by itself gives no time to read it (D-PA28, WCAG 2.2.1)")
         if name == "TsOpts" and "Len(label)" not in pr.get("TemplateSize", ""):
             bad.append(f"{k}/{name}: answer rows have a fixed height, so a three-line answer touches the edge of its row on a phone (D-PA22)")
         if node.get("Variant") == "Horizontal" and "CountRows" not in pr.get("TemplateSize", ""):
