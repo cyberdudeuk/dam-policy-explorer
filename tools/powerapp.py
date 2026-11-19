@@ -1211,8 +1211,12 @@ def screens():
 
 def main():
     pages, sections, qas, exs, glo, rep = build_tables()
-    if "--write-baseline" in sys.argv:   # run once a release is published (or against an older checkout with DPE_ROOT) to record what it contained
+    if "--write-baseline" in sys.argv:   # run against a checkout of the release being replaced (DPE_ROOT), when work on the next version starts
         out = pathlib.Path(sys.argv[sys.argv.index("--write-baseline") + 1])
+        if pathlib.Path(ROOT).resolve() == pathlib.Path(HERE).resolve():
+            # D-PA27: a release recorded as its own baseline has nothing new in it, so every New and Updated flag disappears
+            sys.exit("FAIL: a baseline is written from the release being replaced, not from this one (D-PA27). "
+                     "Check the published release out in another folder and run with DPE_ROOT set to it.")
         out.write_text(json.dumps({"version": C.VERSION, "items": manifest(sections, qas, exs, glo)}, indent=0, sort_keys=True))
         print(f"baseline for {C.VERSION}: {out}"); return
     f, nidx = formulas(pages, sections, qas, exs, glo)

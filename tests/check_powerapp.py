@@ -76,6 +76,14 @@ mutated("answer rows too short for a long answer (D-PA22)", '"TemplateSize": f"p
 mutated("long page squeezed into the window at the design size (D-PA23)", '"Parent.TemplateHeight" if guard else "Parent.Height"', '"Parent.Height"', "D-PA23")
 mutated("count does not match the source", 'f += table("nfSupTabs"', 'QA.pop(); f += table("nfSupTabs"', "")
 
+# D-PA27: the release being built must not be recordable as its own baseline
+with tempfile.TemporaryDirectory() as d:
+    r = subprocess.run([sys.executable, "-I", str(GEN), "--write-baseline", str(pathlib.Path(d) / "b.json")], capture_output=True, text=True, cwd=ROOT,
+                       env={k: v for k, v in os.environ.items() if k != "DPE_ROOT"})
+    if r.returncode == 0 or "D-PA27" not in r.stdout + r.stderr or (pathlib.Path(d) / "b.json").exists():
+        fails.append("a release could be written as its own baseline (D-PA27)")
+    else: print("PASS negative: a release cannot be its own baseline (D-PA27)")
+
 if fails:
     print("\n".join("FAIL " + f for f in fails)); sys.exit(1)
 print("ALL PASS")

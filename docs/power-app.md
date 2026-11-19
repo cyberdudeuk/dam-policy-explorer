@@ -37,7 +37,7 @@ Studio can change what is pasted (see D-PA14). After pasting, select each screen
 
 ### After each release
 
-Run `python tools/powerapp.py --write-baseline pa/baseline.json` **after** publishing, so the next release is compared with this one.
+The baseline (`pa/baseline.json`) is what the release before this one contained; the New and Updated flags are the difference. Leave it alone while this version is live. When work on the next version starts, check the published release out in another folder and run `DPE_ROOT=<that folder> python tools/powerapp.py --write-baseline pa/baseline.json`. The generator refuses to record a release as its own baseline, which would remove every flag (D-PA27).
 
 ## Known limits (19 November 2026)
 
