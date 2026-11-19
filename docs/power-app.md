@@ -2,7 +2,7 @@
 
 The Power Apps version carries the same content as the web explorer, version for version. It is generated, not hand-built: `tools/powerapp.py` reads the built site (`out/`), `tools/content.py` and `tools/examples.py` and writes `pa/`.
 
-Status on 19 November 2026: the app's **draft** in Power Apps Studio holds this build (checked screen by screen, see "Checking the paste"). It is **not published**. The live version is still the earlier, unfinished tracker app until the owner publishes.
+Status on 19 November 2026: **published** at 14:17 (Power Apps reported "Publish successful"). The published version was then opened in the player and is this build: Home, the page reader and the contents list were used there with the keyboard. Still to do by the owner, because both need a file picked from a computer: the app icon (`assets/icon-512.png`, in Settings, General) and the Teams package upload.
 
 ## What is in it
 
@@ -53,7 +53,7 @@ Run `python tools/powerapp.py --write-baseline pa/baseline.json` **after** publi
 
 Forms, My area, the asset test, the Matchmaker, tutorials, Support, the page reader and the answer screen scroll as one page at every size, including a phone held sideways, and with the keyboard (D-PA20 to D-PA24). While a sheet is open nothing behind it takes keyboard focus, and focus moves into the sheet when it opens (D-PA26).
 
-### App checker (draft, 19 November 2026, after the last change)
+### App checker (19 November 2026, the published build)
 
 Formulas: no errors. Runtime 0. Data source 0.
 
