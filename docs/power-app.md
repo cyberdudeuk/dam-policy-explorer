@@ -2,7 +2,7 @@
 
 The Power Apps version carries the same content as the web explorer, version for version. It is generated, not hand-built: `tools/powerapp.py` reads the built site (`out/`), `tools/content.py` and `tools/examples.py` and writes `pa/`.
 
-Status on 19 November 2026: **published** at 14:17 (Power Apps reported "Publish successful"). The published version was then opened in the player and is this build: Home, the page reader and the contents list were used there with the keyboard. Still to do by the owner, because both need a file picked from a computer: the app icon (`assets/icon-512.png`, in Settings, General) and the Teams package upload.
+Status on 19 November 2026: version 1.3.0 **published** at 16:14 and checked in the preview. The app icon is set. Teams: see "In Microsoft Teams".
 
 ## What is in it
 
@@ -80,10 +80,18 @@ Not observed: any screen reader, voice control or magnifier (see Known limits).
 
 Support has a Feedback tab: a box for the description, "Report a bug", "Suggest an idea or feature" and "See what has been reported". The buttons copy the description and open the matching issue form in the repository that hosts the web explorer (`.github/ISSUE_TEMPLATE/bug.yml`, `idea.yml`), with the app version filled in. Issues are public and need a free GitHub account; people without one are pointed to Contact us. Home lists it under Get help.
 
+## In Microsoft Teams
+
+Power Apps' "Add to Teams" builds a Teams package for the app itself: a personal app, and a tab people can add to a chat or a channel. In this tenant people cannot upload custom apps themselves (the install dialog has no Add button), so the package goes to the Teams administrators: Teams, Apps, Manage your apps, Upload an app, **Submit an app to your org**, then the zip from Power Apps' "Download app". Once approved it appears under "Built for your organisation" for everyone, and can be added as a tab with **+** in any chat or channel.
+
+The app must also be shared with the people who will use it (Power Apps, Share). A Teams tab does not grant access to the app.
+
+The separate package in `dist/` (`tools/package_teams.py`) wraps the web explorer, not the Power App.
+
 ## Not done by the generator (owner steps)
 
 - Publishing, each release: done for 1.2.0 on 19 November 2026.
-- Upload the app icon (`assets/icon-512.png`) in Settings, General, and upload the Teams package. Both need a file chosen on the owner's computer.
+- Submit the Power App's Teams package to the Teams administrators (see above); it needs a file chosen on the owner's computer.
 - Sharing, co-owner, and any move to a managed environment or solution.
 
 ## What an app like this should also have
