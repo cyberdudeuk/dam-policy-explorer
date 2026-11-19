@@ -58,7 +58,7 @@ Forms, My area, the asset test, the Matchmaker, tutorials, Support, the page rea
 Formulas: no errors. Runtime 0. Data source 0.
 
 - **Accessibility 600**, of two kinds only: "missing accessible label" (217) and "missing tab stop" (the rest). Every one is on a control that is deliberately not interactive: text, backdrops, accent bars, decorative icons, list containers.
-  - **Why the count cannot be zero.** A probe screen holding one brand-new label with no properties set was flagged "missing tab stop" by the checker. It flags every control whose tab index is below zero and every icon, shape or image with an empty label, whether or not it is interactive. Microsoft's own guidance says the opposite of the "fix": set the tab index to -1 for anything that is not interactive, leave the label empty for decoration, and "ignore any [suggestions] that might do more harm than good" ([accessibility checker](https://learn.microsoft.com/power-apps/maker/canvas-apps/accessibility-checker), [create accessible canvas apps](https://learn.microsoft.com/power-apps/maker/canvas-apps/accessible-apps)). Making 380 pieces of text into tab stops would make the app worse for keyboard users.
+  - **Why the count cannot be zero.** A probe screen holding one brand-new label with no properties set was flagged "missing tab stop" by the checker. It flags every control whose tab index is below zero and every icon, shape or image with an empty label, whether or not it is interactive. Microsoft's own guidance says the opposite of the "fix": set the tab index to -1 for anything that is not interactive, leave the label empty for decoration, and "ignore any [suggestions] that might do more harm than good" ([accessibility checker](https://learn.microsoft.com/power-apps/maker/canvas-apps/accessibility-checker), [create accessible canvas apps](https://learn.microsoft.com/power-apps/maker/canvas-apps/accessible-apps)). Making several hundred pieces of text into tab stops would make the app worse for keyboard users.
   - The generator enforces the real rule instead: anything with an action has a name and a tab stop (D-PA3), every button has text (D-PA1), and focus is always shown.
 - **Performance 3** warnings: "too many controls on a screen" for Home, My area and Support. Advisory.
 
@@ -82,8 +82,8 @@ Support has a Feedback tab: a box for the description, "Report a bug", "Suggest 
 
 ## Not done by the generator (owner steps)
 
-- Publish the app (replaces the live tracker app for everyone it is shared with).
-- Upload the app icon (`assets/icon-512.png`) in Settings.
+- Publishing, each release: done for 1.2.0 on 19 November 2026.
+- Upload the app icon (`assets/icon-512.png`) in Settings, General, and upload the Teams package. Both need a file chosen on the owner's computer.
 - Sharing, co-owner, and any move to a managed environment or solution.
 
 ## What an app like this should also have
