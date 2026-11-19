@@ -228,7 +228,7 @@ Screens:
                         Size: |-
                           =22
                         TabIndex: |-
-                          =0
+                          =If(gPick = "MeRole", -1, 0)
                         Text: |-
                           =If(gMeTab = ThisItem.tab, "✓ ", "") & ThisItem.tab
                         Width: |-
@@ -573,7 +573,7 @@ Screens:
                         Size: |-
                           =16
                         TabIndex: |-
-                          =0
+                          =If(gPick = "MeRole", -1, 0)
                         Text: |-
                           =ThisItem.n & ". " & ThisItem.title & ". " & If(ThisItem.n in colDone.n, "Done. Select to mark as not done.", "Not done yet. Select to mark as done.")
                         Width: |-
@@ -843,7 +843,7 @@ Screens:
                         Size: |-
                           =16
                         TabIndex: |-
-                          =0
+                          =If(gPick = "MeRole", -1, 0)
                         Text: |-
                           =ThisItem.title & ". " & Switch(ThisItem.kind, "page", "Page section", "qa", "Answer", "ex", "Example", "Glossary")
                         Width: |-
@@ -1146,7 +1146,7 @@ Screens:
                         Size: |-
                           =16
                         TabIndex: |-
-                          =0
+                          =If(gPick = "MeRole", -1, 0)
                         Text: |-
                           =ThisItem.name & ". " & ThisItem.head
                         Width: |-
@@ -1265,7 +1265,7 @@ Screens:
                   HoverFill: |-
                     =RGBA(242,243,244,1)
                   OnSelect: |-
-                    =Set(gPick, "MeRole")
+                    =Set(gPick, "MeRole"); SetFocus(MeRoleShade)
                   PaddingLeft: |-
                     =32
                   PressedColor: |-
@@ -1283,7 +1283,7 @@ Screens:
                   Size: |-
                     =22
                   TabIndex: |-
-                    =0
+                    =If(gPick = "MeRole", -1, 0)
                   Text: |-
                     ="I am a: " & gRole & "  ▾"
                   Visible: |-
@@ -1381,7 +1381,7 @@ Screens:
                   Size: |-
                     =26
                   TabIndex: |-
-                    =0
+                    =If(gPick = "MeRole", -1, 0)
                   Text: |-
                     ="Tutorials and tours"
                   Visible: |-
@@ -1440,7 +1440,7 @@ Screens:
                   Size: |-
                     =26
                   TabIndex: |-
-                    =0
+                    =If(gPick = "MeRole", -1, 0)
                   Text: |-
                     ="Clear my data on this device"
                   Visible: |-
@@ -1542,7 +1542,7 @@ Screens:
             PaddingTop: |-
               =40
             TabIndex: |-
-              =0
+              =If(gPick = "MeRole", -1, 0)
             Width: |-
               =112
             X: |-
@@ -1616,7 +1616,7 @@ Screens:
             PaddingTop: |-
               =40
             TabIndex: |-
-              =0
+              =If(gPick = "MeRole", -1, 0)
             Width: |-
               =112
             X: |-
@@ -1740,7 +1740,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If(gPick = "MeRole", -1, 0)
             Text: |-
               ="Home"
             VerticalAlign: |-
@@ -1826,7 +1826,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If(gPick = "MeRole", -1, 0)
             Text: |-
               ="Asset test"
             VerticalAlign: |-
@@ -1912,7 +1912,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If(gPick = "MeRole", -1, 0)
             Text: |-
               ="Questions"
             VerticalAlign: |-
@@ -1998,7 +1998,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If(gPick = "MeRole", -1, 0)
             Text: |-
               ="Examples"
             VerticalAlign: |-
@@ -2101,7 +2101,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If(gPick = "MeRole", -1, 0)
             Text: |-
               ="My area"
             VerticalAlign: |-
@@ -2142,7 +2142,7 @@ Screens:
             HoverFill: |-
               =RGBA(8,62,120,1)
             OnSelect: |-
-              =Navigate(ScrTest, ScreenTransition.Fade)
+              =Navigate(ScrTest, ScreenTransition.Fade); Reset(MeScroll)
             PressedColor: |-
               =RGBA(255,255,255,1)
             PressedFill: |-
@@ -2158,7 +2158,7 @@ Screens:
             Size: |-
               =26
             TabIndex: |-
-              =0
+              =If(gPick = "MeRole", -1, 0)
             Text: |-
               ="Test an asset"
             Visible: |-

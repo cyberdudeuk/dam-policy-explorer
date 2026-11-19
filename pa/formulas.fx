@@ -502,7 +502,7 @@ nfTutSteps = Table(
   {tid: "access", n: 1, h: "Keyboard", t: "Use Tab and Shift+Tab to move between controls, and Enter or Space to choose. The control you are on has a thick yellow outline."},
   {tid: "access", n: 2, h: "Screen reader", t: "Each screen has one main heading and section headings you can jump between. Counts and results are announced when they change. Icons that only decorate are hidden from screen readers."},
   {tid: "access", n: 3, h: "Any screen size", t: "Everything fits the width of your screen: one column on a phone, two or three on larger screens, and nothing scrolls sideways. Turn a phone or tablet on its side to give wide content more room."},
-  {tid: "access", n: 4, h: "Long sections", t: "A long section scrolls inside its panel. If you use a keyboard only and cannot scroll it, choose Contents, then Open the full page in the web explorer."},
+  {tid: "access", n: 4, h: "Long sections", t: "A long section scrolls with the page. With a keyboard, move to Save at the top of the section, then use the arrow keys or Page Down. Previous, Contents and Next are at the end of each section."},
   {tid: "access", n: 5, h: "Motion", t: "The background moves slowly. It stops if your device is set to reduce motion."}
 );
 nfContact = "https://forms.cloud.microsoft/e/SLBvuPX7jK";

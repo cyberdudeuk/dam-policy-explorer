@@ -8,7 +8,7 @@ Screens:
       LoadingSpinnerColor: |-
         =RGBA(11,85,163,1)
       OnVisible: |-
-        =Set(gToc, false)
+        =Set(gToc, false); Reset(PgScroll)
       Width: |-
         =App.Width
     Children:
@@ -31,6 +31,454 @@ Screens:
               =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
             Y: |-
               =If(nfDesign, Max(0, Min(0, Parent.Height - Self.Height)), 0)
+      - PgScroll:
+          Control: Gallery@2.15.0
+          Variant: VariableHeight
+          Properties:
+            AccessibleLabel: |-
+              ="Page content"
+            Height: |-
+              =Parent.Height
+            Items: |-
+              =[1]
+            ShowScrollbar: |-
+              =true
+            TabIndex: |-
+              =-1
+            TemplatePadding: |-
+              =0
+            TemplateSize: |-
+              =3200
+            Transition: |-
+              =Transition.None
+            Visible: |-
+              =!gToc
+            Width: |-
+              =Parent.Width
+            X: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
+            Y: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Height - Self.Height)), 0)
+          Children:
+            - PgEnd:
+                Control: Rectangle@2.3.0
+                Properties:
+                  AccessibleLabel: |-
+                    =""
+                  BorderThickness: |-
+                    =0
+                  Fill: |-
+                    =RGBA(0,0,0,0)
+                  Height: |-
+                    =nfNavH + 32
+                  TabIndex: |-
+                    =-1
+                  Width: |-
+                    =4
+                  X: |-
+                    =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(Max(If(PgPos.Visible, PgPos.Y + PgPos.Height, 0), If(PgSave.Visible, PgSave.Y + PgSave.Height, 0), If(PgTrk.Visible, PgTrk.Y + PgTrk.Height, 0), If(PgBar2.Visible, PgBar2.Y + PgBar2.Height, 0), If(PgH.Visible, PgH.Y + PgH.Height, 0), If(PgBody.Visible, PgBody.Y + PgBody.Height, 0), If(PgPrev.Visible, PgPrev.Y + PgPrev.Height, 0), If(PgToc.Visible, PgToc.Y + PgToc.Height, 0), If(PgNext.Visible, PgNext.Y + PgNext.Height, 0)), Parent.TemplateHeight - Self.Height)), Max(If(PgPos.Visible, PgPos.Y + PgPos.Height, 0), If(PgSave.Visible, PgSave.Y + PgSave.Height, 0), If(PgTrk.Visible, PgTrk.Y + PgTrk.Height, 0), If(PgBar2.Visible, PgBar2.Y + PgBar2.Height, 0), If(PgH.Visible, PgH.Y + PgH.Height, 0), If(PgBody.Visible, PgBody.Y + PgBody.Height, 0), If(PgPrev.Visible, PgPrev.Y + PgPrev.Height, 0), If(PgToc.Visible, PgToc.Y + PgToc.Height, 0), If(PgNext.Visible, PgNext.Y + PgNext.Height, 0)))
+            - PgPanel:
+                Control: HtmlViewer@2.1.0
+                Properties:
+                  Font: |-
+                    =Font.'Open Sans'
+                  Height: |-
+                    =Max((Parent.Height - nfNavH) - 128 - 16 - 144, PgEnd.Y - (144) + 24)
+                  HtmlText: |-
+                    ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:36px;background:linear-gradient(135deg,rgba(255,255,255,0.94),rgba(255,255,255,0.78));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
+                  PaddingBottom: |-
+                    =0
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =0
+                  Size: |-
+                    =2
+                  Width: |-
+                    =nfRW + 48
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX - 24, Parent.Width - Self.Width)), nfRX - 24)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(144, Parent.TemplateHeight - Self.Height)), 144)
+            - PgPos:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: |-
+                    =true
+                  Color: |-
+                    =RGBA(74,79,84,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  LineHeight: |-
+                    =1.35
+                  Live: |-
+                    =Live.Polite
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Size: |-
+                    =22
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    ="Section " & gSec & " of " & LookUp(nfPages, id = gPid).n
+                  Width: |-
+                    =nfRW - 232
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(148, Parent.TemplateHeight - Self.Height)), 148)
+            - PgSave:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: |-
+                    =RGBA(11,85,163,1)
+                  BorderThickness: |-
+                    =4
+                  Color: |-
+                    =RGBA(11,85,163,1)
+                  DisabledBorderColor: |-
+                    =RGBA(138,144,149,1)
+                  DisabledColor: |-
+                    =RGBA(74,79,84,1)
+                  DisabledFill: |-
+                    =RGBA(242,243,244,1)
+                  Fill: |-
+                    =RGBA(255,255,255,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =8
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  Height: |-
+                    =80
+                  HoverColor: |-
+                    =RGBA(11,85,163,1)
+                  HoverFill: |-
+                    =RGBA(242,243,244,1)
+                  OnSelect: |-
+                    =If(("page:" & gPid & ":" & gSec) in colSaved.key, RemoveIf(colSaved, key = ("page:" & gPid & ":" & gSec)), Collect(colSaved, {key: "page:" & gPid & ":" & gSec, kind: "page", ref: gPid, n: gSec, title: LookUp(nfPages, id = gPid).short & ": " & LookUp(nfSections, pid = gPid && n = gSec).h})); IfError(SaveData(colSaved, "dpeSaved"), Blank())
+                  PressedColor: |-
+                    =RGBA(11,85,163,1)
+                  PressedFill: |-
+                    =RGBA(242,243,244,1)
+                  RadiusBottomLeft: |-
+                    =16
+                  RadiusBottomRight: |-
+                    =16
+                  RadiusTopLeft: |-
+                    =16
+                  RadiusTopRight: |-
+                    =16
+                  Size: |-
+                    =22
+                  TabIndex: |-
+                    =0
+                  Text: |-
+                    =If(("page:" & gPid & ":" & gSec) in colSaved.key, "✓ Saved", "Save")
+                  Width: |-
+                    =208
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX + nfRW - 208, Parent.Width - Self.Width)), nfRX + nfRW - 208)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(132, Parent.TemplateHeight - Self.Height)), 132)
+            - PgTrk:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderThickness: |-
+                    =0
+                  Fill: |-
+                    =RGBA(242,243,244,1)
+                  Height: |-
+                    =12
+                  TabIndex: |-
+                    =-1
+                  Visible: |-
+                    =true
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(220, Parent.TemplateHeight - Self.Height)), 220)
+            - PgBar2:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderThickness: |-
+                    =0
+                  Fill: |-
+                    =RGBA(11,85,163,1)
+                  Height: |-
+                    =12
+                  TabIndex: |-
+                    =-1
+                  Visible: |-
+                    =true
+                  Width: |-
+                    =nfRW * If(IsBlank(LookUp(nfPages, id = gPid).n) || LookUp(nfPages, id = gPid).n = 0, 0, gSec / LookUp(nfPages, id = gPid).n)
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(220, Parent.TemplateHeight - Self.Height)), 220)
+            - PgH:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: |-
+                    =true
+                  Color: |-
+                    =RGBA(27,27,27,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  LineHeight: |-
+                    =1.2
+                  Live: |-
+                    =Live.Polite
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Role: |-
+                    =TextRole.Heading2
+                  Size: |-
+                    =36
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    =LookUp(nfSections, pid = gPid && n = gSec).h
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(252, Parent.TemplateHeight - Self.Height)), 252)
+            - PgBody:
+                Control: HtmlViewer@2.1.0
+                Properties:
+                  AutoHeight: |-
+                    =true
+                  Color: |-
+                    =RGBA(27,27,27,1)
+                  Font: |-
+                    =Font.'Open Sans'
+                  Height: |-
+                    =200
+                  HtmlText: |-
+                    =LookUp(nfSections, pid = gPid && n = gSec).x
+                  PaddingBottom: |-
+                    =32
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =16
+                  PaddingTop: |-
+                    =8
+                  Size: |-
+                    =26
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(PgH.Y + PgH.Height + 8, Parent.TemplateHeight - Self.Height)), PgH.Y + PgH.Height + 8)
+            - PgPrev:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: |-
+                    =RGBA(11,85,163,1)
+                  BorderThickness: |-
+                    =4
+                  Color: |-
+                    =RGBA(11,85,163,1)
+                  DisabledBorderColor: |-
+                    =RGBA(138,144,149,1)
+                  DisabledColor: |-
+                    =RGBA(74,79,84,1)
+                  DisabledFill: |-
+                    =RGBA(242,243,244,1)
+                  DisplayMode: |-
+                    =If(gSec > 1, DisplayMode.Edit, DisplayMode.Disabled)
+                  Fill: |-
+                    =RGBA(255,255,255,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =8
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  Height: |-
+                    =96
+                  HoverColor: |-
+                    =RGBA(11,85,163,1)
+                  HoverFill: |-
+                    =RGBA(242,243,244,1)
+                  OnSelect: |-
+                    =Set(gSec, gSec - 1); Reset(PgScroll)
+                  PressedColor: |-
+                    =RGBA(11,85,163,1)
+                  PressedFill: |-
+                    =RGBA(242,243,244,1)
+                  RadiusBottomLeft: |-
+                    =16
+                  RadiusBottomRight: |-
+                    =16
+                  RadiusTopLeft: |-
+                    =16
+                  RadiusTopRight: |-
+                    =16
+                  Size: |-
+                    =26
+                  TabIndex: |-
+                    =0
+                  Text: |-
+                    ="Previous"
+                  Width: |-
+                    =(nfRW - 48) / 3
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(PgBody.Y + PgBody.Height + 32, Parent.TemplateHeight - Self.Height)), PgBody.Y + PgBody.Height + 32)
+            - PgToc:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: |-
+                    =RGBA(11,85,163,1)
+                  BorderThickness: |-
+                    =4
+                  Color: |-
+                    =RGBA(11,85,163,1)
+                  DisabledBorderColor: |-
+                    =RGBA(138,144,149,1)
+                  DisabledColor: |-
+                    =RGBA(74,79,84,1)
+                  DisabledFill: |-
+                    =RGBA(242,243,244,1)
+                  Fill: |-
+                    =RGBA(255,255,255,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =8
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  Height: |-
+                    =96
+                  HoverColor: |-
+                    =RGBA(11,85,163,1)
+                  HoverFill: |-
+                    =RGBA(242,243,244,1)
+                  OnSelect: |-
+                    =Set(gToc, true); SetFocus(PgTocClose)
+                  PressedColor: |-
+                    =RGBA(11,85,163,1)
+                  PressedFill: |-
+                    =RGBA(242,243,244,1)
+                  RadiusBottomLeft: |-
+                    =16
+                  RadiusBottomRight: |-
+                    =16
+                  RadiusTopLeft: |-
+                    =16
+                  RadiusTopRight: |-
+                    =16
+                  Size: |-
+                    =26
+                  TabIndex: |-
+                    =0
+                  Text: |-
+                    ="Contents"
+                  Width: |-
+                    =(nfRW - 48) / 3
+                  X: |-
+                    =If(nfDesign, Max(0, Min(PgPrev.X + PgPrev.Width + 24, Parent.Width - Self.Width)), PgPrev.X + PgPrev.Width + 24)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(PgPrev.Y, Parent.TemplateHeight - Self.Height)), PgPrev.Y)
+            - PgNext:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderThickness: |-
+                    =0
+                  Color: |-
+                    =RGBA(255,255,255,1)
+                  DisabledBorderColor: |-
+                    =RGBA(138,144,149,1)
+                  DisabledColor: |-
+                    =RGBA(74,79,84,1)
+                  DisabledFill: |-
+                    =RGBA(242,243,244,1)
+                  DisplayMode: |-
+                    =If(gSec < LookUp(nfPages, id = gPid).n, DisplayMode.Edit, DisplayMode.Disabled)
+                  Fill: |-
+                    =RGBA(11,85,163,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =8
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  Height: |-
+                    =96
+                  HoverColor: |-
+                    =RGBA(255,255,255,1)
+                  HoverFill: |-
+                    =RGBA(8,62,120,1)
+                  OnSelect: |-
+                    =Set(gSec, gSec + 1); Reset(PgScroll)
+                  PressedColor: |-
+                    =RGBA(255,255,255,1)
+                  PressedFill: |-
+                    =RGBA(8,62,120,1)
+                  RadiusBottomLeft: |-
+                    =16
+                  RadiusBottomRight: |-
+                    =16
+                  RadiusTopLeft: |-
+                    =16
+                  RadiusTopRight: |-
+                    =16
+                  Size: |-
+                    =26
+                  TabIndex: |-
+                    =0
+                  Text: |-
+                    ="Next"
+                  Width: |-
+                    =(nfRW - 48) / 3
+                  X: |-
+                    =If(nfDesign, Max(0, Min(PgToc.X + PgToc.Width + 24, Parent.Width - Self.Width)), PgToc.X + PgToc.Width + 24)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(PgPrev.Y, Parent.TemplateHeight - Self.Height)), PgPrev.Y)
       - PgBar:
           Control: Rectangle@2.3.0
           Properties:
@@ -638,419 +1086,6 @@ Screens:
               =If(nfDesign, Max(0, Min(If(nfWide, Parent.Width - nfPad - 216, 4 * Parent.Width / 5), Parent.Width - Self.Width)), If(nfWide, Parent.Width - nfPad - 216, 4 * Parent.Width / 5))
             Y: |-
               =If(nfDesign, Max(0, Min(If(nfWide, 0, Parent.Height - 120), Parent.Height - Self.Height)), If(nfWide, 0, Parent.Height - 120))
-      - PgPanel:
-          Control: HtmlViewer@2.1.0
-          Properties:
-            Font: |-
-              =Font.'Open Sans'
-            Height: |-
-              =(Parent.Height - nfNavH) - 128 - 16 - 144
-            HtmlText: |-
-              ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:36px;background:linear-gradient(135deg,rgba(255,255,255,0.94),rgba(255,255,255,0.78));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
-            PaddingBottom: |-
-              =0
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =0
-            Size: |-
-              =2
-            Width: |-
-              =nfRW + 48
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX - 24, Parent.Width - Self.Width)), nfRX - 24)
-            Y: |-
-              =If(nfDesign, Max(0, Min(144, Parent.Height - Self.Height)), 144)
-      - PgPos:
-          Control: Label@2.5.1
-          Properties:
-            AutoHeight: |-
-              =true
-            Color: |-
-              =RGBA(74,79,84,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            LineHeight: |-
-              =1.35
-            Live: |-
-              =Live.Polite
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Size: |-
-              =22
-            TabIndex: |-
-              =-1
-            Text: |-
-              ="Section " & gSec & " of " & LookUp(nfPages, id = gPid).n
-            Width: |-
-              =nfRW - 232
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(148, Parent.Height - Self.Height)), 148)
-      - PgSave:
-          Control: Classic/Button@2.2.0
-          Properties:
-            BorderColor: |-
-              =RGBA(11,85,163,1)
-            BorderThickness: |-
-              =4
-            Color: |-
-              =RGBA(11,85,163,1)
-            DisabledBorderColor: |-
-              =RGBA(138,144,149,1)
-            DisabledColor: |-
-              =RGBA(74,79,84,1)
-            DisabledFill: |-
-              =RGBA(242,243,244,1)
-            Fill: |-
-              =RGBA(255,255,255,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =8
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            Height: |-
-              =80
-            HoverColor: |-
-              =RGBA(11,85,163,1)
-            HoverFill: |-
-              =RGBA(242,243,244,1)
-            OnSelect: |-
-              =If(("page:" & gPid & ":" & gSec) in colSaved.key, RemoveIf(colSaved, key = ("page:" & gPid & ":" & gSec)), Collect(colSaved, {key: "page:" & gPid & ":" & gSec, kind: "page", ref: gPid, n: gSec, title: LookUp(nfPages, id = gPid).short & ": " & LookUp(nfSections, pid = gPid && n = gSec).h})); IfError(SaveData(colSaved, "dpeSaved"), Blank())
-            PressedColor: |-
-              =RGBA(11,85,163,1)
-            PressedFill: |-
-              =RGBA(242,243,244,1)
-            RadiusBottomLeft: |-
-              =16
-            RadiusBottomRight: |-
-              =16
-            RadiusTopLeft: |-
-              =16
-            RadiusTopRight: |-
-              =16
-            Size: |-
-              =22
-            TabIndex: |-
-              =0
-            Text: |-
-              =If(("page:" & gPid & ":" & gSec) in colSaved.key, "✓ Saved", "Save")
-            Width: |-
-              =208
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX + nfRW - 208, Parent.Width - Self.Width)), nfRX + nfRW - 208)
-            Y: |-
-              =If(nfDesign, Max(0, Min(132, Parent.Height - Self.Height)), 132)
-      - PgTrk:
-          Control: Rectangle@2.3.0
-          Properties:
-            BorderThickness: |-
-              =0
-            Fill: |-
-              =RGBA(242,243,244,1)
-            Height: |-
-              =12
-            TabIndex: |-
-              =-1
-            Visible: |-
-              =true
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(220, Parent.Height - Self.Height)), 220)
-      - PgBar2:
-          Control: Rectangle@2.3.0
-          Properties:
-            BorderThickness: |-
-              =0
-            Fill: |-
-              =RGBA(11,85,163,1)
-            Height: |-
-              =12
-            TabIndex: |-
-              =-1
-            Visible: |-
-              =true
-            Width: |-
-              =nfRW * If(IsBlank(LookUp(nfPages, id = gPid).n) || LookUp(nfPages, id = gPid).n = 0, 0, gSec / LookUp(nfPages, id = gPid).n)
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(220, Parent.Height - Self.Height)), 220)
-      - PgH:
-          Control: Label@2.5.1
-          Properties:
-            AutoHeight: |-
-              =true
-            Color: |-
-              =RGBA(27,27,27,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            LineHeight: |-
-              =1.2
-            Live: |-
-              =Live.Polite
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Role: |-
-              =TextRole.Heading2
-            Size: |-
-              =36
-            TabIndex: |-
-              =-1
-            Text: |-
-              =LookUp(nfSections, pid = gPid && n = gSec).h
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(252, Parent.Height - Self.Height)), 252)
-      - PgBody:
-          Control: HtmlViewer@2.1.0
-          Properties:
-            Color: |-
-              =RGBA(27,27,27,1)
-            Font: |-
-              =Font.'Open Sans'
-            Height: |-
-              =(Parent.Height - nfNavH) - (PgH.Y + PgH.Height + 8) - 144
-            HtmlText: |-
-              =LookUp(nfSections, pid = gPid && n = gSec).x
-            PaddingBottom: |-
-              =32
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =16
-            PaddingTop: |-
-              =8
-            Size: |-
-              =26
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(PgH.Y + PgH.Height + 8, Parent.Height - Self.Height)), PgH.Y + PgH.Height + 8)
-      - PgFoot:
-          Control: Rectangle@2.3.0
-          Properties:
-            BorderThickness: |-
-              =0
-            Fill: |-
-              =RGBA(242,243,244,1)
-            Height: |-
-              =136
-            TabIndex: |-
-              =-1
-            Width: |-
-              =Parent.Width
-            Y: |-
-              =If(nfDesign, Max(0, Min((Parent.Height - nfNavH) - 136, Parent.Height - Self.Height)), (Parent.Height - nfNavH) - 136)
-      - PgPrev:
-          Control: Classic/Button@2.2.0
-          Properties:
-            BorderColor: |-
-              =RGBA(11,85,163,1)
-            BorderThickness: |-
-              =4
-            Color: |-
-              =RGBA(11,85,163,1)
-            DisabledBorderColor: |-
-              =RGBA(138,144,149,1)
-            DisabledColor: |-
-              =RGBA(74,79,84,1)
-            DisabledFill: |-
-              =RGBA(242,243,244,1)
-            DisplayMode: |-
-              =If(gSec > 1, DisplayMode.Edit, DisplayMode.Disabled)
-            Fill: |-
-              =RGBA(255,255,255,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =8
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            Height: |-
-              =96
-            HoverColor: |-
-              =RGBA(11,85,163,1)
-            HoverFill: |-
-              =RGBA(242,243,244,1)
-            OnSelect: |-
-              =Set(gSec, gSec - 1)
-            PressedColor: |-
-              =RGBA(11,85,163,1)
-            PressedFill: |-
-              =RGBA(242,243,244,1)
-            RadiusBottomLeft: |-
-              =16
-            RadiusBottomRight: |-
-              =16
-            RadiusTopLeft: |-
-              =16
-            RadiusTopRight: |-
-              =16
-            Size: |-
-              =26
-            TabIndex: |-
-              =0
-            Text: |-
-              ="Previous"
-            Width: |-
-              =(nfRW - 48) / 3
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min((Parent.Height - nfNavH) - 116, Parent.Height - Self.Height)), (Parent.Height - nfNavH) - 116)
-      - PgToc:
-          Control: Classic/Button@2.2.0
-          Properties:
-            BorderColor: |-
-              =RGBA(11,85,163,1)
-            BorderThickness: |-
-              =4
-            Color: |-
-              =RGBA(11,85,163,1)
-            DisabledBorderColor: |-
-              =RGBA(138,144,149,1)
-            DisabledColor: |-
-              =RGBA(74,79,84,1)
-            DisabledFill: |-
-              =RGBA(242,243,244,1)
-            Fill: |-
-              =RGBA(255,255,255,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =8
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            Height: |-
-              =96
-            HoverColor: |-
-              =RGBA(11,85,163,1)
-            HoverFill: |-
-              =RGBA(242,243,244,1)
-            OnSelect: |-
-              =Set(gToc, true)
-            PressedColor: |-
-              =RGBA(11,85,163,1)
-            PressedFill: |-
-              =RGBA(242,243,244,1)
-            RadiusBottomLeft: |-
-              =16
-            RadiusBottomRight: |-
-              =16
-            RadiusTopLeft: |-
-              =16
-            RadiusTopRight: |-
-              =16
-            Size: |-
-              =26
-            TabIndex: |-
-              =0
-            Text: |-
-              ="Contents"
-            Width: |-
-              =(nfRW - 48) / 3
-            X: |-
-              =If(nfDesign, Max(0, Min(PgPrev.X + PgPrev.Width + 24, Parent.Width - Self.Width)), PgPrev.X + PgPrev.Width + 24)
-            Y: |-
-              =If(nfDesign, Max(0, Min((Parent.Height - nfNavH) - 116, Parent.Height - Self.Height)), (Parent.Height - nfNavH) - 116)
-      - PgNext:
-          Control: Classic/Button@2.2.0
-          Properties:
-            BorderThickness: |-
-              =0
-            Color: |-
-              =RGBA(255,255,255,1)
-            DisabledBorderColor: |-
-              =RGBA(138,144,149,1)
-            DisabledColor: |-
-              =RGBA(74,79,84,1)
-            DisabledFill: |-
-              =RGBA(242,243,244,1)
-            DisplayMode: |-
-              =If(gSec < LookUp(nfPages, id = gPid).n, DisplayMode.Edit, DisplayMode.Disabled)
-            Fill: |-
-              =RGBA(11,85,163,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =8
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            Height: |-
-              =96
-            HoverColor: |-
-              =RGBA(255,255,255,1)
-            HoverFill: |-
-              =RGBA(8,62,120,1)
-            OnSelect: |-
-              =Set(gSec, gSec + 1)
-            PressedColor: |-
-              =RGBA(255,255,255,1)
-            PressedFill: |-
-              =RGBA(8,62,120,1)
-            RadiusBottomLeft: |-
-              =16
-            RadiusBottomRight: |-
-              =16
-            RadiusTopLeft: |-
-              =16
-            RadiusTopRight: |-
-              =16
-            Size: |-
-              =26
-            TabIndex: |-
-              =0
-            Text: |-
-              ="Next"
-            Width: |-
-              =(nfRW - 48) / 3
-            X: |-
-              =If(nfDesign, Max(0, Min(PgToc.X + PgToc.Width + 24, Parent.Width - Self.Width)), PgToc.X + PgToc.Width + 24)
-            Y: |-
-              =If(nfDesign, Max(0, Min((Parent.Height - nfNavH) - 116, Parent.Height - Self.Height)), (Parent.Height - nfNavH) - 116)
       - PgTocBg:
           Control: Rectangle@2.3.0
           Properties:
@@ -1179,7 +1214,7 @@ Screens:
             Items: |-
               =Filter(nfSections, pid = gPid)
             OnSelect: |-
-              =Set(gSec, ThisItem.n); Set(gToc, false)
+              =Set(gSec, ThisItem.n); Set(gToc, false); Reset(PgScroll)
             ShowScrollbar: |-
               =true
             TabIndex: |-

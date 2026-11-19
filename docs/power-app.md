@@ -43,29 +43,32 @@ Run `python tools/powerapp.py --write-baseline pa/baseline.json` **after** publi
 
 | Limit | Effect | What would fix it |
 |---|---|---|
-| A long page section cannot be scrolled with the keyboard alone, unless it contains a link (the HTML viewer takes no focus) | Touch, mouse wheel and screen-reader reading keys work. Keyboard-only users choose Contents, then "Open the full page in the web explorer", which is the version tested against WCAG 2.2 AA. Pages are split into sections with Previous and Next, which keeps most sections short. | Not possible with the HTML viewer. A rebuild of the reading screens as blocks in a scrolling row, with a focus stop per block, would do it. |
+| After a sheet closes (a filter list, a Home section, the contents list), keyboard focus goes back to the start of the screen, not to the button that opened it | Power Apps cannot set focus on a control inside a list or a scrolling page, which is where those buttons are. The next Tab starts from the header. | A platform change, or moving each opening button out of the scrolling page. |
+| With a keyboard, a long section scrolls only once focus is inside the page | Tab to Save (the first stop in the page), then use the arrow keys or Page Down. The in-app guide says so. Previous, Contents and Next are at the end of each section. | A focus stop per block of text. |
 | No test with assistive technology has been run on the Power Apps version | Screen-reader, voice-control and magnifier behaviour rests on Microsoft's guidance for canvas apps, not on observation. | A test session with people who use them, before the app is relied on. |
 | Matchmaker results open on data.gov.uk | No results inside the app. | A custom connector to the data.gov.uk API. |
 | My area is per device | Progress does not follow the user to another device. | A SharePoint list or Dataverse table; an owner decision. |
 | Top-level screens (Home, lists, reading screens) are held inside the window at exactly 320 x 568 points, the size of the Studio canvas | Checked by eye at that size on 19 November: nothing overlaps. Any new content that overflows there would be squeezed instead of scrolling. | Move the screen into the scrolling row (see D-PA20, D-PA23). |
 | Studio preview at "Window size" crops the left edge when the browser window is narrower than the preview pane | Preview only. Not seen at tablet or phone presets. | Check in the published player. |
 
-Forms, My area, the asset test, the Matchmaker, tutorials and Support now scroll as one page at every size, including a phone held sideways (D-PA20 to D-PA23).
+Forms, My area, the asset test, the Matchmaker, tutorials, Support, the page reader and the answer screen scroll as one page at every size, including a phone held sideways, and with the keyboard (D-PA20 to D-PA24). While a sheet is open nothing behind it takes keyboard focus, and focus moves into the sheet when it opens (D-PA26).
 
 ### App checker (draft, 19 November 2026, after the last change)
 
 Formulas: no errors. Runtime 0. Data source 0.
 
-- **Accessibility 596**, of two kinds only: 380 "missing tab stop" and 216 "missing accessible label". Every one is on a control that is deliberately not interactive: text, backdrops, accent bars, decorative icons, list containers.
+- **Accessibility 600**, of two kinds only: "missing accessible label" (217) and "missing tab stop" (the rest). Every one is on a control that is deliberately not interactive: text, backdrops, accent bars, decorative icons, list containers.
   - **Why the count cannot be zero.** A probe screen holding one brand-new label with no properties set was flagged "missing tab stop" by the checker. It flags every control whose tab index is below zero and every icon, shape or image with an empty label, whether or not it is interactive. Microsoft's own guidance says the opposite of the "fix": set the tab index to -1 for anything that is not interactive, leave the label empty for decoration, and "ignore any [suggestions] that might do more harm than good" ([accessibility checker](https://learn.microsoft.com/power-apps/maker/canvas-apps/accessibility-checker), [create accessible canvas apps](https://learn.microsoft.com/power-apps/maker/canvas-apps/accessible-apps)). Making 380 pieces of text into tab stops would make the app worse for keyboard users.
   - The generator enforces the real rule instead: anything with an action has a name and a tab stop (D-PA3), every button has text (D-PA1), and focus is always shown.
 - **Performance 3** warnings: "too many controls on a screen" for Home, My area and Support. Advisory.
 
-### Checked by eye (19 November 2026)
+### Checked by eye (19 November 2026, last build)
 
-At 375 x 667: Home, My area (all four tabs), Worked examples, Questions, Support (all three tabs), the asset test (start, five questions, result), tutorials (list and a step), Matchmaker (step 1). At 320 x 568: My area Settings, scrolled to the end, and What is new on the Studio canvas. Phone held sideways: the asset test. Tablet 768 x 1024: Home and the asset test. Tablet 1024 x 768: Home and My area. Keyboard: Tab moves through the header and navigation with a yellow focus ring.
+At 320 x 568, mouse and keyboard only: Home and a section sheet (titles fit beside the UPDATED tag, D-PA25); the page reader (sections 1 to 4 of The policy: Tab to Save, the link in the text, Contents and Next; arrow keys and Page Down read a long section to its end; Next opens the following section at its top); the contents list (focus lands on Close, Tab moves to the first section, nothing behind it takes focus); Questions and its Topic list (focus moves into the list, Tab stays in it); an answer (Tab to Save, Page Down to the sources).
 
-Not checked in the last build: Matchmaker steps 2 and 3, Glossary, Search and the reading screen were last looked at one build earlier and their files have not changed since.
+One build earlier, unchanged since except for tab stops behind sheets: at 375 x 667 My area (all four tabs), Worked examples, Support (all three tabs), the asset test, tutorials, Matchmaker step 1; phone held sideways: the asset test; tablet 768 x 1024 and 1024 x 768: Home, the asset test, My area. Every pasted screen was compared with the build, property by property: only values Studio leaves at their default differ.
+
+Not observed: any screen reader, voice control or magnifier (see Known limits).
 
 ## Tests
 

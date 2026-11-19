@@ -272,7 +272,7 @@ TUTORIALS = [
         ("Keyboard", "Use Tab and Shift+Tab to move between controls, and Enter or Space to choose. The control you are on has a thick yellow outline."),
         ("Screen reader", "Each screen has one main heading and section headings you can jump between. Counts and results are announced when they change. Icons that only decorate are hidden from screen readers."),
         ("Any screen size", "Everything fits the width of your screen: one column on a phone, two or three on larger screens, and nothing scrolls sideways. Turn a phone or tablet on its side to give wide content more room."),
-        ("Long sections", "A long section scrolls inside its panel. If you use a keyboard only and cannot scroll it, choose Contents, then Open the full page in the web explorer."),
+        ("Long sections", "A long section scrolls with the page. With a keyboard, move to Save at the top of the section, then use the arrow keys or Page Down. Previous, Contents and Next are at the end of each section."),
         ("Motion", "The background moves slowly. It stops if your device is set to reduce motion.")]),
 ]
 GO = {"test": "ScrTest", "match": "ScrMatch", "questions": "ScrQuestions", "examples": "ScrExamples", "me": "ScrMe", "learn": "ScrLearn", "support": "ScrSupport", "search": "ScrSearch", "glossary": "ScrGlossary"}
@@ -450,7 +450,7 @@ SEC_ROWS = 6; SEC_H = 92 + SEC_ROWS * 48 + 18; TILE_H = 92
 PH = "(Parent.Height - nfNavH)"
 SB = "(nfShort && !nfWide)"   # short and not wide: a phone held sideways
 SHEET_Y = "If(nfShort, 8, 84)"   # top of the Home section sheet (84 = bar + 20)
-SCROLL = {"ScrSupport": "Su", "ScrMatch": "Mt", "ScrTest": "Ts", "ScrMe": "Me", "ScrLearn": "Ln"}   # screens whose content scrolls as one page (D-PA15)
+SCROLL = {"ScrSupport": "Su", "ScrMatch": "Mt", "ScrTest": "Ts", "ScrMe": "Me", "ScrLearn": "Ln", "ScrPage": "Pg", "ScrRead": "Rd"}   # screens whose content scrolls as one page (D-PA15)
 FADE = "ScreenTransition.Fade"
 
 
@@ -486,7 +486,8 @@ def scroll_wrap(pfx, children):
     names = {c[0] for c in children}
     def chrome(c):
         n = c[0]
-        return n in fixed or "Nav" in n or "Shade" in n or "Sheet" in n or (n.endswith("Opts") and n[:-4] + "Shade" in names)
+        return (n in fixed or "Nav" in n or "Shade" in n or "Sheet" in n or (n.endswith("Opts") and n[:-4] + "Shade" in names)
+                or ("Toc" in n and n != pfx + "Toc"))      # the contents list is an overlay: it must not scroll away with the page
     def pinned(c): return not chrome(c) and "Parent.Height" in str(c[2].get("Y", ""))      # buttons and bars that stay at the bottom of the window
     body = [c for c in children if not chrome(c) and not pinned(c)]
     if not body: return children
@@ -495,6 +496,10 @@ def scroll_wrap(pfx, children):
         fills = "Parent.Height" in str(c[2].get("Height", ""))      # sized to the window: a list, a block of page text or a background panel
         if fills and c[1] == GAL:                                   # a list keeps a usable height on a short window
             c[2]["Height"] = f"Max(pt(200), {c[2]['Height']})"; terms.append(f"If({c[0]}.Visible, {c[0]}.Y + pt(200), 0)")
+        elif fills and c[1] == HTM and not c[0].endswith("Panel"):
+            # D-PA24: long page text grows to its full length inside the scrolling row, so the page scrolls by touch, wheel and keyboard
+            # (arrow keys and Page Down, from any button on the page). Tested in Studio: AutoHeight needs a positive height to start from.
+            c[2]["AutoHeight"] = "true"; c[2]["Height"] = "pt(100)"; terms.append(f"If({c[0]}.Visible, {c[0]}.Y + {c[0]}.Height, 0)")
         elif fills and c[0].endswith("Panel"): panels.append(c)
         elif not fills: terms.append(f"If({c[0]}.Visible, {c[0]}.Y + {c[0]}.Height, 0)")
     for c in panels:                                                # the card behind the content reaches at least to the end of the content
@@ -503,6 +508,8 @@ def scroll_wrap(pfx, children):
     # so the last lines of a long tab sat behind the navigation with nothing to scroll. A flexible-height row follows its content; the clear spacer
     # at the end (first in the list, so beneath everything and never in the way of a tap) keeps the last control above the navigation and above
     # whatever is pinned to the bottom of the window in the current state.
+    for c in children:                                              # a new section, step or question starts at the top of the page
+        if pinned(c) and c[1] == BTN and "OnSelect" in c[2]: c[2]["OnSelect"] = f"{c[2]['OnSelect']}; Reset({pfx}Scroll)"
     stack = "".join(f", If({c[0]}.Visible, (Parent.Height - nfNavH) - {c[0]}.Y, 0)" for c in children if pinned(c))
     end = (pfx + "End", RECT, {"Fill": "RGBA(0,0,0,0)", "BorderThickness": 0, "TabIndex": -1, "AccessibleLabel": '""', "X": 0, "Y": f"Max({', '.join(terms)})", "Width": 2,
                                "Height": f"nfNavH + pt(16) + Max(0{stack})" if stack else "nfNavH + pt(16)"})
@@ -515,6 +522,28 @@ def scroll_wrap(pfx, children):
         if not placed and c[0] == pfx + "Bg": out.append(wrap); placed = True
     assert placed, pfx
     return out
+
+
+ROW_HIDE = {"ScrPage": "!gToc"}
+TABBABLE = ("Classic/Button", "Classic/TextInput", "Classic/Toggle")
+
+
+def modal_guard(children):
+    """D-PA26: while a sheet is open over a screen, nothing behind it may take keyboard focus (WCAG 2.2, 2.4.3 and 2.4.11).
+    A sheet is every top-level control that shares its Visible formula with a control named ...Shade. Everything else that
+    has a tab stop, at any depth, gives it up while any sheet on the screen is open."""
+    opens = []
+    for c in children:
+        if c[0].endswith("Shade") and c[2].get("Visible") and c[2]["Visible"] not in opens: opens.append(c[2]["Visible"])
+    if not opens: return children
+    m = " || ".join(f"({o})" for o in opens) if len(opens) > 1 else opens[0]
+    def guard(c):
+        pr = c[2]
+        if str(pr.get("TabIndex", 0 if c[1].startswith(TABBABLE) else -1)).strip() == "0": pr["TabIndex"] = f"If({m}, -1, 0)"
+        for k in (c[3] if len(c) > 3 and c[3] else []): guard(k)
+    for c in children:
+        if c[2].get("Visible") not in opens: guard(c)
+    return children
 
 
 class Y:
@@ -555,8 +584,11 @@ class Y:
             for c in children: self.ctl(ind + 6, *(list(c) + [None] * (5 - len(c))), guard=name.endswith("Scroll") and ind == 6)
     def screen(self, name, props, children):
         props = {"Width": "App.Width", "Height": "App.Height", **props}
+        children = modal_guard(list(children))
         if name in SCROLL:
             children = scroll_wrap(SCROLL[name], list(children))
+            if name in ROW_HIDE:    # D-PA26: an opaque panel covers the row, so the row and every link in it leave the tab order with it
+                next(c for c in children if c[0] == SCROLL[name] + "Scroll")[2]["Visible"] = ROW_HIDE[name]
         self.w(0, "Screens:"); self.w(2, f"{name}:"); self.props(4, props); self.w(4, "Children:")
         for c in children: self.ctl(6, *c)
         return "\n".join(self.l) + "\n"
@@ -754,7 +786,7 @@ def picker(name, items, field, var, y, lab, x="nfCX", w="Min(nfCW, 380)", vis=No
     Returns (controls in the page, controls for the sheet). The sheet goes last on the screen so it sits above everything."""
     on = f"{var} = ThisItem.{field}"
     op = f'gPick = "{name}"'
-    b = secondary(f"{name}Btn", f'"{lab}: " & {var} & "  ▾"', f'Set(gPick, "{name}")', X=x, Y=y, Width=w, Height=44, Size=S_SMALL, Align="Align.Left", PaddingLeft=16)
+    b = secondary(f"{name}Btn", f'"{lab}: " & {var} & "  ▾"', f'Set(gPick, "{name}"); SetFocus({name}Shade)', X=x, Y=y, Width=w, Height=44, Size=S_SMALL, Align="Align.Left", PaddingLeft=16)
     if vis: b[2]["Visible"] = vis
     sw = "Min(Parent.Width - 32, 420)"
     sheet = [button(f"{name}Shade", '"Close the list"', "Set(gPick, Blank())", X=0, Y=0, Width="Parent.Width", Height="Parent.Height", Fill="RGBA(0,0,0,0.55)", HoverFill="RGBA(0,0,0,0.55)", PressedFill="RGBA(0,0,0,0.55)", Color=CLEAR, HoverColor=CLEAR, PressedColor=CLEAR,
@@ -823,17 +855,17 @@ def screens():
     lead_v = "!nfCompact && !nfShort"
     jv = "nfWide || Parent.Height >= 820"
     hero_b = "If(nfNewCount > 0 && !nfWide && !(nfShort && !nfWide), HmNew.Y + HmNew.Height, HmSearch.Y + HmSearch.Height) + 12"
-    S["01-ScrHome"] = Y().screen("ScrHome", {**scr, "OnVisible": 'If(IsBlank(gTour), Set(gTour, 0)); Set(gHomeSec, Blank())'}, [
+    S["01-ScrHome"] = Y().screen("ScrHome", {**scr, "OnVisible": 'If(IsBlank(gTour), Set(gTour, 0)); Set(gHomeSec, Blank()); If(gTour > 0, SetFocus(HmTourNext))'}, [
         *header("Hm", '"DAM Policy Explorer"', back=False, active="ScrHome", right=72),
         rect("HmHero", "RGBA(8,62,120,0.94)", Y=BAR, Height=f"{hero_b} - {BAR}", Width="Parent.Width"),
-        bar_icon("HmTourIc", "Icon.Lightbulb", "Parent.Width - 56", "Set(gTour, 1)", "Take the 1-minute tour", Visible="!nfWide"),
+        bar_icon("HmTourIc", "Icon.Lightbulb", "Parent.Width - 56", "Set(gTour, 1); SetFocus(HmTourNext)", "Take the 1-minute tour", Visible="!nfWide"),
         label("HmLead", '"Everything you need for the Data Asset Management Policy, in one place."', Y=BAR + 14, Size=f"If(nfWide, 20, {S_LEAD})", FontWeight="FontWeight.Semibold", Color=WHITE, X="nfCX", Width="nfCW", Visible=lead_v, LineHeight=1.2),
         label("HmTag", '"PROTOTYPE"', Y=f"If(HmLead.Visible, HmLead.Y + HmLead.Height + 8, {BAR + 12})", X="nfCX", Width=92, Height=22, AutoHeight="false", Size=9, FontWeight="FontWeight.Bold", Fill=WHITE, Color=BRAND_D, Align="Align.Center", VerticalAlign="VerticalAlign.Middle"),
         label("HmProto", 'If(nfCompact || nfShort, "If this disagrees with GOV.UK, GOV.UK is right.", "If anything here disagrees with GOV.UK, GOV.UK is right. Content checked " & Text(DateValue(nfChecked), "d mmmm yyyy") & ". Version " & nfVersion & ".") & If(DateDiff(DateValue(nfChecked), Today()) > nfStale, " This is more than " & nfStale & " days ago: check GOV.UK for anything newer.", "")', Y="HmTag.Y", X="nfCX + 102", Width="nfCW - 102", Size=S_SMALL, Color=WHITE),
         rect("HmSearchBg", WHITE, X="HmSearch.X", Y="HmSearch.Y", Width="HmSearch.Width", Height="HmSearch.Height"),
         deco("HmSearchIc", "Icon.Search", "HmSearch.X + 12", "HmSearch.Y + 13", 22, BRAND),
         button("HmSearch", f'If(nfCompact || {SB}, "Search everything", "Search the policy, answers and examples")', f"Navigate(ScrSearch, {FADE})", X="nfCX", Y="Max(HmTag.Y + HmTag.Height, HmProto.Y + HmProto.Height) + 12", Width=f"If(nfWide, Min(nfCW - 484, 640), {SB}, nfCW - 272, nfCW)", Fill=CLEAR, Color=MUTED, HoverFill="RGBA(11,85,163,0.06)", HoverColor=INK, PressedFill="RGBA(11,85,163,0.14)", PressedColor=INK, Align="Align.Left", PaddingLeft=44, FontWeight="FontWeight.Normal", RadiusTopLeft=0, RadiusTopRight=0, RadiusBottomLeft=0, RadiusBottomRight=0),
-        button("HmTourBtn", '"Take the 1-minute tour"', "Set(gTour, 1)", Y="HmSearch.Y", X="HmSearch.X + HmSearch.Width + 12", Width=200, Fill=CLEAR, BorderColor=WHITE, BorderThickness=2, HoverFill="RGBA(255,255,255,0.16)", PressedFill="RGBA(255,255,255,0.24)", Visible="nfWide"),
+        button("HmTourBtn", '"Take the 1-minute tour"', "Set(gTour, 1); SetFocus(HmTourNext)", Y="HmSearch.Y", X="HmSearch.X + HmSearch.Width + 12", Width=200, Fill=CLEAR, BorderColor=WHITE, BorderThickness=2, HoverFill="RGBA(255,255,255,0.16)", PressedFill="RGBA(255,255,255,0.24)", Visible="nfWide"),
         button("HmNew", f'If({SB}, "What is new (" & nfNewCount & ")", "What is new in version " & nfVersion & " (" & nfNewCount & ")")', f"Navigate(ScrNew, {FADE})", X=f"If(nfWide, HmTourBtn.X + HmTourBtn.Width + 12, {SB}, HmSearch.X + HmSearch.Width + 12, nfCX)", Y=f"If(nfWide || {SB}, HmSearch.Y, HmSearch.Y + HmSearch.Height + 8)", Width=f"If(nfWide || {SB}, 260, nfCW)", Height=f"If(nfWide || {SB}, 48, 36)", Size=S_SMALL,
                Fill=FOCUS, Color=INK, HoverFill="RGBA(255,235,90,1)", HoverColor=INK, PressedFill="RGBA(255,235,90,1)", PressedColor=INK, Visible="nfNewCount > 0"),
         label("HmSecsH", 'If(nfTiles, "Six sections, in order", "Start here: six sections, in the order you will need them")', Y=f"{hero_b} + 8", X="nfCX", Width="nfCW", **{**h2, "Size": S_BODY}),
@@ -853,7 +885,7 @@ def screens():
             ("HmItBtn", BTN, {"Text": 'ThisItem.title & ". " & ThisItem.summ & If(IsBlank(ThisItem.flag), "", ". " & ThisItem.flag & " in this version")', "Color": CLEAR, "HoverColor": CLEAR, "PressedColor": CLEAR, "OnSelect": "Select(Parent)", "Fill": CLEAR, "HoverFill": "RGBA(11,85,163,0.07)", "PressedFill": "RGBA(11,85,163,0.15)", "BorderThickness": 0,
                               "FocusedBorderColor": FOCUS, "FocusedBorderThickness": 4, "X": 2, "Y": 2, "Width": "Parent.TemplateWidth - 4", "Height": 44, "TabIndex": 0, "RadiusTopLeft": 10, "RadiusTopRight": 10, "RadiusBottomLeft": 10, "RadiusBottomRight": 10, "Font": FONT, "Size": 8})], "Vertical")], "Vertical"),
         ("HmTiles", GAL, {"Items": "nfSect", "Y": "HmSecsH.Y + HmSecsH.Height + 4", "X": "nfCX - 5", "Width": "nfCW + 10", "Height": f"Max(96, {PH} - Self.Y)", "TemplateSize": TILE_H, "TemplatePadding": 0, "WrapCount": "If(nfTiny, 1, nfCompact, 2, 3)", "ShowScrollbar": "true", "TabIndex": -1,
-                          "AccessibleLabel": '"Sections"', "Visible": "nfTiles", "DisplayMode": f"If({tv}, DisplayMode.Disabled, DisplayMode.Edit)", "OnSelect": "Set(gHomeSec, ThisItem.n)"},
+                          "AccessibleLabel": '"Sections"', "Visible": "nfTiles", "DisplayMode": f"If({tv}, DisplayMode.Disabled, DisplayMode.Edit)", "OnSelect": "Set(gHomeSec, ThisItem.n); SetFocus(HmShShade)"},
          [glass("HmTilePl", 5, 5, "Parent.TemplateWidth - 10", TILE_H - 10, r=16),
           rect("HmTileTop", "ThisItem.col", X=19, Y=5, Width="Parent.TemplateWidth - 38", Height=4),
           label("HmTileN", "ThisItem.n", X=14, Y=20, Width=30, Height=30, AutoHeight="false", Size=13, FontWeight="FontWeight.Bold", Color=WHITE, Fill="ThisItem.col", Align="Align.Center", VerticalAlign="VerticalAlign.Middle"),
@@ -868,8 +900,9 @@ def screens():
         label("HmShT", "LookUp(nfSect, n = gHomeSec).title", X="(Parent.Width - Min(Parent.Width - 32, 440)) / 2 + 62", Y=f"{SHEET_Y} + 16", Width="Min(Parent.Width - 32, 440) - 82", Size=S_LEAD, FontWeight="FontWeight.Semibold", Role="TextRole.Heading2", Color="LookUp(nfSect, n = gHomeSec).col", Visible="!IsBlank(gHomeSec)", Live="Live.Polite"),
         label("HmShB", "LookUp(nfSect, n = gHomeSec).blurb", X="(Parent.Width - Min(Parent.Width - 32, 440)) / 2 + 62", Y="HmShT.Y + HmShT.Height", Width="Min(Parent.Width - 32, 440) - 82", Visible="!IsBlank(gHomeSec)", **small),
         ("HmShItems", GAL, {"Items": "Filter(nfHome, sec = gHomeSec)", "X": "(Parent.Width - Min(Parent.Width - 32, 440)) / 2 + 10", "Y": "HmShB.Y + HmShB.Height + 10", "Width": "Min(Parent.Width - 32, 440) - 20", "Height": "Min(CountRows(Filter(nfHome, sec = gHomeSec)) * pt(48), Parent.Height - Self.Y - 72)", "TemplateSize": 48, "TemplatePadding": 0, "ShowScrollbar": "true", "TabIndex": -1, "AccessibleLabel": '"Links in this section"', "Visible": "!IsBlank(gHomeSec)", "OnSelect": "Set(gHomeSec, Blank()); " + open_item()},
-           [deco("HmShIIc", "ThisItem.ic", 10, 9, 30, "ThisItem.col", Fill="ThisItem.tint", PaddingLeft=6, PaddingRight=6, PaddingTop=6, PaddingBottom=6),
-            label("HmShIT", "ThisItem.title", X=52, Y=0, Width="Parent.TemplateWidth - 88 - If(IsBlank(ThisItem.flag), 0, 80)", Height=48, AutoHeight="false", Wrap="true", LineHeight=1.15, VerticalAlign="VerticalAlign.Middle", FontWeight="FontWeight.Semibold"),
+           [deco("HmShIIc", "ThisItem.ic", 10, 9, 30, "ThisItem.col", Fill="ThisItem.tint", PaddingLeft=6, PaddingRight=6, PaddingTop=6, PaddingBottom=6, Visible="!nfTiny"),
+            # D-PA25: under 360 px the icon gives way to the title, which was cut to three clipped lines beside an UPDATED tag
+            label("HmShIT", "ThisItem.title", X="If(nfTiny, 10, 52)", Y=0, Width="Parent.TemplateWidth - If(nfTiny, 46, 88) - If(IsBlank(ThisItem.flag), 0, 80)", Height=48, AutoHeight="false", Wrap="true", LineHeight=1.15, VerticalAlign="VerticalAlign.Middle", FontWeight="FontWeight.Semibold"),
             label("HmShIFlag", "Upper(ThisItem.flag)", X="Parent.TemplateWidth - 108", Y=14, Width=72, Height=20, AutoHeight="false", Size=8, FontWeight="FontWeight.Bold", Fill=FOCUS, Color=INK, Align="Align.Center", VerticalAlign="VerticalAlign.Middle", Visible="!IsBlank(ThisItem.flag)"),
             deco("HmShIChev", "Icon.ChevronRight", "Parent.TemplateWidth - 30", 15, 18, MUTED),
             ("HmShIBtn", BTN, {"Text": 'ThisItem.title & ". " & ThisItem.summ & If(IsBlank(ThisItem.flag), "", ". " & ThisItem.flag & " in this version")', "Color": CLEAR, "HoverColor": CLEAR, "PressedColor": CLEAR, "OnSelect": "Select(Parent)", "Fill": CLEAR, "HoverFill": "RGBA(11,85,163,0.07)", "PressedFill": "RGBA(11,85,163,0.15)", "BorderThickness": 0,
@@ -889,7 +922,7 @@ def screens():
     cur = "LookUp(nfSections, pid = gPid && n = gSec)"
     npg = "LookUp(nfPages, id = gPid).n"
     b3 = "(nfRW - 24) / 3"
-    S["02-ScrPage"] = Y().screen("ScrPage", {**scr, "OnVisible": "Set(gToc, false)"}, [
+    S["02-ScrPage"] = Y().screen("ScrPage", {**scr, "OnVisible": "Set(gToc, false); Reset(PgScroll)"}, [
         *header("Pg", "LookUp(nfPages, id = gPid).short", bg="Switch(LookUp(nfPages, id = gPid).sec, 1, nfBg1, 3, nfBg3, 4, nfBg4, 5, nfBg5, 6, nfBg6, nfBg1)", ribbon="LookUp(nfSect, n = LookUp(nfPages, id = gPid).sec).col"),
         glass("PgPanel", "nfRX - 12", BAR + 8, "nfRW + 24", f"{PH} - {BAR} - 8 - {BTNH + 24}", r=18),
         label("PgPos", f'"Section " & gSec & " of " & {npg}', Y=BAR + 10, Width="nfRW - 116", Live="Live.Polite", **small),
@@ -897,18 +930,19 @@ def screens():
         *progress("Pg", BAR + 46, f"If(IsBlank({npg}) || {npg} = 0, 0, gSec / {npg})"),
         label("PgH", f"{cur}.h", Y=BAR + 62, Live="Live.Polite", **h2),
         html_view("PgBody", f"{cur}.x", "PgH.Y + PgH.Height + 4", f"{PH} - Self.Y - {BTNH + 24}"),
-        footer("Pg"),
-        secondary("PgPrev", '"Previous"', "Set(gSec, gSec - 1)", X="nfRX", Y=foot_y, Width=b3, DisplayMode="If(gSec > 1, DisplayMode.Edit, DisplayMode.Disabled)"),
-        secondary("PgToc", '"Contents"', "Set(gToc, true)", X="PgPrev.X + PgPrev.Width + 12", Y=foot_y, Width=b3),
-        button("PgNext", '"Next"', "Set(gSec, gSec + 1)", X="PgToc.X + PgToc.Width + 12", Y=foot_y, Width=b3, DisplayMode=f"If(gSec < {npg}, DisplayMode.Edit, DisplayMode.Disabled)"),
+        # D-PA24: Previous, Contents and Next sit at the end of the section, inside the scrolling page. A keyboard user reads down with the
+        # arrow keys from Save, reaches them by Tab, and after Next the focus is still inside the page, so the arrow keys keep working.
+        secondary("PgPrev", '"Previous"', "Set(gSec, gSec - 1); Reset(PgScroll)", X="nfRX", Y="PgBody.Y + PgBody.Height + 16", Width=b3, DisplayMode="If(gSec > 1, DisplayMode.Edit, DisplayMode.Disabled)"),
+        secondary("PgToc", '"Contents"', "Set(gToc, true); SetFocus(PgTocClose)", X="PgPrev.X + PgPrev.Width + 12", Y="PgPrev.Y", Width=b3),
+        button("PgNext", '"Next"', "Set(gSec, gSec + 1); Reset(PgScroll)", X="PgToc.X + PgToc.Width + 12", Y="PgPrev.Y", Width=b3, DisplayMode=f"If(gSec < {npg}, DisplayMode.Edit, DisplayMode.Disabled)"),
         rect("PgTocBg", WHITE, Y=BAR, Width="Parent.Width", Height=f"{PH} - {BAR}", Visible="gToc"),
         label("PgTocH", '"On this page"', Y=BAR + 20, Visible="gToc", Width="nfRW - 120", **h2),
         secondary("PgTocClose", '"Close"', "Set(gToc, false)", X="nfRX + nfRW - 104", Y=BAR + 12, Width=104, Height=44, Visible="gToc"),
-        cards("PgTocList", "Filter(nfSections, pid = gPid)", "Set(gSec, ThisItem.n); Set(gToc, false)", "ThisItem.h", '"Section " & ThisItem.n & If(ThisItem.n = gSec, " · you are here", "")', BAR + 68, tmpl=76, extra={"Visible": "gToc", "Height": f"{PH} - Self.Y - {BTNH + 20}"}, wide=False, alabel="Sections on this page", flag="ThisItem.flag"),
+        cards("PgTocList", "Filter(nfSections, pid = gPid)", "Set(gSec, ThisItem.n); Set(gToc, false); Reset(PgScroll)", "ThisItem.h", '"Section " & ThisItem.n & If(ThisItem.n = gSec, " · you are here", "")', BAR + 68, tmpl=76, extra={"Visible": "gToc", "Height": f"{PH} - Self.Y - {BTNH + 20}"}, wide=False, alabel="Sections on this page", flag="ThisItem.flag"),
         secondary("PgTocWeb", '"Open the full page in the web explorer"', 'Launch(nfSite & gPid & ".html")', X="nfRX", Y=foot_y, Width="nfRW", Visible="gToc"),
     ])
     # --- Reader for one answer / example / word ---
-    S["03-ScrRead"] = Y().screen("ScrRead", scr, [
+    S["03-ScrRead"] = Y().screen("ScrRead", {**scr, "OnVisible": "Reset(RdScroll)"}, [
         *header("Rd", "gReadKind", bg='If(gReadK = "ex", nfBg2, nfBg4)', ribbon='If(gReadK = "ex", RGBA(0,105,92,1), RGBA(90,47,138,1))'),
         glass("RdPanel", "nfRX - 12", BAR + 8, "nfRW + 24", f"{PH} - {BAR} - 16", r=18),
         save_toggle("RdSave", '(gReadK & ":" & gReadRef)', '{key: gReadK & ":" & gReadRef, kind: gReadK, ref: gReadRef, n: 0, title: gReadTitle}', BAR + 10),
@@ -1219,7 +1253,7 @@ def main():
         pr = node.get("Properties", {}); ctl = node.get("Control", "Screen")
         if ctl.split("@")[0] in ("Label", "Classic/Icon", "Rectangle", "Image") and "OnSelect" in pr:
             # D-PA3: anything with OnSelect is interactive, so it needs a name and a tab stop
-            if pr.get("AccessibleLabel", '=""').strip() in ('=""', "=") or str(pr.get("TabIndex", "=-1")).strip() != "=0":
+            if pr.get("AccessibleLabel", '=""').strip() in ('=""', "=") or not re.fullmatch(r"=(0|If\(.+, -1, 0\))", str(pr.get("TabIndex", "=-1")).strip()):
                 bad.append(f"{k}/{name}: has OnSelect but no accessible name or tab stop")
         if name.endswith("Scroll") and ctl.startswith("Gallery"):
             kids = [cn for c in node.get("Children", []) or [] for cn in c]
@@ -1231,8 +1265,30 @@ def main():
                     cp = cv.get("Properties", {})
                     if "Parent.Height - Self.Height" in cp.get("Y", ""):
                         bad.append(f"{k}/{cn}: held inside the window height, so a long page is squeezed on a 320 x 568 phone and on the Studio canvas; the limit is the row (D-PA23)")
-                    if cv.get("Control", "").startswith("HtmlViewer") and not cn.endswith("Panel") and "Parent.Height" in cp.get("Height", ""):
-                        bad.append(f"{k}/{cn}: an HTML box sized to the window is squeezed to nothing on a phone and does not grow (AutoHeight did not make it grow when tried in Studio); use a label (D-PA21)")
+                    if cv.get("Control", "").startswith("HtmlViewer") and not cn.endswith("Panel") and ("Parent.Height" in cp.get("Height", "") or (cn.endswith("Body") and cp.get("AutoHeight", "").strip() != "=true")):
+                        bad.append(f"{k}/{cn}: an HTML box sized to the window is squeezed to nothing on a phone; inside a scrolling page it must grow with its content (D-PA21)")
+        if ctl == "Screen":
+            for c in node.get("Children", []) or []:
+                for cn, cv in c.items():
+                    if cv.get("Control", "").startswith("HtmlViewer") and "Parent.Height" in cv.get("Properties", {}).get("Height", "") and not cn.endswith(("Panel", "Sheet")):
+                        bad.append(f"{k}/{cn}: long text outside a scrolling page cannot be scrolled with the keyboard (D-PA24)")
+        if ctl == "Screen":
+            # D-PA26: with a sheet open, nothing behind it keeps a tab stop, and the sheet itself has one
+            top = [(cn, cv) for c in node.get("Children", []) or [] for cn, cv in c.items()]
+            opens = {cv.get("Properties", {}).get("Visible") for cn, cv in top if cn.endswith("Shade")} - {None}
+            def stops(cn, cv):
+                cp = cv.get("Properties", {}); t = str(cp.get("TabIndex", "=0" if cv.get("Control", "").startswith(TABBABLE) else "=-1")).strip()
+                return ([cn] if t == "=0" else []) + [x for c in cv.get("Children", []) or [] for a, b in c.items() for x in stops(a, b)]
+            for cn, cv in top:
+                if opens and cv.get("Properties", {}).get("Visible") not in opens:
+                    for x in stops(cn, cv): bad.append(f"{k}/{x}: keeps its tab stop while a sheet covers it, so keyboard focus goes where it cannot be seen (D-PA26)")
+            for o in opens:
+                if not any(stops(cn, cv) for cn, cv in top if cv.get("Properties", {}).get("Visible") == o):
+                    bad.append(f"{k}: the sheet shown when {o} has nothing that takes keyboard focus (D-PA26)")
+            covers = [cv.get("Properties", {}).get("Visible", "").strip().lstrip("=") for cn, cv in top if cn.endswith("TocBg")]
+            for cn, cv in top:
+                if covers and cn.endswith("Scroll") and cv.get("Properties", {}).get("Visible", "").strip() != "=!" + covers[0]:
+                    bad.append(f"{k}/{cn}: the page stays in the tab order behind the contents list (D-PA26)")
         if name == "TsOpts" and "Len(label)" not in pr.get("TemplateSize", ""):
             bad.append(f"{k}/{name}: answer rows have a fixed height, so a three-line answer touches the edge of its row on a phone (D-PA22)")
         if node.get("Variant") == "Horizontal" and "CountRows" not in pr.get("TemplateSize", ""):

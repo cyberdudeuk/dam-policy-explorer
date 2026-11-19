@@ -7,6 +7,8 @@ Screens:
         =App.Height
       LoadingSpinnerColor: |-
         =RGBA(11,85,163,1)
+      OnVisible: |-
+        =Reset(RdScroll)
       Width: |-
         =App.Width
     Children:
@@ -29,6 +31,202 @@ Screens:
               =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
             Y: |-
               =If(nfDesign, Max(0, Min(0, Parent.Height - Self.Height)), 0)
+      - RdScroll:
+          Control: Gallery@2.15.0
+          Variant: VariableHeight
+          Properties:
+            AccessibleLabel: |-
+              ="Page content"
+            Height: |-
+              =Parent.Height
+            Items: |-
+              =[1]
+            ShowScrollbar: |-
+              =true
+            TabIndex: |-
+              =-1
+            TemplatePadding: |-
+              =0
+            TemplateSize: |-
+              =3200
+            Transition: |-
+              =Transition.None
+            Width: |-
+              =Parent.Width
+            X: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
+            Y: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Height - Self.Height)), 0)
+          Children:
+            - RdEnd:
+                Control: Rectangle@2.3.0
+                Properties:
+                  AccessibleLabel: |-
+                    =""
+                  BorderThickness: |-
+                    =0
+                  Fill: |-
+                    =RGBA(0,0,0,0)
+                  Height: |-
+                    =nfNavH + 32
+                  TabIndex: |-
+                    =-1
+                  Width: |-
+                    =4
+                  X: |-
+                    =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(Max(If(RdSave.Visible, RdSave.Y + RdSave.Height, 0), If(RdH.Visible, RdH.Y + RdH.Height, 0), If(RdBody.Visible, RdBody.Y + RdBody.Height, 0)), Parent.TemplateHeight - Self.Height)), Max(If(RdSave.Visible, RdSave.Y + RdSave.Height, 0), If(RdH.Visible, RdH.Y + RdH.Height, 0), If(RdBody.Visible, RdBody.Y + RdBody.Height, 0)))
+            - RdPanel:
+                Control: HtmlViewer@2.1.0
+                Properties:
+                  Font: |-
+                    =Font.'Open Sans'
+                  Height: |-
+                    =Max((Parent.Height - nfNavH) - 128 - 32, RdEnd.Y - (144) + 24)
+                  HtmlText: |-
+                    ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:36px;background:linear-gradient(135deg,rgba(255,255,255,0.94),rgba(255,255,255,0.78));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
+                  PaddingBottom: |-
+                    =0
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =0
+                  Size: |-
+                    =2
+                  Width: |-
+                    =nfRW + 48
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX - 24, Parent.Width - Self.Width)), nfRX - 24)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(144, Parent.TemplateHeight - Self.Height)), 144)
+            - RdSave:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: |-
+                    =RGBA(11,85,163,1)
+                  BorderThickness: |-
+                    =4
+                  Color: |-
+                    =RGBA(11,85,163,1)
+                  DisabledBorderColor: |-
+                    =RGBA(138,144,149,1)
+                  DisabledColor: |-
+                    =RGBA(74,79,84,1)
+                  DisabledFill: |-
+                    =RGBA(242,243,244,1)
+                  Fill: |-
+                    =RGBA(255,255,255,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =8
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  Height: |-
+                    =80
+                  HoverColor: |-
+                    =RGBA(11,85,163,1)
+                  HoverFill: |-
+                    =RGBA(242,243,244,1)
+                  OnSelect: |-
+                    =If((gReadK & ":" & gReadRef) in colSaved.key, RemoveIf(colSaved, key = (gReadK & ":" & gReadRef)), Collect(colSaved, {key: gReadK & ":" & gReadRef, kind: gReadK, ref: gReadRef, n: 0, title: gReadTitle})); IfError(SaveData(colSaved, "dpeSaved"), Blank())
+                  PressedColor: |-
+                    =RGBA(11,85,163,1)
+                  PressedFill: |-
+                    =RGBA(242,243,244,1)
+                  RadiusBottomLeft: |-
+                    =16
+                  RadiusBottomRight: |-
+                    =16
+                  RadiusTopLeft: |-
+                    =16
+                  RadiusTopRight: |-
+                    =16
+                  Size: |-
+                    =22
+                  TabIndex: |-
+                    =0
+                  Text: |-
+                    =If((gReadK & ":" & gReadRef) in colSaved.key, "✓ Saved", "Save")
+                  Width: |-
+                    =208
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX + nfRW - 208, Parent.Width - Self.Width)), nfRX + nfRW - 208)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(148, Parent.TemplateHeight - Self.Height)), 148)
+            - RdH:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: |-
+                    =true
+                  Color: |-
+                    =RGBA(27,27,27,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  LineHeight: |-
+                    =1.2
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Role: |-
+                    =TextRole.Heading2
+                  Size: |-
+                    =36
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    =gReadTitle
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(244, Parent.TemplateHeight - Self.Height)), 244)
+            - RdBody:
+                Control: HtmlViewer@2.1.0
+                Properties:
+                  AutoHeight: |-
+                    =true
+                  Color: |-
+                    =RGBA(27,27,27,1)
+                  Font: |-
+                    =Font.'Open Sans'
+                  Height: |-
+                    =200
+                  HtmlText: |-
+                    =gReadHtml
+                  PaddingBottom: |-
+                    =32
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =16
+                  PaddingTop: |-
+                    =8
+                  Size: |-
+                    =26
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(RdH.Y + RdH.Height + 8, Parent.TemplateHeight - Self.Height)), RdH.Y + RdH.Height + 8)
       - RdBar:
           Control: Rectangle@2.3.0
           Properties:
@@ -636,151 +834,3 @@ Screens:
               =If(nfDesign, Max(0, Min(If(nfWide, Parent.Width - nfPad - 216, 4 * Parent.Width / 5), Parent.Width - Self.Width)), If(nfWide, Parent.Width - nfPad - 216, 4 * Parent.Width / 5))
             Y: |-
               =If(nfDesign, Max(0, Min(If(nfWide, 0, Parent.Height - 120), Parent.Height - Self.Height)), If(nfWide, 0, Parent.Height - 120))
-      - RdPanel:
-          Control: HtmlViewer@2.1.0
-          Properties:
-            Font: |-
-              =Font.'Open Sans'
-            Height: |-
-              =(Parent.Height - nfNavH) - 128 - 32
-            HtmlText: |-
-              ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:36px;background:linear-gradient(135deg,rgba(255,255,255,0.94),rgba(255,255,255,0.78));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
-            PaddingBottom: |-
-              =0
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =0
-            Size: |-
-              =2
-            Width: |-
-              =nfRW + 48
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX - 24, Parent.Width - Self.Width)), nfRX - 24)
-            Y: |-
-              =If(nfDesign, Max(0, Min(144, Parent.Height - Self.Height)), 144)
-      - RdSave:
-          Control: Classic/Button@2.2.0
-          Properties:
-            BorderColor: |-
-              =RGBA(11,85,163,1)
-            BorderThickness: |-
-              =4
-            Color: |-
-              =RGBA(11,85,163,1)
-            DisabledBorderColor: |-
-              =RGBA(138,144,149,1)
-            DisabledColor: |-
-              =RGBA(74,79,84,1)
-            DisabledFill: |-
-              =RGBA(242,243,244,1)
-            Fill: |-
-              =RGBA(255,255,255,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =8
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            Height: |-
-              =80
-            HoverColor: |-
-              =RGBA(11,85,163,1)
-            HoverFill: |-
-              =RGBA(242,243,244,1)
-            OnSelect: |-
-              =If((gReadK & ":" & gReadRef) in colSaved.key, RemoveIf(colSaved, key = (gReadK & ":" & gReadRef)), Collect(colSaved, {key: gReadK & ":" & gReadRef, kind: gReadK, ref: gReadRef, n: 0, title: gReadTitle})); IfError(SaveData(colSaved, "dpeSaved"), Blank())
-            PressedColor: |-
-              =RGBA(11,85,163,1)
-            PressedFill: |-
-              =RGBA(242,243,244,1)
-            RadiusBottomLeft: |-
-              =16
-            RadiusBottomRight: |-
-              =16
-            RadiusTopLeft: |-
-              =16
-            RadiusTopRight: |-
-              =16
-            Size: |-
-              =22
-            TabIndex: |-
-              =0
-            Text: |-
-              =If((gReadK & ":" & gReadRef) in colSaved.key, "✓ Saved", "Save")
-            Width: |-
-              =208
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX + nfRW - 208, Parent.Width - Self.Width)), nfRX + nfRW - 208)
-            Y: |-
-              =If(nfDesign, Max(0, Min(148, Parent.Height - Self.Height)), 148)
-      - RdH:
-          Control: Label@2.5.1
-          Properties:
-            AutoHeight: |-
-              =true
-            Color: |-
-              =RGBA(27,27,27,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            LineHeight: |-
-              =1.2
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Role: |-
-              =TextRole.Heading2
-            Size: |-
-              =36
-            TabIndex: |-
-              =-1
-            Text: |-
-              =gReadTitle
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(244, Parent.Height - Self.Height)), 244)
-      - RdBody:
-          Control: HtmlViewer@2.1.0
-          Properties:
-            Color: |-
-              =RGBA(27,27,27,1)
-            Font: |-
-              =Font.'Open Sans'
-            Height: |-
-              =(Parent.Height - nfNavH) - (RdH.Y + RdH.Height + 8) - 16
-            HtmlText: |-
-              =gReadHtml
-            PaddingBottom: |-
-              =32
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =16
-            PaddingTop: |-
-              =8
-            Size: |-
-              =26
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(RdH.Y + RdH.Height + 8, Parent.Height - Self.Height)), RdH.Y + RdH.Height + 8)

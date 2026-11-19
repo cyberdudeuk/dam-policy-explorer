@@ -1552,7 +1552,7 @@ Screens:
             HoverFill: |-
               =RGBA(242,243,244,1)
             OnSelect: |-
-              =Set(gStep, gStep - 1)
+              =Set(gStep, gStep - 1); Reset(TsScroll)
             PressedColor: |-
               =RGBA(11,85,163,1)
             PressedFill: |-
@@ -1609,7 +1609,7 @@ Screens:
             HoverFill: |-
               =RGBA(8,62,120,1)
             OnSelect: |-
-              =If(gStep = 5, Set(gVerdict, If(LookUp(colAns, key = "official").v = "no" || CountRows(colPurp) = 0 || LookUp(colAns, key = "shared").v = "no" || LookUp(colAns, key = "accountable").v = "asis" || LookUp(colAns, key = "source").v = "derived", "out", (IsBlank(LookUp(colAns, key = "official").v) || LookUp(colAns, key = "official").v = "unsure") || (CountRows(colPurp) > 0 && CountRows(Filter(colPurp, v <> "unsure")) = 0) || (IsBlank(LookUp(colAns, key = "shared").v) || LookUp(colAns, key = "shared").v = "unsure") || (IsBlank(LookUp(colAns, key = "accountable").v) || LookUp(colAns, key = "accountable").v = "unsure") || (IsBlank(LookUp(colAns, key = "source").v) || LookUp(colAns, key = "source").v = "unsure"), "flag", LookUp(colAns, key = "shared").v = "potential", "in-later", "in")); Collect(colTested, {name: If(IsBlank(Trim(TsName.Text)), "Unnamed asset", Trim(TsName.Text)), head: Switch(gVerdict, "in", "Include it in your return", "in-later", "In scope: include it if you have time", "out", "Leave it out", "Include it provisionally, flagged")}); IfError(SaveData(colTested, "dpeTested"), Blank())); Set(gStep, gStep + 1)
+              =If(gStep = 5, Set(gVerdict, If(LookUp(colAns, key = "official").v = "no" || CountRows(colPurp) = 0 || LookUp(colAns, key = "shared").v = "no" || LookUp(colAns, key = "accountable").v = "asis" || LookUp(colAns, key = "source").v = "derived", "out", (IsBlank(LookUp(colAns, key = "official").v) || LookUp(colAns, key = "official").v = "unsure") || (CountRows(colPurp) > 0 && CountRows(Filter(colPurp, v <> "unsure")) = 0) || (IsBlank(LookUp(colAns, key = "shared").v) || LookUp(colAns, key = "shared").v = "unsure") || (IsBlank(LookUp(colAns, key = "accountable").v) || LookUp(colAns, key = "accountable").v = "unsure") || (IsBlank(LookUp(colAns, key = "source").v) || LookUp(colAns, key = "source").v = "unsure"), "flag", LookUp(colAns, key = "shared").v = "potential", "in-later", "in")); Collect(colTested, {name: If(IsBlank(Trim(TsName.Text)), "Unnamed asset", Trim(TsName.Text)), head: Switch(gVerdict, "in", "Include it in your return", "in-later", "In scope: include it if you have time", "out", "Leave it out", "Include it provisionally, flagged")}); IfError(SaveData(colTested, "dpeTested"), Blank())); Set(gStep, gStep + 1); Reset(TsScroll)
             PressedColor: |-
               =RGBA(255,255,255,1)
             PressedFill: |-
@@ -1668,7 +1668,7 @@ Screens:
             HoverFill: |-
               =RGBA(242,243,244,1)
             OnSelect: |-
-              =Navigate(ScrMatch, ScreenTransition.Fade)
+              =Navigate(ScrMatch, ScreenTransition.Fade); Reset(TsScroll)
             PressedColor: |-
               =RGBA(11,85,163,1)
             PressedFill: |-
@@ -1742,7 +1742,7 @@ Screens:
             HoverFill: |-
               =RGBA(8,62,120,1)
             OnSelect: |-
-              =Reset(TsName); Clear(colAns); Clear(colPurp); Set(gStep, 0)
+              =Reset(TsName); Clear(colAns); Clear(colPurp); Set(gStep, 0); Reset(TsScroll)
             PressedColor: |-
               =RGBA(255,255,255,1)
             PressedFill: |-
@@ -1801,7 +1801,7 @@ Screens:
             HoverFill: |-
               =RGBA(242,243,244,1)
             OnSelect: |-
-              =Set(gPid, "return"); Set(gSec, 1); Navigate(ScrPage, ScreenTransition.Fade)
+              =Set(gPid, "return"); Set(gSec, 1); Navigate(ScrPage, ScreenTransition.Fade); Reset(TsScroll)
             PressedColor: |-
               =RGBA(11,85,163,1)
             PressedFill: |-

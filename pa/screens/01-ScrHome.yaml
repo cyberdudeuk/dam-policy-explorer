@@ -8,7 +8,7 @@ Screens:
       LoadingSpinnerColor: |-
         =RGBA(11,85,163,1)
       OnVisible: |-
-        =If(IsBlank(gTour), Set(gTour, 0)); Set(gHomeSec, Blank())
+        =If(IsBlank(gTour), Set(gTour, 0)); Set(gHomeSec, Blank()); If(gTour > 0, SetFocus(HmTourNext))
       Width: |-
         =App.Width
     Children:
@@ -257,7 +257,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If((!IsBlank(gHomeSec)) || (gTour > 0), -1, 0)
             Text: |-
               ="Home"
             VerticalAlign: |-
@@ -343,7 +343,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If((!IsBlank(gHomeSec)) || (gTour > 0), -1, 0)
             Text: |-
               ="Asset test"
             VerticalAlign: |-
@@ -429,7 +429,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If((!IsBlank(gHomeSec)) || (gTour > 0), -1, 0)
             Text: |-
               ="Questions"
             VerticalAlign: |-
@@ -515,7 +515,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If((!IsBlank(gHomeSec)) || (gTour > 0), -1, 0)
             Text: |-
               ="Examples"
             VerticalAlign: |-
@@ -601,7 +601,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If((!IsBlank(gHomeSec)) || (gTour > 0), -1, 0)
             Text: |-
               ="My area"
             VerticalAlign: |-
@@ -643,7 +643,7 @@ Screens:
             Icon: |-
               =Icon.Lightbulb
             OnSelect: |-
-              =Set(gTour, 1)
+              =Set(gTour, 1); SetFocus(HmTourNext)
             PaddingBottom: |-
               =40
             PaddingLeft: |-
@@ -653,7 +653,7 @@ Screens:
             PaddingTop: |-
               =40
             TabIndex: |-
-              =0
+              =If((!IsBlank(gHomeSec)) || (gTour > 0), -1, 0)
             Visible: |-
               =!nfWide
             Width: |-
@@ -869,7 +869,7 @@ Screens:
             Size: |-
               =26
             TabIndex: |-
-              =0
+              =If((!IsBlank(gHomeSec)) || (gTour > 0), -1, 0)
             Text: |-
               =If(nfCompact || (nfShort && !nfWide), "Search everything", "Search the policy, answers and examples")
             Width: |-
@@ -910,7 +910,7 @@ Screens:
             HoverFill: |-
               =RGBA(255,255,255,0.16)
             OnSelect: |-
-              =Set(gTour, 1)
+              =Set(gTour, 1); SetFocus(HmTourNext)
             PressedColor: |-
               =RGBA(255,255,255,1)
             PressedFill: |-
@@ -926,7 +926,7 @@ Screens:
             Size: |-
               =26
             TabIndex: |-
-              =0
+              =If((!IsBlank(gHomeSec)) || (gTour > 0), -1, 0)
             Text: |-
               ="Take the 1-minute tour"
             Visible: |-
@@ -983,7 +983,7 @@ Screens:
             Size: |-
               =22
             TabIndex: |-
-              =0
+              =If((!IsBlank(gHomeSec)) || (gTour > 0), -1, 0)
             Text: |-
               =If((nfShort && !nfWide), "What is new (" & nfNewCount & ")", "What is new in version " & nfVersion & " (" & nfNewCount & ")")
             Visible: |-
@@ -1476,7 +1476,7 @@ Screens:
                         Size: |-
                           =16
                         TabIndex: |-
-                          =0
+                          =If((!IsBlank(gHomeSec)) || (gTour > 0), -1, 0)
                         Text: |-
                           =ThisItem.title & ". " & ThisItem.summ & If(IsBlank(ThisItem.flag), "", ". " & ThisItem.flag & " in this version")
                         Width: |-
@@ -1498,7 +1498,7 @@ Screens:
             Items: |-
               =nfSect
             OnSelect: |-
-              =Set(gHomeSec, ThisItem.n)
+              =Set(gHomeSec, ThisItem.n); SetFocus(HmShShade)
             ShowScrollbar: |-
               =true
             TabIndex: |-
@@ -1725,7 +1725,7 @@ Screens:
                   Size: |-
                     =16
                   TabIndex: |-
-                    =0
+                    =If((!IsBlank(gHomeSec)) || (gTour > 0), -1, 0)
                   Text: |-
                     ="Section " & ThisItem.n & ": " & ThisItem.title & ". " & ThisItem.blurb
                   Width: |-
@@ -2033,6 +2033,8 @@ Screens:
                     =12
                   TabIndex: |-
                     =-1
+                  Visible: |-
+                    =!nfTiny
                   Width: |-
                     =60
                   X: |-
@@ -2075,11 +2077,11 @@ Screens:
                   VerticalAlign: |-
                     =VerticalAlign.Middle
                   Width: |-
-                    =Parent.TemplateWidth - 176 - If(IsBlank(ThisItem.flag), 0, 160)
+                    =Parent.TemplateWidth - If(nfTiny, 92, 176) - If(IsBlank(ThisItem.flag), 0, 160)
                   Wrap: |-
                     =true
                   X: |-
-                    =104
+                    =If(nfTiny, 20, 104)
                   Y: |-
                     =0
             - HmShIFlag:

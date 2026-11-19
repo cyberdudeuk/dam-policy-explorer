@@ -377,7 +377,7 @@ Screens:
                   Size: |-
                     =26
                   TabIndex: |-
-                    =0
+                    =If((gPick = "MtTopic") || (gPick = "MtFormat"), -1, 0)
                   Visible: |-
                     =gMt = 1
                   Width: |-
@@ -621,7 +621,7 @@ Screens:
                   Size: |-
                     =26
                   TabIndex: |-
-                    =0
+                    =If((gPick = "MtTopic") || (gPick = "MtFormat"), -1, 0)
                   Visible: |-
                     =gMt = 2
                   Width: |-
@@ -664,7 +664,7 @@ Screens:
                   HoverFill: |-
                     =RGBA(242,243,244,1)
                   OnSelect: |-
-                    =Set(gPick, "MtTopic")
+                    =Set(gPick, "MtTopic"); SetFocus(MtTopicShade)
                   PaddingLeft: |-
                     =32
                   PressedColor: |-
@@ -682,7 +682,7 @@ Screens:
                   Size: |-
                     =22
                   TabIndex: |-
-                    =0
+                    =If((gPick = "MtTopic") || (gPick = "MtFormat"), -1, 0)
                   Text: |-
                     ="Topic: " & gMtTopic & "  ▾"
                   Visible: |-
@@ -727,7 +727,7 @@ Screens:
                   HoverFill: |-
                     =RGBA(242,243,244,1)
                   OnSelect: |-
-                    =Set(gPick, "MtFormat")
+                    =Set(gPick, "MtFormat"); SetFocus(MtFormatShade)
                   PaddingLeft: |-
                     =32
                   PressedColor: |-
@@ -745,7 +745,7 @@ Screens:
                   Size: |-
                     =22
                   TabIndex: |-
-                    =0
+                    =If((gPick = "MtTopic") || (gPick = "MtFormat"), -1, 0)
                   Text: |-
                     ="Format: " & gMtFmt & "  ▾"
                   Visible: |-
@@ -995,7 +995,7 @@ Screens:
                   Size: |-
                     =26
                   TabIndex: |-
-                    =0
+                    =If((gPick = "MtTopic") || (gPick = "MtFormat"), -1, 0)
                   Text: |-
                     ="Find matches on data.gov.uk"
                   Visible: |-
@@ -1056,7 +1056,7 @@ Screens:
                   Size: |-
                     =26
                   TabIndex: |-
-                    =0
+                    =If((gPick = "MtTopic") || (gPick = "MtFormat"), -1, 0)
                   Text: |-
                     ="Search with my exact words instead"
                   Visible: |-
@@ -1158,7 +1158,7 @@ Screens:
             PaddingTop: |-
               =40
             TabIndex: |-
-              =0
+              =If((gPick = "MtTopic") || (gPick = "MtFormat"), -1, 0)
             Width: |-
               =112
             X: |-
@@ -1232,7 +1232,7 @@ Screens:
             PaddingTop: |-
               =40
             TabIndex: |-
-              =0
+              =If((gPick = "MtTopic") || (gPick = "MtFormat"), -1, 0)
             Width: |-
               =112
             X: |-
@@ -1356,7 +1356,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If((gPick = "MtTopic") || (gPick = "MtFormat"), -1, 0)
             Text: |-
               ="Home"
             VerticalAlign: |-
@@ -1442,7 +1442,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If((gPick = "MtTopic") || (gPick = "MtFormat"), -1, 0)
             Text: |-
               ="Asset test"
             VerticalAlign: |-
@@ -1528,7 +1528,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If((gPick = "MtTopic") || (gPick = "MtFormat"), -1, 0)
             Text: |-
               ="Questions"
             VerticalAlign: |-
@@ -1614,7 +1614,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If((gPick = "MtTopic") || (gPick = "MtFormat"), -1, 0)
             Text: |-
               ="Examples"
             VerticalAlign: |-
@@ -1700,7 +1700,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If((gPick = "MtTopic") || (gPick = "MtFormat"), -1, 0)
             Text: |-
               ="My area"
             VerticalAlign: |-
@@ -1760,7 +1760,7 @@ Screens:
             HoverFill: |-
               =RGBA(242,243,244,1)
             OnSelect: |-
-              =Set(gMt, gMt - 1)
+              =Set(gMt, gMt - 1); Reset(MtScroll)
             PressedColor: |-
               =RGBA(11,85,163,1)
             PressedFill: |-
@@ -1776,7 +1776,7 @@ Screens:
             Size: |-
               =26
             TabIndex: |-
-              =0
+              =If((gPick = "MtTopic") || (gPick = "MtFormat"), -1, 0)
             Text: |-
               ="Previous"
             Width: |-
@@ -1815,7 +1815,7 @@ Screens:
             HoverFill: |-
               =RGBA(0,80,70,1)
             OnSelect: |-
-              =If(gMt = 3, Reset(MtDesc); Reset(MtPub); Set(gMtTopic, "Any"); Set(gMtFmt, "Any"); Set(gMt, 1), Set(gMt, gMt + 1))
+              =If(gMt = 3, Reset(MtDesc); Reset(MtPub); Set(gMtTopic, "Any"); Set(gMtFmt, "Any"); Set(gMt, 1), Set(gMt, gMt + 1)); Reset(MtScroll)
             PressedColor: |-
               =RGBA(255,255,255,1)
             PressedFill: |-
@@ -1831,7 +1831,7 @@ Screens:
             Size: |-
               =26
             TabIndex: |-
-              =0
+              =If((gPick = "MtTopic") || (gPick = "MtFormat"), -1, 0)
             Text: |-
               =If(gMt = 3, "Start again", "Next")
             Width: |-

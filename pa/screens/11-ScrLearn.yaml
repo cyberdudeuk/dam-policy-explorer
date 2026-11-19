@@ -1370,7 +1370,7 @@ Screens:
             HoverFill: |-
               =RGBA(242,243,244,1)
             OnSelect: |-
-              =If(gTutStep > 1, Set(gTutStep, gTutStep - 1), Set(gTut, Blank()))
+              =If(gTutStep > 1, Set(gTutStep, gTutStep - 1), Set(gTut, Blank())); Reset(LnScroll)
             PressedColor: |-
               =RGBA(11,85,163,1)
             PressedFill: |-
@@ -1427,7 +1427,7 @@ Screens:
             HoverFill: |-
               =RGBA(8,62,120,1)
             OnSelect: |-
-              =If(gTutStep < CountRows(Filter(nfTutSteps, tid = gTut)), Set(gTutStep, gTutStep + 1), If(!(gTut in colTut.id), Collect(colTut, {id: gTut})); IfError(SaveData(colTut, "dpeTut"), Blank()); Set(gTut, Blank()))
+              =If(gTutStep < CountRows(Filter(nfTutSteps, tid = gTut)), Set(gTutStep, gTutStep + 1), If(!(gTut in colTut.id), Collect(colTut, {id: gTut})); IfError(SaveData(colTut, "dpeTut"), Blank()); Set(gTut, Blank())); Reset(LnScroll)
             PressedColor: |-
               =RGBA(255,255,255,1)
             PressedFill: |-

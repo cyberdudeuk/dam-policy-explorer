@@ -154,7 +154,7 @@ Screens:
                         Size: |-
                           =22
                         TabIndex: |-
-                          =0
+                          =If(gPick = "SuType", -1, 0)
                         Text: |-
                           =If(gSupTab = ThisItem.tab, "✓ ", "") & ThisItem.tab
                         Width: |-
@@ -433,7 +433,7 @@ Screens:
                         Size: |-
                           =16
                         TabIndex: |-
-                          =0
+                          =If(gPick = "SuType", -1, 0)
                         Text: |-
                           =ThisItem.title & ". " & ThisItem.summ
                         Width: |-
@@ -616,7 +616,7 @@ Screens:
                   HoverFill: |-
                     =RGBA(242,243,244,1)
                   OnSelect: |-
-                    =Set(gPick, "SuType")
+                    =Set(gPick, "SuType"); SetFocus(SuTypeShade)
                   PaddingLeft: |-
                     =32
                   PressedColor: |-
@@ -634,7 +634,7 @@ Screens:
                   Size: |-
                     =22
                   TabIndex: |-
-                    =0
+                    =If(gPick = "SuType", -1, 0)
                   Text: |-
                     ="It is about: " & gReqType & "  ▾"
                   Visible: |-
@@ -808,7 +808,7 @@ Screens:
                   Size: |-
                     =26
                   TabIndex: |-
-                    =0
+                    =If(gPick = "SuType", -1, 0)
                   Visible: |-
                     =gSupTab = "Contact us"
                   Width: |-
@@ -841,7 +841,7 @@ Screens:
                   Size: |-
                     =22
                   TabIndex: |-
-                    =0
+                    =If(gPick = "SuType", -1, 0)
                   TrueFill: |-
                     =RGBA(11,85,163,1)
                   TrueText: |-
@@ -1015,7 +1015,7 @@ Screens:
                   Size: |-
                     =26
                   TabIndex: |-
-                    =0
+                    =If(gPick = "SuType", -1, 0)
                   Text: |-
                     =If(nfCompact, "Copy and open the form", "Copy my message and open the contact form")
                   Visible: |-
@@ -1074,7 +1074,7 @@ Screens:
                   Size: |-
                     =26
                   TabIndex: |-
-                    =0
+                    =If(gPick = "SuType", -1, 0)
                   Text: |-
                     =If(nfCompact, "Open the form only", "Open the contact form without a message")
                   Visible: |-
@@ -1209,7 +1209,7 @@ Screens:
                   Size: |-
                     =26
                   TabIndex: |-
-                    =0
+                    =If(gPick = "SuType", -1, 0)
                   Visible: |-
                     =gSupTab = "Feedback"
                   Width: |-
@@ -1264,7 +1264,7 @@ Screens:
                   Size: |-
                     =26
                   TabIndex: |-
-                    =0
+                    =If(gPick = "SuType", -1, 0)
                   Text: |-
                     ="Report a bug"
                   Visible: |-
@@ -1321,7 +1321,7 @@ Screens:
                   Size: |-
                     =26
                   TabIndex: |-
-                    =0
+                    =If(gPick = "SuType", -1, 0)
                   Text: |-
                     =If(nfCompact, "Suggest an idea or feature", "Suggest an idea, a new feature or an improvement")
                   Visible: |-
@@ -1380,7 +1380,7 @@ Screens:
                   Size: |-
                     =26
                   TabIndex: |-
-                    =0
+                    =If(gPick = "SuType", -1, 0)
                   Text: |-
                     ="See what has been reported"
                   Visible: |-
@@ -1482,7 +1482,7 @@ Screens:
             PaddingTop: |-
               =40
             TabIndex: |-
-              =0
+              =If(gPick = "SuType", -1, 0)
             Width: |-
               =112
             X: |-
@@ -1649,7 +1649,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If(gPick = "SuType", -1, 0)
             Text: |-
               ="Home"
             VerticalAlign: |-
@@ -1735,7 +1735,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If(gPick = "SuType", -1, 0)
             Text: |-
               ="Asset test"
             VerticalAlign: |-
@@ -1821,7 +1821,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If(gPick = "SuType", -1, 0)
             Text: |-
               ="Questions"
             VerticalAlign: |-
@@ -1907,7 +1907,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If(gPick = "SuType", -1, 0)
             Text: |-
               ="Examples"
             VerticalAlign: |-
@@ -1993,7 +1993,7 @@ Screens:
             Size: |-
               =18
             TabIndex: |-
-              =0
+              =If(gPick = "SuType", -1, 0)
             Text: |-
               ="My area"
             VerticalAlign: |-
