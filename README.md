@@ -4,7 +4,7 @@ A one-stop shop for the UK government Data Asset Management (DAM) Policy, made f
 
 **Open it:** [cyberdudeuk.github.io/dam-policy-explorer](https://cyberdudeuk.github.io/dam-policy-explorer/) ·
 **Version:** 1.3.0 (19 November 2026) ·
-**Status:** in development. This is not policy: the GOV.UK pages on the Data Asset Management Policy are the authority.
+**Status:** prototype, in development. This is not policy: the GOV.UK pages on the Data Asset Management Policy are the authority.
 
 ## Quick start
 
