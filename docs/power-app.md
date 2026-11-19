@@ -19,7 +19,7 @@ Fourteen screens: splash, Home, page, reader, questions, worked examples, glossa
 ## Design basis
 
 - Not on service.gov.uk, so no crown, no GOV.UK logotype and no GDS Transport. GOV.UK patterns are used where they fit (one thing per page in forms, plain labels, yellow focus).
-- One layout that follows the window: one column under 640 px wide, two from 640, top navigation and three columns from 900 and 1,100. A short window (under 550 px high, such as a phone held sideways) gets its own Home and splash layout.
+- One layout that follows the window: one column under 640 px wide, two from 640, top navigation and three columns from 900 and 1,100. A short window (under 550 px high, such as a phone held sideways) gets its own Home and splash layout. Forms and other long pages sit in one scrolling row, so they scroll as a whole at any size.
 - Phone-layout canvas apps count two units to a pixel. Every length in the generator is written in pixels and doubled on output.
 - Only real buttons and inputs take focus. Each card is one button whose text is its accessible name. Colour never carries meaning alone: every tag and status has words or an icon.
 - Glass panels and backdrops are inline HTML and SVG; motion stops under "reduce motion".
@@ -28,7 +28,7 @@ Fourteen screens: splash, Home, page, reader, questions, worked examples, glossa
 
 1. `python -I tools/build.py --home-url <site>` then `python -I tools/powerapp.py`. It exits 1 on any failed check.
 2. `python tools/pa_relay.py` builds a page with one copy button per file (the files are too large to type).
-3. In Studio: paste `formulas.fx` into `App.Formulas` first. Then add a blank screen, delete the old screens, paste `all-screens.yaml` from the blank screen's menu, and delete the blank screen.
+3. In Studio: paste `formulas.fx` into `App.Formulas` first. Then add a blank screen, delete the old screens, paste `all-screens.yaml` from the blank screen's menu, and delete the blank screen. To replace one screen, delete it and paste its file from another screen's menu.
 4. Check `App.StartScreen` is `ScrSplash`, run the App checker, preview at phone, tablet and window size, both ways up.
 
 ### Checking the paste
@@ -43,19 +43,39 @@ Run `python tools/powerapp.py --write-baseline pa/baseline.json` **after** publi
 
 | Limit | Effect | What would fix it |
 |---|---|---|
-| Forms do not scroll on a very short window (phone held sideways): contact form, Matchmaker, asset test, My area, tutorial steps | The bottom of the form cannot be reached. A notice says so and asks the user to turn the device upright. Lists and reading screens are unaffected. | Rebuild each form inside a vertical container with scrolling. |
-| Long text sections cannot be scrolled by keyboard (HTML viewer takes no focus) | Each has "Open the full page in the web explorer". | None inside a canvas app. |
+| A long page section cannot be scrolled with the keyboard alone, unless it contains a link (the HTML viewer takes no focus) | Touch, mouse wheel and screen-reader reading keys work. Keyboard-only users choose Contents, then "Open the full page in the web explorer", which is the version tested against WCAG 2.2 AA. Pages are split into sections with Previous and Next, which keeps most sections short. | Not possible with the HTML viewer. A rebuild of the reading screens as blocks in a scrolling row, with a focus stop per block, would do it. |
+| No test with assistive technology has been run on the Power Apps version | Screen-reader, voice-control and magnifier behaviour rests on Microsoft's guidance for canvas apps, not on observation. | A test session with people who use them, before the app is relied on. |
 | Matchmaker results open on data.gov.uk | No results inside the app. | A custom connector to the data.gov.uk API. |
 | My area is per device | Progress does not follow the user to another device. | A SharePoint list or Dataverse table; an owner decision. |
-| At exactly 320 px wide, some Home tile titles clip | iPhone SE (375 px) and wider are correct. | Smaller tile text under 360 px. |
+| Top-level screens (Home, lists, reading screens) are held inside the window at exactly 320 x 568 points, the size of the Studio canvas | Checked by eye at that size on 19 November: nothing overlaps. Any new content that overflows there would be squeezed instead of scrolling. | Move the screen into the scrolling row (see D-PA20, D-PA23). |
 | Studio preview at "Window size" crops the left edge when the browser window is narrower than the preview pane | Preview only. Not seen at tablet or phone presets. | Check in the published player. |
 
-### App checker (draft, 19 November 2026)
+Forms, My area, the asset test, the Matchmaker, tutorials and Support now scroll as one page at every size, including a phone held sideways (D-PA20 to D-PA23).
 
-Formulas 0, runtime 0, data source 0.
+### App checker (draft, 19 November 2026, after the last change)
 
-- Accessibility 587: 211 "missing accessible label" and 371 "missing tab stop", all on decorative or read-only controls (backdrops, accent bars, icons, text) that are deliberately out of the tab order, as Microsoft's guidance for decorative content says. 5 "focus isn't showing" on the five short-window notices, which cannot take focus. Open item: give them a focus border at the next build so the count is clean.
-- Performance 11: 10 "use AllItemsCount instead of CountRows" on the empty-list messages. Open item for the next build.
+Formulas: no errors. Runtime 0. Data source 0.
+
+- **Accessibility 596**, of two kinds only: 380 "missing tab stop" and 216 "missing accessible label". Every one is on a control that is deliberately not interactive: text, backdrops, accent bars, decorative icons, list containers.
+  - **Why the count cannot be zero.** A probe screen holding one brand-new label with no properties set was flagged "missing tab stop" by the checker. It flags every control whose tab index is below zero and every icon, shape or image with an empty label, whether or not it is interactive. Microsoft's own guidance says the opposite of the "fix": set the tab index to -1 for anything that is not interactive, leave the label empty for decoration, and "ignore any [suggestions] that might do more harm than good" ([accessibility checker](https://learn.microsoft.com/power-apps/maker/canvas-apps/accessibility-checker), [create accessible canvas apps](https://learn.microsoft.com/power-apps/maker/canvas-apps/accessible-apps)). Making 380 pieces of text into tab stops would make the app worse for keyboard users.
+  - The generator enforces the real rule instead: anything with an action has a name and a tab stop (D-PA3), every button has text (D-PA1), and focus is always shown.
+- **Performance 3** warnings: "too many controls on a screen" for Home, My area and Support. Advisory.
+
+### Checked by eye (19 November 2026)
+
+At 375 x 667: Home, My area (all four tabs), Worked examples, Questions, Support (all three tabs), the asset test (start, five questions, result), tutorials (list and a step), Matchmaker (step 1). At 320 x 568: My area Settings, scrolled to the end, and What is new on the Studio canvas. Phone held sideways: the asset test. Tablet 768 x 1024: Home and the asset test. Tablet 1024 x 768: Home and My area. Keyboard: Tab moves through the header and navigation with a yellow focus ring.
+
+Not checked in the last build: Matchmaker steps 2 and 3, Glossary, Search and the reading screen were last looked at one build earlier and their files have not changed since.
+
+## Tests
+
+- `python -I tools/powerapp.py` builds and runs every build check; it exits 1 on any failure.
+- `python -I tests/check_powerapp.py` runs the build in a temporary folder and compares it with the committed `pa/`, unit-tests the unit scaling and the HTML cleaner, and runs one negative test per recorded defect (it breaks the generator on purpose and expects the build to fail). Both run in CI.
+- The relay page's "Check" box compares each screen copied back from Studio with the build, property by property.
+
+## Reporting a bug or suggesting an idea
+
+Support has a Feedback tab: a box for the description, "Report a bug", "Suggest an idea or feature" and "See what has been reported". The buttons copy the description and open the matching issue form in the repository that hosts the web explorer (`.github/ISSUE_TEMPLATE/bug.yml`, `idea.yml`), with the app version filled in. Issues are public and need a free GitHub account; people without one are pointed to Contact us. Home lists it under Get help.
 
 ## Not done by the generator (owner steps)
 

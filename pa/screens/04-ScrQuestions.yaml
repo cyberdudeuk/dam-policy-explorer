@@ -108,7 +108,7 @@ Screens:
             Height: |-
               =128
             LineHeight: |-
-              =1.35
+              =1.15
             PaddingBottom: |-
               =4
             PaddingLeft: |-
@@ -120,7 +120,7 @@ Screens:
             Role: |-
               =TextRole.Heading1
             Size: |-
-              =32
+              =If(nfTiny, 26, 32)
             TabIndex: |-
               =-1
             Text: |-
@@ -130,7 +130,7 @@ Screens:
             Width: |-
               =If(nfWide, Parent.Width - (nfPad + 112) - nfPad - 1208, Parent.Width - (nfPad + 112) - 128)
             Wrap: |-
-              =false
+              =nfTiny
             X: |-
               =If(nfDesign, Max(0, Min(nfPad + 112, Parent.Width - Self.Width)), nfPad + 112)
       - QsHelp:
@@ -706,7 +706,7 @@ Screens:
             Height: |-
               =96
             HintText: |-
-              ="Search questions and answers"
+              =If(nfCompact, "Search questions", "Search questions and answers")
             HoverBorderColor: |-
               =RGBA(11,85,163,1)
             HoverFill: |-
@@ -848,7 +848,7 @@ Screens:
             TemplatePadding: |-
               =0
             TemplateSize: |-
-              =240
+              =192 + (Min(5, Max(1, RoundUp(Max(Filter(nfQA, (gTopic = "All" || topic = gTopic) && (IsBlank(QsSearch.Text) || QsSearch.Text in q || QsSearch.Text in t)), Len(q)) * 22 / ((nfCW + 20) / nfCols2 - (If(nfCompact, 40, 148) + 108)), 0))) - 2) * 42 + If(nfCompact, 28, 0)
             Width: |-
               =nfCW + 20
             WrapCount: |-
@@ -864,7 +864,7 @@ Screens:
                   Font: |-
                     =Font.'Open Sans'
                   Height: |-
-                    =220
+                    =Parent.TemplateHeight - 20
                   HtmlText: |-
                     ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:28px;background:linear-gradient(135deg,rgba(255,255,255,0.94),rgba(255,255,255,0.78));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
                   PaddingBottom: |-
@@ -927,12 +927,14 @@ Screens:
                     =20
                   TabIndex: |-
                     =-1
+                  Visible: |-
+                    =!nfCompact
                   Width: |-
                     =84
                   X: |-
                     =40
                   Y: |-
-                    =78
+                    =Parent.TemplateHeight / 2 - 42
             - QsListFlag:
                 Control: Label@2.5.1
                 Properties:
@@ -979,7 +981,7 @@ Screens:
                   X: |-
                     =Parent.TemplateWidth - 232
                   Y: |-
-                    =168
+                    =Parent.TemplateHeight - 72
             - QsListT:
                 Control: Label@2.5.1
                 Properties:
@@ -996,7 +998,7 @@ Screens:
                   FontWeight: |-
                     =FontWeight.Semibold
                   Height: |-
-                    =148
+                    =Parent.TemplateHeight - 92 - If(nfCompact, 28, 0)
                   LineHeight: |-
                     =1.2
                   PaddingBottom: |-
@@ -1016,11 +1018,11 @@ Screens:
                   VerticalAlign: |-
                     =VerticalAlign.Top
                   Width: |-
-                    =Parent.TemplateWidth - 236
+                    =Parent.TemplateWidth - (If(nfCompact, 40, 148) + 88)
                   Wrap: |-
                     =true
                   X: |-
-                    =148
+                    =If(nfCompact, 40, 148)
                   Y: |-
                     =20
             - QsListS:
@@ -1037,9 +1039,9 @@ Screens:
                   Font: |-
                     =Font.'Open Sans'
                   Height: |-
-                    =48
+                    =If(nfCompact, 76, 48)
                   LineHeight: |-
-                    =1.35
+                    =1.2
                   PaddingBottom: |-
                     =4
                   PaddingLeft: |-
@@ -1054,14 +1056,16 @@ Screens:
                     =-1
                   Text: |-
                     =ThisItem.prov & " · " & ThisItem.topic
+                  VerticalAlign: |-
+                    =VerticalAlign.Top
                   Width: |-
-                    =Parent.TemplateWidth - 236 - If(IsBlank(ThisItem.flag), 0, 160)
+                    =Parent.TemplateWidth - (If(nfCompact, 40, 148) + 88) - If(IsBlank(ThisItem.flag), 0, 160)
                   Wrap: |-
-                    =false
+                    =nfCompact
                   X: |-
-                    =148
+                    =If(nfCompact, 40, 148)
                   Y: |-
-                    =168
+                    =Parent.TemplateHeight - 72 - If(nfCompact, 28, 0)
             - QsListChev:
                 Control: Classic/Icon@2.5.0
                 Properties:
@@ -1084,7 +1088,7 @@ Screens:
                   X: |-
                     =Parent.TemplateWidth - 72
                   Y: |-
-                    =100
+                    =Parent.TemplateHeight / 2 - 20
             - QsListCard:
                 Control: Classic/Button@2.2.0
                 Properties:
@@ -1154,7 +1158,7 @@ Screens:
             TabIndex: |-
               =-1
             Visible: |-
-              =CountRows(QsList.AllItems) = 0 && true
+              =QsList.AllItemsCount = 0 && true
             Width: |-
               =80
             X: |-
@@ -1195,7 +1199,7 @@ Screens:
             Text: |-
               ="No answers match. Try a different word, or choose All."
             Visible: |-
-              =CountRows(QsList.AllItems) = 0 && true
+              =QsList.AllItemsCount = 0 && true
             Width: |-
               =nfRW
             X: |-

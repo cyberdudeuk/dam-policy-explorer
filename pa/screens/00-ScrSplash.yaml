@@ -74,7 +74,7 @@ Screens:
             X: |-
               =If(nfDesign, Max(0, Min(Parent.Width / 2 - 96, Parent.Width - Self.Width)), Parent.Width / 2 - 96)
             Y: |-
-              =If(nfDesign, Max(0, Min(Max(If(nfShort, 28, 48), (Parent.Height - 880) * 0.5), Parent.Height - Self.Height)), Max(If(nfShort, 28, 48), (Parent.Height - 880) * 0.5))
+              =If(nfDesign, Max(0, Min(If(Parent.Height < 2600, 28, Max(48, (Parent.Height - 880) * 0.5)), Parent.Height - Self.Height)), If(Parent.Height < 2600, 28, Max(48, (Parent.Height - 880) * 0.5)))
       - SpTitle:
           Control: Label@2.5.1
           Properties:
@@ -115,7 +115,7 @@ Screens:
             X: |-
               =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
             Y: |-
-              =If(nfDesign, Max(0, Min(SpLogo.Y + 244, Parent.Height - Self.Height)), SpLogo.Y + 244)
+              =If(nfDesign, Max(0, Min(SpLogo.Y + 264, Parent.Height - Self.Height)), SpLogo.Y + 264)
       - SpStrap:
           Control: Label@2.5.1
           Properties:
@@ -228,7 +228,7 @@ Screens:
             Text: |-
               =nfStats
             Visible: |-
-              =!nfShort
+              =Parent.Height >= 1300
             Width: |-
               =nfRW
             X: |-
@@ -289,7 +289,7 @@ Screens:
             X: |-
               =If(nfDesign, Max(0, Min(Parent.Width / 2 - 260, Parent.Width - Self.Width)), Parent.Width / 2 - 260)
             Y: |-
-              =If(nfDesign, Max(0, Min(Min(SpStats.Y + SpStats.Height + 40, Parent.Height - 248), Parent.Height - Self.Height)), Min(SpStats.Y + SpStats.Height + 40, Parent.Height - 248))
+              =If(nfDesign, Max(0, Min(Min(If(SpStats.Visible, SpStats.Y + SpStats.Height, If(SpHello.Visible, SpHello.Y + SpHello.Height, SpTitle.Y + SpTitle.Height)) + 40, Parent.Height - 248), Parent.Height - Self.Height)), Min(If(SpStats.Visible, SpStats.Y + SpStats.Height, If(SpHello.Visible, SpHello.Y + SpHello.Height, SpTitle.Y + SpTitle.Height)) + 40, Parent.Height - 248))
       - SpProto:
           Control: Label@2.5.1
           Properties:

@@ -21,7 +21,7 @@ if (ROOT / "tools" / "examples.py").exists():
 else:                      # releases before 1.2.0 had no worked examples (D-PA8: do not fall back to today's file when building an old baseline)
     class X: EXAMPLES, TOPICS = [], []
 
-OUT, PA = ROOT / "out", HERE / "pa"
+OUT, PA = ROOT / "out", pathlib.Path(os.environ.get("DPE_PA_OUT", HERE / "pa"))   # DPE_PA_OUT: write somewhere else (used by the negative tests)
 BASELINE = PA / "baseline.json"   # what the previous release contained: {"version": "...", "items": {key: hash}}
 SITE = "https://cyberdudeuk.github.io/dam-policy-explorer/"
 NATIVE = {"index.html", "asset-test.html", "questions.html", "examples.html", "glossary.html"}   # rebuilt as native screens
@@ -41,6 +41,7 @@ READER = [  # (file, short title, group, one-line summary)
 ]
 DROP = {"svg", "nav", "aside", "form", "fieldset", "button", "input", "select", "textarea", "option", "label", "noscript", "script", "style", "img", "legend"}
 KEEP = {"p", "ul", "ol", "li", "b", "strong", "em", "i", "a", "h3", "h4", "table", "thead", "tbody", "tr", "th", "td", "caption", "br", "code", "pre"}
+REPO = "https://github.com/cyberdudeuk/dam-policy-explorer"   # the repository that hosts the web explorer: its issue forms take bugs and ideas
 BANNED = re.compile(r"OCDO|Office of the Chief Data Officer|Data Management Team|sharepoint\.com|@dsit\.gov|@[a-z0-9-]+\.gov\.uk", re.I)
 
 
@@ -363,7 +364,8 @@ def formulas(pages, sections, qas, exs, glo):
             (4, "Resources", "Templates, guidance and playbooks", "page", "resources", "Folder"),
             (5, "User guide", "How to use this app", "page", "guide", "Journal"),
             (5, "Tutorials and tours", "Short walk-throughs of the main tasks", "learn", "", "Lightbulb"),
-            (5, "Support and contact", "Get help, report a problem or send a suggestion", "support", "", "Message"),
+            (5, "Support and contact", "Get help or ask a question", "support", "", "Message"),
+            (5, "Report a bug or suggest an idea", "Opens the public forms on GitHub", "feedback", "", "Bug"),
             (5, "About this app", "Sources, method, versions and roadmap", "page", "about", "Information"),
             (5, "Accessibility", "Accessibility and inclusion statement", "page", "accessibility", "View"),
             (6, "My area", "Your progress, saved items and tested assets", "me", "", "Person"),
@@ -380,7 +382,8 @@ def formulas(pages, sections, qas, exs, glo):
     f += table("nfTut", ["id", "title", "summ", "mins", "kind", "ref", "ic"], [(t[0], t[1], t[2], t[3], t[4], t[5], Raw("Icon." + t[6])) for t in TUTORIALS])
     f += table("nfTutSteps", ["tid", "n", "h", "t"], [(t[0], i, h, x) for t in TUTORIALS for i, (h, x) in enumerate(t[7], 1)])
     f += f'nfContact = "{C.CONTACT}";\nnfStale = {C.STALE_AFTER_DAYS};\n'
-    f += table("nfSupTabs", ["tab"], [("Get help",), ("Contact us",)])
+    f += table("nfSupTabs", ["tab"], [("Get help",), ("Contact us",), ("Feedback",)])
+    f += f'nfRepo = "{REPO}";\n'
     f += table("nfReqTypes", ["v"], [(t,) for t in ["A question about the policy", "A problem with this app", "An accessibility problem", "A suggestion", "Something else"]])
     f += table("nfSupport", ["title", "summ", "kind", "ref", "ic"], [(t, su, k, r, Raw("Icon." + ic)) for t, su, k, r, ic in [
         ("Tutorials and tours", "Short walk-throughs of the main tasks", "learn", "", "Lightbulb"),
@@ -439,14 +442,15 @@ nfCols2 = If(App.Width >= 1800, 2, 1);
 nfCompact = App.Width < 1280;
 nfDesign = App.Width = 640 && App.Height = 1136;
 nfShort = App.Height < 1100;
+nfTiny = App.Width < 720;
 nfTiles = nfCompact || (nfShort && !nfWide);
 """
 BAR, BTNH, S_BODY, S_SMALL, S_H2, S_LEAD, NAVW = 64, 48, 13, 11, 18, 15, 108
-SEC_ROWS = 5; SEC_H = 80 + SEC_ROWS * 48 + 18; TILE_H = 92
+SEC_ROWS = 6; SEC_H = 92 + SEC_ROWS * 48 + 18; TILE_H = 92
 PH = "(Parent.Height - nfNavH)"
 SB = "(nfShort && !nfWide)"   # short and not wide: a phone held sideways
 SHEET_Y = "If(nfShort, 8, 84)"   # top of the Home section sheet (84 = bar + 20)
-SHORT_NOTE = {"ScrSupport": 'gSupTab = "Contact us"', "ScrMatch": "true", "ScrTest": "true", "ScrMe": "true", "ScrLearn": "!IsBlank(gTut)"}
+SCROLL = {"ScrSupport": "Su", "ScrMatch": "Mt", "ScrTest": "Ts", "ScrMe": "Me", "ScrLearn": "Ln"}   # screens whose content scrolls as one page (D-PA15)
 FADE = "ScreenTransition.Fade"
 
 
@@ -460,14 +464,57 @@ _NUM = re.compile(r"(?<![A-Za-z_\d.])(\d+(?:\.\d+)?)(?![A-Za-z_\d.])")
 
 def scale(v):
     """Multiply the lengths in a formula by K. A number that is a factor or divisor (next to * or /) is a ratio, not a length, and is left alone."""
-    v = re.sub(r"\bpt\((\d+(?:\.\d+)?)\)", lambda m: str(int(float(m.group(1)) * K)), v)
+    v = re.sub(r"\bpt\((\d+(?:\.\d+)?)\)", lambda m: f"raw({int(float(m.group(1)) * K)})", v)   # pt(n): a length written out in full; doubled here, once (D-PA19)
+    v = re.sub(r"\braw\((\d+)\)", lambda m: "\x00" + "".join(chr(97 + int(d)) for d in m.group(1)) + "\x00", v)   # raw(n): a count, not a length; never doubled
     def f(m):
         before, after = v[:m.start()].rstrip(), v[m.end():].lstrip()
         if before.endswith(("*", "/")) or after.startswith(("*", "/")):
             return m.group(1)
         n = float(m.group(1)) * K
         return str(int(n)) if n == int(n) else str(n)
-    return _NUM.sub(f, v)
+    v = _NUM.sub(f, v)
+    return re.sub("\x00([a-j]+)\x00", lambda m: "".join(str(ord(c) - 97) for c in m.group(1)), v)
+
+
+ROW_DESIGN_H = 1600   # design height of the scrolling row, in pixels. At run time the row is as tall as its content; this is only the limit Studio checks positions against (D-PA23)
+
+
+def scroll_wrap(pfx, children):
+    """D-PA15: put a screen's content inside a one-row gallery, which scrolls by touch, wheel and keyboard focus.
+    The backdrop, header, navigation, anything pinned to the bottom of the window and the pop-up sheets stay outside."""
+    fixed = {pfx + x for x in ("Bg", "Bar", "Rib", "Back", "Logo", "Title", "Help")}
+    names = {c[0] for c in children}
+    def chrome(c):
+        n = c[0]
+        return n in fixed or "Nav" in n or "Shade" in n or "Sheet" in n or (n.endswith("Opts") and n[:-4] + "Shade" in names)
+    def pinned(c): return not chrome(c) and "Parent.Height" in str(c[2].get("Y", ""))      # buttons and bars that stay at the bottom of the window
+    body = [c for c in children if not chrome(c) and not pinned(c)]
+    if not body: return children
+    terms, panels = [], []
+    for c in body:
+        fills = "Parent.Height" in str(c[2].get("Height", ""))      # sized to the window: a list, a block of page text or a background panel
+        if fills and c[1] == GAL:                                   # a list keeps a usable height on a short window
+            c[2]["Height"] = f"Max(pt(200), {c[2]['Height']})"; terms.append(f"If({c[0]}.Visible, {c[0]}.Y + pt(200), 0)")
+        elif fills and c[0].endswith("Panel"): panels.append(c)
+        elif not fills: terms.append(f"If({c[0]}.Visible, {c[0]}.Y + {c[0]}.Height, 0)")
+    for c in panels:                                                # the card behind the content reaches at least to the end of the content
+        c[2]["Height"] = f"Max({c[2]['Height']}, {pfx}End.Y - ({c[2]['Y']}) + pt(12))"
+    # D-PA20: a fixed-height row does not learn the height of its own auto-height text (TemplateSize is not re-evaluated when a label inside grows),
+    # so the last lines of a long tab sat behind the navigation with nothing to scroll. A flexible-height row follows its content; the clear spacer
+    # at the end (first in the list, so beneath everything and never in the way of a tap) keeps the last control above the navigation and above
+    # whatever is pinned to the bottom of the window in the current state.
+    stack = "".join(f", If({c[0]}.Visible, (Parent.Height - nfNavH) - {c[0]}.Y, 0)" for c in children if pinned(c))
+    end = (pfx + "End", RECT, {"Fill": "RGBA(0,0,0,0)", "BorderThickness": 0, "TabIndex": -1, "AccessibleLabel": '""', "X": 0, "Y": f"Max({', '.join(terms)})", "Width": 2,
+                               "Height": f"nfNavH + pt(16) + Max(0{stack})" if stack else "nfNavH + pt(16)"})
+    wrap = (pfx + "Scroll", GAL, {"Items": "[1]", "X": 0, "Y": 0, "Width": "Parent.Width", "Height": "Parent.Height", "TemplatePadding": 0, "ShowScrollbar": "true", "TabIndex": -1,
+                                  "TemplateSize": f"pt({ROW_DESIGN_H})", "AccessibleLabel": '"Page content"', "Transition": "Transition.None"}, [end] + body, "VariableHeight")
+    out, placed = [], False
+    for c in children:
+        if c in body: continue
+        out.append(c)
+        if not placed and c[0] == pfx + "Bg": out.append(wrap); placed = True
+    assert placed, pfx
+    return out
 
 
 class Y:
@@ -479,20 +526,23 @@ class Y:
         for k in sorted(props):
             v = str(props[k])
             if k in LENGTH_PROPS:
-                for m in re.finditer(r"[*/]\s*(\d+(?:\.\d+)?)(?![\d.])|(?<![\d.])(\d+(?:\.\d+)?)\s*[*/]", re.sub(r"pt\(\d+\)", "", v)):
+                for m in re.finditer(r"[*/]\s*(\d+(?:\.\d+)?)(?![\d.])|(?<![\d.])(\d+(?:\.\d+)?)\s*[*/]", re.sub(r"(?:pt|raw)\(\d+\)", "", v)):
                     n = float(m.group(1) or m.group(2))
                     if n > 12: UNSCALED.append(f"{k}: {v[:80]}")   # D-PA10: looks like a length used as a factor; write pt(n)
                 v = scale(v)
+            v = re.sub(r"\braw\((\d+)\)", r"\1", v)
             self.w(ind + 2, f"{k}: |-")
             for i, line in enumerate(v.split("\n")):
                 self.w(ind + 4, ("=" if i == 0 else "") + line)
-    def ctl(self, ind, name, control, props, children=None, variant=None):
+    def ctl(self, ind, name, control, props, children=None, variant=None, guard=False):
         self.w(ind, f"- {name}:")
         self.w(ind + 4, f"Control: {control}")
         if variant: self.w(ind + 4, f"Variant: {variant}")
-        if ind == 6:
+        if ind == 6 or guard:
             props = dict(props)
-            for pos, size, par in (("X", "Width", "Parent.Width"), ("Y", "Height", "Parent.Height")):
+            # inside the scrolling row the limit is the row's design height (TemplateSize), not the window: content below the fold is still inside it,
+            # so nothing is squeezed on a 320 x 568 phone or on the Studio canvas (D-PA23)
+            for pos, size, par in (("X", "Width", "Parent.Width"), ("Y", "Height", "Parent.TemplateHeight" if guard else "Parent.Height")):
                 own = (f"Self.{pos}", f"{name}.{pos}")
                 if pos in props and size in props:      # a size written in terms of its own position is rewritten in terms of the position formula (Studio evaluated it with the position at 0)
                     for o in own: props[size] = str(props[size]).replace(o, f"({props[pos]})")
@@ -502,13 +552,11 @@ class Y:
         self.props(ind + 4, props)
         if children:
             self.w(ind + 4, "Children:")
-            for c in children: self.ctl(ind + 6, *c)
+            for c in children: self.ctl(ind + 6, *(list(c) + [None] * (5 - len(c))), guard=name.endswith("Scroll") and ind == 6)
     def screen(self, name, props, children):
         props = {"Width": "App.Width", "Height": "App.Height", **props}
-        if name in SHORT_NOTE:   # D-PA15: these screens hold a form that cannot fit a very short window; say so, in words, on top of everything
-            children = list(children) + [(name[3:5] + "ShortNote", LBL, {"Text": '"This screen needs more height. Turn your device upright, or make the window taller, to reach all of it."', "Font": FONT, "Size": S_SMALL, "FontWeight": "FontWeight.Semibold",
-                "Color": INK, "Fill": FOCUS, "X": 0, "Y": BAR + 4, "Width": "Parent.Width", "Height": 40, "AutoHeight": "false", "Align": "Align.Center", "VerticalAlign": "VerticalAlign.Middle", "PaddingLeft": 12, "PaddingRight": 12,
-                "TabIndex": -1, "Role": "TextRole.Default", "Live": "Live.Polite", "Visible": f"nfShort && ({SHORT_NOTE[name]})"})]
+        if name in SCROLL:
+            children = scroll_wrap(SCROLL[name], list(children))
         self.w(0, "Screens:"); self.w(2, f"{name}:"); self.props(4, props); self.w(4, "Children:")
         for c in children: self.ctl(6, *c)
         return "\n".join(self.l) + "\n"
@@ -630,8 +678,8 @@ def header(pfx, title, back=True, active=None, right=16, bg="nfBg1", ribbon=BRAN
         c.append(image(f"{pfx}Logo", "nfPad + 14", 14, 36))
     tut = SCREEN_TUT.get(pfx)
     if tut: right = 64
-    c.append(label(f"{pfx}Title", title, Color=WHITE, Size=16, FontWeight="FontWeight.Semibold", Height=BAR, AutoHeight="false", X=f"nfPad + {56 if back else 72}",
-                   Width=f"If(nfWide, Parent.Width - Self.X - nfPad - {len(NAV) * NAVW + 64}, Parent.Width - Self.X - {right})", VerticalAlign="VerticalAlign.Middle", Role="TextRole.Heading1", Wrap="false"))
+    c.append(label(f"{pfx}Title", title, Color=WHITE, Size="If(nfTiny, 13, 16)", LineHeight=1.15, FontWeight="FontWeight.Semibold", Height=BAR, AutoHeight="false", X=f"nfPad + {56 if back else 72}",
+                   Width=f"If(nfWide, Parent.Width - Self.X - nfPad - {len(NAV) * NAVW + 64}, Parent.Width - Self.X - {right})", VerticalAlign="VerticalAlign.Middle", Role="TextRole.Heading1", Wrap="nfTiny"))
     if tut:
         c.append(bar_icon(f"{pfx}Help", "Icon.Lightbulb", f"If(nfWide, Parent.Width - nfPad - {len(NAV) * NAVW + 56}, Parent.Width - 56)", f'Set(gTut, "{tut}"); Set(gTutStep, 1); Navigate(ScrLearn, {FADE})', "Tutorial for this screen"))
     return c + nav(pfx, active)
@@ -649,6 +697,7 @@ def open_item(tr=FADE):
     "match", Navigate(ScrMatch, {tr}),
     "learn", Set(gTut, Blank()); Navigate(ScrLearn, {tr}),
     "support", Navigate(ScrSupport, {tr}),
+    "feedback", Set(gSupTab, "Feedback"); Navigate(ScrSupport, {tr}),
     "contact", Set(gSupTab, "Contact us"),
     "web", Launch(nfSite))"""
 
@@ -657,30 +706,36 @@ TITLE_2L = 50    # units a two-line card title needs at body size (points, not p
 CARD_MIN = 10 + TITLE_2L + 24 + 12   # top, title, second line, bottom
 CARD_SUB = 36     # the second line sits this far above the bottom of the card
 CARD_GEOM = []
+CHAR_W = 11       # width allowed per character of a card title at body size, in pixels: Open Sans Semibold averages about 9.7, plus room for word wrap (estimate, checked by eye at 320 px)
+LINE_H = 21       # one more line of card title, in pixels
 
 
 def cards(name, items, onselect, title, sub, y, tmpl=88, extra=None, cols="1", wide=True, ic=None, col=BRAND, tint="RGBA(230,238,247,1)", alabel=None, flag=None):
     """A grid of cards. Each card is one rounded button (its text is the accessible name); the icon tile, title and
-    second line sit on top. Columns follow the window width. Colour always comes with an icon and words."""
+    second line sit on top. Columns follow the window width. Colour always comes with an icon and words.
+    The card height follows the longest title in the list at the current width (one to five lines), D-PA17."""
     tw, th = "Parent.TemplateWidth", "Parent.TemplateHeight"
-    tmpl = max(tmpl, CARD_MIN)
-    CARD_GEOM.append((name, 10 + tmpl - CARD_MIN + TITLE_2L, tmpl - CARD_SUB, tmpl - CARD_MIN + TITLE_2L))
     tx = 74 if ic else 20
-    ch = [glass(f"{name}Pl", 5, 5, f"{tw} - 10", tmpl - 10, r=14), rect(f"{name}Acc", col, X=5, Y=19, Width=4, Height=f"{th} - 38")]
+    cx, cw = ("nfCX", "nfCW") if wide else ("nfRX", "nfRW")
+    longest = f"Max({items}, Len({title.replace('ThisItem.', '')}))"
+    txf = f"If(nfCompact, 20, {tx})" if ic else str(tx)
+    lines = f"Min(raw(5), Max(raw(1), RoundUp({longest} * pt({CHAR_W}) / (({cw} + 10) / {cols} - ({txf} + 54)), 0)))"
+    size = f"{CARD_MIN} + ({lines} - raw(2)) * pt({LINE_H}) + If(nfCompact, pt(14), 0)"
+    CARD_GEOM.append((name, 10 + TITLE_2L, CARD_MIN - CARD_SUB, TITLE_2L))
+    ch = [glass(f"{name}Pl", 5, 5, f"{tw} - 10", f"{th} - 10", r=14), rect(f"{name}Acc", col, X=5, Y=19, Width=4, Height=f"{th} - 38")]
     if ic:
-        ch.append(deco(f"{name}Ic", ic, 20, tmpl / 2 - 21, 42, col, Fill=tint, PaddingLeft=10, PaddingRight=10, PaddingTop=10, PaddingBottom=10))
+        ch.append(deco(f"{name}Ic", ic, 20, f"{th} / 2 - 21", 42, col, Fill=tint, PaddingLeft=10, PaddingRight=10, PaddingTop=10, PaddingBottom=10, Visible="!nfCompact"))
     if flag:   # NEW / UPDATED tag: words on a high-contrast tag, never colour alone
-        ch.append(label(f"{name}Flag", f"Upper({flag})", X=f"{tw} - 116", Y=tmpl - 36, Width=72, Height=20, AutoHeight="false", Size=8, FontWeight="FontWeight.Bold", Fill=FOCUS, Color=INK, Align="Align.Center", VerticalAlign="VerticalAlign.Middle", Visible=f"!IsBlank({flag})"))
+        ch.append(label(f"{name}Flag", f"Upper({flag})", X=f"{tw} - 116", Y=f"{th} - 36", Width=72, Height=20, AutoHeight="false", Size=8, FontWeight="FontWeight.Bold", Fill=FOCUS, Color=INK, Align="Align.Center", VerticalAlign="VerticalAlign.Middle", Visible=f"!IsBlank({flag})"))
         asub = f'{sub} & If(IsBlank({flag}), "", ". " & {flag} & " in this version")'
-    fw = ""; sw_ = f" - If(IsBlank({flag}), 0, 80)" if flag else ""
-    ch += [label(f"{name}T", title, FontWeight="FontWeight.Semibold", Color=INK, Size=S_BODY, X=tx, Y=10, Width=f"{tw} - {tx + 44}{fw}", AutoHeight="false", Height=tmpl - CARD_MIN + TITLE_2L, Wrap="true", VerticalAlign="VerticalAlign.Top", LineHeight=1.2),
-           label(f"{name}S", sub, Color=MUTED, Size=S_SMALL, X=tx, Y=tmpl - CARD_SUB, Width=f"{tw} - {tx + 44}{sw_ if flag else ''}", AutoHeight="false", Height=24, Wrap="false"),
-           deco(f"{name}Chev", "Icon.ChevronRight", f"{tw} - 36", tmpl / 2 - 10, 20, MUTED),
+    sw_ = f" - If(IsBlank({flag}), 0, 80)" if flag else ""
+    ch += [label(f"{name}T", title, FontWeight="FontWeight.Semibold", Color=INK, Size=S_BODY, X=txf, Y=10, Width=f"{tw} - ({txf} + 44)", AutoHeight="false", Height=f"{th} - {CARD_MIN - TITLE_2L} - If(nfCompact, 14, 0)", Wrap="true", VerticalAlign="VerticalAlign.Top", LineHeight=1.2),
+           label(f"{name}S", sub, Color=MUTED, Size=S_SMALL, X=txf, Y=f"{th} - {CARD_SUB} - If(nfCompact, 14, 0)", Width=f"{tw} - ({txf} + 44){sw_}", AutoHeight="false", Height="If(nfCompact, 38, 24)", Wrap="nfCompact", VerticalAlign="VerticalAlign.Top", LineHeight=1.2),
+           deco(f"{name}Chev", "Icon.ChevronRight", f"{tw} - 36", f"{th} / 2 - 10", 20, MUTED),
            (f"{name}Card", BTN, {"Text": f"{title} & \". \" & {asub if flag else sub}", "Color": CLEAR, "HoverColor": CLEAR, "PressedColor": CLEAR, "OnSelect": "Select(Parent)", "Fill": CLEAR, "HoverFill": "RGBA(11,85,163,0.06)", "PressedFill": "RGBA(11,85,163,0.14)",
                                  "BorderColor": "RGBA(138,144,149,0.55)", "BorderThickness": 1, "HoverBorderColor": col, "FocusedBorderColor": FOCUS, "FocusedBorderThickness": 4, "X": 5, "Y": 5, "Width": f"{tw} - 10", "Height": f"{th} - 10", "TabIndex": 0,
                                  "RadiusTopLeft": 14, "RadiusTopRight": 14, "RadiusBottomLeft": 14, "RadiusBottomRight": 14, "Font": FONT, "Size": 8})]
-    cx, cw = ("nfCX", "nfCW") if wide else ("nfRX", "nfRW")
-    p = {"Items": items, "OnSelect": onselect, "Y": y, "X": f"{cx} - 5", "Width": f"{cw} + 10", "Height": f"{PH} - Self.Y", "TemplateSize": tmpl, "TemplatePadding": 0, "ShowScrollbar": "true", "TabIndex": -1, "WrapCount": cols, "AccessibleLabel": fx(alabel or name)}
+    p = {"Items": items, "OnSelect": onselect, "Y": y, "X": f"{cx} - 5", "Width": f"{cw} + 10", "Height": f"{PH} - Self.Y", "TemplateSize": size, "TemplatePadding": 0, "ShowScrollbar": "true", "TabIndex": -1, "WrapCount": cols, "AccessibleLabel": fx(alabel or name)}
     if extra: p.update(extra)
     return (name, GAL, p, ch, "Vertical")
 
@@ -714,15 +769,24 @@ def picker(name, items, field, var, y, lab, x="nfCX", w="Min(nfCW, 380)", vis=No
 
 
 def segmented(name, items, field, var, y):
-    """Tabs that share the width equally, so they always fit."""
-    c = chips(name, items, field, var, y)
-    c[2].update({"TemplateSize": f"(nfCW + 8) / CountRows({items})", "ShowNavigation": "false", "AccessibleLabel": '"Tabs"'})
-    return c
+    """Tabs that share the width equally. On a narrow phone, more than two tabs take two rows (D-PA16)."""
+    on = f"{var} = ThisItem.{field}"
+    rows = f"If((nfTiny && CountRows({items}) > raw(2)) || (nfCompact && CountRows({items}) > raw(3)), raw(2), raw(1))"
+    return (name, GAL, {"Items": items, "Y": y, "X": "nfCX - 4", "Width": "nfCW + 8", "Height": f"{rows} * pt(52)", "TemplateSize": 52, "TemplatePadding": 0, "WrapCount": f"RoundUp(CountRows({items}) / {rows}, 0)", "ShowScrollbar": "false", "TabIndex": -1,
+                        "OnSelect": f"Set({var}, ThisItem.{field})", "AccessibleLabel": '"Tabs"'},
+            [button(f"{name}B", f'If({on}, "✓ ", "") & ThisItem.{field}', "Select(Parent)", X=4, Y=4, Height=44, Size=S_SMALL, Width="Parent.TemplateWidth - 8", Fill=f"If({on}, {BRAND}, {WHITE})", Color=f"If({on}, {WHITE}, {BRAND})", HoverColor=f"If({on}, {WHITE}, {BRAND})", HoverFill=f"If({on}, {BRAND}, {SOFT})",
+                    BorderThickness=2, BorderColor=BRAND, RadiusTopLeft=22, RadiusTopRight=22, RadiusBottomLeft=22, RadiusBottomRight=22)],
+            "Vertical")
+
+
+SHORT_HINT = {"QsSearch": "Search questions", "ExSearch": "Search examples", "SrSearch": "Search everything", "TsName": "For example, Vehicle records"}   # hints that would be cut on a phone (D-PA18)
 
 
 def text_box(name, hint, y, **p):
     d = {"HintText": fx(hint), "AccessibleLabel": fx(hint), "Default": '""', "DelayOutput": "true", "Font": FONT, "Size": S_BODY, "Height": BTNH, "Y": y, "X": "nfCX", "Width": "Min(nfCW, 760)", "BorderColor": INK, "BorderThickness": 2, "FocusedBorderColor": FOCUS, "FocusedBorderThickness": 4, "Color": INK, "Fill": WHITE, "HoverFill": WHITE, "HoverBorderColor": BRAND, "Clear": "true", "TabIndex": 0, "RadiusTopLeft": 8, "RadiusTopRight": 8, "RadiusBottomLeft": 8, "RadiusBottomRight": 8, "PaddingLeft": 44}
-    d.update(p); return (name, TXT, d)
+    d.update(p)
+    if name in SHORT_HINT: d["HintText"] = f"If(nfCompact, {fx(SHORT_HINT[name])}, {d['HintText']})"   # the full wording stays in the accessible label
+    return (name, TXT, d)
 
 
 def search_field(name, hint, y):
@@ -735,8 +799,8 @@ def html_view(name, expr, y, h, **p):
 
 
 def empty(name, gallery, text, vis_extra="true"):
-    return [deco(f"{name}Ic", "Icon.Search", "(Parent.Width - 40) / 2", f"{gallery}.Y + 28", 40, LINE, Visible=f"CountRows({gallery}.AllItems) = 0 && {vis_extra}"),
-            label(name, fx(text), Y=f"{gallery}.Y + 76", Align="Align.Center", Color=MUTED, Visible=f"CountRows({gallery}.AllItems) = 0 && {vis_extra}", Live="Live.Polite")]
+    return [deco(f"{name}Ic", "Icon.Search", "(Parent.Width - 40) / 2", f"{gallery}.Y + 28", 40, LINE, Visible=f"{gallery}.AllItemsCount = 0 && {vis_extra}"),
+            label(name, fx(text), Y=f"{gallery}.Y + 76", Align="Align.Center", Color=MUTED, Visible=f"{gallery}.AllItemsCount = 0 && {vis_extra}", Live="Live.Polite")]
 
 
 def progress(pfx, y, frac, vis="true"):
@@ -779,16 +843,16 @@ def screens():
           rect("HmSecTop", "ThisItem.col", X=22, Y=6, Width="Parent.TemplateWidth - 44", Height=4),
           label("HmSecN", "ThisItem.n", X=22, Y=24, Width=36, Height=36, AutoHeight="false", Size=15, FontWeight="FontWeight.Bold", Color=WHITE, Fill="ThisItem.col", Align="Align.Center", VerticalAlign="VerticalAlign.Middle"),
           label("HmSecT", "ThisItem.title", X=70, Y=20, Width="Parent.TemplateWidth - 92", Height=26, AutoHeight="false", Wrap="false", Size=S_LEAD, FontWeight="FontWeight.Semibold", Role="TextRole.Heading2", Color="ThisItem.col"),
-          label("HmSecB", "ThisItem.blurb", X=70, Y=44, Width="Parent.TemplateWidth - 92", Height=22, AutoHeight="false", Wrap="false", **small),
-          rect("HmSecRule", "ThisItem.tint", X=22, Y=74, Width="Parent.TemplateWidth - 44", Height=2),
-          ("HmSecItems", GAL, {"Items": "Filter(nfHome, sec = ThisItem.n)", "X": 14, "Y": 80, "Width": "Parent.TemplateWidth - 28", "Height": SEC_ROWS * 48, "TemplateSize": 48, "TemplatePadding": 0, "ShowScrollbar": "false", "TabIndex": -1, "AccessibleLabel": '"Links in this section"', "OnSelect": open_item()},
+          label("HmSecB", "ThisItem.blurb", X=70, Y=44, Width="Parent.TemplateWidth - 92", Height=36, AutoHeight="false", Wrap="true", LineHeight=1.2, VerticalAlign="VerticalAlign.Top", **small),
+          rect("HmSecRule", "ThisItem.tint", X=22, Y=86, Width="Parent.TemplateWidth - 44", Height=2),
+          ("HmSecItems", GAL, {"Items": "Filter(nfHome, sec = ThisItem.n)", "X": 14, "Y": 92, "Width": "Parent.TemplateWidth - 28", "Height": SEC_ROWS * 48, "TemplateSize": 48, "TemplatePadding": 0, "ShowScrollbar": "false", "TabIndex": -1, "AccessibleLabel": '"Links in this section"', "OnSelect": open_item()},
            [deco("HmItIc", "ThisItem.ic", 10, 9, 30, "ThisItem.col", Fill="ThisItem.tint", PaddingLeft=6, PaddingRight=6, PaddingTop=6, PaddingBottom=6),
-            label("HmItT", "ThisItem.title", X=52, Y=0, Width="Parent.TemplateWidth - 88 - If(IsBlank(ThisItem.flag), 0, 80)", Height=48, AutoHeight="false", Wrap="false", VerticalAlign="VerticalAlign.Middle", FontWeight="FontWeight.Semibold"),
+            label("HmItT", "ThisItem.title", X=52, Y=0, Width="Parent.TemplateWidth - 88 - If(IsBlank(ThisItem.flag), 0, 80)", Height=48, AutoHeight="false", Wrap="true", LineHeight=1.15, VerticalAlign="VerticalAlign.Middle", FontWeight="FontWeight.Semibold"),
             label("HmItFlag", "Upper(ThisItem.flag)", X="Parent.TemplateWidth - 108", Y=14, Width=72, Height=20, AutoHeight="false", Size=8, FontWeight="FontWeight.Bold", Fill=FOCUS, Color=INK, Align="Align.Center", VerticalAlign="VerticalAlign.Middle", Visible="!IsBlank(ThisItem.flag)"),
             deco("HmItChev", "Icon.ChevronRight", "Parent.TemplateWidth - 30", 15, 18, MUTED),
             ("HmItBtn", BTN, {"Text": 'ThisItem.title & ". " & ThisItem.summ & If(IsBlank(ThisItem.flag), "", ". " & ThisItem.flag & " in this version")', "Color": CLEAR, "HoverColor": CLEAR, "PressedColor": CLEAR, "OnSelect": "Select(Parent)", "Fill": CLEAR, "HoverFill": "RGBA(11,85,163,0.07)", "PressedFill": "RGBA(11,85,163,0.15)", "BorderThickness": 0,
                               "FocusedBorderColor": FOCUS, "FocusedBorderThickness": 4, "X": 2, "Y": 2, "Width": "Parent.TemplateWidth - 4", "Height": 44, "TabIndex": 0, "RadiusTopLeft": 10, "RadiusTopRight": 10, "RadiusBottomLeft": 10, "RadiusBottomRight": 10, "Font": FONT, "Size": 8})], "Vertical")], "Vertical"),
-        ("HmTiles", GAL, {"Items": "nfSect", "Y": "HmSecsH.Y + HmSecsH.Height + 4", "X": "nfCX - 5", "Width": "nfCW + 10", "Height": f"Max(96, {PH} - Self.Y)", "TemplateSize": TILE_H, "TemplatePadding": 0, "WrapCount": "If(nfCompact, 2, 3)", "ShowScrollbar": "true", "TabIndex": -1,
+        ("HmTiles", GAL, {"Items": "nfSect", "Y": "HmSecsH.Y + HmSecsH.Height + 4", "X": "nfCX - 5", "Width": "nfCW + 10", "Height": f"Max(96, {PH} - Self.Y)", "TemplateSize": TILE_H, "TemplatePadding": 0, "WrapCount": "If(nfTiny, 1, nfCompact, 2, 3)", "ShowScrollbar": "true", "TabIndex": -1,
                           "AccessibleLabel": '"Sections"', "Visible": "nfTiles", "DisplayMode": f"If({tv}, DisplayMode.Disabled, DisplayMode.Edit)", "OnSelect": "Set(gHomeSec, ThisItem.n)"},
          [glass("HmTilePl", 5, 5, "Parent.TemplateWidth - 10", TILE_H - 10, r=16),
           rect("HmTileTop", "ThisItem.col", X=19, Y=5, Width="Parent.TemplateWidth - 38", Height=4),
@@ -805,7 +869,7 @@ def screens():
         label("HmShB", "LookUp(nfSect, n = gHomeSec).blurb", X="(Parent.Width - Min(Parent.Width - 32, 440)) / 2 + 62", Y="HmShT.Y + HmShT.Height", Width="Min(Parent.Width - 32, 440) - 82", Visible="!IsBlank(gHomeSec)", **small),
         ("HmShItems", GAL, {"Items": "Filter(nfHome, sec = gHomeSec)", "X": "(Parent.Width - Min(Parent.Width - 32, 440)) / 2 + 10", "Y": "HmShB.Y + HmShB.Height + 10", "Width": "Min(Parent.Width - 32, 440) - 20", "Height": "Min(CountRows(Filter(nfHome, sec = gHomeSec)) * pt(48), Parent.Height - Self.Y - 72)", "TemplateSize": 48, "TemplatePadding": 0, "ShowScrollbar": "true", "TabIndex": -1, "AccessibleLabel": '"Links in this section"', "Visible": "!IsBlank(gHomeSec)", "OnSelect": "Set(gHomeSec, Blank()); " + open_item()},
            [deco("HmShIIc", "ThisItem.ic", 10, 9, 30, "ThisItem.col", Fill="ThisItem.tint", PaddingLeft=6, PaddingRight=6, PaddingTop=6, PaddingBottom=6),
-            label("HmShIT", "ThisItem.title", X=52, Y=0, Width="Parent.TemplateWidth - 88 - If(IsBlank(ThisItem.flag), 0, 80)", Height=48, AutoHeight="false", Wrap="false", VerticalAlign="VerticalAlign.Middle", FontWeight="FontWeight.Semibold"),
+            label("HmShIT", "ThisItem.title", X=52, Y=0, Width="Parent.TemplateWidth - 88 - If(IsBlank(ThisItem.flag), 0, 80)", Height=48, AutoHeight="false", Wrap="true", LineHeight=1.15, VerticalAlign="VerticalAlign.Middle", FontWeight="FontWeight.Semibold"),
             label("HmShIFlag", "Upper(ThisItem.flag)", X="Parent.TemplateWidth - 108", Y=14, Width=72, Height=20, AutoHeight="false", Size=8, FontWeight="FontWeight.Bold", Fill=FOCUS, Color=INK, Align="Align.Center", VerticalAlign="VerticalAlign.Middle", Visible="!IsBlank(ThisItem.flag)"),
             deco("HmShIChev", "Icon.ChevronRight", "Parent.TemplateWidth - 30", 15, 18, MUTED),
             ("HmShIBtn", BTN, {"Text": 'ThisItem.title & ". " & ThisItem.summ & If(IsBlank(ThisItem.flag), "", ". " & ThisItem.flag & " in this version")', "Color": CLEAR, "HoverColor": CLEAR, "PressedColor": CLEAR, "OnSelect": "Select(Parent)", "Fill": CLEAR, "HoverFill": "RGBA(11,85,163,0.07)", "PressedFill": "RGBA(11,85,163,0.15)", "BorderThickness": 0,
@@ -870,7 +934,7 @@ def screens():
         *header("Ex", '"Worked examples"', active="ScrExamples", bg="nfBg2", ribbon="RGBA(0,105,92,1)"),
         *search_field("ExSearch", "Search examples, sectors and topics", BAR + 12),
         *ep[0],
-        ("ExAgreed", TOG, {"Default": "false", "TrueText": '"Agreed only"', "FalseText": '"Agreed only: off"', "AccessibleLabel": '"Show agreed examples only"', "X": "ExKindBtn.X + ExKindBtn.Width + 12", "Y": BAR + 68, "Width": "nfCW - ExKindBtn.Width - 12", "Height": 44, "Size": S_SMALL, "Font": FONT, "Color": INK, "TabIndex": 0, "TrueFill": BRAND, "FalseFill": MUTED, "FocusedBorderColor": FOCUS, "FocusedBorderThickness": 4}),
+        ("ExAgreed", TOG, {"Default": "false", "TrueText": '"Agreed only"', "FalseText": '"Agreed only"', "AccessibleLabel": '"Show agreed examples only"', "X": "ExKindBtn.X + ExKindBtn.Width + 12", "Y": BAR + 68, "Width": "nfCW - ExKindBtn.Width - 12", "Height": 44, "Size": S_SMALL, "Font": FONT, "Color": INK, "TabIndex": 0, "TrueFill": BRAND, "FalseFill": MUTED, "FocusedBorderColor": FOCUS, "FocusedBorderThickness": 4}),
         label("ExCount", f'CountRows({eitems}) & " of " & CountRows(nfEx) & " examples"', Y=BAR + 118, X="nfCX", Width="nfCW", Live="Live.Polite", **small),
         cards("ExList", eitems, read('"Example " & ThisItem.id', "ThisItem.title", "ThisItem.x", "ex", "ThisItem.id"), 'ThisItem.id & ": " & ThisItem.title', 'ThisItem.kind & " · " & ThisItem.stat & " · " & ThisItem.sector', BAR + 144, tmpl=120, cols="nfCols2", ic="ThisItem.ic", col="ThisItem.col", tint="ThisItem.tint", flag="ThisItem.flag"),
         *empty("ExNone", "ExList", "No examples match. Try a different word, or choose All."),
@@ -890,7 +954,7 @@ def screens():
         *header("Sr", '"Search"', bg="nfBg4", ribbon="RGBA(90,47,138,1)"),
         *search_field("SrSearch", "Search pages, answers, examples and glossary", BAR + 12),
         label("SrCount", f'If(Len(Trim(SrSearch.Text)) < 2, "Type two or more letters to search {{N}} pages, answers, examples and words.", CountRows({sitems}) & " results")', Y=BAR + 68, X="nfCX", Width="nfCW", Live="Live.Polite", **small),
-        cards("SrList", sitems, open_ref(), "ThisItem.title", 'ThisItem.type & " · " & ThisItem.t', BAR + 100, tmpl=112, cols="nfCols2", ic="ThisItem.ic", col="ThisItem.col", tint="ThisItem.tint", flag="ThisItem.flag"),
+        cards("SrList", sitems, open_ref(), "ThisItem.title", 'ThisItem.type & " · " & ThisItem.t', "SrCount.Y + SrCount.Height + 8", tmpl=112, cols="nfCols2", ic="ThisItem.ic", col="ThisItem.col", tint="ThisItem.tint", flag="ThisItem.flag"),
         *empty("SrNone", "SrList", "No results. Try a different word.", "Len(Trim(SrSearch.Text)) >= 2"),
     ])
     # --- Asset test: one question per step, then the result. Same rules as decideAsset() in the web explorer. ---
@@ -919,7 +983,7 @@ def screens():
     sel = 'If(' + q + '.multi = 1, ThisItem.v in colPurp.v, LookUp(colAns, key = ' + q + '.key).v = ThisItem.v)'
     pick = ('If(' + q + '.multi = 1,\n    If(ThisItem.v in colPurp.v, RemoveIf(colPurp, v = ThisItem.v), Collect(colPurp, {v: ThisItem.v})),\n'
             '    RemoveIf(colAns, key = ' + q + '.key); Collect(colAns, {key: ' + q + '.key, v: ThisItem.v}))')
-    tested = '"<ul>" & Concat(colTested, "<li><b>" & EncodeHTML(name) & "</b>: " & head & "</li>") & "</ul>"'
+    tested = 'Concat(colTested, "• " & name & ": " & head, Char(10))'
     has_t = "gStep = 0 && CountRows(colTested) > 0"
     b2 = "(nfRW - 12) / 2"
     vcol = f'Switch(gVerdict, "in", {OK_C}, "out", {BAD_C}, {WARN_C})'
@@ -932,13 +996,14 @@ def screens():
         label("TsNameL", '"Name of the possible asset (optional)"', Y="TsIntro.Y + TsIntro.Height + 16", FontWeight="FontWeight.Semibold", Visible=s0),
         text_box("TsName", "Name of the possible asset (optional)", "TsNameL.Y + TsNameL.Height + 4", Visible=s0, MaxLength=120, Clear="false", X="nfRX", Width="nfRW", DelayOutput="false", PaddingLeft=12, HintText='"For example, Vehicle keeper records"'),
         button("TsStart", '"Start the test"', "Clear(colAns); Clear(colPurp); Set(gStep, 1)", X="nfRX", Y="TsName.Y + TsName.Height + 16", Width="Min(nfRW, 260)", Visible=s0),
-        label("TsTestedH", '"Assets you have tested in this session"', Y="TsStart.Y + TsStart.Height + 24", Visible=has_t, **{**h2, "Size": S_LEAD}),
-        html_view("TsTested", tested, "TsTestedH.Y + TsTestedH.Height + 4", f"{PH} - Self.Y - 8", Visible=has_t),
+        label("TsTestedH", '"Assets you have tested on this device"', Y="TsStart.Y + TsStart.Height + 24", Visible=has_t, **{**h2, "Size": S_LEAD}),
+        label("TsTested", tested, Y="TsTestedH.Y + TsTestedH.Height + 4", Visible=has_t),      # D-PA21: plain text that grows; the HTML box was squeezed to nothing on a phone
         label("TsQn", '"Question " & gStep & " of 5"', Y=BAR + 10, Visible=isq, Live="Live.Polite", **small),
         *progress("Ts", BAR + 36, "gStep / 5", isq),
         label("TsQ", f"{q}.q", Y=BAR + 52, Visible=isq, Live="Live.Polite", **h2),
         label("TsHint", f"{q}.hint", Y="TsQ.Y + TsQ.Height + 4", Visible=isq, **small),
-        ("TsOpts", GAL, {"Items": f"Filter(nfTestOpt, key = {q}.key)", "Y": "TsHint.Y + TsHint.Height + 8", "X": "nfRX", "Width": "nfRW", "Height": f"{PH} - Self.Y - {BTNH + 24}", "TemplateSize": "If(nfRW < 480, 76, 60)", "TemplatePadding": 0, "Visible": isq, "ShowScrollbar": "true", "TabIndex": -1, "OnSelect": pick, "AccessibleLabel": '"Answers"'},
+        # D-PA22: answer rows are as tall as the longest answer needs (three-line answers touched the edge of a fixed row)
+        ("TsOpts", GAL, {"Items": f"Filter(nfTestOpt, key = {q}.key)", "Y": "TsHint.Y + TsHint.Height + 8", "X": "nfRX", "Width": "nfRW", "Height": f"{PH} - Self.Y - {BTNH + 24}", "TemplateSize": f"pt(38) + Min(raw(4), Max(raw(1), RoundUp((Max(Filter(nfTestOpt, key = {q}.key), Len(label)) + raw(3)) * pt(10) / (nfRW - 44), 0))) * pt(22)", "TemplatePadding": 0, "Visible": isq, "ShowScrollbar": "true", "TabIndex": -1, "OnSelect": pick, "AccessibleLabel": '"Answers"'},
          [button("TsOpt", f'If({sel}, "✓  ", "") & ThisItem.label', "Select(Parent)", X=0, Y=4, Width="Parent.TemplateWidth - 12", Height="Parent.TemplateHeight - 8", Align="Align.Left", PaddingLeft=16,
                  Fill=f"If({sel}, {BRAND}, {WHITE})", Color=f"If({sel}, {WHITE}, {INK})", HoverFill=f"If({sel}, {BRAND}, {SOFT})", HoverColor=f"If({sel}, {WHITE}, {INK})", PressedFill=BRAND, BorderThickness=2, BorderColor=f"If({sel}, {BRAND}, {INK})", FontWeight="FontWeight.Normal")], "Vertical"),
         footer("Ts", isq),
@@ -949,7 +1014,7 @@ def screens():
         rect("TsResAcc", vcol, X="nfRX - 8", Y=BAR + 36, Width=5, Height="TsResBg.Height", Visible=isres),
         deco("TsResIc", 'Switch(gVerdict, "in", Icon.CheckBadge, "out", Icon.CancelBadge, Icon.Warning)', "nfRX + 8", BAR + 48, 40, vcol, Visible=isres),
         label("TsResH", f'If(IsBlank(Trim(TsName.Text)), "", Trim(TsName.Text) & ": ") & {head}', Y=BAR + 48, X="nfRX + 60", Width="nfRW - 60", Visible=isres, Live="Live.Assertive", **h2),
-        html_view("TsRes", f'"<ul>" & {reasons} & "</ul><p>" & {nxt} & "</p>"', "TsResBg.Y + TsResBg.Height + 12", f"{PH} - Self.Y - {2 * BTNH + 40}", Visible=isres),
+        label("TsRes", f'Substitute(Substitute({reasons}, "<li>", "• "), "</li>", Char(10) & Char(10)) & {nxt}', Y="TsResBg.Y + TsResBg.Height + 12", Visible=isres),
         secondary("TsMatch", '"Look for a match in the National Data Library"', f"Navigate(ScrMatch, {FADE})", X="nfRX", Y=f"{PH} - {2 * BTNH + 30}", Width="nfRW", Visible=isres),
         footer("TsR", isres),
         button("TsAgain", '"Test another asset"', "Reset(TsName); Clear(colAns); Clear(colPurp); Set(gStep, 0)", X="nfRX", Y=foot_y, Width=b2, Visible=isres),
@@ -962,12 +1027,12 @@ def screens():
     S["00-ScrSplash"] = Y().screen("ScrSplash", {"Fill": BRAND_D, "LoadingSpinnerColor": WHITE, "OnVisible": f'If(IsBlank(gLoaded), Set(gLoaded, true); {load}; Set(gRole, First(colPrefs).role)); Set(gTour, 0); Set(gGo, Lower(Coalesce(Param("go"), "")))'}, [
         backdrop("SpArt", "nfSplashArt"),
         glass("SpDisc", f"{cxm} - 60", "SpLogo.Y - 12", 120, 120, r=60, a=.30, b=.12),
-        image("SpLogo", f"{cxm} - 48", "Max(If(nfShort, 14, 24), (Parent.Height - 440) * 0.5)", 96, AccessibleLabel='"DAM Policy Explorer logo: a data store with a compass"'),
-        label("SpTitle", '"DAM Policy Explorer"', X="nfRX", Width="nfRW", Y="SpLogo.Y + 122", Align="Align.Center", Color=WHITE, Size="If(nfWide, 30, 24)", FontWeight="FontWeight.Bold", Role="TextRole.Heading1", LineHeight=1.2),
+        image("SpLogo", f"{cxm} - 48", "If(Parent.Height < 1300, 14, Max(24, (Parent.Height - 440) * 0.5))", 96, AccessibleLabel='"DAM Policy Explorer logo: a data store with a compass"'),
+        label("SpTitle", '"DAM Policy Explorer"', X="nfRX", Width="nfRW", Y="SpLogo.Y + 132", Align="Align.Center", Color=WHITE, Size="If(nfWide, 30, 24)", FontWeight="FontWeight.Bold", Role="TextRole.Heading1", LineHeight=1.2),
         label("SpStrap", '"Everything you need for the Data Asset Management Policy, in one place."', X="nfRX", Width="nfRW", Y="SpTitle.Y + SpTitle.Height + 8", Align="Align.Center", Color=WHITE, Size=S_LEAD, Visible="!nfShort"),
         label("SpHello", '"Hello, " & nfFirst & "."', X="nfRX", Width="nfRW", Y="SpStrap.Y + SpStrap.Height + 16", Align="Align.Center", Color=WHITE, Size=S_H2, FontWeight="FontWeight.Semibold", Visible="!nfShort"),
-        label("SpStats", "nfStats", X="nfRX", Width="nfRW", Y="SpHello.Y + SpHello.Height + 6", Align="Align.Center", Color=WHITE, Size=S_SMALL, Visible="!nfShort"),
-        button("SpGo", '"Open the explorer"', go_nav, X=f"{cxm} - 130", Width=260, Y="Min(SpStats.Y + SpStats.Height + 20, Parent.Height - 124)", Fill=WHITE, Color=BRAND_D, HoverFill=SOFT, HoverColor=BRAND_D, PressedFill=SOFT, PressedColor=BRAND_D),
+        label("SpStats", "nfStats", X="nfRX", Width="nfRW", Y="SpHello.Y + SpHello.Height + 6", Align="Align.Center", Color=WHITE, Size=S_SMALL, Visible="Parent.Height >= 1300"),
+        button("SpGo", '"Open the explorer"', go_nav, X=f"{cxm} - 130", Width=260, Y="Min(If(SpStats.Visible, SpStats.Y + SpStats.Height, If(SpHello.Visible, SpHello.Y + SpHello.Height, SpTitle.Y + SpTitle.Height)) + 20, Parent.Height - 124)", Fill=WHITE, Color=BRAND_D, HoverFill=SOFT, HoverColor=BRAND_D, PressedFill=SOFT, PressedColor=BRAND_D),
         label("SpProto", '"Prototype. GOV.UK is right if anything differs. Version " & nfVersion & "."', X="nfRX", Width="nfRW", Y="SpGo.Y + SpGo.Height + 12", Align="Align.Center", Color=WHITE, Size=S_SMALL),
         ("SpTimer", TIMER, {"Duration": 4000, "AutoStart": "true", "Repeat": "false", "Visible": "false", "OnTimerEnd": go_nav}),
     ])
@@ -981,20 +1046,20 @@ def screens():
         label("MeWho", '"Signed in as " & User().FullName & ". What you save here stays on this device and is not sent anywhere."', Y="MeHello.Y + MeHello.Height + 2", X="nfCX", Width="nfCW", **small),
         segmented("MeChips", "nfMeTabs", "tab", "gMeTab", "MeWho.Y + MeWho.Height + 8"),
         # progress
-        label("MeProg", 'CountRows(colDone) & " of 12 steps of your return done"', Y="MeChips.Y + 60", X="nfCX", Width="nfCW", FontWeight="FontWeight.Semibold", Visible=tab("Progress"), Live="Live.Polite"),
+        label("MeProg", 'CountRows(colDone) & " of 12 steps of your return done"', Y="MeChips.Y + MeChips.Height + 8", X="nfCX", Width="nfCW", FontWeight="FontWeight.Semibold", Visible=tab("Progress"), Live="Live.Polite"),
         rect("MeTrk", SOFT, X="nfCX", Y="MeProg.Y + MeProg.Height + 4", Width="nfCW", Height=8, Visible=tab("Progress")),
         rect("MeProgBar", OK_C, X="nfCX", Y="MeTrk.Y", Width="nfCW * CountRows(colDone) / 12", Height=8, Visible=tab("Progress")),
         cards("MeSteps", "nfSteps", f'If({done}, RemoveIf(colDone, n = ThisItem.n), Collect(colDone, {{n: ThisItem.n}})); {SAVE["colDone"]}', 'ThisItem.n & ". " & ThisItem.title', f'If({done}, "Done. Select to mark as not done.", "Not done yet. Select to mark as done.")', "MeTrk.Y + 18", tmpl=84, cols="nfCols2",
               ic=f"If({done}, Icon.CheckBadge, Icon.Clock)", col=f"If({done}, {OK_C}, {MUTED})", tint=f"If({done}, {OK_BG}, {SOFT})", extra={"Visible": tab("Progress")}),
         # saved
-        cards("MeSaved", "colSaved", open_ref(), "ThisItem.title", 'Switch(ThisItem.kind, "page", "Page section", "qa", "Answer", "ex", "Example", "Glossary")', "MeChips.Y + 60", tmpl=84, cols="nfCols2", ic="Icon.Bookmark", extra={"Visible": tab("Saved")}),
-        label("MeSavedNone", '"Nothing saved yet. Choose Save on any page section, answer, example or word."', Y="MeChips.Y + 76", X="nfCX", Width="nfCW", Color=MUTED, Visible=f'{tab("Saved")} && CountRows(colSaved) = 0'),
+        cards("MeSaved", "colSaved", open_ref(), "ThisItem.title", 'Switch(ThisItem.kind, "page", "Page section", "qa", "Answer", "ex", "Example", "Glossary")', "MeChips.Y + MeChips.Height + 8", tmpl=84, cols="nfCols2", ic="Icon.Bookmark", extra={"Visible": tab("Saved")}),
+        label("MeSavedNone", '"Nothing saved yet. Choose Save on any page section, answer, example or word."', Y="MeChips.Y + MeChips.Height + 24", X="nfCX", Width="nfCW", Color=MUTED, Visible=f'{tab("Saved")} && CountRows(colSaved) = 0'),
         # tested
-        cards("MeTested", "colTested", "false", "ThisItem.name", "ThisItem.head", "MeChips.Y + 60", tmpl=84, cols="nfCols2", ic="Icon.CheckBadge", extra={"Visible": tab("Tested"), "Height": f"{PH} - Self.Y - {BTNH + 24}"}),
-        label("MeTestedNone", '"No assets tested yet."', Y="MeChips.Y + 76", X="nfCX", Width="nfCW", Color=MUTED, Visible=f'{tab("Tested")} && CountRows(colTested) = 0'),
+        cards("MeTested", "colTested", "false", "ThisItem.name", "ThisItem.head", "MeChips.Y + MeChips.Height + 8", tmpl=84, cols="nfCols2", ic="Icon.CheckBadge", extra={"Visible": tab("Tested"), "Height": f"{PH} - Self.Y - {BTNH + 24}"}),
+        label("MeTestedNone", '"No assets tested yet."', Y="MeChips.Y + MeChips.Height + 24", X="nfCX", Width="nfCW", Color=MUTED, Visible=f'{tab("Tested")} && CountRows(colTested) = 0'),
         button("MeTestGo", '"Test an asset"', f"Navigate(ScrTest, {FADE})", X="nfCX", Y=foot_y, Width="Min(nfCW, 260)", Visible=tab("Tested")),
         # settings
-        label("MeRoleH", '"What best describes you?"', Y="MeChips.Y + 60", X="nfCX", Width="nfCW", FontWeight="FontWeight.Semibold", Visible=tab("Settings")),
+        label("MeRoleH", '"What best describes you?"', Y="MeChips.Y + MeChips.Height + 8", X="nfCX", Width="nfCW", FontWeight="FontWeight.Semibold", Visible=tab("Settings")),
         *rp[0],
         label("MeTip", 'If(IsBlank(gRole), "Choose one to get a suggested place to start.", "Suggested: " & LookUp(nfRoles, role = gRole).tip)', Y="MeRoleBtn.Y + 52", X="nfCX", Width="nfCW", Visible=tab("Settings"), Live="Live.Polite"),
         secondary("MeTour", '"Tutorials and tours"', f"Set(gTut, Blank()); Navigate(ScrLearn, {FADE})", X="nfCX", Y="MeTip.Y + MeTip.Height + 20", Width="Min(nfCW, 300)", Visible=tab("Settings")),
@@ -1070,15 +1135,17 @@ def screens():
     ])
     # --- Support: help yourself first, then contact. The message is written here and copied; the contact form itself opens in the browser. ---
     amber2 = "RGBA(138,74,0,1)"
-    hp, ct = 'gSupTab = "Get help"', 'gSupTab = "Contact us"'
+    hp, ct, fb = 'gSupTab = "Get help"', 'gSupTab = "Contact us"', 'gSupTab = "Feedback"'
+    fbmsg = 'Trim(SuFbMsg.Text) & Char(10) & Char(10) & "DAM Policy Explorer (Power Apps), version " & nfVersion & ", screen " & App.Width / 2 & " x " & App.Height / 2 & " points."'
+    issue = lambda t: f'If(!IsBlank(Trim(SuFbMsg.Text)), Copy({fbmsg}); Notify("Copied. Paste it into the form on GitHub.", NotificationType.Success)); Launch(nfRepo & "/issues/new?template={t}.yml&version=" & EncodeUrl(nfVersion) & "&where=" & EncodeUrl("Power Apps app"))'
     tp = picker("SuType", "nfReqTypes", "v", "gReqType", "SuD1N.Y + 44", "It is about", x="nfRX", w="nfRW", vis=ct)
     msg = '"[" & gReqType & "] " & Trim(SuMsg.Text) & If(SuDetails.Value, Char(10) & Char(10) & "Sent from: DAM Policy Explorer (Power Apps), version " & nfVersion & ", content checked " & nfChecked & ", screen " & App.Width / 2 & " x " & App.Height / 2 & " points.", "")'
     S["12-ScrSupport"] = Y().screen("ScrSupport", {**scr, "OnVisible": 'If(IsBlank(gSupTab), Set(gSupTab, "Get help")); If(IsBlank(gReqType), Set(gReqType, "A question about the policy"))'}, [
         *header("Su", '"Support and contact"', bg="nfBg5", ribbon=amber2),
         segmented("SuTabs", "nfSupTabs", "tab", "gSupTab", BAR + 12),
-        cards("SuList", "nfSupport", open_item(), "ThisItem.title", "ThisItem.summ", BAR + 72, tmpl=84, cols="nfCols2", ic="ThisItem.ic", col=amber2, tint="RGBA(247,237,224,1)", extra={"Visible": hp}, alabel="Ways to get help"),
-        glass("SuPanel", "nfRX - 12", BAR + 68, "nfRW + 24", f"{PH} - {BAR} - 76", r=18, Visible=ct),
-        *divider("SuD1", '"1"', '"What is it about?"', BAR + 84, col=amber2, Visible=ct),
+        cards("SuList", "nfSupport", open_item(), "ThisItem.title", "ThisItem.summ", "SuTabs.Y + SuTabs.Height + 8", tmpl=84, cols="nfCols2", ic="ThisItem.ic", col=amber2, tint="RGBA(247,237,224,1)", extra={"Visible": hp}, alabel="Ways to get help"),
+        glass("SuPanel", "nfRX - 12", "SuTabs.Y + SuTabs.Height + 4", "nfRW + 24", f"If({ct}, SuNote.Y + SuNote.Height, SuFbNote.Y + SuFbNote.Height) + 16 - (SuTabs.Y + SuTabs.Height + 4)", r=18, Visible=f"!({hp})"),
+        *divider("SuD1", '"1"', '"What is it about?"', "SuTabs.Y + SuTabs.Height + 20", col=amber2, Visible=ct),
         *tp[0],
         *divider("SuD2", '"2"', '"Your message"', "SuTypeBtn.Y + 56", col=amber2, Visible=ct),
         text_box("SuMsg", "Your message", "SuD2N.Y + 44", X="nfRX", Width="nfRW", Height="If(Parent.Height < 680, 72, 110)", Mode="TextMode.MultiLine", Clear="false", PaddingLeft=12, DelayOutput="false", MaxLength=1500, HintText='"Say what happened, or what you need. Leave out personal or sensitive details."', Visible=ct),
@@ -1086,14 +1153,20 @@ def screens():
         *divider("SuD3", '"3"', '"Send it"', "SuDetails.Y + 48", col=amber2, Visible=ct),
         button("SuSend", 'If(nfCompact, "Copy and open the form", "Copy my message and open the contact form")', f'Copy({msg}); Notify("Message copied. Paste it into the contact form.", NotificationType.Success); Launch(nfContact)', X="nfRX", Y="SuD3N.Y + 44", Width="nfRW", DisplayMode="If(IsBlank(Trim(SuMsg.Text)), DisplayMode.Disabled, DisplayMode.Edit)", Visible=ct),
         secondary("SuOpen", 'If(nfCompact, "Open the form only", "Open the contact form without a message")', "Launch(nfContact)", X="nfRX", Y=f"SuD3N.Y + {44 + BTNH + 10}", Width="nfRW", Visible=ct),
-        label("SuNote", '"Nothing is sent from this app. The form opens in your browser; paste your copied message into it."', Y=f"SuD3N.Y + {44 + 2 * (BTNH + 10)}", Visible=f"{ct} && Self.Y + 88 <= {PH}", **small),
+        label("SuNote", '"Nothing is sent from this app. The form opens in your browser; paste your copied message into it."', Y=f"SuD3N.Y + {44 + 2 * (BTNH + 10)}", Visible=ct, **small),
+        label("SuFbIntro", '"Bugs and ideas are tracked in the open on GitHub, next to the explorer\'s code. You need a free GitHub account. What you write there is public: leave out anything personal or sensitive."', Y="SuTabs.Y + SuTabs.Height + 20", Visible=fb),
+        text_box("SuFbMsg", "Describe the bug or idea (optional)", "SuFbIntro.Y + SuFbIntro.Height + 12", X="nfRX", Width="nfRW", Height=96, Mode="TextMode.MultiLine", Clear="false", PaddingLeft=12, DelayOutput="false", MaxLength=1500, HintText='"Describe the bug or idea (optional). It is copied so you can paste it into the form."', Visible=fb),
+        button("SuBug", '"Report a bug"', issue("bug"), X="nfRX", Y="SuFbMsg.Y + SuFbMsg.Height + 16", Width="nfRW", Visible=fb),
+        button("SuIdea", 'If(nfCompact, "Suggest an idea or feature", "Suggest an idea, a new feature or an improvement")', issue("idea"), X="nfRX", Y=f"SuFbMsg.Y + SuFbMsg.Height + {16 + BTNH + 10}", Width="nfRW", Visible=fb),
+        secondary("SuSeen", '"See what has been reported"', 'Launch(nfRepo & "/issues")', X="nfRX", Y=f"SuFbMsg.Y + SuFbMsg.Height + {16 + 2 * (BTNH + 10)}", Width="nfRW", Visible=fb),
+        label("SuFbNote", '"No GitHub account? Choose Contact us instead."', Y=f"SuFbMsg.Y + SuFbMsg.Height + {16 + 3 * (BTNH + 10)}", Visible=fb, **small),
         *tp[1],
     ])
     # --- What's new: everything flagged New or Updated against the previous release, with the release note. ---
     S["13-ScrNew"] = Y().screen("ScrNew", scr, [
         *header("Nw", '"What is new"', bg="nfBg5", ribbon="RGBA(138,74,0,1)"),
         label("NwH", '"Version " & nfVersion & If(IsBlank(nfBaseVer), "", ", compared with version " & nfBaseVer)', Y=BAR + 16, X="nfCX", Width="nfCW", **h2),
-        label("NwNotes", "nfNotes", Y="NwH.Y + NwH.Height + 6", X="nfCX", Width="nfCW", AutoHeight="false", Height=f"If(gNwMore, Max(120, Min(400, {PH} - Self.Y - 120)), If(nfCompact, 64, 96))", Overflow="If(gNwMore, Overflow.Scroll, Overflow.Hidden)", VerticalAlign="VerticalAlign.Top"),
+        label("NwNotes", "nfNotes", Y="NwH.Y + NwH.Height + 6", X="nfCX", Width="nfCW", AutoHeight="false", Height=f"If(gNwMore, Max(120, Min(400, {PH} - Self.Y - 120)), If(nfCompact, 73, 97))", Overflow="If(gNwMore, Overflow.Scroll, Overflow.Hidden)", VerticalAlign="VerticalAlign.Top"),
         secondary("NwMore", 'If(gNwMore, "Show less of the release note", "Read the full release note")', "Set(gNwMore, !gNwMore)", X="nfCX", Y="NwNotes.Y + NwNotes.Height + 6", Width="Min(nfCW, 300)", Height=36, Size=S_SMALL),
         label("NwCount", 'nfNewCount & " items are new or updated. Each is tagged where it appears in the app."', Y="NwMore.Y + NwMore.Height + 8", X="nfCX", Width="nfCW", **small),
         cards("NwList", 'Filter(nfIndex, !IsBlank(flag))', open_ref(), "ThisItem.title", "ThisItem.type", "NwCount.Y + NwCount.Height + 8", tmpl=92, cols="nfCols2", ic="ThisItem.ic", col="ThisItem.col", tint="ThisItem.tint", flag="ThisItem.flag", alabel="New and updated items"),
@@ -1129,6 +1202,9 @@ def main():
     content_only = "\n".join(l for l in f.split("\n") if not re.match(r"nf(Logo|Bg\d|SplashArt) = ", l))   # artwork is inline SVG drawn by Image controls, never passed to the HTML viewer
     if re.search(r"<(script|iframe|style|img|svg)\b", content_only, re.I): bad.append("disallowed tag in generated HTML")
     if re.search(r'href=""(?!https://)', f): bad.append("non-https link in generated HTML")
+    for where, text in [("formulas", f)] + [(k, v) for k, v in S.items()]:      # every address the app can open, not only links inside page text
+        for u in set(re.findall(r"http://[^\s\"'<>)]+", text)):
+            if not u.startswith("http://www.w3.org/"): bad.append(f"address that is not https in {where}: {u[:60]}")
     for p in pages:
         if p[5] < 1: bad.append(f"page {p[0]} has no sections")
     # D-PA2: control names must be unique across the whole app, or Studio rejects the paste (MeBar was used twice)
@@ -1145,6 +1221,20 @@ def main():
             # D-PA3: anything with OnSelect is interactive, so it needs a name and a tab stop
             if pr.get("AccessibleLabel", '=""').strip() in ('=""', "=") or str(pr.get("TabIndex", "=-1")).strip() != "=0":
                 bad.append(f"{k}/{name}: has OnSelect but no accessible name or tab stop")
+        if name.endswith("Scroll") and ctl.startswith("Gallery"):
+            kids = [cn for c in node.get("Children", []) or [] for cn in c]
+            if node.get("Variant") != "VariableHeight" or name[:-6] + "End" not in kids:
+                bad.append(f"{k}/{name}: page content must be a flexible-height row with an end spacer, or long text hides behind the navigation (D-PA20)")
+        if name.endswith("Scroll") and ctl.startswith("Gallery"):
+            for c in node.get("Children", []) or []:
+                for cn, cv in c.items():
+                    cp = cv.get("Properties", {})
+                    if "Parent.Height - Self.Height" in cp.get("Y", ""):
+                        bad.append(f"{k}/{cn}: held inside the window height, so a long page is squeezed on a 320 x 568 phone and on the Studio canvas; the limit is the row (D-PA23)")
+                    if cv.get("Control", "").startswith("HtmlViewer") and not cn.endswith("Panel") and "Parent.Height" in cp.get("Height", ""):
+                        bad.append(f"{k}/{cn}: an HTML box sized to the window is squeezed to nothing on a phone and does not grow (AutoHeight did not make it grow when tried in Studio); use a label (D-PA21)")
+        if name == "TsOpts" and "Len(label)" not in pr.get("TemplateSize", ""):
+            bad.append(f"{k}/{name}: answer rows have a fixed height, so a three-line answer touches the edge of its row on a phone (D-PA22)")
         if node.get("Variant") == "Horizontal" and "CountRows" not in pr.get("TemplateSize", ""):
             bad.append(f"{k}/{name}: horizontal list can scroll sideways (D-PA7: content must fit the screen width)")
         if ctl.startswith("Classic/Button") and pr.get("Text", "").strip() in ('=""', "=") and "Disabled" not in pr.get("DisplayMode", ""):

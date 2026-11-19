@@ -1,0 +1,44 @@
+name: Suggest an idea, feature or improvement
+description: Something the DAM Policy Explorer should do, or do better.
+title: "Idea: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form is public. Leave out anything personal, sensitive or protectively marked.
+  - type: textarea
+    id: what
+    attributes:
+      label: What is the idea?
+      description: If you copied your message in the app, paste it here.
+    validations:
+      required: true
+  - type: textarea
+    id: need
+    attributes:
+      label: What would it help you do?
+      description: The task you are trying to finish, and what gets in the way today.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of suggestion is it?
+      options:
+        - A new feature
+        - An improvement to something that exists
+        - Content that is missing or unclear
+        - Something else
+  - type: dropdown
+    id: where
+    attributes:
+      label: Which version is it about?
+      options:
+        - Web explorer
+        - Power Apps app
+        - Teams app
+        - SharePoint page
+        - All of them
+  - type: input
+    id: version
+    attributes:
+      label: Version you are using

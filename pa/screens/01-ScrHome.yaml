@@ -96,7 +96,7 @@ Screens:
             Height: |-
               =128
             LineHeight: |-
-              =1.35
+              =1.15
             PaddingBottom: |-
               =4
             PaddingLeft: |-
@@ -108,7 +108,7 @@ Screens:
             Role: |-
               =TextRole.Heading1
             Size: |-
-              =32
+              =If(nfTiny, 26, 32)
             TabIndex: |-
               =-1
             Text: |-
@@ -118,7 +118,7 @@ Screens:
             Width: |-
               =If(nfWide, Parent.Width - (nfPad + 144) - nfPad - 1208, Parent.Width - (nfPad + 144) - 144)
             Wrap: |-
-              =false
+              =nfTiny
             X: |-
               =If(nfDesign, Max(0, Min(nfPad + 144, Parent.Width - Self.Width)), nfPad + 144)
       - HmNavBg:
@@ -1052,7 +1052,7 @@ Screens:
             TemplatePadding: |-
               =0
             TemplateSize: |-
-              =676
+              =796
             Visible: |-
               =!nfTiles
             Width: |-
@@ -1070,7 +1070,7 @@ Screens:
                   Font: |-
                     =Font.'Open Sans'
                   Height: |-
-                    =652
+                    =772
                   HtmlText: |-
                     ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:36px;background:linear-gradient(135deg,rgba(255,255,255,0.94),rgba(255,255,255,0.78));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
                   PaddingBottom: |-
@@ -1208,9 +1208,9 @@ Screens:
                   Font: |-
                     =Font.'Open Sans'
                   Height: |-
-                    =44
+                    =72
                   LineHeight: |-
-                    =1.35
+                    =1.2
                   PaddingBottom: |-
                     =4
                   PaddingLeft: |-
@@ -1225,10 +1225,12 @@ Screens:
                     =-1
                   Text: |-
                     =ThisItem.blurb
+                  VerticalAlign: |-
+                    =VerticalAlign.Top
                   Width: |-
                     =Parent.TemplateWidth - 184
                   Wrap: |-
-                    =false
+                    =true
                   X: |-
                     =140
                   Y: |-
@@ -1249,7 +1251,7 @@ Screens:
                   X: |-
                     =44
                   Y: |-
-                    =148
+                    =172
             - HmSecItems:
                 Control: Gallery@2.15.0
                 Variant: Vertical
@@ -1257,7 +1259,7 @@ Screens:
                   AccessibleLabel: |-
                     ="Links in this section"
                   Height: |-
-                    =480
+                    =576
                   Items: |-
                     =Filter(nfHome, sec = ThisItem.n)
                   OnSelect: |-
@@ -1272,6 +1274,7 @@ Screens:
                         "match", Navigate(ScrMatch, ScreenTransition.Fade),
                         "learn", Set(gTut, Blank()); Navigate(ScrLearn, ScreenTransition.Fade),
                         "support", Navigate(ScrSupport, ScreenTransition.Fade),
+                        "feedback", Set(gSupTab, "Feedback"); Navigate(ScrSupport, ScreenTransition.Fade),
                         "contact", Set(gSupTab, "Contact us"),
                         "web", Launch(nfSite))
                   ShowScrollbar: |-
@@ -1287,7 +1290,7 @@ Screens:
                   X: |-
                     =28
                   Y: |-
-                    =160
+                    =184
                 Children:
                   - HmItIc:
                       Control: Classic/Icon@2.5.0
@@ -1340,7 +1343,7 @@ Screens:
                         Height: |-
                           =96
                         LineHeight: |-
-                          =1.35
+                          =1.15
                         PaddingBottom: |-
                           =4
                         PaddingLeft: |-
@@ -1360,7 +1363,7 @@ Screens:
                         Width: |-
                           =Parent.TemplateWidth - 176 - If(IsBlank(ThisItem.flag), 0, 160)
                         Wrap: |-
-                          =false
+                          =true
                         X: |-
                           =104
                         Y: |-
@@ -1509,7 +1512,7 @@ Screens:
             Width: |-
               =nfCW + 20
             WrapCount: |-
-              =If(nfCompact, 2, 3)
+              =If(nfTiny, 1, nfCompact, 2, 3)
             X: |-
               =If(nfDesign, Max(0, Min(nfCX - 10, Parent.Width - Self.Width)), nfCX - 10)
             Y: |-
@@ -1983,6 +1986,7 @@ Screens:
                   "match", Navigate(ScrMatch, ScreenTransition.Fade),
                   "learn", Set(gTut, Blank()); Navigate(ScrLearn, ScreenTransition.Fade),
                   "support", Navigate(ScrSupport, ScreenTransition.Fade),
+                  "feedback", Set(gSupTab, "Feedback"); Navigate(ScrSupport, ScreenTransition.Fade),
                   "contact", Set(gSupTab, "Contact us"),
                   "web", Launch(nfSite))
             ShowScrollbar: |-
@@ -2053,7 +2057,7 @@ Screens:
                   Height: |-
                     =96
                   LineHeight: |-
-                    =1.35
+                    =1.15
                   PaddingBottom: |-
                     =4
                   PaddingLeft: |-
@@ -2073,7 +2077,7 @@ Screens:
                   Width: |-
                     =Parent.TemplateWidth - 176 - If(IsBlank(ThisItem.flag), 0, 160)
                   Wrap: |-
-                    =false
+                    =true
                   X: |-
                     =104
                   Y: |-

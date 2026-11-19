@@ -106,7 +106,7 @@ Screens:
             Height: |-
               =128
             LineHeight: |-
-              =1.35
+              =1.15
             PaddingBottom: |-
               =4
             PaddingLeft: |-
@@ -118,7 +118,7 @@ Screens:
             Role: |-
               =TextRole.Heading1
             Size: |-
-              =32
+              =If(nfTiny, 26, 32)
             TabIndex: |-
               =-1
             Text: |-
@@ -128,7 +128,7 @@ Screens:
             Width: |-
               =If(nfWide, Parent.Width - (nfPad + 112) - nfPad - 1208, Parent.Width - (nfPad + 112) - 128)
             Wrap: |-
-              =false
+              =nfTiny
             X: |-
               =If(nfDesign, Max(0, Min(nfPad + 112, Parent.Width - Self.Width)), nfPad + 112)
       - SrHelp:
@@ -687,7 +687,7 @@ Screens:
             Height: |-
               =96
             HintText: |-
-              ="Search pages, answers, examples and glossary"
+              =If(nfCompact, "Search everything", "Search pages, answers, examples and glossary")
             HoverBorderColor: |-
               =RGBA(11,85,163,1)
             HoverFill: |-
@@ -756,7 +756,7 @@ Screens:
             AccessibleLabel: |-
               ="SrList"
             Height: |-
-              =(Parent.Height - nfNavH) - (328)
+              =(Parent.Height - nfNavH) - (SrCount.Y + SrCount.Height + 16)
             Items: |-
               =If(Len(Trim(SrSearch.Text)) < 2, Blank(), Filter(nfIndex, SrSearch.Text in title || SrSearch.Text in t))
             OnSelect: |-
@@ -772,7 +772,7 @@ Screens:
             TemplatePadding: |-
               =0
             TemplateSize: |-
-              =224
+              =192 + (Min(5, Max(1, RoundUp(Max(If(Len(Trim(SrSearch.Text)) < 4, Blank(), Filter(nfIndex, SrSearch.Text in title || SrSearch.Text in t)), Len(title)) * 22 / ((nfCW + 20) / nfCols2 - (If(nfCompact, 40, 148) + 108)), 0))) - 2) * 42 + If(nfCompact, 28, 0)
             Width: |-
               =nfCW + 20
             WrapCount: |-
@@ -780,7 +780,7 @@ Screens:
             X: |-
               =If(nfDesign, Max(0, Min(nfCX - 10, Parent.Width - Self.Width)), nfCX - 10)
             Y: |-
-              =If(nfDesign, Max(0, Min(328, Parent.Height - Self.Height)), 328)
+              =If(nfDesign, Max(0, Min(SrCount.Y + SrCount.Height + 16, Parent.Height - Self.Height)), SrCount.Y + SrCount.Height + 16)
           Children:
             - SrListPl:
                 Control: HtmlViewer@2.1.0
@@ -788,7 +788,7 @@ Screens:
                   Font: |-
                     =Font.'Open Sans'
                   Height: |-
-                    =204
+                    =Parent.TemplateHeight - 20
                   HtmlText: |-
                     ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:28px;background:linear-gradient(135deg,rgba(255,255,255,0.94),rgba(255,255,255,0.78));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
                   PaddingBottom: |-
@@ -851,12 +851,14 @@ Screens:
                     =20
                   TabIndex: |-
                     =-1
+                  Visible: |-
+                    =!nfCompact
                   Width: |-
                     =84
                   X: |-
                     =40
                   Y: |-
-                    =70
+                    =Parent.TemplateHeight / 2 - 42
             - SrListFlag:
                 Control: Label@2.5.1
                 Properties:
@@ -903,7 +905,7 @@ Screens:
                   X: |-
                     =Parent.TemplateWidth - 232
                   Y: |-
-                    =152
+                    =Parent.TemplateHeight - 72
             - SrListT:
                 Control: Label@2.5.1
                 Properties:
@@ -920,7 +922,7 @@ Screens:
                   FontWeight: |-
                     =FontWeight.Semibold
                   Height: |-
-                    =132
+                    =Parent.TemplateHeight - 92 - If(nfCompact, 28, 0)
                   LineHeight: |-
                     =1.2
                   PaddingBottom: |-
@@ -940,11 +942,11 @@ Screens:
                   VerticalAlign: |-
                     =VerticalAlign.Top
                   Width: |-
-                    =Parent.TemplateWidth - 236
+                    =Parent.TemplateWidth - (If(nfCompact, 40, 148) + 88)
                   Wrap: |-
                     =true
                   X: |-
-                    =148
+                    =If(nfCompact, 40, 148)
                   Y: |-
                     =20
             - SrListS:
@@ -961,9 +963,9 @@ Screens:
                   Font: |-
                     =Font.'Open Sans'
                   Height: |-
-                    =48
+                    =If(nfCompact, 76, 48)
                   LineHeight: |-
-                    =1.35
+                    =1.2
                   PaddingBottom: |-
                     =4
                   PaddingLeft: |-
@@ -978,14 +980,16 @@ Screens:
                     =-1
                   Text: |-
                     =ThisItem.type & " · " & ThisItem.t
+                  VerticalAlign: |-
+                    =VerticalAlign.Top
                   Width: |-
-                    =Parent.TemplateWidth - 236 - If(IsBlank(ThisItem.flag), 0, 160)
+                    =Parent.TemplateWidth - (If(nfCompact, 40, 148) + 88) - If(IsBlank(ThisItem.flag), 0, 160)
                   Wrap: |-
-                    =false
+                    =nfCompact
                   X: |-
-                    =148
+                    =If(nfCompact, 40, 148)
                   Y: |-
-                    =152
+                    =Parent.TemplateHeight - 72 - If(nfCompact, 28, 0)
             - SrListChev:
                 Control: Classic/Icon@2.5.0
                 Properties:
@@ -1008,7 +1012,7 @@ Screens:
                   X: |-
                     =Parent.TemplateWidth - 72
                   Y: |-
-                    =92
+                    =Parent.TemplateHeight / 2 - 20
             - SrListCard:
                 Control: Classic/Button@2.2.0
                 Properties:
@@ -1078,7 +1082,7 @@ Screens:
             TabIndex: |-
               =-1
             Visible: |-
-              =CountRows(SrList.AllItems) = 0 && Len(Trim(SrSearch.Text)) >= 2
+              =SrList.AllItemsCount = 0 && Len(Trim(SrSearch.Text)) >= 2
             Width: |-
               =80
             X: |-
@@ -1119,7 +1123,7 @@ Screens:
             Text: |-
               ="No results. Try a different word."
             Visible: |-
-              =CountRows(SrList.AllItems) = 0 && Len(Trim(SrSearch.Text)) >= 2
+              =SrList.AllItemsCount = 0 && Len(Trim(SrSearch.Text)) >= 2
             Width: |-
               =nfRW
             X: |-

@@ -31,6 +31,1079 @@ Screens:
               =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
             Y: |-
               =If(nfDesign, Max(0, Min(0, Parent.Height - Self.Height)), 0)
+      - MtScroll:
+          Control: Gallery@2.15.0
+          Variant: VariableHeight
+          Properties:
+            AccessibleLabel: |-
+              ="Page content"
+            Height: |-
+              =Parent.Height
+            Items: |-
+              =[1]
+            ShowScrollbar: |-
+              =true
+            TabIndex: |-
+              =-1
+            TemplatePadding: |-
+              =0
+            TemplateSize: |-
+              =3200
+            Transition: |-
+              =Transition.None
+            Width: |-
+              =Parent.Width
+            X: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
+            Y: |-
+              =If(nfDesign, Max(0, Min(0, Parent.Height - Self.Height)), 0)
+          Children:
+            - MtEnd:
+                Control: Rectangle@2.3.0
+                Properties:
+                  AccessibleLabel: |-
+                    =""
+                  BorderThickness: |-
+                    =0
+                  Fill: |-
+                    =RGBA(0,0,0,0)
+                  Height: |-
+                    =nfNavH + 32 + Max(0, If(MtFoot.Visible, (Parent.Height - nfNavH) - MtFoot.Y, 0), If(MtPrev.Visible, (Parent.Height - nfNavH) - MtPrev.Y, 0), If(MtNext.Visible, (Parent.Height - nfNavH) - MtNext.Y, 0))
+                  TabIndex: |-
+                    =-1
+                  Width: |-
+                    =4
+                  X: |-
+                    =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(Max(If(MtPos.Visible, MtPos.Y + MtPos.Height, 0), If(MtTrk.Visible, MtTrk.Y + MtTrk.Height, 0), If(MtBar2.Visible, MtBar2.Y + MtBar2.Height, 0), If(MtD1N.Visible, MtD1N.Y + MtD1N.Height, 0), If(MtD1H.Visible, MtD1H.Y + MtD1H.Height, 0), If(MtD1R.Visible, MtD1R.Y + MtD1R.Height, 0), If(MtIntro.Visible, MtIntro.Y + MtIntro.Height, 0), If(MtDesc.Visible, MtDesc.Y + MtDesc.Height, 0), If(MtSafe.Visible, MtSafe.Y + MtSafe.Height, 0), If(MtD2N.Visible, MtD2N.Y + MtD2N.Height, 0), If(MtD2H.Visible, MtD2H.Y + MtD2H.Height, 0), If(MtD2R.Visible, MtD2R.Y + MtD2R.Height, 0), If(MtPubL.Visible, MtPubL.Y + MtPubL.Height, 0), If(MtPub.Visible, MtPub.Y + MtPub.Height, 0), If(MtTopicBtn.Visible, MtTopicBtn.Y + MtTopicBtn.Height, 0), If(MtFormatBtn.Visible, MtFormatBtn.Y + MtFormatBtn.Height, 0), If(MtD3N.Visible, MtD3N.Y + MtD3N.Height, 0), If(MtD3H.Visible, MtD3H.Y + MtD3H.Height, 0), If(MtD3R.Visible, MtD3R.Y + MtD3R.Height, 0), If(MtTermsL.Visible, MtTermsL.Y + MtTermsL.Height, 0), If(MtTerms.Visible, MtTerms.Y + MtTerms.Height, 0), If(MtGo.Visible, MtGo.Y + MtGo.Height, 0), If(MtExact.Visible, MtExact.Y + MtExact.Height, 0), If(MtNote.Visible, MtNote.Y + MtNote.Height, 0)), Parent.TemplateHeight - Self.Height)), Max(If(MtPos.Visible, MtPos.Y + MtPos.Height, 0), If(MtTrk.Visible, MtTrk.Y + MtTrk.Height, 0), If(MtBar2.Visible, MtBar2.Y + MtBar2.Height, 0), If(MtD1N.Visible, MtD1N.Y + MtD1N.Height, 0), If(MtD1H.Visible, MtD1H.Y + MtD1H.Height, 0), If(MtD1R.Visible, MtD1R.Y + MtD1R.Height, 0), If(MtIntro.Visible, MtIntro.Y + MtIntro.Height, 0), If(MtDesc.Visible, MtDesc.Y + MtDesc.Height, 0), If(MtSafe.Visible, MtSafe.Y + MtSafe.Height, 0), If(MtD2N.Visible, MtD2N.Y + MtD2N.Height, 0), If(MtD2H.Visible, MtD2H.Y + MtD2H.Height, 0), If(MtD2R.Visible, MtD2R.Y + MtD2R.Height, 0), If(MtPubL.Visible, MtPubL.Y + MtPubL.Height, 0), If(MtPub.Visible, MtPub.Y + MtPub.Height, 0), If(MtTopicBtn.Visible, MtTopicBtn.Y + MtTopicBtn.Height, 0), If(MtFormatBtn.Visible, MtFormatBtn.Y + MtFormatBtn.Height, 0), If(MtD3N.Visible, MtD3N.Y + MtD3N.Height, 0), If(MtD3H.Visible, MtD3H.Y + MtD3H.Height, 0), If(MtD3R.Visible, MtD3R.Y + MtD3R.Height, 0), If(MtTermsL.Visible, MtTermsL.Y + MtTermsL.Height, 0), If(MtTerms.Visible, MtTerms.Y + MtTerms.Height, 0), If(MtGo.Visible, MtGo.Y + MtGo.Height, 0), If(MtExact.Visible, MtExact.Y + MtExact.Height, 0), If(MtNote.Visible, MtNote.Y + MtNote.Height, 0)))
+            - MtPanel:
+                Control: HtmlViewer@2.1.0
+                Properties:
+                  Font: |-
+                    =Font.'Open Sans'
+                  Height: |-
+                    =Max((Parent.Height - nfNavH) - 128 - 32, MtEnd.Y - (144) + 24)
+                  HtmlText: |-
+                    ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:36px;background:linear-gradient(135deg,rgba(255,255,255,0.94),rgba(255,255,255,0.78));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
+                  PaddingBottom: |-
+                    =0
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =0
+                  Size: |-
+                    =2
+                  Width: |-
+                    =nfRW + 48
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX - 24, Parent.Width - Self.Width)), nfRX - 24)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(144, Parent.TemplateHeight - Self.Height)), 144)
+            - MtPos:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: |-
+                    =true
+                  Color: |-
+                    =RGBA(74,79,84,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  LineHeight: |-
+                    =1.35
+                  Live: |-
+                    =Live.Polite
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Size: |-
+                    =22
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    ="Step " & gMt & " of 3"
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(160, Parent.TemplateHeight - Self.Height)), 160)
+            - MtTrk:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderThickness: |-
+                    =0
+                  Fill: |-
+                    =RGBA(242,243,244,1)
+                  Height: |-
+                    =12
+                  TabIndex: |-
+                    =-1
+                  Visible: |-
+                    =true
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(212, Parent.TemplateHeight - Self.Height)), 212)
+            - MtBar2:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderThickness: |-
+                    =0
+                  Fill: |-
+                    =RGBA(11,85,163,1)
+                  Height: |-
+                    =12
+                  TabIndex: |-
+                    =-1
+                  Visible: |-
+                    =true
+                  Width: |-
+                    =nfRW * gMt / 3
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(212, Parent.TemplateHeight - Self.Height)), 212)
+            - MtD1N:
+                Control: Label@2.5.1
+                Properties:
+                  Align: |-
+                    =Align.Center
+                  AutoHeight: |-
+                    =false
+                  Color: |-
+                    =RGBA(255,255,255,1)
+                  Fill: |-
+                    =RGBA(0,105,92,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Bold
+                  Height: |-
+                    =56
+                  LineHeight: |-
+                    =1.35
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Size: |-
+                    =24
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    ="1"
+                  VerticalAlign: |-
+                    =VerticalAlign.Middle
+                  Visible: |-
+                    =gMt = 1
+                  Width: |-
+                    =56
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(248, Parent.TemplateHeight - Self.Height)), 248)
+            - MtD1H:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: |-
+                    =false
+                  Color: |-
+                    =RGBA(27,27,27,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  Height: |-
+                    =56
+                  LineHeight: |-
+                    =1.35
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Role: |-
+                    =TextRole.Heading2
+                  Size: |-
+                    =30
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    ="Describe the data asset"
+                  VerticalAlign: |-
+                    =VerticalAlign.Middle
+                  Visible: |-
+                    =gMt = 1
+                  Width: |-
+                    =nfRW - 76
+                  Wrap: |-
+                    =false
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX + 76, Parent.Width - Self.Width)), nfRX + 76)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(248, Parent.TemplateHeight - Self.Height)), 248)
+            - MtD1R:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderThickness: |-
+                    =0
+                  Fill: |-
+                    =RGBA(0,105,92,1)
+                  Height: |-
+                    =4
+                  TabIndex: |-
+                    =-1
+                  Visible: |-
+                    =gMt = 1
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(248 + 68, Parent.TemplateHeight - Self.Height)), 248 + 68)
+            - MtIntro:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: |-
+                    =true
+                  Color: |-
+                    =RGBA(27,27,27,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  LineHeight: |-
+                    =1.35
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Size: |-
+                    =26
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    ="Find out whether the same or a related data set is already listed in the National Data Library on data.gov.uk. Say what the data is about, in a sentence or two."
+                  Visible: |-
+                    =gMt = 1
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(340, Parent.TemplateHeight - Self.Height)), 340)
+            - MtDesc:
+                Control: Classic/TextInput@2.3.2
+                Properties:
+                  AccessibleLabel: |-
+                    ="Describe the data asset"
+                  BorderColor: |-
+                    =RGBA(27,27,27,1)
+                  BorderThickness: |-
+                    =4
+                  Clear: |-
+                    =false
+                  Color: |-
+                    =RGBA(27,27,27,1)
+                  Default: |-
+                    =""
+                  DelayOutput: |-
+                    =false
+                  Fill: |-
+                    =RGBA(255,255,255,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =8
+                  Font: |-
+                    =Font.'Open Sans'
+                  Height: |-
+                    =240
+                  HintText: |-
+                    ="For example, live and historical river levels and flood warnings for England"
+                  HoverBorderColor: |-
+                    =RGBA(11,85,163,1)
+                  HoverFill: |-
+                    =RGBA(255,255,255,1)
+                  MaxLength: |-
+                    =500
+                  Mode: |-
+                    =TextMode.MultiLine
+                  PaddingLeft: |-
+                    =24
+                  RadiusBottomLeft: |-
+                    =16
+                  RadiusBottomRight: |-
+                    =16
+                  RadiusTopLeft: |-
+                    =16
+                  RadiusTopRight: |-
+                    =16
+                  Size: |-
+                    =26
+                  TabIndex: |-
+                    =0
+                  Visible: |-
+                    =gMt = 1
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(MtIntro.Y + MtIntro.Height + 20, Parent.TemplateHeight - Self.Height)), MtIntro.Y + MtIntro.Height + 20)
+            - MtSafe:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: |-
+                    =true
+                  Color: |-
+                    =RGBA(74,79,84,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  LineHeight: |-
+                    =1.35
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Size: |-
+                    =22
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    ="Leave out anything sensitive. Your search words go to data.gov.uk when you search."
+                  Visible: |-
+                    =gMt = 1
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(MtDesc.Y + MtDesc.Height + 16, Parent.TemplateHeight - Self.Height)), MtDesc.Y + MtDesc.Height + 16)
+            - MtD2N:
+                Control: Label@2.5.1
+                Properties:
+                  Align: |-
+                    =Align.Center
+                  AutoHeight: |-
+                    =false
+                  Color: |-
+                    =RGBA(255,255,255,1)
+                  Fill: |-
+                    =RGBA(0,105,92,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Bold
+                  Height: |-
+                    =56
+                  LineHeight: |-
+                    =1.35
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Size: |-
+                    =24
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    ="2"
+                  VerticalAlign: |-
+                    =VerticalAlign.Middle
+                  Visible: |-
+                    =gMt = 2
+                  Width: |-
+                    =56
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(248, Parent.TemplateHeight - Self.Height)), 248)
+            - MtD2H:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: |-
+                    =false
+                  Color: |-
+                    =RGBA(27,27,27,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  Height: |-
+                    =56
+                  LineHeight: |-
+                    =1.35
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Role: |-
+                    =TextRole.Heading2
+                  Size: |-
+                    =30
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    ="Narrow it down (optional)"
+                  VerticalAlign: |-
+                    =VerticalAlign.Middle
+                  Visible: |-
+                    =gMt = 2
+                  Width: |-
+                    =nfRW - 76
+                  Wrap: |-
+                    =false
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX + 76, Parent.Width - Self.Width)), nfRX + 76)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(248, Parent.TemplateHeight - Self.Height)), 248)
+            - MtD2R:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderThickness: |-
+                    =0
+                  Fill: |-
+                    =RGBA(0,105,92,1)
+                  Height: |-
+                    =4
+                  TabIndex: |-
+                    =-1
+                  Visible: |-
+                    =gMt = 2
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(248 + 68, Parent.TemplateHeight - Self.Height)), 248 + 68)
+            - MtPubL:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: |-
+                    =true
+                  Color: |-
+                    =RGBA(27,27,27,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  LineHeight: |-
+                    =1.35
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Size: |-
+                    =26
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    ="Publisher"
+                  Visible: |-
+                    =gMt = 2
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(340, Parent.TemplateHeight - Self.Height)), 340)
+            - MtPub:
+                Control: Classic/TextInput@2.3.2
+                Properties:
+                  AccessibleLabel: |-
+                    ="Publisher (optional)"
+                  BorderColor: |-
+                    =RGBA(27,27,27,1)
+                  BorderThickness: |-
+                    =4
+                  Clear: |-
+                    =true
+                  Color: |-
+                    =RGBA(27,27,27,1)
+                  Default: |-
+                    =""
+                  DelayOutput: |-
+                    =true
+                  Fill: |-
+                    =RGBA(255,255,255,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =8
+                  Font: |-
+                    =Font.'Open Sans'
+                  Height: |-
+                    =96
+                  HintText: |-
+                    ="For example, Environment Agency"
+                  HoverBorderColor: |-
+                    =RGBA(11,85,163,1)
+                  HoverFill: |-
+                    =RGBA(255,255,255,1)
+                  PaddingLeft: |-
+                    =24
+                  RadiusBottomLeft: |-
+                    =16
+                  RadiusBottomRight: |-
+                    =16
+                  RadiusTopLeft: |-
+                    =16
+                  RadiusTopRight: |-
+                    =16
+                  Size: |-
+                    =26
+                  TabIndex: |-
+                    =0
+                  Visible: |-
+                    =gMt = 2
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(392, Parent.TemplateHeight - Self.Height)), 392)
+            - MtTopicBtn:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  Align: |-
+                    =Align.Left
+                  BorderColor: |-
+                    =RGBA(11,85,163,1)
+                  BorderThickness: |-
+                    =4
+                  Color: |-
+                    =RGBA(11,85,163,1)
+                  DisabledBorderColor: |-
+                    =RGBA(138,144,149,1)
+                  DisabledColor: |-
+                    =RGBA(74,79,84,1)
+                  DisabledFill: |-
+                    =RGBA(242,243,244,1)
+                  Fill: |-
+                    =RGBA(255,255,255,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =8
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  Height: |-
+                    =88
+                  HoverColor: |-
+                    =RGBA(11,85,163,1)
+                  HoverFill: |-
+                    =RGBA(242,243,244,1)
+                  OnSelect: |-
+                    =Set(gPick, "MtTopic")
+                  PaddingLeft: |-
+                    =32
+                  PressedColor: |-
+                    =RGBA(11,85,163,1)
+                  PressedFill: |-
+                    =RGBA(242,243,244,1)
+                  RadiusBottomLeft: |-
+                    =16
+                  RadiusBottomRight: |-
+                    =16
+                  RadiusTopLeft: |-
+                    =16
+                  RadiusTopRight: |-
+                    =16
+                  Size: |-
+                    =22
+                  TabIndex: |-
+                    =0
+                  Text: |-
+                    ="Topic: " & gMtTopic & "  ▾"
+                  Visible: |-
+                    =gMt = 2
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(520, Parent.TemplateHeight - Self.Height)), 520)
+            - MtFormatBtn:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  Align: |-
+                    =Align.Left
+                  BorderColor: |-
+                    =RGBA(11,85,163,1)
+                  BorderThickness: |-
+                    =4
+                  Color: |-
+                    =RGBA(11,85,163,1)
+                  DisabledBorderColor: |-
+                    =RGBA(138,144,149,1)
+                  DisabledColor: |-
+                    =RGBA(74,79,84,1)
+                  DisabledFill: |-
+                    =RGBA(242,243,244,1)
+                  Fill: |-
+                    =RGBA(255,255,255,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =8
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  Height: |-
+                    =88
+                  HoverColor: |-
+                    =RGBA(11,85,163,1)
+                  HoverFill: |-
+                    =RGBA(242,243,244,1)
+                  OnSelect: |-
+                    =Set(gPick, "MtFormat")
+                  PaddingLeft: |-
+                    =32
+                  PressedColor: |-
+                    =RGBA(11,85,163,1)
+                  PressedFill: |-
+                    =RGBA(242,243,244,1)
+                  RadiusBottomLeft: |-
+                    =16
+                  RadiusBottomRight: |-
+                    =16
+                  RadiusTopLeft: |-
+                    =16
+                  RadiusTopRight: |-
+                    =16
+                  Size: |-
+                    =22
+                  TabIndex: |-
+                    =0
+                  Text: |-
+                    ="Format: " & gMtFmt & "  ▾"
+                  Visible: |-
+                    =gMt = 2
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(632, Parent.TemplateHeight - Self.Height)), 632)
+            - MtD3N:
+                Control: Label@2.5.1
+                Properties:
+                  Align: |-
+                    =Align.Center
+                  AutoHeight: |-
+                    =false
+                  Color: |-
+                    =RGBA(255,255,255,1)
+                  Fill: |-
+                    =RGBA(0,105,92,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Bold
+                  Height: |-
+                    =56
+                  LineHeight: |-
+                    =1.35
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Size: |-
+                    =24
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    ="3"
+                  VerticalAlign: |-
+                    =VerticalAlign.Middle
+                  Visible: |-
+                    =gMt = 3
+                  Width: |-
+                    =56
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(248, Parent.TemplateHeight - Self.Height)), 248)
+            - MtD3H:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: |-
+                    =false
+                  Color: |-
+                    =RGBA(27,27,27,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  Height: |-
+                    =56
+                  LineHeight: |-
+                    =1.35
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Role: |-
+                    =TextRole.Heading2
+                  Size: |-
+                    =30
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    ="Search data.gov.uk"
+                  VerticalAlign: |-
+                    =VerticalAlign.Middle
+                  Visible: |-
+                    =gMt = 3
+                  Width: |-
+                    =nfRW - 76
+                  Wrap: |-
+                    =false
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX + 76, Parent.Width - Self.Width)), nfRX + 76)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(248, Parent.TemplateHeight - Self.Height)), 248)
+            - MtD3R:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderThickness: |-
+                    =0
+                  Fill: |-
+                    =RGBA(0,105,92,1)
+                  Height: |-
+                    =4
+                  TabIndex: |-
+                    =-1
+                  Visible: |-
+                    =gMt = 3
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(248 + 68, Parent.TemplateHeight - Self.Height)), 248 + 68)
+            - MtTermsL:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: |-
+                    =true
+                  Color: |-
+                    =RGBA(74,79,84,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  LineHeight: |-
+                    =1.35
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Size: |-
+                    =22
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    ="We will search for"
+                  Visible: |-
+                    =gMt = 3
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(340, Parent.TemplateHeight - Self.Height)), 340)
+            - MtTerms:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: |-
+                    =true
+                  Color: |-
+                    =RGBA(27,27,27,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  LineHeight: |-
+                    =1.35
+                  Live: |-
+                    =Live.Polite
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Size: |-
+                    =30
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    =If(IsBlank(Trim(Concat(FirstN(Distinct(Filter(MatchAll(Lower(MtDesc.Text), "[a-z][a-z\-]{3,}"), !(FullMatch in nfStop.w)), FullMatch), 6), Value, " ") & " " & Trim(MtPub.Text) & " " & If(gMtTopic = "Any" || IsBlank(gMtTopic), "", gMtTopic) & " " & If(gMtFmt = "Any" || IsBlank(gMtFmt), "", gMtFmt))), "Go back and describe the data asset first.", Trim(Concat(FirstN(Distinct(Filter(MatchAll(Lower(MtDesc.Text), "[a-z][a-z\-]{3,}"), !(FullMatch in nfStop.w)), FullMatch), 6), Value, " ") & " " & Trim(MtPub.Text) & " " & If(gMtTopic = "Any" || IsBlank(gMtTopic), "", gMtTopic) & " " & If(gMtFmt = "Any" || IsBlank(gMtFmt), "", gMtFmt)))
+                  Visible: |-
+                    =gMt = 3
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(384, Parent.TemplateHeight - Self.Height)), 384)
+            - MtGo:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderThickness: |-
+                    =0
+                  Color: |-
+                    =RGBA(255,255,255,1)
+                  DisabledBorderColor: |-
+                    =RGBA(138,144,149,1)
+                  DisabledColor: |-
+                    =RGBA(74,79,84,1)
+                  DisabledFill: |-
+                    =RGBA(242,243,244,1)
+                  DisplayMode: |-
+                    =If(IsBlank(Trim(Concat(FirstN(Distinct(Filter(MatchAll(Lower(MtDesc.Text), "[a-z][a-z\-]{3,}"), !(FullMatch in nfStop.w)), FullMatch), 6), Value, " ") & " " & Trim(MtPub.Text) & " " & If(gMtTopic = "Any" || IsBlank(gMtTopic), "", gMtTopic) & " " & If(gMtFmt = "Any" || IsBlank(gMtFmt), "", gMtFmt))), DisplayMode.Disabled, DisplayMode.Edit)
+                  Fill: |-
+                    =RGBA(0,105,92,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =8
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  Height: |-
+                    =96
+                  HoverColor: |-
+                    =RGBA(255,255,255,1)
+                  HoverFill: |-
+                    =RGBA(0,80,70,1)
+                  OnSelect: |-
+                    =Launch("https://www.data.gov.uk/search?q=" & EncodeUrl(Trim(Concat(FirstN(Distinct(Filter(MatchAll(Lower(MtDesc.Text), "[a-z][a-z\-]{3,}"), !(FullMatch in nfStop.w)), FullMatch), 6), Value, " ") & " " & Trim(MtPub.Text) & " " & If(gMtTopic = "Any" || IsBlank(gMtTopic), "", gMtTopic) & " " & If(gMtFmt = "Any" || IsBlank(gMtFmt), "", gMtFmt))))
+                  PressedColor: |-
+                    =RGBA(255,255,255,1)
+                  PressedFill: |-
+                    =RGBA(0,80,70,1)
+                  RadiusBottomLeft: |-
+                    =16
+                  RadiusBottomRight: |-
+                    =16
+                  RadiusTopLeft: |-
+                    =16
+                  RadiusTopRight: |-
+                    =16
+                  Size: |-
+                    =26
+                  TabIndex: |-
+                    =0
+                  Text: |-
+                    ="Find matches on data.gov.uk"
+                  Visible: |-
+                    =gMt = 3
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(MtTerms.Y + MtTerms.Height + 32, Parent.TemplateHeight - Self.Height)), MtTerms.Y + MtTerms.Height + 32)
+            - MtExact:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  BorderColor: |-
+                    =RGBA(11,85,163,1)
+                  BorderThickness: |-
+                    =4
+                  Color: |-
+                    =RGBA(11,85,163,1)
+                  DisabledBorderColor: |-
+                    =RGBA(138,144,149,1)
+                  DisabledColor: |-
+                    =RGBA(74,79,84,1)
+                  DisabledFill: |-
+                    =RGBA(242,243,244,1)
+                  DisplayMode: |-
+                    =If(IsBlank(Trim(MtDesc.Text)), DisplayMode.Disabled, DisplayMode.Edit)
+                  Fill: |-
+                    =RGBA(255,255,255,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =8
+                  Font: |-
+                    =Font.'Open Sans'
+                  FontWeight: |-
+                    =FontWeight.Semibold
+                  Height: |-
+                    =96
+                  HoverColor: |-
+                    =RGBA(11,85,163,1)
+                  HoverFill: |-
+                    =RGBA(242,243,244,1)
+                  OnSelect: |-
+                    =Launch("https://www.data.gov.uk/search?q=" & EncodeUrl(Left(Trim(MtDesc.Text), 150)))
+                  PressedColor: |-
+                    =RGBA(11,85,163,1)
+                  PressedFill: |-
+                    =RGBA(242,243,244,1)
+                  RadiusBottomLeft: |-
+                    =16
+                  RadiusBottomRight: |-
+                    =16
+                  RadiusTopLeft: |-
+                    =16
+                  RadiusTopRight: |-
+                    =16
+                  Size: |-
+                    =26
+                  TabIndex: |-
+                    =0
+                  Text: |-
+                    ="Search with my exact words instead"
+                  Visible: |-
+                    =gMt = 3
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(MtGo.Y + MtGo.Height + 20, Parent.TemplateHeight - Self.Height)), MtGo.Y + MtGo.Height + 20)
+            - MtNote:
+                Control: Label@2.5.1
+                Properties:
+                  AutoHeight: |-
+                    =true
+                  Color: |-
+                    =RGBA(74,79,84,1)
+                  FocusedBorderColor: |-
+                    =RGBA(255,221,0,1)
+                  FocusedBorderThickness: |-
+                    =4
+                  Font: |-
+                    =Font.'Open Sans'
+                  LineHeight: |-
+                    =1.35
+                  PaddingBottom: |-
+                    =4
+                  PaddingLeft: |-
+                    =0
+                  PaddingRight: |-
+                    =0
+                  PaddingTop: |-
+                    =4
+                  Size: |-
+                    =22
+                  TabIndex: |-
+                    =-1
+                  Text: |-
+                    ="Results open on data.gov.uk in your browser. Publisher, topic and format are added as search words; use the filters on the results page to narrow further. If you find the same data set, use its title and publisher so your return describes it the same way. If nothing matches, that is a useful finding too."
+                  Visible: |-
+                    =gMt = 3
+                  Width: |-
+                    =nfRW
+                  X: |-
+                    =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
+                  Y: |-
+                    =If(nfDesign, Max(0, Min(MtExact.Y + MtExact.Height + 28, Parent.TemplateHeight - Self.Height)), MtExact.Y + MtExact.Height + 28)
       - MtBar:
           Control: Rectangle@2.3.0
           Properties:
@@ -108,7 +1181,7 @@ Screens:
             Height: |-
               =128
             LineHeight: |-
-              =1.35
+              =1.15
             PaddingBottom: |-
               =4
             PaddingLeft: |-
@@ -120,7 +1193,7 @@ Screens:
             Role: |-
               =TextRole.Heading1
             Size: |-
-              =32
+              =If(nfTiny, 26, 32)
             TabIndex: |-
               =-1
             Text: |-
@@ -130,7 +1203,7 @@ Screens:
             Width: |-
               =If(nfWide, Parent.Width - (nfPad + 112) - nfPad - 1208, Parent.Width - (nfPad + 112) - 128)
             Wrap: |-
-              =false
+              =nfTiny
             X: |-
               =If(nfDesign, Max(0, Min(nfPad + 112, Parent.Width - Self.Width)), nfPad + 112)
       - MtHelp:
@@ -638,1033 +1711,6 @@ Screens:
               =If(nfDesign, Max(0, Min(If(nfWide, Parent.Width - nfPad - 216, 4 * Parent.Width / 5), Parent.Width - Self.Width)), If(nfWide, Parent.Width - nfPad - 216, 4 * Parent.Width / 5))
             Y: |-
               =If(nfDesign, Max(0, Min(If(nfWide, 0, Parent.Height - 120), Parent.Height - Self.Height)), If(nfWide, 0, Parent.Height - 120))
-      - MtPanel:
-          Control: HtmlViewer@2.1.0
-          Properties:
-            Font: |-
-              =Font.'Open Sans'
-            Height: |-
-              =(Parent.Height - nfNavH) - 128 - 32
-            HtmlText: |-
-              ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:36px;background:linear-gradient(135deg,rgba(255,255,255,0.94),rgba(255,255,255,0.78));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
-            PaddingBottom: |-
-              =0
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =0
-            Size: |-
-              =2
-            Width: |-
-              =nfRW + 48
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX - 24, Parent.Width - Self.Width)), nfRX - 24)
-            Y: |-
-              =If(nfDesign, Max(0, Min(144, Parent.Height - Self.Height)), 144)
-      - MtPos:
-          Control: Label@2.5.1
-          Properties:
-            AutoHeight: |-
-              =true
-            Color: |-
-              =RGBA(74,79,84,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            LineHeight: |-
-              =1.35
-            Live: |-
-              =Live.Polite
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Size: |-
-              =22
-            TabIndex: |-
-              =-1
-            Text: |-
-              ="Step " & gMt & " of 3"
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(160, Parent.Height - Self.Height)), 160)
-      - MtTrk:
-          Control: Rectangle@2.3.0
-          Properties:
-            BorderThickness: |-
-              =0
-            Fill: |-
-              =RGBA(242,243,244,1)
-            Height: |-
-              =12
-            TabIndex: |-
-              =-1
-            Visible: |-
-              =true
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(212, Parent.Height - Self.Height)), 212)
-      - MtBar2:
-          Control: Rectangle@2.3.0
-          Properties:
-            BorderThickness: |-
-              =0
-            Fill: |-
-              =RGBA(11,85,163,1)
-            Height: |-
-              =12
-            TabIndex: |-
-              =-1
-            Visible: |-
-              =true
-            Width: |-
-              =nfRW * gMt / 3
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(212, Parent.Height - Self.Height)), 212)
-      - MtD1N:
-          Control: Label@2.5.1
-          Properties:
-            Align: |-
-              =Align.Center
-            AutoHeight: |-
-              =false
-            Color: |-
-              =RGBA(255,255,255,1)
-            Fill: |-
-              =RGBA(0,105,92,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Bold
-            Height: |-
-              =56
-            LineHeight: |-
-              =1.35
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Size: |-
-              =24
-            TabIndex: |-
-              =-1
-            Text: |-
-              ="1"
-            VerticalAlign: |-
-              =VerticalAlign.Middle
-            Visible: |-
-              =gMt = 1
-            Width: |-
-              =56
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(248, Parent.Height - Self.Height)), 248)
-      - MtD1H:
-          Control: Label@2.5.1
-          Properties:
-            AutoHeight: |-
-              =false
-            Color: |-
-              =RGBA(27,27,27,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            Height: |-
-              =56
-            LineHeight: |-
-              =1.35
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Role: |-
-              =TextRole.Heading2
-            Size: |-
-              =30
-            TabIndex: |-
-              =-1
-            Text: |-
-              ="Describe the data asset"
-            VerticalAlign: |-
-              =VerticalAlign.Middle
-            Visible: |-
-              =gMt = 1
-            Width: |-
-              =nfRW - 76
-            Wrap: |-
-              =false
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX + 76, Parent.Width - Self.Width)), nfRX + 76)
-            Y: |-
-              =If(nfDesign, Max(0, Min(248, Parent.Height - Self.Height)), 248)
-      - MtD1R:
-          Control: Rectangle@2.3.0
-          Properties:
-            BorderThickness: |-
-              =0
-            Fill: |-
-              =RGBA(0,105,92,1)
-            Height: |-
-              =4
-            TabIndex: |-
-              =-1
-            Visible: |-
-              =gMt = 1
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(248 + 68, Parent.Height - Self.Height)), 248 + 68)
-      - MtIntro:
-          Control: Label@2.5.1
-          Properties:
-            AutoHeight: |-
-              =true
-            Color: |-
-              =RGBA(27,27,27,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            LineHeight: |-
-              =1.35
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Size: |-
-              =26
-            TabIndex: |-
-              =-1
-            Text: |-
-              ="Find out whether the same or a related data set is already listed in the National Data Library on data.gov.uk. Say what the data is about, in a sentence or two."
-            Visible: |-
-              =gMt = 1
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(340, Parent.Height - Self.Height)), 340)
-      - MtDesc:
-          Control: Classic/TextInput@2.3.2
-          Properties:
-            AccessibleLabel: |-
-              ="Describe the data asset"
-            BorderColor: |-
-              =RGBA(27,27,27,1)
-            BorderThickness: |-
-              =4
-            Clear: |-
-              =false
-            Color: |-
-              =RGBA(27,27,27,1)
-            Default: |-
-              =""
-            DelayOutput: |-
-              =false
-            Fill: |-
-              =RGBA(255,255,255,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =8
-            Font: |-
-              =Font.'Open Sans'
-            Height: |-
-              =240
-            HintText: |-
-              ="For example, live and historical river levels and flood warnings for England"
-            HoverBorderColor: |-
-              =RGBA(11,85,163,1)
-            HoverFill: |-
-              =RGBA(255,255,255,1)
-            MaxLength: |-
-              =500
-            Mode: |-
-              =TextMode.MultiLine
-            PaddingLeft: |-
-              =24
-            RadiusBottomLeft: |-
-              =16
-            RadiusBottomRight: |-
-              =16
-            RadiusTopLeft: |-
-              =16
-            RadiusTopRight: |-
-              =16
-            Size: |-
-              =26
-            TabIndex: |-
-              =0
-            Visible: |-
-              =gMt = 1
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(MtIntro.Y + MtIntro.Height + 20, Parent.Height - Self.Height)), MtIntro.Y + MtIntro.Height + 20)
-      - MtSafe:
-          Control: Label@2.5.1
-          Properties:
-            AutoHeight: |-
-              =true
-            Color: |-
-              =RGBA(74,79,84,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            LineHeight: |-
-              =1.35
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Size: |-
-              =22
-            TabIndex: |-
-              =-1
-            Text: |-
-              ="Leave out anything sensitive. Your search words go to data.gov.uk when you search."
-            Visible: |-
-              =gMt = 1
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(MtDesc.Y + MtDesc.Height + 16, Parent.Height - Self.Height)), MtDesc.Y + MtDesc.Height + 16)
-      - MtD2N:
-          Control: Label@2.5.1
-          Properties:
-            Align: |-
-              =Align.Center
-            AutoHeight: |-
-              =false
-            Color: |-
-              =RGBA(255,255,255,1)
-            Fill: |-
-              =RGBA(0,105,92,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Bold
-            Height: |-
-              =56
-            LineHeight: |-
-              =1.35
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Size: |-
-              =24
-            TabIndex: |-
-              =-1
-            Text: |-
-              ="2"
-            VerticalAlign: |-
-              =VerticalAlign.Middle
-            Visible: |-
-              =gMt = 2
-            Width: |-
-              =56
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(248, Parent.Height - Self.Height)), 248)
-      - MtD2H:
-          Control: Label@2.5.1
-          Properties:
-            AutoHeight: |-
-              =false
-            Color: |-
-              =RGBA(27,27,27,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            Height: |-
-              =56
-            LineHeight: |-
-              =1.35
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Role: |-
-              =TextRole.Heading2
-            Size: |-
-              =30
-            TabIndex: |-
-              =-1
-            Text: |-
-              ="Narrow it down (optional)"
-            VerticalAlign: |-
-              =VerticalAlign.Middle
-            Visible: |-
-              =gMt = 2
-            Width: |-
-              =nfRW - 76
-            Wrap: |-
-              =false
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX + 76, Parent.Width - Self.Width)), nfRX + 76)
-            Y: |-
-              =If(nfDesign, Max(0, Min(248, Parent.Height - Self.Height)), 248)
-      - MtD2R:
-          Control: Rectangle@2.3.0
-          Properties:
-            BorderThickness: |-
-              =0
-            Fill: |-
-              =RGBA(0,105,92,1)
-            Height: |-
-              =4
-            TabIndex: |-
-              =-1
-            Visible: |-
-              =gMt = 2
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(248 + 68, Parent.Height - Self.Height)), 248 + 68)
-      - MtPubL:
-          Control: Label@2.5.1
-          Properties:
-            AutoHeight: |-
-              =true
-            Color: |-
-              =RGBA(27,27,27,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            LineHeight: |-
-              =1.35
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Size: |-
-              =26
-            TabIndex: |-
-              =-1
-            Text: |-
-              ="Publisher"
-            Visible: |-
-              =gMt = 2
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(340, Parent.Height - Self.Height)), 340)
-      - MtPub:
-          Control: Classic/TextInput@2.3.2
-          Properties:
-            AccessibleLabel: |-
-              ="Publisher (optional)"
-            BorderColor: |-
-              =RGBA(27,27,27,1)
-            BorderThickness: |-
-              =4
-            Clear: |-
-              =true
-            Color: |-
-              =RGBA(27,27,27,1)
-            Default: |-
-              =""
-            DelayOutput: |-
-              =true
-            Fill: |-
-              =RGBA(255,255,255,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =8
-            Font: |-
-              =Font.'Open Sans'
-            Height: |-
-              =96
-            HintText: |-
-              ="For example, Environment Agency"
-            HoverBorderColor: |-
-              =RGBA(11,85,163,1)
-            HoverFill: |-
-              =RGBA(255,255,255,1)
-            PaddingLeft: |-
-              =24
-            RadiusBottomLeft: |-
-              =16
-            RadiusBottomRight: |-
-              =16
-            RadiusTopLeft: |-
-              =16
-            RadiusTopRight: |-
-              =16
-            Size: |-
-              =26
-            TabIndex: |-
-              =0
-            Visible: |-
-              =gMt = 2
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(392, Parent.Height - Self.Height)), 392)
-      - MtTopicBtn:
-          Control: Classic/Button@2.2.0
-          Properties:
-            Align: |-
-              =Align.Left
-            BorderColor: |-
-              =RGBA(11,85,163,1)
-            BorderThickness: |-
-              =4
-            Color: |-
-              =RGBA(11,85,163,1)
-            DisabledBorderColor: |-
-              =RGBA(138,144,149,1)
-            DisabledColor: |-
-              =RGBA(74,79,84,1)
-            DisabledFill: |-
-              =RGBA(242,243,244,1)
-            Fill: |-
-              =RGBA(255,255,255,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =8
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            Height: |-
-              =88
-            HoverColor: |-
-              =RGBA(11,85,163,1)
-            HoverFill: |-
-              =RGBA(242,243,244,1)
-            OnSelect: |-
-              =Set(gPick, "MtTopic")
-            PaddingLeft: |-
-              =32
-            PressedColor: |-
-              =RGBA(11,85,163,1)
-            PressedFill: |-
-              =RGBA(242,243,244,1)
-            RadiusBottomLeft: |-
-              =16
-            RadiusBottomRight: |-
-              =16
-            RadiusTopLeft: |-
-              =16
-            RadiusTopRight: |-
-              =16
-            Size: |-
-              =22
-            TabIndex: |-
-              =0
-            Text: |-
-              ="Topic: " & gMtTopic & "  ▾"
-            Visible: |-
-              =gMt = 2
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(520, Parent.Height - Self.Height)), 520)
-      - MtFormatBtn:
-          Control: Classic/Button@2.2.0
-          Properties:
-            Align: |-
-              =Align.Left
-            BorderColor: |-
-              =RGBA(11,85,163,1)
-            BorderThickness: |-
-              =4
-            Color: |-
-              =RGBA(11,85,163,1)
-            DisabledBorderColor: |-
-              =RGBA(138,144,149,1)
-            DisabledColor: |-
-              =RGBA(74,79,84,1)
-            DisabledFill: |-
-              =RGBA(242,243,244,1)
-            Fill: |-
-              =RGBA(255,255,255,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =8
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            Height: |-
-              =88
-            HoverColor: |-
-              =RGBA(11,85,163,1)
-            HoverFill: |-
-              =RGBA(242,243,244,1)
-            OnSelect: |-
-              =Set(gPick, "MtFormat")
-            PaddingLeft: |-
-              =32
-            PressedColor: |-
-              =RGBA(11,85,163,1)
-            PressedFill: |-
-              =RGBA(242,243,244,1)
-            RadiusBottomLeft: |-
-              =16
-            RadiusBottomRight: |-
-              =16
-            RadiusTopLeft: |-
-              =16
-            RadiusTopRight: |-
-              =16
-            Size: |-
-              =22
-            TabIndex: |-
-              =0
-            Text: |-
-              ="Format: " & gMtFmt & "  ▾"
-            Visible: |-
-              =gMt = 2
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(632, Parent.Height - Self.Height)), 632)
-      - MtD3N:
-          Control: Label@2.5.1
-          Properties:
-            Align: |-
-              =Align.Center
-            AutoHeight: |-
-              =false
-            Color: |-
-              =RGBA(255,255,255,1)
-            Fill: |-
-              =RGBA(0,105,92,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Bold
-            Height: |-
-              =56
-            LineHeight: |-
-              =1.35
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Size: |-
-              =24
-            TabIndex: |-
-              =-1
-            Text: |-
-              ="3"
-            VerticalAlign: |-
-              =VerticalAlign.Middle
-            Visible: |-
-              =gMt = 3
-            Width: |-
-              =56
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(248, Parent.Height - Self.Height)), 248)
-      - MtD3H:
-          Control: Label@2.5.1
-          Properties:
-            AutoHeight: |-
-              =false
-            Color: |-
-              =RGBA(27,27,27,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            Height: |-
-              =56
-            LineHeight: |-
-              =1.35
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Role: |-
-              =TextRole.Heading2
-            Size: |-
-              =30
-            TabIndex: |-
-              =-1
-            Text: |-
-              ="Search data.gov.uk"
-            VerticalAlign: |-
-              =VerticalAlign.Middle
-            Visible: |-
-              =gMt = 3
-            Width: |-
-              =nfRW - 76
-            Wrap: |-
-              =false
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX + 76, Parent.Width - Self.Width)), nfRX + 76)
-            Y: |-
-              =If(nfDesign, Max(0, Min(248, Parent.Height - Self.Height)), 248)
-      - MtD3R:
-          Control: Rectangle@2.3.0
-          Properties:
-            BorderThickness: |-
-              =0
-            Fill: |-
-              =RGBA(0,105,92,1)
-            Height: |-
-              =4
-            TabIndex: |-
-              =-1
-            Visible: |-
-              =gMt = 3
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(248 + 68, Parent.Height - Self.Height)), 248 + 68)
-      - MtTermsL:
-          Control: Label@2.5.1
-          Properties:
-            AutoHeight: |-
-              =true
-            Color: |-
-              =RGBA(74,79,84,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            LineHeight: |-
-              =1.35
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Size: |-
-              =22
-            TabIndex: |-
-              =-1
-            Text: |-
-              ="We will search for"
-            Visible: |-
-              =gMt = 3
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(340, Parent.Height - Self.Height)), 340)
-      - MtTerms:
-          Control: Label@2.5.1
-          Properties:
-            AutoHeight: |-
-              =true
-            Color: |-
-              =RGBA(27,27,27,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            LineHeight: |-
-              =1.35
-            Live: |-
-              =Live.Polite
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Size: |-
-              =30
-            TabIndex: |-
-              =-1
-            Text: |-
-              =If(IsBlank(Trim(Concat(FirstN(Distinct(Filter(MatchAll(Lower(MtDesc.Text), "[a-z][a-z\-]{3,}"), !(FullMatch in nfStop.w)), FullMatch), 6), Value, " ") & " " & Trim(MtPub.Text) & " " & If(gMtTopic = "Any" || IsBlank(gMtTopic), "", gMtTopic) & " " & If(gMtFmt = "Any" || IsBlank(gMtFmt), "", gMtFmt))), "Go back and describe the data asset first.", Trim(Concat(FirstN(Distinct(Filter(MatchAll(Lower(MtDesc.Text), "[a-z][a-z\-]{3,}"), !(FullMatch in nfStop.w)), FullMatch), 6), Value, " ") & " " & Trim(MtPub.Text) & " " & If(gMtTopic = "Any" || IsBlank(gMtTopic), "", gMtTopic) & " " & If(gMtFmt = "Any" || IsBlank(gMtFmt), "", gMtFmt)))
-            Visible: |-
-              =gMt = 3
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(384, Parent.Height - Self.Height)), 384)
-      - MtGo:
-          Control: Classic/Button@2.2.0
-          Properties:
-            BorderThickness: |-
-              =0
-            Color: |-
-              =RGBA(255,255,255,1)
-            DisabledBorderColor: |-
-              =RGBA(138,144,149,1)
-            DisabledColor: |-
-              =RGBA(74,79,84,1)
-            DisabledFill: |-
-              =RGBA(242,243,244,1)
-            DisplayMode: |-
-              =If(IsBlank(Trim(Concat(FirstN(Distinct(Filter(MatchAll(Lower(MtDesc.Text), "[a-z][a-z\-]{3,}"), !(FullMatch in nfStop.w)), FullMatch), 6), Value, " ") & " " & Trim(MtPub.Text) & " " & If(gMtTopic = "Any" || IsBlank(gMtTopic), "", gMtTopic) & " " & If(gMtFmt = "Any" || IsBlank(gMtFmt), "", gMtFmt))), DisplayMode.Disabled, DisplayMode.Edit)
-            Fill: |-
-              =RGBA(0,105,92,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =8
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            Height: |-
-              =96
-            HoverColor: |-
-              =RGBA(255,255,255,1)
-            HoverFill: |-
-              =RGBA(0,80,70,1)
-            OnSelect: |-
-              =Launch("https://www.data.gov.uk/search?q=" & EncodeUrl(Trim(Concat(FirstN(Distinct(Filter(MatchAll(Lower(MtDesc.Text), "[a-z][a-z\-]{3,}"), !(FullMatch in nfStop.w)), FullMatch), 6), Value, " ") & " " & Trim(MtPub.Text) & " " & If(gMtTopic = "Any" || IsBlank(gMtTopic), "", gMtTopic) & " " & If(gMtFmt = "Any" || IsBlank(gMtFmt), "", gMtFmt))))
-            PressedColor: |-
-              =RGBA(255,255,255,1)
-            PressedFill: |-
-              =RGBA(0,80,70,1)
-            RadiusBottomLeft: |-
-              =16
-            RadiusBottomRight: |-
-              =16
-            RadiusTopLeft: |-
-              =16
-            RadiusTopRight: |-
-              =16
-            Size: |-
-              =26
-            TabIndex: |-
-              =0
-            Text: |-
-              ="Find matches on data.gov.uk"
-            Visible: |-
-              =gMt = 3
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(MtTerms.Y + MtTerms.Height + 32, Parent.Height - Self.Height)), MtTerms.Y + MtTerms.Height + 32)
-      - MtExact:
-          Control: Classic/Button@2.2.0
-          Properties:
-            BorderColor: |-
-              =RGBA(11,85,163,1)
-            BorderThickness: |-
-              =4
-            Color: |-
-              =RGBA(11,85,163,1)
-            DisabledBorderColor: |-
-              =RGBA(138,144,149,1)
-            DisabledColor: |-
-              =RGBA(74,79,84,1)
-            DisabledFill: |-
-              =RGBA(242,243,244,1)
-            DisplayMode: |-
-              =If(IsBlank(Trim(MtDesc.Text)), DisplayMode.Disabled, DisplayMode.Edit)
-            Fill: |-
-              =RGBA(255,255,255,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =8
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            Height: |-
-              =96
-            HoverColor: |-
-              =RGBA(11,85,163,1)
-            HoverFill: |-
-              =RGBA(242,243,244,1)
-            OnSelect: |-
-              =Launch("https://www.data.gov.uk/search?q=" & EncodeUrl(Left(Trim(MtDesc.Text), 150)))
-            PressedColor: |-
-              =RGBA(11,85,163,1)
-            PressedFill: |-
-              =RGBA(242,243,244,1)
-            RadiusBottomLeft: |-
-              =16
-            RadiusBottomRight: |-
-              =16
-            RadiusTopLeft: |-
-              =16
-            RadiusTopRight: |-
-              =16
-            Size: |-
-              =26
-            TabIndex: |-
-              =0
-            Text: |-
-              ="Search with my exact words instead"
-            Visible: |-
-              =gMt = 3
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(MtGo.Y + MtGo.Height + 20, Parent.Height - Self.Height)), MtGo.Y + MtGo.Height + 20)
-      - MtNote:
-          Control: Label@2.5.1
-          Properties:
-            AutoHeight: |-
-              =true
-            Color: |-
-              =RGBA(74,79,84,1)
-            FocusedBorderColor: |-
-              =RGBA(255,221,0,1)
-            FocusedBorderThickness: |-
-              =4
-            Font: |-
-              =Font.'Open Sans'
-            LineHeight: |-
-              =1.35
-            PaddingBottom: |-
-              =4
-            PaddingLeft: |-
-              =0
-            PaddingRight: |-
-              =0
-            PaddingTop: |-
-              =4
-            Size: |-
-              =22
-            TabIndex: |-
-              =-1
-            Text: |-
-              ="Results open on data.gov.uk in your browser. Publisher, topic and format are added as search words; use the filters on the results page to narrow further. If you find the same data set, use its title and publisher so your return describes it the same way. If nothing matches, that is a useful finding too."
-            Visible: |-
-              =gMt = 3
-            Width: |-
-              =nfRW
-            X: |-
-              =If(nfDesign, Max(0, Min(nfRX, Parent.Width - Self.Width)), nfRX)
-            Y: |-
-              =If(nfDesign, Max(0, Min(MtExact.Y + MtExact.Height + 28, Parent.Height - Self.Height)), MtExact.Y + MtExact.Height + 28)
       - MtFoot:
           Control: Rectangle@2.3.0
           Properties:
@@ -2224,44 +2270,3 @@ Screens:
                     =0
                   Y: |-
                     =6
-      - MaShortNote:
-          Control: Label@2.5.1
-          Properties:
-            Align: |-
-              =Align.Center
-            AutoHeight: |-
-              =false
-            Color: |-
-              =RGBA(27,27,27,1)
-            Fill: |-
-              =RGBA(255,221,0,1)
-            Font: |-
-              =Font.'Open Sans'
-            FontWeight: |-
-              =FontWeight.Semibold
-            Height: |-
-              =80
-            Live: |-
-              =Live.Polite
-            PaddingLeft: |-
-              =24
-            PaddingRight: |-
-              =24
-            Role: |-
-              =TextRole.Default
-            Size: |-
-              =22
-            TabIndex: |-
-              =-1
-            Text: |-
-              ="This screen needs more height. Turn your device upright, or make the window taller, to reach all of it."
-            VerticalAlign: |-
-              =VerticalAlign.Middle
-            Visible: |-
-              =nfShort && (true)
-            Width: |-
-              =Parent.Width
-            X: |-
-              =If(nfDesign, Max(0, Min(0, Parent.Width - Self.Width)), 0)
-            Y: |-
-              =If(nfDesign, Max(0, Min(136, Parent.Height - Self.Height)), 136)

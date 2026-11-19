@@ -106,7 +106,7 @@ Screens:
             Height: |-
               =128
             LineHeight: |-
-              =1.35
+              =1.15
             PaddingBottom: |-
               =4
             PaddingLeft: |-
@@ -118,7 +118,7 @@ Screens:
             Role: |-
               =TextRole.Heading1
             Size: |-
-              =32
+              =If(nfTiny, 26, 32)
             TabIndex: |-
               =-1
             Text: |-
@@ -128,7 +128,7 @@ Screens:
             Width: |-
               =If(nfWide, Parent.Width - (nfPad + 112) - nfPad - 1208, Parent.Width - (nfPad + 112) - 128)
             Wrap: |-
-              =false
+              =nfTiny
             X: |-
               =If(nfDesign, Max(0, Min(nfPad + 112, Parent.Width - Self.Width)), nfPad + 112)
       - RdHelp:

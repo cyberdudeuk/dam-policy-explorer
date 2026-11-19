@@ -11,6 +11,7 @@ nfCols2 = If(App.Width >= 1800, 2, 1);
 nfCompact = App.Width < 1280;
 nfDesign = App.Width = 640 && App.Height = 1136;
 nfShort = App.Height < 1100;
+nfTiny = App.Width < 720;
 nfTiles = nfCompact || (nfShort && !nfWide);
 nfVersion = "1.2.0";
 nfChecked = "2026-11-18";
@@ -356,7 +357,8 @@ nfHome = Table(
   {sec: 4, title: "Resources", summ: "Templates, guidance and playbooks", kind: "page", ref: "resources", ic: Icon.Folder, col: RGBA(90,47,138,1), tint: RGBA(238,232,245,1), flag: ""},
   {sec: 5, title: "User guide", summ: "How to use this app", kind: "page", ref: "guide", ic: Icon.Journal, col: RGBA(138,74,0,1), tint: RGBA(247,237,224,1), flag: "New"},
   {sec: 5, title: "Tutorials and tours", summ: "Short walk-throughs of the main tasks", kind: "learn", ref: "", ic: Icon.Lightbulb, col: RGBA(138,74,0,1), tint: RGBA(247,237,224,1), flag: ""},
-  {sec: 5, title: "Support and contact", summ: "Get help, report a problem or send a suggestion", kind: "support", ref: "", ic: Icon.Message, col: RGBA(138,74,0,1), tint: RGBA(247,237,224,1), flag: ""},
+  {sec: 5, title: "Support and contact", summ: "Get help or ask a question", kind: "support", ref: "", ic: Icon.Message, col: RGBA(138,74,0,1), tint: RGBA(247,237,224,1), flag: ""},
+  {sec: 5, title: "Report a bug or suggest an idea", summ: "Opens the public forms on GitHub", kind: "feedback", ref: "", ic: Icon.Bug, col: RGBA(138,74,0,1), tint: RGBA(247,237,224,1), flag: ""},
   {sec: 5, title: "About this app", summ: "Sources, method, versions and roadmap", kind: "page", ref: "about", ic: Icon.Information, col: RGBA(138,74,0,1), tint: RGBA(247,237,224,1), flag: "Updated"},
   {sec: 5, title: "Accessibility", summ: "Accessibility and inclusion statement", kind: "page", ref: "accessibility", ic: Icon.View, col: RGBA(138,74,0,1), tint: RGBA(247,237,224,1), flag: ""},
   {sec: 6, title: "My area", summ: "Your progress, saved items and tested assets", kind: "me", ref: "", ic: Icon.Person, col: RGBA(156,31,92,1), tint: RGBA(247,230,239,1), flag: ""},
@@ -507,8 +509,10 @@ nfContact = "https://forms.cloud.microsoft/e/SLBvuPX7jK";
 nfStale = 30;
 nfSupTabs = Table(
   {tab: "Get help"},
-  {tab: "Contact us"}
+  {tab: "Contact us"},
+  {tab: "Feedback"}
 );
+nfRepo = "https://github.com/cyberdudeuk/dam-policy-explorer";
 nfReqTypes = Table(
   {v: "A question about the policy"},
   {v: "A problem with this app"},

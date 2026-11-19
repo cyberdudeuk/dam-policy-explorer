@@ -1,0 +1,53 @@
+name: Report a bug
+description: Something in the DAM Policy Explorer is broken, wrong or hard to use.
+title: "Bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form is public. Leave out anything personal, sensitive or protectively marked.
+        For a question about the policy itself, use the contact form in the explorer instead.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: If you copied your message in the app, paste it here.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to see the problem
+      placeholder: "1. Open ...\n2. Choose ...\n3. ..."
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where did you see it?
+      options:
+        - Web explorer
+        - Power Apps app
+        - Teams app
+        - SharePoint page
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Shown on the home page and in About.
+  - type: input
+    id: device
+    attributes:
+      label: Device, browser and any assistive technology
+      placeholder: For example, iPhone with VoiceOver, or Windows laptop with Edge
+  - type: checkboxes
+    id: a11y
+    attributes:
+      label: Accessibility
+      options:
+        - label: This stops me, or someone else, using the explorer with assistive technology

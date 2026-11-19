@@ -106,7 +106,7 @@ Screens:
             Height: |-
               =128
             LineHeight: |-
-              =1.35
+              =1.15
             PaddingBottom: |-
               =4
             PaddingLeft: |-
@@ -118,7 +118,7 @@ Screens:
             Role: |-
               =TextRole.Heading1
             Size: |-
-              =32
+              =If(nfTiny, 26, 32)
             TabIndex: |-
               =-1
             Text: |-
@@ -128,7 +128,7 @@ Screens:
             Width: |-
               =If(nfWide, Parent.Width - (nfPad + 112) - nfPad - 1208, Parent.Width - (nfPad + 112) - 128)
             Wrap: |-
-              =false
+              =nfTiny
             X: |-
               =If(nfDesign, Max(0, Min(nfPad + 112, Parent.Width - Self.Width)), nfPad + 112)
       - GlHelp:
@@ -731,7 +731,7 @@ Screens:
             TemplatePadding: |-
               =0
             TemplateSize: |-
-              =192
+              =192 + (Min(5, Max(1, RoundUp(Max(Filter(nfGlo, IsBlank(GlSearch.Text) || GlSearch.Text in term || GlSearch.Text in def), Len(term)) * 22 / ((nfCW + 20) / nfCols - (If(nfCompact, 40, 148) + 108)), 0))) - 2) * 42 + If(nfCompact, 28, 0)
             Width: |-
               =nfCW + 20
             WrapCount: |-
@@ -747,7 +747,7 @@ Screens:
                   Font: |-
                     =Font.'Open Sans'
                   Height: |-
-                    =172
+                    =Parent.TemplateHeight - 20
                   HtmlText: |-
                     ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:28px;background:linear-gradient(135deg,rgba(255,255,255,0.94),rgba(255,255,255,0.78));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden'></div>"
                   PaddingBottom: |-
@@ -810,12 +810,14 @@ Screens:
                     =20
                   TabIndex: |-
                     =-1
+                  Visible: |-
+                    =!nfCompact
                   Width: |-
                     =84
                   X: |-
                     =40
                   Y: |-
-                    =54
+                    =Parent.TemplateHeight / 2 - 42
             - GlListFlag:
                 Control: Label@2.5.1
                 Properties:
@@ -862,7 +864,7 @@ Screens:
                   X: |-
                     =Parent.TemplateWidth - 232
                   Y: |-
-                    =120
+                    =Parent.TemplateHeight - 72
             - GlListT:
                 Control: Label@2.5.1
                 Properties:
@@ -879,7 +881,7 @@ Screens:
                   FontWeight: |-
                     =FontWeight.Semibold
                   Height: |-
-                    =100
+                    =Parent.TemplateHeight - 92 - If(nfCompact, 28, 0)
                   LineHeight: |-
                     =1.2
                   PaddingBottom: |-
@@ -899,11 +901,11 @@ Screens:
                   VerticalAlign: |-
                     =VerticalAlign.Top
                   Width: |-
-                    =Parent.TemplateWidth - 236
+                    =Parent.TemplateWidth - (If(nfCompact, 40, 148) + 88)
                   Wrap: |-
                     =true
                   X: |-
-                    =148
+                    =If(nfCompact, 40, 148)
                   Y: |-
                     =20
             - GlListS:
@@ -920,9 +922,9 @@ Screens:
                   Font: |-
                     =Font.'Open Sans'
                   Height: |-
-                    =48
+                    =If(nfCompact, 76, 48)
                   LineHeight: |-
-                    =1.35
+                    =1.2
                   PaddingBottom: |-
                     =4
                   PaddingLeft: |-
@@ -937,14 +939,16 @@ Screens:
                     =-1
                   Text: |-
                     =ThisItem.def
+                  VerticalAlign: |-
+                    =VerticalAlign.Top
                   Width: |-
-                    =Parent.TemplateWidth - 236 - If(IsBlank(ThisItem.flag), 0, 160)
+                    =Parent.TemplateWidth - (If(nfCompact, 40, 148) + 88) - If(IsBlank(ThisItem.flag), 0, 160)
                   Wrap: |-
-                    =false
+                    =nfCompact
                   X: |-
-                    =148
+                    =If(nfCompact, 40, 148)
                   Y: |-
-                    =120
+                    =Parent.TemplateHeight - 72 - If(nfCompact, 28, 0)
             - GlListChev:
                 Control: Classic/Icon@2.5.0
                 Properties:
@@ -967,7 +971,7 @@ Screens:
                   X: |-
                     =Parent.TemplateWidth - 72
                   Y: |-
-                    =76
+                    =Parent.TemplateHeight / 2 - 20
             - GlListCard:
                 Control: Classic/Button@2.2.0
                 Properties:
@@ -1037,7 +1041,7 @@ Screens:
             TabIndex: |-
               =-1
             Visible: |-
-              =CountRows(GlList.AllItems) = 0 && true
+              =GlList.AllItemsCount = 0 && true
             Width: |-
               =80
             X: |-
@@ -1078,7 +1082,7 @@ Screens:
             Text: |-
               ="No words match. Try a different word."
             Visible: |-
-              =CountRows(GlList.AllItems) = 0 && true
+              =GlList.AllItemsCount = 0 && true
             Width: |-
               =nfRW
             X: |-

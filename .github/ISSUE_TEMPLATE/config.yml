@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question about the policy, or get in touch without a GitHub account
+    url: https://forms.cloud.microsoft/e/SLBvuPX7jK
+    about: The explorer's contact form. Use it for anything that should not be public.
+  - name: Open the DAM Policy Explorer
+    url: https://cyberdudeuk.github.io/dam-policy-explorer/
+    about: The web version, which is tested to WCAG 2.2 AA.
