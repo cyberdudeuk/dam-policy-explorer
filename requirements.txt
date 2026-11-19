@@ -1,6 +1,6 @@
 playwright==1.63.0
 segno==1.6.6
 python-barcode==0.16.1
-pillow==12.3.0
+pillow==13.0.0
 beautifulsoup4==4.15.0
 PyYAML==6.0.3
