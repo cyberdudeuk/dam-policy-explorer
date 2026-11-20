@@ -165,6 +165,17 @@ SHARED_CLASSES_REVIEWED = {
     "term": "glossary word, restyled on purpose", "tooltip": "the explorer tooltip has its own arrow rules (D-24)", "verdict": "asset-test result; checked by eye", "vh": "visually hidden text, same rule",
 }
 
+def s17_source_hosts(out):
+    """D-29: a source labelled GOV.UK is on www.gov.uk. Every linked source was labelled GOV.UK, so the first source on
+    another site (the Digital Economy Act register on data.gov.uk) was mislabelled."""
+    bad, seen = [], 0
+    for f in pages(out):
+        for href, text in re.findall(r'<a href="([^"]+)"[^>]*>([^<]*\(GOV\.UK\))(?:<span[^>]*>[^<]*</span>)?</a>', f.read_text()):
+            seen += 1
+            if not html.unescape(href).startswith("https://www.gov.uk/"): bad.append(f"{f.name}: {text} -> {href}")
+    if not seen: bad.append("no source labelled GOV.UK was found: the pattern no longer matches the page, so the check proves nothing")
+    return bad
+
 def s15_class_collisions(out):
     """D-19, D-22 to D-25: a class name defined in both the base and the explorer stylesheet must be reviewed, because base rules leak into explorer components."""
     def classes(css):
@@ -190,7 +201,7 @@ def s16_repo_licences(out):
         if f.exists() and re.search(r"within \d+ working days", f.read_text()): bad.append(f"{name} states a reply time")
     return bad
 
-STATIC = [s16_repo_licences, s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped, s14_css_vars_defined, s15_class_collisions]
+STATIC = [s16_repo_licences, s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped, s14_css_vars_defined, s15_class_collisions, s17_source_hosts]
 
 # ---------------- browser checks ----------------
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -433,6 +444,7 @@ def negatives(out):
         (s3_csp, lambda o: edit(o, "index.html", "</body>", "<script>alert(1)</script></body>")),
         (s4_links, lambda o: edit(o, "index.html", 'href="policy.html"', 'href="policy.html#nowhere"')),
         (s4_links, lambda o: edit(o, "index.html", 'href="policy.html"', 'href="missing.html"')),
+        (s17_source_hosts, lambda o: edit(o, "questions.html", "(digital-economy-act-register.data.gov.uk)<span", "(GOV.UK)<span")),
         (s5_external, lambda o: edit(o, "index.html", 'target="_blank" rel="noopener noreferrer"', '')),
         (s6_structure, lambda o: edit(o, "index.html", "</main>", "<h1>Second</h1></main>")),
         (s6_structure, lambda o: edit(o, "index.html", 'alt=""', '')),

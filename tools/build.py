@@ -44,7 +44,10 @@ def badge(prov):
 
 def src_links(srcs):
     if not srcs: return ""
-    return '<p class="source">Source: ' + "; ".join((f'<a href="{E(u)}">{E(t)} (GOV.UK)</a>' if u else f'{E(t)}') for t, u in srcs) + "</p>"
+    def host(u):  # D-29: name the site a source is on; only www.gov.uk is GOV.UK
+        h = re.sub(r"^https?://", "", u).split("/")[0].lower()
+        return "GOV.UK" if h == "www.gov.uk" else h.removeprefix("www.")
+    return '<p class="source">Source: ' + "; ".join((f'<a href="{E(u)}">{E(t)} ({E(host(u))})</a>' if u else f'{E(t)}') for t, u in srcs) + "</p>"
 
 def long_date(iso):
     d = datetime.date.fromisoformat(iso); return f"{d.day} {d.strftime('%B %Y')}"
