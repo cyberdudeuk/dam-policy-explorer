@@ -204,6 +204,22 @@ def forum_mentions(text):
 STAMPS = [r"\b[Vv]ersion \d+\.\d+\.\d+\b", r"\b(prepared on|built|checked|last updated|updated on) \d{1,2} [A-Z][a-z]+ \d{4}"]
 
 
+def counted_plurals(text):
+    """D-PA32: CountRows(...) & " results" says "1 results" for one item. Walks brackets back from the
+    plural, because a regex cannot match nesting of any depth (the search count nests four deep).
+    "3 of 67 answers" is allowed: the total is never 1."""
+    found = []
+    for m in re.finditer(r'\) & " (results|answers|examples|items|matches)"', text):
+        depth, k = 0, m.start()
+        while k >= 0:
+            depth += {")": 1, "(": -1}.get(text[k], 0)
+            if depth == 0: break
+            k -= 1
+        if k >= 9 and text[k - 9:k] == "CountRows" and not text[:k - 9].endswith('" of " & '):
+            found.append(m.group(1))
+    return found
+
+
 def stamp_free(t):
     """D-PA29: the version number and build date change every release. Left in, they flag a page UPDATED when nothing a reader needs has changed."""
     for pat in STAMPS: t = re.sub(pat, "", t)
@@ -1009,7 +1025,7 @@ def screens():
     S["07-ScrSearch"] = Y().screen("ScrSearch", scr, [
         *header("Sr", '"Search"', bg="nfBg4", ribbon="RGBA(90,47,138,1)"),
         *search_field("SrSearch", "Search pages, answers, examples and glossary", BAR + 12),
-        label("SrCount", f'If(Len(Trim(SrSearch.Text)) < 2, "Type two or more letters to search {{N}} pages, answers, examples and words.", CountRows({sitems}) & " results")', Y=BAR + 68, X="nfCX", Width="nfCW", Live="Live.Polite", **small),
+        label("SrCount", f'If(Len(Trim(SrSearch.Text)) < 2, "Type two or more letters to search {{N}} pages, answers, examples and words.", With({{n: CountRows({sitems})}}, n & If(n = 1, " result", " results")))', Y=BAR + 68, X="nfCX", Width="nfCW", Live="Live.Polite", **small),
         cards("SrList", sitems, open_ref(), "ThisItem.title", 'ThisItem.type & " · " & ThisItem.t', "SrCount.Y + SrCount.Height + 8", tmpl=112, cols="nfCols2", ic="ThisItem.ic", col="ThisItem.col", tint="ThisItem.tint", flag="ThisItem.flag"),
         *empty("SrNone", "SrList", "No results. Try a different word.", "Len(Trim(SrSearch.Text)) >= 2"),
     ])
@@ -1278,6 +1294,9 @@ def main():
         if forum_mentions(q["a"] + " " + q["q"]): bad.append(f"answer {q['id']} says where the question was raised; only the release log may (D-PA30)")
     if stamp_free("This statement was prepared on 18 November 2026. Version 1.2.0, built 18 November 2026.") != stamp_free("This statement was prepared on 19 November 2026. Version 1.3.0, built 19 November 2026."):
         bad.append("a new version number or build date alone flags a page UPDATED (D-PA29)")
+    # D-PA32: a single search result read "1 results". A count followed by a fixed plural must say the singular for 1.
+    for word in counted_plurals("".join(S.values())):
+        bad.append(f"a count is always followed by \"{word}\", so one item reads \"1 {word}\" (D-PA32)")
     for u in sorted(set(UNSCALED)): bad.append(f"length next to * or / is not scaled, write pt(n): {u}")
     import yaml
     def walk(name, node, k):
