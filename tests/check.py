@@ -140,6 +140,25 @@ def s21_choices_and_open(out):
     if sorted(listed) != sorted(opens): bad.append(f"Open list shows {len(listed)} answers, there are {len(opens)}")
     return bad
 
+def s22_portal_pages(out):
+    """1.5.0 guard: the Government Data portal pages are rebuilt from the published site, so their bodies must be safe to
+    put in a SharePoint text web part (only headings, paragraphs, lists, links and emphasis; https or portal links; no
+    addresses) and must state the versions they were made from."""
+    sys.path.insert(0, str(ROOT / "tools")); import content as C
+    snap = json.loads((ROOT / "data" / "playbooks-snapshot.json").read_text()); bad = []
+    for name, stamp in (("explorer.html", f"version {C.VERSION}"), ("playbooks.html", f"playbooks version {snap['playbooks_version']}")):
+        f = out / "portal" / name
+        if not f.exists(): bad.append(f"portal/{name} was not built"); continue
+        t = f.read_text()
+        tags = set(re.findall(r"</?([a-zA-Z0-9]+)", t)) - {"h2", "p", "ul", "li", "a", "em"}
+        if tags: bad.append(f"portal/{name}: tags a text web part should not carry: {sorted(tags)}")
+        for h in re.findall(r'href="([^"]+)"', t):
+            if not (h.startswith("https://") or re.fullmatch(r"[A-Za-z0-9-]+\.aspx", h)): bad.append(f"portal/{name}: link {h}")
+        if "@" in t: bad.append(f"portal/{name}: an address")
+        if stamp not in t: bad.append(f"portal/{name}: does not say it was made from {stamp}")
+        if re.search(r"\bon\w+\s*=", t): bad.append(f"portal/{name}: an event handler")
+    return bad
+
 def s7_traceability(out):
     """Every forum need maps to an answer; every answer has a source unless it is labelled suggested practice."""
     d = json.loads((out / "explorer-data.json").read_text()); bad = []
@@ -257,7 +276,7 @@ def s16_repo_licences(out):
         if f.exists() and re.search(r"within \d+ working days", f.read_text()): bad.append(f"{name} states a reply time")
     return bad
 
-STATIC = [s21_choices_and_open, s20_playbook_results, s19_no_tracked_build_outputs, s18_section_citations, s16_repo_licences, s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped, s14_css_vars_defined, s15_class_collisions, s17_source_hosts]
+STATIC = [s22_portal_pages, s21_choices_and_open, s20_playbook_results, s19_no_tracked_build_outputs, s18_section_citations, s16_repo_licences, s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped, s14_css_vars_defined, s15_class_collisions, s17_source_hosts]
 
 # ---------------- browser checks ----------------
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -513,6 +532,8 @@ def negatives(out):
         (s18_section_citations, lambda o: (o / "explorer-data.json").write_text((o / "explorer-data.json").read_text().replace("data-asset-management-policy-in-government#data-quality-action-plans", "data-asset-management-policy-in-government", 1))),
         (s18_section_citations, lambda o: (o / "explorer-data.json").write_text((o / "explorer-data.json").read_text().replace("identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets#what-critical-data-assets-are", "implement-a-data-quality-action-plan/data-quality-issues-framework#what-data-quality-rules-and-issues-are", 1))),
         (s20_playbook_results, lambda o: _poison_playbook(o)),
+        (s22_portal_pages, lambda o: (o / "portal" / "playbooks.html").write_text((o / "portal" / "playbooks.html").read_text() + '<script>alert(1)</script>')),
+        (s22_portal_pages, lambda o: (o / "portal" / "explorer.html").write_text((o / "portal" / "explorer.html").read_text().replace('href="https://', 'href="javascript:', 1))),
         (s20_playbook_results, lambda o: _label_playbook(o)),
         (s21_choices_and_open, lambda o: edit(o, "policy.html", 'id="choice-catalogue"', 'id="choice-gone"')),
         (s21_choices_and_open, lambda o: edit(o, "policy.html", '<h3 id="open">Still being decided</h3>', '<h3 id="open">Still being decided</h3><ul><li><a href="questions.html#q-extra">x</a></li></ul>')),

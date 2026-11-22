@@ -992,6 +992,8 @@ def main():
         doc = link_terms(externalise(doc), f)
         (OUT / f).write_text(doc)
     colophon()
+    import portal_pages   # bodies of the two Government Data portal pages, fetched from the published site when the portal is refreshed
+    portal_pages.main(OUT / "portal")
     if HOME_URL.startswith("https://") and "claude.ai" not in HOME_URL and not PREVIEW:
         import subprocess
         subprocess.run([sys.executable, "-I", str(ROOT / "tools" / "package_teams.py"), HOME_URL.rstrip("/")], check=True, capture_output=True)
