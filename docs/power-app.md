@@ -2,7 +2,7 @@
 
 The Power Apps version carries the same content as the web explorer, version for version. It is generated, not hand-built: `tools/powerapp.py` reads the built site (`out/`), `tools/content.py` and `tools/examples.py` and writes `pa/`.
 
-Status on 19 November 2026: version 1.3.0 **published** at 16:14 and checked in the preview. The app icon is set. Teams: see "In Microsoft Teams".
+Status on 22 November 2026: version 1.4.0 built and tested; it replaces 1.3.0 (published 19 November 2026) once pasted into Studio and published. Teams: see "In Microsoft Teams".
 
 ## What is in it
 
@@ -23,6 +23,20 @@ Fourteen screens: splash (it stays until "Open the explorer" is pressed), Home, 
 - Phone-layout canvas apps count two units to a pixel. Every length in the generator is written in pixels and doubled on output.
 - Only real buttons and inputs take focus. Each card is one button whose text is its accessible name. Colour never carries meaning alone: every tag and status has words or an icon.
 - Glass panels and backdrops are inline HTML and SVG; motion stops under "reduce motion".
+
+## Running it alone: the ongoing effort
+
+One person runs this app and the web explorer, without a co-owner. The figures are estimates from the releases so far, not measurements.
+
+| What | How often | Effort (estimate) |
+|---|---|---|
+| Read the signals: the coordinators' and DCAP working groups, the Knowledge Hub community, the contact form, GitHub issues | Weekly | 30 to 60 minutes |
+| Release: edit `tools/content.py`, build, run the four suites (about 6 minutes unattended) | Per release, about monthly | 1 to 2 hours |
+| Paste into Studio (formulas, plus only the screens whose files changed), compare, publish, check in the player | Per release | 30 to 60 minutes |
+| Check the GOV.UK section links still open their sections (no test does this: the checks only hold citations to the section list in `tools/content.py`, which was read from GOV.UK on 22 November 2026) | Monthly, or when GOV.UK republishes a guidance page | 15 minutes |
+| Dependabot pull requests: run the suites on the branch, merge if they pass | As they come | 10 minutes each |
+
+The biggest risk is that there is one person: no one else can publish a fix. Adding a co-owner (Power Apps, Share, Co-owner) removes it.
 
 ## Building and pasting
 
