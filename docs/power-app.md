@@ -2,7 +2,7 @@
 
 The Power Apps version carries the same content as the web explorer, version for version. It is generated, not hand-built: `tools/powerapp.py` reads the built site (`out/`), `tools/content.py` and `tools/examples.py` and writes `pa/`.
 
-Status on 22 November 2026: version 1.4.0 published (06:29) and checked in the player. Version 1.5.0 built and tested; it changes the formulas and the Search, My area and What is new screens (search results can now open a capability playbook page). Teams: see "In Microsoft Teams".
+Status on 22 November 2026: version 1.6.0 published (10:30) and checked in the player; the formulas were pasted and the Search screen's count label edited, and the relay compare of the Search screen found 0 differences. Its "What is new" compares with 1.4.0, because the baseline was not rebuilt from 1.5.0 before 1.6.0 began (1.5.0 was live for 90 minutes); rebuild it from the 1.6.0 release before the next one starts. Teams: see "In Microsoft Teams".
 
 ## What is in it
 
