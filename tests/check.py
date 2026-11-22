@@ -84,6 +84,34 @@ def s6_structure(out):
         bad += [f"{f.name}: duplicate id {d}" for d in dup]
     return bad
 
+def s19_no_tracked_build_outputs(out, files=None):
+    """D-32: compiled Python (tests/__pycache__) was committed in 1.1.0, before .gitignore excluded it; ignoring a path
+    does not untrack it. Nothing generated (bytecode, out/, dist/, inputs/) may be tracked."""
+    import subprocess
+    if files is None:
+        r = subprocess.run(["git", "-C", str(ROOT), "ls-files"], capture_output=True, text=True)
+        if r.returncode: return ["git ls-files failed, so the check proves nothing"]
+        files = r.stdout.splitlines()
+    return [f"tracked build output: {f}" for f in files
+            if f.endswith((".pyc", ".pyo")) or "__pycache__/" in f or f.split("/")[0] in ("out", "dist", "inputs", "node_modules")]
+
+def s18_section_citations(out):
+    """D-31: citations of GOV.UK guidance link to the section the answer rests on, not the whole document (owner rule,
+    19 Nov 2026), and scope answers do not cite data quality guidance (three did, through a one-letter alias)."""
+    sys.path.insert(0, str(ROOT / "tools")); import content as C
+    docs = {u: k for k, (t, u) in C.GOVUK.items() if k in C.SECTIONS}
+    d = json.loads((out / "explorer-data.json").read_text()); bad, seen = [], 0
+    for q in d["qa"]:
+        for t, u in q["src"]:
+            if not u: continue
+            base, _, frag = u.partition("#")
+            if base in docs:
+                seen += 1
+                if frag not in C.SECTIONS[docs[base]]: bad.append(f"answer {q['id']}: '{t}' links to the whole document, or to an unknown section '{frag}'")
+            if q["topic"] == C.S and "implement-a-data-quality-action-plan" in u: bad.append(f"scope answer {q['id']} cites data quality guidance: {t}")
+    if not seen: bad.append("no GOV.UK guidance citation found: the check proves nothing")
+    return bad
+
 def s7_traceability(out):
     """Every forum need maps to an answer; every answer has a source unless it is labelled suggested practice."""
     d = json.loads((out / "explorer-data.json").read_text()); bad = []
@@ -201,7 +229,7 @@ def s16_repo_licences(out):
         if f.exists() and re.search(r"within \d+ working days", f.read_text()): bad.append(f"{name} states a reply time")
     return bad
 
-STATIC = [s16_repo_licences, s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped, s14_css_vars_defined, s15_class_collisions, s17_source_hosts]
+STATIC = [s19_no_tracked_build_outputs, s18_section_citations, s16_repo_licences, s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped, s14_css_vars_defined, s15_class_collisions, s17_source_hosts]
 
 # ---------------- browser checks ----------------
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -444,6 +472,8 @@ def negatives(out):
         (s3_csp, lambda o: edit(o, "index.html", "</body>", "<script>alert(1)</script></body>")),
         (s4_links, lambda o: edit(o, "index.html", 'href="policy.html"', 'href="policy.html#nowhere"')),
         (s4_links, lambda o: edit(o, "index.html", 'href="policy.html"', 'href="missing.html"')),
+        (s18_section_citations, lambda o: (o / "explorer-data.json").write_text((o / "explorer-data.json").read_text().replace("data-asset-management-policy-in-government#data-quality-action-plans", "data-asset-management-policy-in-government", 1))),
+        (s18_section_citations, lambda o: (o / "explorer-data.json").write_text((o / "explorer-data.json").read_text().replace("identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets#what-critical-data-assets-are", "implement-a-data-quality-action-plan/data-quality-issues-framework#what-data-quality-rules-and-issues-are", 1))),
         (s17_source_hosts, lambda o: edit(o, "questions.html", "(digital-economy-act-register.data.gov.uk)<span", "(GOV.UK)<span")),
         (s5_external, lambda o: edit(o, "index.html", 'target="_blank" rel="noopener noreferrer"', '')),
         (s6_structure, lambda o: edit(o, "index.html", "</main>", "<h1>Second</h1></main>")),
@@ -469,6 +499,8 @@ def negatives(out):
     try:
         lic.write_text("All rights reserved.\n")
         if not s16_repo_licences(out): bad.append("NEGATIVE s16_repo_licences did not fail on its broken copy")
+        if not s19_no_tracked_build_outputs(out, ["README.md", "tests/__pycache__/check.cpython-313.pyc"]): bad.append("NEGATIVE s19_no_tracked_build_outputs did not fail on its broken copy")
+        if not s19_no_tracked_build_outputs(out, ["README.md", "inputs/notes.txt"]): bad.append("NEGATIVE s19_no_tracked_build_outputs did not fail on inputs/")
     finally:
         lic.write_text(lic_orig)
     cases = [c for c in cases if c[0] is not s12_agent_open_sources]
