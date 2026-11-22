@@ -8,19 +8,19 @@
  "items": [
   {
    "t": "Data governance",
-   "x": "Put the authority, roles and routines in place so that every critical data asset has a named, active owner, decisions are made and recorded, and the...",
+   "x": "Every critical data asset needs a named data owner. Governance is how you appoint them and keep them active.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/governance.html",
    "k": "Playbook"
   },
   {
    "t": "Data cataloguing",
-   "x": "Find the critical data assets, describe each one to the cross-government metadata standard, keep the descriptions in a catalogue that others can harvest,...",
+   "x": "Find the data other organisations depend on, and decide which of it is critical.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/cataloguing.html",
    "k": "Playbook"
   },
   {
    "t": "Data quality",
-   "x": "Know, prove and improve the quality of each critical data asset through a data quality action plan (DQAP), scored with the government issues framework,...",
+   "x": "Every critical data asset needs a data quality action plan (DQAP) or an equivalent.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/quality.html",
    "k": "Playbook"
   },
@@ -170,115 +170,115 @@
   },
   {
    "t": "Learning module: The DAM Policy - what it asks of you",
-   "x": "Explain who the policy applies to and what is in scope; Name the core duties: identify and catalogue assets, report them, name an owner and manage quality; Find the requirement behind any step in these playbooks",
+   "x": "Explain who the policy applies to and what is in scope.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M01",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Roles and accountability",
-   "x": "Describe the data owner, data steward and data custodian roles; Explain how the data owner relates to the information asset owner; Choose between the three ownership options",
+   "x": "Describe the data owner, data steward and data custodian roles.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M02",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Setting up governance with five recipes",
-   "x": "Run the Mandate, Frame, Assign, Operate and Assure recipes in order; Set up a decision log and an exception register; Collect evidence continuously for the GDS return",
+   "x": "Run the Mandate, Frame, Assign, Operate and Assure recipes in order.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M03",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Finding and designating critical data assets",
-   "x": "Build a candidate list from existing registers; Apply the scope tests and the seven purposes; Draw an asset's boundary and record why",
+   "x": "Build a candidate list from existing registers.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M04",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Describing assets with metadata others can use",
-   "x": "Record the metadata properties in the GOV.UK guidance; Write titles and descriptions in plain English; Map properties to the Metadata Exchange Model",
+   "x": "Record the metadata properties in the GOV.UK guidance.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M05",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Cataloguing, harvesting and reporting to GDS",
-   "x": "Expose records so others can harvest them; Produce the return from catalogue records; Plan the annual review",
+   "x": "Expose records so others can harvest them.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M06",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Data quality foundations",
-   "x": "Name the five principles and six dimensions of the Government Data Quality Framework; Explain what a DQAP is for; Recognise when quality differs between groups of people",
+   "x": "Name the five principles and six dimensions of the Government Data Quality Framework.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M07",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Building a DQAP and scoring issues",
-   "x": "Write rules with targets from the issues framework; Measure a baseline and log issues; Prioritise issues and set resolution dates",
+   "x": "Write rules with targets from the issues framework.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M08",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Running the three capabilities as one yearly cycle",
-   "x": "Use the hand-offs so each fact is recorded once; Plan one annual review per asset; Feed assurance lessons into the next mandate",
+   "x": "Use the hand-offs so each fact is recorded once.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M09",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Inclusive data practice",
-   "x": "Apply equality and inclusion checks in each capability; Make data quality statements and records accessible; Involve people the data describes",
+   "x": "Apply equality and inclusion checks in each capability.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M10",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Embedding the policy in delivery and change",
-   "x": "Name the capabilities the policy relies on but does not state; Build DAM checkpoints into a business case and an assurance plan; Plan a legacy exit and a handover to business as usual",
+   "x": "Name the capabilities the policy relies on but does not state.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M11",
    "k": "Playbook"
   },
   {
    "t": "Learning module: What makes a critical data asset AI-ready",
-   "x": "Name the four pillars in the GDS guidelines on AI-ready datasets; Decide whether an asset needs the AI-ready supplement; Explain why AI-readiness is a stewardship question as well as a technical one",
+   "x": "Name the four pillars in the GDS guidelines on AI-ready datasets.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M12",
    "k": "Playbook"
   },
   {
    "t": "Learning module: From FAIR to AI-ready metadata",
-   "x": "Explain the four FAIR principles in plain English; Add the AI-ready catalogue fields to a record; See how the proposed DCAT-AP-UK profile extends the xGov MEM for AI use",
+   "x": "Explain the four FAIR principles in plain English.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M13",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Start from the question the data must answer",
-   "x": "Write down the decision or question an AI use of an asset serves; Test that question against the seven purposes in the policy; Record out-of-scope uses before anyone asks for them",
+   "x": "Write down the decision or question an AI use of an asset serves.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M14",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Connecting data to AI with linked data, knowledge graphs and MCP",
-   "x": "Explain the RDF triple and why linked data helps machines read metadata; Find and reuse this portal's knowledge graph and vocabulary files; Describe how an MCP server lets an AI assistant check metadata against the xGov MEM",
+   "x": "Explain the RDF triple and why linked data helps machines read metadata.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M15",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Making public data AI-ready together",
-   "x": "Look for existing work before building, across public sector code and catalogues; Involve the people the data describes when you judge whether it is fit for AI; Use the shared assurance and community routes rather than working alone",
+   "x": "Look for existing work before building, across public sector code and catalogues.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M16",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Governing AI use of critical data in practice",
-   "x": "Run the AI-ready quality rules on a sample file; Apply the transparency and ethics duties that go with AI use; Plan who monitors drift and bias once AI use begins",
+   "x": "Run the AI-ready quality rules on a sample file.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M17",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Leading data asset management - your first year",
-   "x": "Set Must, Should and Could aims for your organisation and the outcomes each brings; Plan the first 30, 60 and 90 days and the 6 and 12 month checkpoints; Choose the maturity model that fits each aim and measure progress against a baseline",
+   "x": "Set Must, Should and Could aims for your organisation and the outcomes each brings.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M18",
    "k": "Playbook"
   },
   {
    "t": "Learning module: Buying tools for data asset management without lock-in",
-   "x": "Pick the requirements that fit the kinds of tool you need, with priorities; Run a request for information and a proof of concept with your own data; Ask for contract clauses that keep your data movable",
+   "x": "Pick the requirements that fit the kinds of tool you need, with priorities.",
    "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M19",
    "k": "Playbook"
   }
