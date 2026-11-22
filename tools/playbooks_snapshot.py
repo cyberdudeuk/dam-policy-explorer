@@ -35,7 +35,7 @@ def plain(s, n=240):
 def main():
     raw = get("data/playbooks.json")
     pb = json.loads(raw)
-    pages, ids = {}, {}
+    pages, ids = {}, {}   # page HTML and the ids on each page
     for p in PAGES:
         t = get(p).decode("utf-8", "replace")
         pages[p] = t
@@ -45,13 +45,17 @@ def main():
         t = pages[p]
         title = plain(re.search(r"<title>(.*?)</title>", t, re.S).group(1)).split(" - ")[0]
         m = re.search(r'<meta name="description" content="([^"]*)"', t)
-        items.append({"t": title, "x": plain(m.group(1) if m else ""), "u": BASE + p, "k": "Playbook"})
+        x = plain(m.group(1) if m else "")
+        cap = {"governance.html": "gov", "cataloguing.html": "cat", "quality.html": "dq"}.get(p)
+        if cap and re.search(r"(\.\.\.|…)$", x):   # the page description is cut short; use the capability's own one-line summary
+            x = plain(next(c for c in pb["capabilities"] if c["id"] == cap)["in_brief"][0])
+        items.append({"t": title, "x": x, "u": BASE + p, "k": "Playbook"})
     for s in pb["supplements"]:
         if SAFE.match(s["id"]) and s["id"] in ids["sectors.html"]:
             items.append({"t": "Sector supplement: " + plain(s["title"], 120), "x": plain(s.get("summary", "")), "u": BASE + "sectors.html#" + s["id"], "k": "Playbook"})
     for m in pb["modules"]:
         if SAFE.match(m["id"]) and m["id"] in ids["learning.html"]:
-            items.append({"t": "Learning module: " + plain(m["title"], 120), "x": plain("; ".join(m.get("outcomes", []))), "u": BASE + "learning.html#" + m["id"], "k": "Playbook"})
+            items.append({"t": "Learning module: " + plain(m["title"], 120), "x": plain((m.get("outcomes") or [""])[0].rstrip(".") + "." if m.get("outcomes") else ""), "u": BASE + "learning.html#" + m["id"], "k": "Playbook"})
     meta = pb["meta"]
     snap = {"source": BASE + "data/playbooks.json", "playbooks_version": meta.get("version"), "playbooks_as_of": meta.get("as_of"),
             "retrieved": date.today().isoformat(), "sha256": hashlib.sha256(raw).hexdigest(), "count": len(items), "items": items}
