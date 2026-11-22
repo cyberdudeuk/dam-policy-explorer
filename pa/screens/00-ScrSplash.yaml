@@ -56,6 +56,56 @@ Screens:
               =If(nfDesign, Max(0, Min(Parent.Width / 2 - 120, Parent.Width - Self.Width)), Parent.Width / 2 - 120)
             Y: |-
               =If(nfDesign, Max(0, Min(SpLogo.Y - 24, Parent.Height - Self.Height)), SpLogo.Y - 24)
+      - SpPlate:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: |-
+              =Font.'Open Sans'
+            Height: |-
+              =If(SpStats.Visible, SpStats.Y + SpStats.Height, If(SpHello.Visible, SpHello.Y + SpHello.Height, If(SpStrap.Visible, SpStrap.Y + SpStrap.Height, SpTitle.Y + SpTitle.Height))) + 28 - (SpTitle.Y - 28)
+            HtmlText: |-
+              ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:40px;background:linear-gradient(135deg,rgba(5,42,85,0.84),rgba(8,62,120,0.8));border:1px solid rgba(255,255,255,.30);'></div>"
+            PaddingBottom: |-
+              =0
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =0
+            Size: |-
+              =2
+            Width: |-
+              =nfRW + 32
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX - 16, Parent.Width - Self.Width)), nfRX - 16)
+            Y: |-
+              =If(nfDesign, Max(0, Min(SpTitle.Y - 28, Parent.Height - Self.Height)), SpTitle.Y - 28)
+      - SpProtoPlate:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: |-
+              =Font.'Open Sans'
+            Height: |-
+              =SpProto.Height + 24
+            HtmlText: |-
+              ="<div style='height:" & Max(0, Self.Height - 1) & "px;border-radius:24px;background:linear-gradient(135deg,rgba(5,42,85,0.84),rgba(8,62,120,0.8));border:1px solid rgba(255,255,255,.30);'></div>"
+            PaddingBottom: |-
+              =0
+            PaddingLeft: |-
+              =0
+            PaddingRight: |-
+              =0
+            PaddingTop: |-
+              =0
+            Size: |-
+              =2
+            Width: |-
+              =nfRW + 32
+            X: |-
+              =If(nfDesign, Max(0, Min(nfRX - 16, Parent.Width - Self.Width)), nfRX - 16)
+            Y: |-
+              =If(nfDesign, Max(0, Min(SpProto.Y - 12, Parent.Height - Self.Height)), SpProto.Y - 12)
       - SpLogo:
           Control: Image@2.2.3
           Properties:

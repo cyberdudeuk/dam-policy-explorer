@@ -640,10 +640,24 @@ GLASS = ("border-radius:{r}px;background:linear-gradient(135deg,rgba(255,255,255
          "box-shadow:0 8px 24px rgba(16,42,84,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-sizing:border-box;overflow:hidden")
 
 
-def glass(name, x, y, w, h, r=16, a=.94, b=.78, **p):
+# D-PA33: white text on the splash sat on the artwork, and on a phone the glass drops ran behind it. A dark plate goes
+# under white text; its lightest stop, laid over pure white (the worst case beneath), must still give 4.5:1.
+PLATE_RGB, PLATE_A = ((5, 42, 85), (8, 62, 120)), (.84, .80)
+GLASS_DARK = ("border-radius:{r}px;background:linear-gradient(135deg,rgba(5,42,85,{a}),rgba(8,62,120,{b}));border:1px solid rgba(255,255,255,.30);")
+
+
+def plate_contrast(rgb=PLATE_RGB, alpha=PLATE_A):
+    """Worst-case contrast of white text on the dark plate: each gradient stop composited over white."""
+    def lum(c):
+        c = [v / 255 for v in c]; c = [v / 12.92 if v <= .03928 else ((v + .055) / 1.055) ** 2.4 for v in c]
+        return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]
+    return min(1.05 / (lum([a * v + (1 - a) * 255 for v in c]) + .05) for c, a in zip(rgb, alpha))
+
+
+def glass(name, x, y, w, h, r=16, a=.94, b=.78, dark=False, **p):
     """A translucent 'liquid glass' plate. Purely visual: an HTML text control holding one empty styled box, so it is
     not focusable and has nothing for a screen reader to announce. Text always sits on a plate, never on the artwork."""
-    style = GLASS.format(r=r * K, a=a, b=b)
+    style = (GLASS_DARK if dark else GLASS).format(r=r * K, a=a, b=b)
     d = {"HtmlText": f'"<div style=\'height:" & Max(0, Self.Height - 1) & "px;{style}\'></div>"', "X": x, "Y": y, "Width": w, "Height": h, "PaddingTop": 0, "PaddingBottom": 0, "PaddingLeft": 0, "PaddingRight": 0, "Font": FONT, "Size": 1}
     d.update(p); return (name, HTM, d)
 
@@ -1099,6 +1113,8 @@ def screens():
     S["00-ScrSplash"] = Y().screen("ScrSplash", {"Fill": BRAND_D, "LoadingSpinnerColor": WHITE, "OnVisible": f'If(IsBlank(gLoaded), Set(gLoaded, true); {load}; Set(gRole, First(colPrefs).role)); Set(gTour, 0); Set(gGo, Lower(Coalesce(Param("go"), "")))'}, [
         backdrop("SpArt", "nfSplashArt"),
         glass("SpDisc", f"{cxm} - 60", "SpLogo.Y - 12", 120, 120, r=60, a=.30, b=.12),
+        glass("SpPlate", "nfRX - 8", "SpTitle.Y - 14", "nfRW + 16", "If(SpStats.Visible, SpStats.Y + SpStats.Height, If(SpHello.Visible, SpHello.Y + SpHello.Height, If(SpStrap.Visible, SpStrap.Y + SpStrap.Height, SpTitle.Y + SpTitle.Height))) + 14 - Self.Y", r=20, a=PLATE_A[0], b=PLATE_A[1], dark=True),
+        glass("SpProtoPlate", "nfRX - 8", "SpProto.Y - 6", "nfRW + 16", "SpProto.Height + 12", r=12, a=PLATE_A[0], b=PLATE_A[1], dark=True),
         image("SpLogo", f"{cxm} - 48", "If(Parent.Height < 1300, 14, Max(24, (Parent.Height - 440) * 0.5))", 96, AccessibleLabel='"DAM Policy Explorer logo: a data store with a compass"'),
         label("SpTitle", '"DAM Policy Explorer"', X="nfRX", Width="nfRW", Y="SpLogo.Y + 132", Align="Align.Center", Color=WHITE, Size="If(nfWide, 30, 24)", FontWeight="FontWeight.Bold", Role="TextRole.Heading1", LineHeight=1.2),
         label("SpStrap", '"Everything you need for the Data Asset Management Policy, in one place."', X="nfRX", Width="nfRW", Y="SpTitle.Y + SpTitle.Height + 8", Align="Align.Center", Color=WHITE, Size=S_LEAD, Visible="!nfShort"),
@@ -1294,6 +1310,13 @@ def main():
         if forum_mentions(q["a"] + " " + q["q"]): bad.append(f"answer {q['id']} says where the question was raised; only the release log may (D-PA30)")
     if stamp_free("This statement was prepared on 18 November 2026. Version 1.2.0, built 18 November 2026.") != stamp_free("This statement was prepared on 19 November 2026. Version 1.3.0, built 19 November 2026."):
         bad.append("a new version number or build date alone flags a page UPDATED (D-PA29)")
+    # D-PA33: every white label on the splash sits on a dark plate that grows with it, and the plate keeps 4.5:1 at worst
+    sp = S.get("00-ScrSplash", "")
+    for lab, plate in (("SpTitle", "SpPlate"), ("SpStrap", "SpPlate"), ("SpHello", "SpPlate"), ("SpStats", "SpPlate"), ("SpProto", "SpProtoPlate")):
+        m = re.search(r"^ +- " + plate + r":\n(.*?)(?=^ +- \w+:$)", sp, re.M | re.S)
+        if not m or lab not in m.group(1): bad.append(f"splash text {lab} is not on a dark plate, so the artwork can show through it (D-PA33)")
+    if sp.find("- SpPlate:") > sp.find("- SpTitle:") or sp.find("- SpProtoPlate:") > sp.find("- SpProto:"): bad.append("a splash plate is drawn above its text (D-PA33)")
+    if plate_contrast() < 4.5: bad.append(f"white on the splash plate is {plate_contrast():.2f}:1 over a white background, under 4.5:1 (D-PA33)")
     # D-PA32: a single search result read "1 results". A count followed by a fixed plural must say the singular for 1.
     for word in counted_plurals("".join(S.values())):
         bad.append(f"a count is always followed by \"{word}\", so one item reads \"1 {word}\" (D-PA32)")

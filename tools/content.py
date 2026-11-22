@@ -12,7 +12,7 @@ Coordinators Working Group, Knowledge Hub, DCAP Working Group, email and meeting
 organisations are removed: each need is paraphrased and counted, never quoted.
 """
 
-VERSION = "1.6.0"
+VERSION = "1.6.1"
 BUILD_DATE = "2026-11-22"
 CONTENT_CHECKED = "2026-11-18"          # date the GOV.UK sources were last re-read
 REGISTER_SNAPSHOT = "2026-11-18"        # Question and Insight Register snapshot used for the needs
@@ -423,6 +423,7 @@ AUDIENCES = {"coordinator": "Coordinators", "cdo": "Chief data officers", "owner
 
 # What changed, newest first. Items flagged as new show a "New" marker for 30 days.
 CHANGES = [
+    ("2026-11-22", "1.6.1", "In the app, on a phone, the text on the opening screen could sit over the artwork and was hard to read. It now sits on a dark panel that keeps it readable."),
     ("2026-11-22", "1.6.0", "From the DAM Policy FAQs (November 2026): three more decisions that are yours (how you organise and resource the work, what you do with data that is critical to you but not in scope, and which other assets you catalogue), who is accountable when there is no chief data officer, and a fuller answer on resourcing. The journey for each role is now tested to stay within three choices of the home page. In the app, a single search result now says 1 result."),
     ("2026-11-22", "1.5.0", "From the coordinator group of 19 November 2026 and a support session for a transformation project on the same day: what the policy fixes and what each organisation decides for itself, read from the policy and its guidance on GOV.UK; where answers come from, and which are still being decided; whether you can leave out commercially or security-sensitive details; and who lists and owns critical data that a supplier holds for you. Search now also finds the main pages, sector supplements and learning modules of the DAM capability playbooks, with a link to each."),
     ("2026-11-22", "1.4.0", "From the Cross-Government Data Management Community on the Knowledge Hub and the Data Catalogue and Analysis Platform Working Group, November 2026: what to do when a critical data set you rely on belongs to another organisation, and which files to send back with the return. Every citation of GOV.UK guidance now opens the section the answer rests on. Three answers on scope cited the data quality issues framework by mistake; they now cite the guidance on identifying critical data assets. The answer on finding data you already share, added on 20 November, is now in the app too."),
