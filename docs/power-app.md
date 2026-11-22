@@ -35,6 +35,7 @@ One person runs this app and the web explorer, without a co-owner. The figures a
 | Paste into Studio (formulas, plus only the screens whose files changed), compare, publish, check in the player | Per release | 30 to 60 minutes |
 | Check the GOV.UK section links still open their sections (no test does this: the checks only hold citations to the section list in `tools/content.py`, which was read from GOV.UK on 22 November 2026) | Monthly, or when GOV.UK republishes a guidance page | 15 minutes |
 | Refresh the playbooks snapshot (`python3 -I tools/playbooks_snapshot.py`), when the playbooks publish a new version | As needed | 5 minutes |
+| Refresh the two Government Data portal pages (`tools/portal_refresh.js`, see docs/portal.md) | Per release | 5 minutes |
 | Dependabot pull requests: run the suites on the branch, merge if they pass | As they come | 10 minutes each |
 
 The biggest risk is that there is one person: no one else can publish a fix. Adding a co-owner (Power Apps, Share, Co-owner) removes it.
