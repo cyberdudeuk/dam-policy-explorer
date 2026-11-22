@@ -128,9 +128,8 @@
   var uid = 0;
   function field(list, i, f, val) {
     var id = 'dq-' + list + '-' + i + '-' + f[0] + '-' + (uid++), lab = '<label for="' + id + '">' + esc(f[1]) + '</label>', a = ' id="' + id + '" data-f="' + f[0] + '"';
-    if (f[2] === 'dim') {
-      var o = $('[data-rows="rules"]').getAttribute('data-dims');
-      return lab + '<select' + a + '><option value="">Choose</option>' + o.replace('value="' + esc(val) + '"', 'value="' + esc(val) + '" selected') + '</select>';
+    if (f[2] === 'dim') {   // D-36: options come from the data file, escaped, never from text read back out of the page
+      return lab + '<select' + a + '><option value="">Choose</option>' + DATA.dims.map(function (m) { return '<option value="' + esc(m.id) + '"' + (m.id === val ? ' selected' : '') + '>' + esc(m.label) + '</option>'; }).join('') + '</select>';
     }
     if (f[2] === 'prio') return lab + '<select' + a + '><option value="">Choose</option>' + ['High', 'Medium', 'Low'].map(function (p) { return '<option' + (p === val ? ' selected' : '') + '>' + p + '</option>'; }).join('') + '</select>';
     return lab + '<input' + a + ' type="' + (f[2] === 'date' ? 'date' : 'text') + '"' + (f[2] === 'number' ? ' inputmode="decimal"' : '') + ' maxlength="300" autocomplete="off" value="' + esc(val) + '">';

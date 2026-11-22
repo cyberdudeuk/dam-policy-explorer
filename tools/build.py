@@ -456,7 +456,6 @@ def dqap():
     rows = "".join(f'<tr><th scope="row">{E(a)}</th><td>{E(b)}</td><td><code>{E(c)}</code></td><td>{E(n)}</td></tr>' for a, b, c, n in C.DQV_MAP)
     other = "".join(f'<li><a href="{u}">{E(n)}</a>: {E(w)}</li>' for n, u, w in C.DQ_OTHER)
     dqv_src = " ".join(f'<a href="{u}">{E(t)}</a>.' for t, u in C.DQV_SRC)
-    opts = "".join(f'<option value="{d["id"]}">{E(d["label"])}</option>' for d in C.DQ_DIMS)
     return page("dqap.html", "Data quality action plan", f"""
 <h1>Data quality action plans</h1>
 <p class="lead">Every critical data asset needs a data quality action plan (DQAP), or an equivalent. Check a plan you have, build one step by step, or test your own process against the seven steps.</p>
@@ -488,7 +487,7 @@ def dqap():
 <fieldset class="q"><legend><h3 id="b-issues"><span class="qn">1</span> Known issues</h3></legend><p class="hint">Quality problems you already know about.</p>
 <div data-rows="issues"></div><p><button type="button" class="btn secondary" data-add="issues">Add an issue</button></p></fieldset>
 <fieldset class="q"><legend><h3 id="b-rules"><span class="qn">2</span> Rules and targets</h3></legend><p class="hint">Each rule tests one dimension against a target. Enter targets and results as percentages, for example 95. <a href="{C.GOVUK["dqap"][1]}#step-2-identify-data-quality-rules">Step 2 (GOV.UK)</a>, <a href="{C.GOVUK["dqissues"][1]}#set-a-data-quality-target">setting a target (GOV.UK)</a></p>
-<div data-rows="rules" data-dims="{E(opts)}"></div><p><button type="button" class="btn secondary" data-add="rules">Add a rule</button></p></fieldset>
+<div data-rows="rules"></div><p><button type="button" class="btn secondary" data-add="rules">Add a rule</button></p></fieldset>
 <fieldset class="q"><legend><h3 id="b-results"><span class="qn">3</span> Results</h3></legend><p class="hint">Run each rule and record the result with its date. Add a new result each time you measure again (step 7). <a href="{C.GOVUK["dqap"][1]}#step-3-assess-current-data-quality">Step 3 (GOV.UK)</a></p>
 <div data-rows="results"></div><p><button type="button" class="btn secondary" data-add="results">Add a result</button></p></fieldset>
 <fieldset class="q"><legend><h3 id="b-causes"><span class="qn">4</span> Priorities, causes and actions</h3></legend><p class="hint">For each issue: its priority, the root cause and what you will do. <a href="{C.GOVUK["dqissues"][1]}#assign-a-priority-to-a-data-quality-issue">Assigning a priority (GOV.UK)</a>, <a href="{C.GOVUK["dqap"][1]}#step-5-identify-root-cause-and-take-action">step 5 (GOV.UK)</a></p>
