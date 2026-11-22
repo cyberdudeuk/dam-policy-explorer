@@ -156,6 +156,9 @@ def s24_dqap(out):
             if not re.fullmatch(r"https://www\.gov\.uk/government/publications/implement-a-data-quality-action-plan/[a-z-]+#[a-z0-9-]+|https://www\.gov\.uk/government/publications/data-asset-management-policy-in-government/[a-z-]+#[a-z0-9-]+", x["u"]):
                 bad.append(f"check {c['id']} source is not a GOV.UK section: {x['u']}")
     if len(d["equiv"]) != 7 or [e["step"] for e in d["equiv"]] != list(range(1, 8)): bad.append("the self-assessment does not cover steps 1 to 7")
+    # D-36 (CodeQL js/xss-through-dom): the dimension list was read back out of a page attribute and inserted as HTML
+    js = (out / "assets" / "dqap.js").read_text()
+    if re.search(r"getAttribute\(['\"]data-dims", js) or "data-dims" in (out / "dqap.html").read_text(): bad.append("dqap.js builds markup from text read out of the page (data-dims)")
     # D-35: link text repeated the full document title on every line, which made the results hard to scan on a phone
     for c in d["checks"]:
         for x in c["src"]:
@@ -611,6 +614,7 @@ def negatives(out):
         (s20_playbook_results, lambda o: _poison_playbook(o)),
         (s24_dqap, lambda o: (o / "vocab" / "dq.jsonld").write_text((o / "vocab" / "dq.jsonld").read_text().replace('"skos:closeMatch"', '"skos:exactMatch"', 1))),
         (s24_dqap, lambda o: (o / "dqap-data.json").write_text((o / "dqap-data.json").read_text().replace("#step-2-identify-data-quality-rules", "", 1))),
+        (s24_dqap, lambda o: edit(o, "assets/dqap.js", "if (f[2] === 'dim') {", "if (f[2] === 'dim') { var o = $('[data-rows=\"rules\"]').getAttribute('data-dims');")),
         (s24_dqap, lambda o: edit(o, "dqap.html", '<h3 id="dq-result-h">Your plan</h3>', '<h2 id="dq-result-h">Your plan</h2>')),
         (s24_dqap, lambda o: edit(o, "assets/explorer.css", ".dqv-map code { white-space: normal; word-break: normal;", ".dqv-map code { white-space: normal; word-break: break-all;")),
         (s24_dqap, lambda o: (o / "dqap-data.json").write_text((o / "dqap-data.json").read_text().replace('"DQAP guide, Step 2: Identify data quality rules (GOV.UK)"', '"Data quality action plan: implementation guide: Step 2: Identify data quality rules"', 1))),
