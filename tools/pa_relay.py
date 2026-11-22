@@ -17,11 +17,13 @@ function parse(t){var o={},cur='(screen)',prop=null,m;o[cur]={};t.split(/\r?\n/)
  else if(/^\s*(Properties|Children|Screens):\s*$/.test(l)||/^\s*(Control|Variant|Layout|Group|IsLocked|MetadataKey): /.test(l)){prop=null}
  else if(prop){o[cur][prop]+=l}});return o}
 function norm(x){return String(x==null?'':x).replace(/\s+/g,'')}
+// D-PA31: Studio leaves a property out of a copy when it holds its default value, so a missing key property is a difference only if the build gives it a non-default value.
+var DEFAULTS={X:'=0',Y:'=0',Visible:'=true',OnSelect:'=false'};function isDefault(pn,v){return pn in DEFAULTS&&norm(v)===DEFAULTS[pn]}
 document.getElementById('v').addEventListener('paste',function(e){e.preventDefault();var got=parse((e.clipboardData||window.clipboardData).getData('text')),name=got.__name,r=document.getElementById('r');
  var src=document.getElementById('t-all-screens').value,exp=null;src.split(/^(?=  [A-Za-z0-9_]+:\s*$)/m).forEach(function(part){var q=parse(part);if(q.__name===name)exp=q});
  if(!exp){r.textContent='Pasted text is not one of the build screens (found: '+name+')';return}
  var diff=[],miss=0,n=0,c=0;Object.keys(exp).forEach(function(k){if(k==='__name')return;c++;if(!got[k]){diff.push(k+': control missing in Studio');return}
-  Object.keys(exp[k]).forEach(function(pn){n++;if(!(pn in got[k])){miss++;if(/^(X|Y|Width|Height|Visible|OnSelect|Text|Items)$/.test(pn))diff.push(k+'.'+pn+': not in Studio copy (build '+norm(exp[k][pn]).slice(0,70)+')');return}
+  Object.keys(exp[k]).forEach(function(pn){n++;if(!(pn in got[k])){miss++;if(/^(X|Y|Width|Height|Visible|OnSelect|Text|Items)$/.test(pn)&&!isDefault(pn,exp[k][pn]))diff.push(k+'.'+pn+': not in Studio copy (build '+norm(exp[k][pn]).slice(0,70)+')');return}
    if(norm(got[k][pn])!==norm(exp[k][pn]))diff.push(k+'.'+pn+': build '+norm(exp[k][pn]).slice(0,90)+' | Studio '+norm(got[k][pn]).slice(0,60))})});
  var extra=Object.keys(got).filter(function(k){return k!=='__name'&&!exp[k]});
  r.textContent=name+': '+c+' controls, '+n+' properties compared, '+diff.length+' differences, '+miss+' properties left at default by Studio, '+extra.length+' extra controls'+(diff.length?'\n'+diff.slice(0,60).join('\n'):'')+(extra.length?'\nextra: '+extra.slice(0,20).join(', '):'')})

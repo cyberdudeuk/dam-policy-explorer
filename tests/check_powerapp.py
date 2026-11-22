@@ -87,6 +87,21 @@ with tempfile.TemporaryDirectory() as d:
         fails.append("a release could be written as its own baseline (D-PA27)")
     else: print("PASS negative: a release cannot be its own baseline (D-PA27)")
 
+# D-PA31: the relay's compare reported Studio leaving out a default value (OnSelect false, X 0) as a difference.
+def relay_defaults_bad(js):
+    m = re.search(r"function norm\(x\)\{.*?\}\n.*?var DEFAULTS=.*?function isDefault\(pn,v\)\{.*?\}", js, re.S)
+    if not m or "&&!isDefault(pn,exp[k][pn])" not in js: return "the compare does not exempt default values"
+    probe = m.group(0) + """;var r=[isDefault('OnSelect','=false'),isDefault('X','= 0'),isDefault('Visible','=true'),!isDefault('X','=16'),!isDefault('Text','=""'),!isDefault('OnSelect','=Navigate(ScrHome)')];console.log(r.every(Boolean)?'ok':'bad '+r)"""
+    out = subprocess.run(["node", "-e", probe], capture_output=True, text=True)
+    return None if out.stdout.strip() == "ok" else "isDefault gives the wrong answer: " + (out.stdout + out.stderr).strip()[:200]
+RELAY = (ROOT / "tools" / "pa_relay.py").read_text()
+bad = relay_defaults_bad(RELAY)
+if bad: fails.append("relay compare (D-PA31): " + bad)
+else: print("PASS relay compare treats omitted defaults as defaults, and real values as differences (D-PA31)")
+if not relay_defaults_bad(RELAY.replace("&&!isDefault(pn,exp[k][pn])", "")): fails.append("negative D-PA31: removing the default exemption was not caught")
+elif not relay_defaults_bad(RELAY.replace("OnSelect:'=false'", "OnSelect:'=true'")): fails.append("negative D-PA31: a wrong default was not caught")
+else: print("PASS negative: relay compare without the default rule, or with a wrong default (D-PA31)")
+
 if fails:
     print("\n".join("FAIL " + f for f in fails)); sys.exit(1)
 print("ALL PASS")
