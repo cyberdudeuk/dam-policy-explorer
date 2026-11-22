@@ -4,3 +4,4 @@ python-barcode==0.16.1
 pillow==13.0.0
 beautifulsoup4==4.15.0
 PyYAML==6.0.3
+rdflib==7.6.0

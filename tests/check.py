@@ -140,6 +140,42 @@ def s21_choices_and_open(out):
     if sorted(listed) != sorted(opens): bad.append(f"Open list shows {len(listed)} answers, there are {len(opens)}")
     return bad
 
+def s24_dqap(out):
+    """1.7.0 guard (owner request, 22 Nov 2026): the DQAP tool cites the exact GOV.UK section for every check, links the
+    GOV.UK template, and publishes the dimensions the same way in Turtle and JSON-LD (one graph, two formats)."""
+    import rdflib
+    from rdflib.compare import isomorphic
+    bad = []
+    try:
+        d = json.loads((out / "dqap-data.json").read_text())
+    except Exception as e:  # noqa: BLE001
+        return [f"dqap-data.json missing or unreadable: {e}"]
+    for c in d["checks"]:
+        if c["test"] != "examples" and not c["src"]: bad.append(f"check {c['id']} cites no source")
+        for x in c["src"]:
+            if not re.fullmatch(r"https://www\.gov\.uk/government/publications/implement-a-data-quality-action-plan/[a-z-]+#[a-z0-9-]+|https://www\.gov\.uk/government/publications/data-asset-management-policy-in-government/[a-z-]+#[a-z0-9-]+", x["u"]):
+                bad.append(f"check {c['id']} source is not a GOV.UK section: {x['u']}")
+    if len(d["equiv"]) != 7 or [e["step"] for e in d["equiv"]] != list(range(1, 8)): bad.append("the self-assessment does not cover steps 1 to 7")
+    # D-35: link text repeated the full document title on every line, which made the results hard to scan on a phone
+    for c in d["checks"]:
+        for x in c["src"]:
+            if not re.match(r"(The policy|DQAP guide|Issues framework), .{3,70} \(GOV\.UK\)$", x["t"]): bad.append(f"check {c['id']} link text is not short: {x['t'][:80]}")
+    t = (out / "dqap.html").read_text()
+    # D-35: a heading inside a hidden result panel became a drawer link to nothing
+    for m in re.finditer(r'<section[^>]* hidden>(.*?)</section>', t.split('<main', 1)[-1], re.S):   # the drawer collects headings in main only
+        if "<h2" in m.group(1): bad.append("a section heading (h2) sits inside a hidden panel, so the contents drawer links to it")
+    # D-35: vocabulary terms such as dcat:Dataset broke mid-word in the mapping table
+    if not re.search(r"\.dqv-map code \{[^}]*word-break: normal;[^}]*overflow-wrap: normal", (out / "assets" / "explorer.css").read_text().replace("white-space: normal; ", "")): bad.append("DQV terms in the mapping table can break mid-word")
+    if "assets.publishing.service.gov.uk/media/690b8da814b040dfe829237f/DQAP_Supporting_Materials_Template.xlsx" not in t: bad.append("dqap.html does not link the GOV.UK template")
+    try:
+        a = rdflib.Graph().parse(str(out / "vocab" / "dq.ttl"), format="turtle"); b = rdflib.Graph().parse(str(out / "vocab" / "dq.jsonld"), format="json-ld")
+        if not isomorphic(a, b): bad.append("vocab/dq.ttl and vocab/dq.jsonld describe different graphs")
+        n = len(list(a.subjects(rdflib.RDF.type, rdflib.URIRef("http://www.w3.org/ns/dqv#Dimension"))))
+        if n != len(d["dims"]): bad.append(f"the vocabulary has {n} dimensions, the tool {len(d['dims'])}")
+    except Exception as e:  # noqa: BLE001
+        bad.append(f"the dimensions vocabulary does not parse: {e}")
+    return bad
+
 def s23_three_choices(out):
     """DAM-02 (SSRO backlog, 22 Nov 2026): role-based journeys. From the home page, each role and every task on its journey
     must be reachable in three choices or fewer, counted as link clicks over the built site (in-page links count too)."""
@@ -301,7 +337,7 @@ def s16_repo_licences(out):
         if f.exists() and re.search(r"within \d+ working days", f.read_text()): bad.append(f"{name} states a reply time")
     return bad
 
-STATIC = [s23_three_choices, s22_portal_pages, s21_choices_and_open, s20_playbook_results, s19_no_tracked_build_outputs, s18_section_citations, s16_repo_licences, s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped, s14_css_vars_defined, s15_class_collisions, s17_source_hosts]
+STATIC = [s24_dqap, s23_three_choices, s22_portal_pages, s21_choices_and_open, s20_playbook_results, s19_no_tracked_build_outputs, s18_section_citations, s16_repo_licences, s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped, s14_css_vars_defined, s15_class_collisions, s17_source_hosts]
 
 # ---------------- browser checks ----------------
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -526,7 +562,11 @@ def functional_checks(out):
         for f in ("index.html", "questions.html", "people.html"):
             p2.goto(base + f)
             if len(p2.inner_text("main")) < 400: fails.append(f"F11 {f} has little content without JavaScript")
-        ctx.close(); b.close()
+        ctx.close()
+        # FD1 to FD6: the data quality action plan tool (1.7.0, owner request 22 Nov 2026)
+        sys.path.insert(0, str(ROOT / "tests")); from check_dqap import dqap_functional
+        fails += dqap_functional(b, base)
+        b.close()
     srv.shutdown()
     return fails
 
@@ -540,6 +580,18 @@ def _label_playbook(o):
     d = json.loads((o / "explorer-data.json").read_text())
     next(i for i in d["index"] if i["k"] == "Playbook")["p"] = "practice"
     (o / "explorer-data.json").write_text(json.dumps(d))
+
+def f_dqap(out):
+    """FD1 to FD6 on their own, so the negative tests can run them against a broken copy."""
+    from playwright.sync_api import sync_playwright
+    sys.path.insert(0, str(ROOT / "tests")); from check_dqap import dqap_functional
+    srv, base = serve(out)
+    try:
+        with sync_playwright() as pw:
+            b = pw.chromium.launch(); f = dqap_functional(b, base); b.close()
+    finally:
+        srv.shutdown()
+    return f
 
 def negatives(out):
     def mutate(fn):
@@ -557,6 +609,11 @@ def negatives(out):
         (s18_section_citations, lambda o: (o / "explorer-data.json").write_text((o / "explorer-data.json").read_text().replace("data-asset-management-policy-in-government#data-quality-action-plans", "data-asset-management-policy-in-government", 1))),
         (s18_section_citations, lambda o: (o / "explorer-data.json").write_text((o / "explorer-data.json").read_text().replace("identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets#what-critical-data-assets-are", "implement-a-data-quality-action-plan/data-quality-issues-framework#what-data-quality-rules-and-issues-are", 1))),
         (s20_playbook_results, lambda o: _poison_playbook(o)),
+        (s24_dqap, lambda o: (o / "vocab" / "dq.jsonld").write_text((o / "vocab" / "dq.jsonld").read_text().replace('"skos:closeMatch"', '"skos:exactMatch"', 1))),
+        (s24_dqap, lambda o: (o / "dqap-data.json").write_text((o / "dqap-data.json").read_text().replace("#step-2-identify-data-quality-rules", "", 1))),
+        (s24_dqap, lambda o: edit(o, "dqap.html", '<h3 id="dq-result-h">Your plan</h3>', '<h2 id="dq-result-h">Your plan</h2>')),
+        (s24_dqap, lambda o: edit(o, "assets/explorer.css", ".dqv-map code { white-space: normal; word-break: normal;", ".dqv-map code { white-space: normal; word-break: break-all;")),
+        (s24_dqap, lambda o: (o / "dqap-data.json").write_text((o / "dqap-data.json").read_text().replace('"DQAP guide, Step 2: Identify data quality rules (GOV.UK)"', '"Data quality action plan: implementation guide: Step 2: Identify data quality rules"', 1))),
         (s23_three_choices, lambda o: [f.write_text(re.sub(r'href="people\.html[^"]*"', 'href="index.html"', f.read_text())) for f in o.glob("*.html") if f.name != "people.html"]),
         (s22_portal_pages, lambda o: (o / "portal" / "playbooks.html").write_text((o / "portal" / "playbooks.html").read_text() + '<script>alert(1)</script>')),
         (s22_portal_pages, lambda o: (o / "portal" / "explorer.html").write_text((o / "portal" / "explorer.html").read_text().replace('href="https://', 'href="javascript:', 1))),
@@ -592,6 +649,13 @@ def negatives(out):
         if not s19_no_tracked_build_outputs(out, ["README.md", "inputs/notes.txt"]): bad.append("NEGATIVE s19_no_tracked_build_outputs did not fail on inputs/")
     finally:
         lic.write_text(lic_orig)
+    # FD: the DQAP tool must fail when its parts are broken (examples not detected, DQV link dropped, protected files not recognised)
+    for name, x, y in (("examples left in", "p.examples++; return;", "return;"),
+                       ("DQV measurement link", "ds['dqv:hasQualityMeasurement'].push(ref(mm['@id']));", ""),
+                       ("protected file", "if (u8[0] === 0xD0 && u8[1] === 0xCF) throw new Error('protected');", ""),
+                       ("template fractions shown as percentages", "return n == null ? norm(v) : String(Math.round(n * 1e4) / 100);", "return norm(v);")):
+        o = mutate(lambda o: edit(o, "assets/dqap.js", x, y))
+        if not f_dqap(o): bad.append(f"NEGATIVE f_dqap did not fail when the tool was broken: {name}")
     cases = [c for c in cases if c[0] is not s12_agent_open_sources]
     for check, breaker in cases:
         o = mutate(breaker)
