@@ -742,7 +742,7 @@ Screens:
             TabIndex: |-
               =-1
             Text: |-
-              =If(Len(Trim(SrSearch.Text)) < 2, "Type two or more letters to search 256 pages, answers, examples and words.", CountRows(If(Len(Trim(SrSearch.Text)) < 2, Blank(), Filter(nfIndex, SrSearch.Text in title || SrSearch.Text in t))) & " results")
+              =If(Len(Trim(SrSearch.Text)) < 2, "Type two or more letters to search 308 pages, answers, examples and words.", CountRows(If(Len(Trim(SrSearch.Text)) < 2, Blank(), Filter(nfIndex, SrSearch.Text in title || SrSearch.Text in t))) & " results")
             Width: |-
               =nfCW
             X: |-
@@ -764,7 +764,8 @@ Screens:
                   "page", Set(gPid, ThisItem.ref); Set(gSec, ThisItem.n); Navigate(ScrPage, ScreenTransition.Fade),
                   "qa", Set(gReadKind, "Answer"); Set(gReadTitle, LookUp(nfQA, id = ThisItem.ref).q); Set(gReadHtml, LookUp(nfQA, id = ThisItem.ref).x); Set(gReadK, "qa"); Set(gReadRef, ThisItem.ref); Navigate(ScrRead, ScreenTransition.Fade),
                   "ex", Set(gReadKind, "Example " & ThisItem.ref); Set(gReadTitle, LookUp(nfEx, id = ThisItem.ref).title); Set(gReadHtml, LookUp(nfEx, id = ThisItem.ref).x); Set(gReadK, "ex"); Set(gReadRef, ThisItem.ref); Navigate(ScrRead, ScreenTransition.Fade),
-                  "glo", Set(gReadKind, "Glossary"); Set(gReadTitle, ThisItem.ref); Set(gReadHtml, "<p>" & LookUp(nfGlo, term = ThisItem.ref).def & "</p>"); Set(gReadK, "glo"); Set(gReadRef, ThisItem.ref); Navigate(ScrRead, ScreenTransition.Fade))
+                  "glo", Set(gReadKind, "Glossary"); Set(gReadTitle, ThisItem.ref); Set(gReadHtml, "<p>" & LookUp(nfGlo, term = ThisItem.ref).def & "</p>"); Set(gReadK, "glo"); Set(gReadRef, ThisItem.ref); Navigate(ScrRead, ScreenTransition.Fade),
+                  "url", Launch(ThisItem.ref))
             ShowScrollbar: |-
               =true
             TabIndex: |-

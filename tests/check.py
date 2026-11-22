@@ -112,6 +112,34 @@ def s18_section_citations(out):
     if not seen: bad.append("no GOV.UK guidance citation found: the check proves nothing")
     return bad
 
+def s20_playbook_results(out):
+    """1.5.0 guard: search includes a pinned snapshot of the capability playbooks. Every playbook result must link to the
+    playbooks site (so a tampered snapshot cannot inject another site or a script URL), and the count must match the snapshot."""
+    d = json.loads((out / "explorer-data.json").read_text()); snap = json.loads((ROOT / "data" / "playbooks-snapshot.json").read_text())
+    base = "https://cyberdudeuk.github.io/dam-capability-playbooks/"; bad = []
+    items = [i for i in d["index"] if i["k"] == "Playbook"]
+    if len(items) != snap["count"] or not items: bad.append(f"{len(items)} playbook results, snapshot says {snap['count']}")
+    for i in items:
+        if not i["u"].startswith(base) or re.search(r"[\s\"'<>]", i["u"]): bad.append(f"playbook result leaves the playbooks site: {i['u']}")
+        if i["p"]: bad.append(f"playbook result labelled '{i['p']}': the app's provenance labels describe its own content, and the playbooks are not written for it")
+    for k in ("sha256", "playbooks_version", "retrieved"):
+        if not snap.get(k): bad.append(f"snapshot has no {k}")
+    return bad
+
+def s21_choices_and_open(out):
+    """1.5.0 guard (owner request, 22 Nov 2026): the policy page says what is fixed and what is up to each organisation,
+    each item with a section-level GOV.UK source, and lists every answer still labelled Open."""
+    sys.path.insert(0, str(ROOT / "tools")); import content as C
+    t = (out / "policy.html").read_text(); bad = []
+    for c in C.CHOICES:
+        m = re.search(r'<li class="req[^"]*" id="choice-' + re.escape(c["id"]) + r'">(.*?)</li>\s*(?=<li class="req|</ul>)', t, re.S)
+        if not m: bad.append(f"choice {c['id']} is not on the policy page"); continue
+        if not re.search(r'href="https://www\.gov\.uk/[^"#]+#[^"]+"', m.group(1)): bad.append(f"choice {c['id']} has no section-level GOV.UK source")
+    opens = [q["id"] for q in C.QA if q["prov"] == "open"]
+    listed = re.findall(r'<li><a href="questions\.html#q-([^"]+)">', t.split('id="open"')[1].split("<h2")[0]) if 'id="open"' in t else []
+    if sorted(listed) != sorted(opens): bad.append(f"Open list shows {len(listed)} answers, there are {len(opens)}")
+    return bad
+
 def s7_traceability(out):
     """Every forum need maps to an answer; every answer has a source unless it is labelled suggested practice."""
     d = json.loads((out / "explorer-data.json").read_text()); bad = []
@@ -229,7 +257,7 @@ def s16_repo_licences(out):
         if f.exists() and re.search(r"within \d+ working days", f.read_text()): bad.append(f"{name} states a reply time")
     return bad
 
-STATIC = [s19_no_tracked_build_outputs, s18_section_citations, s16_repo_licences, s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped, s14_css_vars_defined, s15_class_collisions, s17_source_hosts]
+STATIC = [s21_choices_and_open, s20_playbook_results, s19_no_tracked_build_outputs, s18_section_citations, s16_repo_licences, s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped, s14_css_vars_defined, s15_class_collisions, s17_source_hosts]
 
 # ---------------- browser checks ----------------
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -459,6 +487,16 @@ def functional_checks(out):
     return fails
 
 # ---------------- negative tests: each check must fail on a broken copy ----------------
+def _poison_playbook(o):
+    d = json.loads((o / "explorer-data.json").read_text())
+    next(i for i in d["index"] if i["k"] == "Playbook")["u"] = "javascript:alert(1)"
+    (o / "explorer-data.json").write_text(json.dumps(d))
+
+def _label_playbook(o):
+    d = json.loads((o / "explorer-data.json").read_text())
+    next(i for i in d["index"] if i["k"] == "Playbook")["p"] = "practice"
+    (o / "explorer-data.json").write_text(json.dumps(d))
+
 def negatives(out):
     def mutate(fn):
         tmp = Path(tempfile.mkdtemp()); shutil.copytree(out, tmp / "o"); fn(tmp / "o"); return tmp / "o"
@@ -474,6 +512,10 @@ def negatives(out):
         (s4_links, lambda o: edit(o, "index.html", 'href="policy.html"', 'href="missing.html"')),
         (s18_section_citations, lambda o: (o / "explorer-data.json").write_text((o / "explorer-data.json").read_text().replace("data-asset-management-policy-in-government#data-quality-action-plans", "data-asset-management-policy-in-government", 1))),
         (s18_section_citations, lambda o: (o / "explorer-data.json").write_text((o / "explorer-data.json").read_text().replace("identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets#what-critical-data-assets-are", "implement-a-data-quality-action-plan/data-quality-issues-framework#what-data-quality-rules-and-issues-are", 1))),
+        (s20_playbook_results, lambda o: _poison_playbook(o)),
+        (s20_playbook_results, lambda o: _label_playbook(o)),
+        (s21_choices_and_open, lambda o: edit(o, "policy.html", 'id="choice-catalogue"', 'id="choice-gone"')),
+        (s21_choices_and_open, lambda o: edit(o, "policy.html", '<h3 id="open">Still being decided</h3>', '<h3 id="open">Still being decided</h3><ul><li><a href="questions.html#q-extra">x</a></li></ul>')),
         (s17_source_hosts, lambda o: edit(o, "questions.html", "(digital-economy-act-register.data.gov.uk)<span", "(GOV.UK)<span")),
         (s5_external, lambda o: edit(o, "index.html", 'target="_blank" rel="noopener noreferrer"', '')),
         (s6_structure, lambda o: edit(o, "index.html", "</main>", "<h1>Second</h1></main>")),

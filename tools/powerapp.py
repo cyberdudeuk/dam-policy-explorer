@@ -429,8 +429,12 @@ def formulas(pages, sections, qas, exs, glo):
     idx += [("Answer", q[3], "qa", q[0], 0, q[5], fl(f"qa:{q[0]}")) for q in qas]
     idx += [("Example", e[0] + " " + e[1], "ex", e[0], 0, e[7], fl(f"ex:{e[0]}")) for e in exs]
     idx += [("Glossary", g[0], "glo", g[0], 0, g[1], fl(f"glo:{g[0]}")) for g in glo]
+    # Capability playbooks: title, one line and a link from the pinned snapshot; opened in the browser, never copied.
+    # Not flagged New: they are not this app's content, and would crowd out real changes in What is new.
+    pbs = json.loads((ROOT / "data" / "playbooks-snapshot.json").read_text())["items"] if (ROOT / "data" / "playbooks-snapshot.json").exists() else []
+    idx += [("Playbook", it["t"], "url", it["u"], 0, it["x"], "") for it in pbs if it["u"].startswith("https://cyberdudeuk.github.io/dam-capability-playbooks/")]
     f += f"nfNewCount = {sum(1 for r in idx if r[6])};\n"
-    IC = {"Page": ("Journal", "RGBA(11,85,163,1)", "RGBA(230,238,247,1)"), "Answer": ("QuestionMark", "RGBA(0,105,92,1)", "RGBA(224,240,238,1)"), "Example": ("LevelsLayersItems", "RGBA(138,74,0,1)", "RGBA(247,237,224,1)"), "Glossary": ("Tag", "RGBA(90,47,138,1)", "RGBA(238,232,245,1)")}
+    IC = {"Page": ("Journal", "RGBA(11,85,163,1)", "RGBA(230,238,247,1)"), "Answer": ("QuestionMark", "RGBA(0,105,92,1)", "RGBA(224,240,238,1)"), "Example": ("LevelsLayersItems", "RGBA(138,74,0,1)", "RGBA(247,237,224,1)"), "Glossary": ("Tag", "RGBA(90,47,138,1)", "RGBA(238,232,245,1)"), "Playbook": ("Globe", "RGBA(55,65,81,1)", "RGBA(236,238,241,1)")}
     f += table("nfIndex", ["type", "title", "kind", "ref", "n", "t", "flag", "ic", "col", "tint"], [(*r, Raw("Icon." + IC[r[0]][0]), Raw(IC[r[0]][1]), Raw(IC[r[0]][2])) for r in idx])
     return f.replace("{N}", str(len(idx))), len(idx)
 
@@ -692,7 +696,8 @@ def open_ref():
     "page", Set(gPid, ThisItem.ref); Set(gSec, ThisItem.n); Navigate(ScrPage, {FADE}),
     "qa", {read('"Answer"', 'LookUp(nfQA, id = ThisItem.ref).q', 'LookUp(nfQA, id = ThisItem.ref).x', 'qa', 'ThisItem.ref')},
     "ex", {read('"Example " & ThisItem.ref', 'LookUp(nfEx, id = ThisItem.ref).title', 'LookUp(nfEx, id = ThisItem.ref).x', 'ex', 'ThisItem.ref')},
-    "glo", {read('"Glossary"', 'ThisItem.ref', '"<p>" & LookUp(nfGlo, term = ThisItem.ref).def & "</p>"', 'glo', 'ThisItem.ref')})"""
+    "glo", {read('"Glossary"', 'ThisItem.ref', '"<p>" & LookUp(nfGlo, term = ThisItem.ref).def & "</p>"', 'glo', 'ThisItem.ref')},
+    "url", Launch(ThisItem.ref))"""
 
 
 def save_toggle(name, key, rec, y, x="nfRX + nfRW - 104"):

@@ -294,6 +294,11 @@ def policy():
             ("Plan for quality", "Every identified data asset must have a data quality action plan or equivalent.", "Section 6"),
             ("Keep it up to date", "Maintain what you send and review it every year.", "Section 4"),
             ("Your chief data officer is responsible", "The chief data officer of each organisation in scope is responsible for putting the policy into practice there.", "Section 8")]
+    PCLS = {"must": "yes", "should": "maybe", "choice": "own"}
+    choiceli = "".join(f'<li class="req{" own" if c["level"] == "choice" else ""}" id="choice-{c["id"]}">{ic("i-check")}<div><h3>{E(c["title"])} <span class="pill {PCLS[c["level"]]}">{C.LEVELS[c["level"]]}</span></h3><dl class="fx"><dt>Fixed</dt><dd>{E(c["fixed"])}</dd><dt>Up to you</dt><dd>{E(c["yours"])}</dd></dl><p class="small muted">{badge(c["prov"])}</p>{src_links(c["src"])}</div></li>' for c in C.CHOICES)
+    authli = "".join(f'<li><b>{(f"<a href=\"{E(u)}\">{E(t)}</a>") if u else E(t)}</b>. {E(d)}</li>' for t, d, u in C.AUTHORITY)
+    openqs = [q for q in C.QA if q["prov"] == "open"]
+    openli = "".join(f'<li><a href="questions.html#q-{q["id"]}">{E(q["q"])}</a></li>' for q in openqs)
     mustli = "".join(f'<li class="req">{ic("i-check")}<div><h3>{E(t)}</h3><p>{E(d)}</p><p class="small muted">{E(s)} of the policy {badge("policy")}</p></div></li>' for t, d, s in must)
     roles = "".join(f'<tr><th scope="row">{E(r["role"])}</th><td>{E(r["does"])}</td><td>{badge(r["prov"])}{(" <a href=\"" + E(r["src"][1]) + "\">source</a>") if r["src"] else ""}</td></tr>' for r in C.ROLES)
     scope = [("Government departments", "Must", "yes"), ("Arm's length bodies: executive agencies, non-departmental public bodies, non-ministerial departments", "Must", "yes"),
@@ -315,6 +320,17 @@ def policy():
 
 <h2 id="must" data-count="{len(must)}">What you must do</h2>
 <ul class="reqs">{mustli}</ul>
+
+<h2 id="choice" data-count="{len(C.CHOICES)}">What is up to you</h2>
+<p>The policy fixes what must be true. How you get there is often your decision, because you know your organisation, its structure and its data best. Each item says what is fixed, what is yours to decide, and where that comes from.</p>
+<ul class="reqs">{choiceli}</ul>
+
+<h2 id="authority">Where the answers come from</h2>
+<p>If two sources disagree, the higher one is right:</p>
+<ol class="authority">{authli}</ol>
+<h3 id="open">Still being decided</h3>
+<p>{len(openqs)} answers are labelled Open. Each says what to do meanwhile.</p>
+<ul>{openli}</ul>
 
 <h2 id="scope">What counts as a critical data asset</h2>
 <p>First, the data must be OFFICIAL. SECRET and TOP SECRET data is not in scope. {badge("policy")}</p>
@@ -811,6 +827,9 @@ def about():
 <h2 id="how">How we work</h2>
 <p>We follow the <a href="{E(C.GOVUK["standard"][1])}">Service Standard</a>, the <a href="https://gds-way.digital.cabinet-office.gov.uk/">GDS Way</a> and the <a href="https://www.gov.uk/guidance/content-design/writing-for-gov-uk">GOV.UK guidance on writing</a>. That means we start from users' needs, write in plain English, make every page work without JavaScript, test with assistive technology and publish what we change.</p>
 
+<h2 id="playbooks">Search across the capability playbooks</h2>
+<p>Search here also finds {PB_SNAP["count"]} pages of the <a href="https://cyberdudeuk.github.io/dam-capability-playbooks/">DAM capability playbooks</a>: their main pages, sector supplements and learning modules. It shows each one's title, a line about it and a link; the content stays in the playbooks, so nothing is copied twice. The list is from playbooks version {E(str(PB_SNAP["playbooks_version"]))}, as at {long_date(PB_SNAP["playbooks_as_of"])}, read on {long_date(PB_SNAP["retrieved"])}.</p>
+
 <h2 id="channels">Where you can use it</h2>
 <ul class="tiles channels">
 <li>{ic("i-dashboard")}<div><h3>Any web browser</h3><p>Current versions of Edge, Chrome, Safari and Firefox, on computers, tablets and phones. Pages work without JavaScript.</p></div></li>
@@ -949,6 +968,9 @@ def colophon():
     buf = io.BytesIO(); barcode.get("code128", f"DPE {C.VERSION}", writer=SVGWriter()).write(buf, {"module_height": 12, "font_size": 8, "text_distance": 4, "quiet_zone": 2})
     (OUT / "assets" / "barcode.svg").write_bytes(buf.getvalue())
 
+PB_SNAP = json.loads((ROOT / "data" / "playbooks-snapshot.json").read_text())   # pinned; refreshed by tools/playbooks_snapshot.py
+
+
 def main():
     global SPRITE
     SPRITE = sprite()
@@ -996,6 +1018,7 @@ def main():
     index += [{"t": x["name"], "x": x["role"] + " " + " ".join(x["goals"]), "u": "people.html#p-" + x["id"], "k": "Role", "p": "practice"} for x in C.PERSONAS]
     index += [{"t": m, "x": f, "u": "policy.html#myths", "k": "Myth and fact", "p": pv} for m, f, pv in C.MYTHS]
     index += [{"t": e[1], "x": e[3] + ". " + e[4] + " " + e[5], "u": "examples.html#" + e[0].lower(), "k": "Worked example", "p": "gds" if e[7] == X.A else "open"} for e in X.EXAMPLES]
+    index += [{"t": it["t"], "x": it["x"], "u": it["u"], "k": "Playbook", "p": ""} for it in PB_SNAP["items"]]   # no provenance badge: not written for this app
     data = {"version": C.VERSION, "checked": C.CONTENT_CHECKED, "needs": C.NEEDS, "qa": [{k: v for k, v in q.items() if k != "a"} for q in C.QA], "index": index, "prov": {k: v[0] for k, v in C.PROV.items()},
             "glossary": [{"id": k, "term": t} for k, t, _ in C.GLOSSARY], "pages": list(pages)}
     (OUT / "explorer-data.json").write_text(json.dumps(data, indent=1))
