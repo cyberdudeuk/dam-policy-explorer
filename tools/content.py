@@ -12,7 +12,7 @@ Coordinators Working Group, Knowledge Hub, DCAP Working Group, email and meeting
 organisations are removed: each need is paraphrased and counted, never quoted.
 """
 
-VERSION = "1.5.0"
+VERSION = "1.6.0"
 BUILD_DATE = "2026-11-22"
 CONTENT_CHECKED = "2026-11-18"          # date the GOV.UK sources were last re-read
 REGISTER_SNAPSHOT = "2026-11-18"        # Question and Insight Register snapshot used for the needs
@@ -98,6 +98,7 @@ NEEDS = [
     {"id": "N39", "theme": "Making the return", "need": "Which files do we send back with the return?", "raised": 1, "qa": "what-to-send"},
     {"id": "N40", "theme": "Sharing and access", "need": "Can we leave out fields that are commercially sensitive or could raise a cyber security risk?", "raised": 1, "qa": "sensitive-fields"},
     {"id": "N41", "theme": "Scope", "need": "A supplier builds or runs the system that holds our critical data. Who lists it and who owns it?", "raised": 1, "qa": "supplier-data"},
+    {"id": "N42", "theme": "Roles", "need": "Should we set up a new team for the DAM Policy, or absorb it into existing roles?", "raised": 1, "qa": "resourcing"},
 ]
 
 PLAYBOOKS_URL = "https://cyberdudeuk.github.io/dam-capability-playbooks/"
@@ -232,9 +233,9 @@ QA = [
      "a": "<p>Yes: see the <a href=\"embed.html#owners\">practical kit for data owners and stewards</a>. It has a checklist for each role, what to do first, questions to ask yourself each quarter, and a guide for the regular owner and steward conversation. It is built on the data ownership model and the capability playbooks.</p><p>GDS is also developing training for data owners.</p>",
      "src": [sec("ownership", "data-ownership-roles-and-responsibilities"), FAQ]},
     # Implementation and support
-    {"id": "resourcing", "topic": IS, "prov": "gds", "q": "This is a big task. Do we absorb it or set up a team?",
-     "a": "<p>GDS is not prescriptive about how you organise the work, because organisations differ so much. It will work through the challenges with lead coordinators in the DAM Policy Working Group, and share how others are approaching it.</p>",
-     "src": [FAQ]},
+    {"id": "resourcing", "topic": IS, "prov": "gds", "q": "This is a lot of work. Should we set up a new team, or fit it around current roles?",
+     "a": "<p>That is your decision. GDS has said it will not be prescriptive about how organisations organise the work, because they differ so much in size, structure and data. It tested the approach in the earlier essential shared data assets beta, and the GDS discovery found a need for a mandate from the centre to put investment into the data that matters most.</p><p>What helps: start with the assets already shared, so the first return is achievable; agree who coordinates (see <a href=\"policy.html#choice\">what is up to you</a>); and raise capacity problems through your lead coordinator, who can ask for closer support. The working group shares how other organisations are doing it.</p>",
+     "src": [sec("policy", "oversight-and-implementation-of-the-policy"), FAQ]},
     {"id": "tranches", "topic": IS, "prov": "gds", "q": "Are the timings for prioritised support fixed?",
      "a": "<p>No, they are indicative. They are based on how complex and widely used each department's data was in the ESDA returns. If the timing does not suit your capacity, or you need closer support, raise it through your lead coordinator.</p>",
      "src": [FAQ]},
@@ -422,6 +423,7 @@ AUDIENCES = {"coordinator": "Coordinators", "cdo": "Chief data officers", "owner
 
 # What changed, newest first. Items flagged as new show a "New" marker for 30 days.
 CHANGES = [
+    ("2026-11-22", "1.6.0", "From the DAM Policy FAQs (November 2026): three more decisions that are yours (how you organise and resource the work, what you do with data that is critical to you but not in scope, and which other assets you catalogue), who is accountable when there is no chief data officer, and a fuller answer on resourcing. The journey for each role is now tested to stay within three choices of the home page. In the app, a single search result now says 1 result."),
     ("2026-11-22", "1.5.0", "From the coordinator group of 19 November 2026 and a support session for a transformation project on the same day: what the policy fixes and what each organisation decides for itself, read from the policy and its guidance on GOV.UK; where answers come from, and which are still being decided; whether you can leave out commercially or security-sensitive details; and who lists and owns critical data that a supplier holds for you. Search now also finds the main pages, sector supplements and learning modules of the DAM capability playbooks, with a link to each."),
     ("2026-11-22", "1.4.0", "From the Cross-Government Data Management Community on the Knowledge Hub and the Data Catalogue and Analysis Platform Working Group, November 2026: what to do when a critical data set you rely on belongs to another organisation, and which files to send back with the return. Every citation of GOV.UK guidance now opens the section the answer rests on. Three answers on scope cited the data quality issues framework by mistake; they now cite the guidance on identifying critical data assets. The answer on finding data you already share, added on 20 November, is now in the app too."),
     ("2026-11-19", "1.3.0", "From the coordinator group of 19 November: what to do once an asset is identified, what to say when a team does not want its metadata to leave the organisation, what has helped with senior ownership and with getting teams involved, what is known about the October 2027 return, and how to see what changed. The scope principles and the answer on who sees your metadata now say more plainly what they cover."),
@@ -629,9 +631,9 @@ CHOICES = [
      "yours": "Whether to include assets that have not been shared yet but have high potential for reuse. Start from the data other organisations ask for and rely on.",
      "level": "choice", "prov": "policy", "src": [sec("cda", "how-to-get-started")]},
     {"id": "who-leads", "title": "Who leads the work",
-     "fixed": "Your chief data officer is responsible for putting the policy into practice in your organisation.",
+     "fixed": "Your chief data officer is responsible for putting the policy into practice in your organisation. If you have no chief data officer, the director responsible for data is accountable.",
      "yours": "Who coordinates. The guidance says the chief data officer, or your most senior official for data, should lead, and choose a team or person to coordinate, drawing in owners, stewards, service owners, analysts and policy colleagues.",
-     "level": "should", "prov": "policy", "src": [sec("cda", "identify-your-critical-data-assets"), sec("policy", "oversight-and-implementation-of-the-policy")]},
+     "level": "should", "prov": "policy", "src": [sec("cda", "identify-your-critical-data-assets"), sec("policy", "oversight-and-implementation-of-the-policy"), FAQ]},
     {"id": "catalogue", "title": "Which catalogue you use",
      "fixed": "You identify and manage metadata about your assets in your data catalogues, and report them to GDS.",
      "yours": "The catalogue and tools. The policy does not name a product.",
@@ -644,8 +646,20 @@ CHOICES = [
      "fixed": "Departments coordinate and assure the returns of their arm's length bodies.",
      "yours": "One combined return or separate returns, as long as the department knows about every one.",
      "level": "choice", "prov": "gds", "src": [sec("policy", "identifying-and-reporting-data-assets"), FAQ]},
+    {"id": "how-resourced", "title": "How you organise and resource the work",
+     "fixed": "The policy's requirements apply to every critical data asset, and your chief data officer is responsible for meeting them.",
+     "yours": "Whether you set up a team, add the work to existing roles, or a mix. GDS has said it will not be prescriptive about this, because organisations differ so much; the working group shares how others have done it.",
+     "level": "choice", "prov": "gds", "src": [sec("policy", "oversight-and-implementation-of-the-policy"), FAQ]},
+    {"id": "outside-scope", "title": "What you do with data that is critical to you but not in scope",
+     "fixed": "Only assets that meet all four scope principles go in the return.",
+     "yours": "How you manage assets that are critical inside your organisation but have no value across government, such as some workforce or finance data. GDS recommends labelling the assets that are in scope XG_CDA in your catalogue, so the two kinds stay distinct.",
+     "level": "choice", "prov": "gds", "src": [sec("cda", "what-critical-data-assets-are"), FAQ]},
+    {"id": "more-assets", "title": "Which other assets you catalogue",
+     "fixed": "Your critical data assets must be in your catalogue and in your return.",
+     "yours": "Whether to catalogue other assets for your own purposes. They do not go in the return unless they meet the definition of a critical data asset.",
+     "level": "choice", "prov": "gds", "src": [sec("policy", "identifying-and-reporting-data-assets"), FAQ]},
     {"id": "more-metadata", "title": "How much metadata you keep",
-     "fixed": "You record the metadata the guidance sets out, and maintain and review it every year.",
+     "fixed": "You record the metadata the guidance sets out, and maintain and review it every year. Where your own rules, regulators or standards ask for more than the minimum, keep meeting them.",
      "yours": "Anything beyond that. The return asks for less than the guidance, and the minimum is a floor, not a ceiling.",
      "level": "choice", "prov": "gds", "src": [sec("metadata", "metadata-you-should-record"), sec("policy", "identifying-and-reporting-data-assets"), V3]},
 ]

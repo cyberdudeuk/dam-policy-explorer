@@ -140,6 +140,31 @@ def s21_choices_and_open(out):
     if sorted(listed) != sorted(opens): bad.append(f"Open list shows {len(listed)} answers, there are {len(opens)}")
     return bad
 
+def s23_three_choices(out):
+    """DAM-02 (SSRO backlog, 22 Nov 2026): role-based journeys. From the home page, each role and every task on its journey
+    must be reachable in three choices or fewer, counted as link clicks over the built site (in-page links count too)."""
+    import collections
+    sys.path.insert(0, str(ROOT / "tools")); import content as C
+    links = {}
+    for f in pages(out):
+        links[f.name] = {(f.name + h if h.startswith("#") else h).replace("&amp;", "&") for h in re.findall(r'<a\b[^>]*\bhref="([^"]+)"', f.read_text())}
+    depth, q = {"index.html": 0}, collections.deque(["index.html"])
+    while q:
+        p = q.popleft()
+        for h in links.get(p, ()):
+            pg = h.split("#")[0]
+            if pg in links and pg not in depth: depth[pg] = depth[p] + 1; q.append(pg)
+    def clicks(t):
+        if "#" not in t and t in depth: return depth[t]
+        c = [depth[p] + 1 for p, hs in links.items() if p in depth and t in hs]
+        return min(c) if c else None
+    bad = []
+    for x in C.PERSONAS:
+        for t in [f"people.html#p-{x['id']}"] + [h for items in x["journey"].values() for _, h in items]:
+            n = clicks(t)
+            if n is None or n > 3: bad.append(f"{x['name']}: {t} takes {n if n is not None else 'no route of'} choices from the home page")
+    return bad
+
 def s22_portal_pages(out):
     """1.5.0 guard: the Government Data portal pages are rebuilt from the published site, so their bodies must be safe to
     put in a SharePoint text web part (only headings, paragraphs, lists, links and emphasis; https or portal links; no
@@ -276,7 +301,7 @@ def s16_repo_licences(out):
         if f.exists() and re.search(r"within \d+ working days", f.read_text()): bad.append(f"{name} states a reply time")
     return bad
 
-STATIC = [s22_portal_pages, s21_choices_and_open, s20_playbook_results, s19_no_tracked_build_outputs, s18_section_citations, s16_repo_licences, s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped, s14_css_vars_defined, s15_class_collisions, s17_source_hosts]
+STATIC = [s23_three_choices, s22_portal_pages, s21_choices_and_open, s20_playbook_results, s19_no_tracked_build_outputs, s18_section_citations, s16_repo_licences, s12_agent_open_sources, s11_no_unagreed_promises, s10_class_collision, s1_banned, s2_emails, s3_csp, s4_links, s5_external, s6_structure, s7_traceability, s8_contact, s9_wording, s13_topics_grouped, s14_css_vars_defined, s15_class_collisions, s17_source_hosts]
 
 # ---------------- browser checks ----------------
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -532,6 +557,7 @@ def negatives(out):
         (s18_section_citations, lambda o: (o / "explorer-data.json").write_text((o / "explorer-data.json").read_text().replace("data-asset-management-policy-in-government#data-quality-action-plans", "data-asset-management-policy-in-government", 1))),
         (s18_section_citations, lambda o: (o / "explorer-data.json").write_text((o / "explorer-data.json").read_text().replace("identify-and-record-critical-data-assets/identifying-and-recording-critical-data-assets#what-critical-data-assets-are", "implement-a-data-quality-action-plan/data-quality-issues-framework#what-data-quality-rules-and-issues-are", 1))),
         (s20_playbook_results, lambda o: _poison_playbook(o)),
+        (s23_three_choices, lambda o: [f.write_text(re.sub(r'href="people\.html[^"]*"', 'href="index.html"', f.read_text())) for f in o.glob("*.html") if f.name != "people.html"]),
         (s22_portal_pages, lambda o: (o / "portal" / "playbooks.html").write_text((o / "portal" / "playbooks.html").read_text() + '<script>alert(1)</script>')),
         (s22_portal_pages, lambda o: (o / "portal" / "explorer.html").write_text((o / "portal" / "explorer.html").read_text().replace('href="https://', 'href="javascript:', 1))),
         (s20_playbook_results, lambda o: _label_playbook(o)),

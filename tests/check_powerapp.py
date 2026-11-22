@@ -77,6 +77,7 @@ mutated("version and date stamps counted as a change (D-PA29)", '    for pat in 
 mutated("answers allowed to name the forum (D-PA30)", 'told coordinators|coordinators (shared', 'xx-never-xx|coordinators (shared', "D-PA30")
 mutated("answer rows too short for a long answer (D-PA22)", '"TemplateSize": f"pt(38) + Min(raw(4)', '"TemplateSize": "pt(60)", "X2": f"pt(38) + Min(raw(4)', "D-PA22")
 mutated("long page squeezed into the window at the design size (D-PA23)", '"Parent.TemplateHeight" if guard else "Parent.Height"', '"Parent.Height"', "D-PA23")
+mutated("a single search result read as 1 results (D-PA32)", 'With({{n: CountRows({sitems})}}, n & If(n = 1, " result", " results")))', 'CountRows({sitems}) & " results")', "D-PA32")
 mutated("count does not match the source", 'f += table("nfSupTabs"', 'QA.pop(); f += table("nfSupTabs"', "")
 
 # D-PA27: the release being built must not be recordable as its own baseline
