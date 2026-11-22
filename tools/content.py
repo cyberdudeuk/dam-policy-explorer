@@ -97,6 +97,7 @@ NEEDS = [
     {"id": "N38", "theme": "Scope", "need": "A critical data set we receive belongs to another organisation. Will they list it, and who do we ask?", "raised": 1, "qa": "others-data"},
     {"id": "N39", "theme": "Making the return", "need": "Which files do we send back with the return?", "raised": 1, "qa": "what-to-send"},
     {"id": "N40", "theme": "Sharing and access", "need": "Can we leave out fields that are commercially sensitive or could raise a cyber security risk?", "raised": 1, "qa": "sensitive-fields"},
+    {"id": "N41", "theme": "Scope", "need": "A supplier builds or runs the system that holds our critical data. Who lists it and who owns it?", "raised": 1, "qa": "supplier-data"},
 ]
 
 PLAYBOOKS_URL = "https://cyberdudeuk.github.io/dam-capability-playbooks/"
@@ -162,6 +163,9 @@ QA = [
     {"id": "others-data", "topic": S, "prov": "practice", "q": "A critical data set we rely on belongs to another organisation. Do we list it?",
      "a": "<p>Usually not. The organisation that holds the source lists it in its return, because it is accountable for it. You own and look after the copy you hold, but an unchanged copy is not a separate critical data asset.</p><p>List it yourself only if you have materially changed or enriched it, so that your version has become a source in its own right.</p><p>To check it will be listed, ask the other organisation's DAM Policy coordinator. If you do not know who that is, ask GDS through the contact form. You can also record the dependency in your own catalogue, so the link is not lost.</p>",
      "src": [sec("cda", "identifyingyour-source-data-set"), sec("ownership", "data-from-a-third-party")]},
+    {"id": "supplier-data", "topic": S, "prov": "practice", "q": "A supplier builds or runs the system that holds a critical data set for us. Who lists it, and who owns it?",
+     "a": "<p>You do, if your organisation is accountable for the data. A supplier building or hosting a system does not move that accountability: the scope principle asks whether your organisation manages or controls the data, not whose servers it sits on. So list the asset in your return and give it a data owner in your organisation.</p><p>Then make sure the contract lets you meet the policy: access to the metadata, a way to manage quality, and the data handed back when the contract ends. The capability playbooks have <a href=\"https://cyberdudeuk.github.io/dam-capability-playbooks/capabilities.html#CR-20\">guidance on supplier-held data</a> and <a href=\"https://cyberdudeuk.github.io/dam-capability-playbooks/tooling.html\">requirements you can reuse in procurement</a>.</p>",
+     "src": [sec("cda", "ownership-and-accountability"), sec("ownership", "data-from-a-third-party")]},
     {"id": "official-stats", "topic": S, "prov": "policy", "q": "Are official statistics, or our extracts of another department's statistics, in scope?",
      "a": "<p>Do not list published official statistics themselves. List the data behind them: the administrative data, surveys and censuses. That data is listed by the organisation that is accountable for it.</p><p>An extract you take from another department is yours to list only if you have materially changed or enriched it. Otherwise the source belongs to the other department.</p>",
      "src": [sec("cda", "official-statistics"), sec("cda", "identifyingyour-source-data-set"), FAQ]},
