@@ -2,7 +2,7 @@
 
 The Power Apps version carries the same content as the web explorer, version for version. It is generated, not hand-built: `tools/powerapp.py` reads the built site (`out/`), `tools/content.py` and `tools/examples.py` and writes `pa/`.
 
-Status on 22 November 2026: version 1.4.0 built and tested; it replaces 1.3.0 (published 19 November 2026) once pasted into Studio and published. Teams: see "In Microsoft Teams".
+Status on 22 November 2026: version 1.4.0 published (06:29) and checked in the player. Version 1.5.0 built and tested; it changes the formulas and the Search, My area and What is new screens (search results can now open a capability playbook page). Teams: see "In Microsoft Teams".
 
 ## What is in it
 
@@ -34,6 +34,7 @@ One person runs this app and the web explorer, without a co-owner. The figures a
 | Release: edit `tools/content.py`, build, run the four suites (about 6 minutes unattended) | Per release, about monthly | 1 to 2 hours |
 | Paste into Studio (formulas, plus only the screens whose files changed), compare, publish, check in the player | Per release | 30 to 60 minutes |
 | Check the GOV.UK section links still open their sections (no test does this: the checks only hold citations to the section list in `tools/content.py`, which was read from GOV.UK on 22 November 2026) | Monthly, or when GOV.UK republishes a guidance page | 15 minutes |
+| Refresh the playbooks snapshot (`python3 -I tools/playbooks_snapshot.py`), when the playbooks publish a new version | As needed | 5 minutes |
 | Dependabot pull requests: run the suites on the branch, merge if they pass | As they come | 10 minutes each |
 
 The biggest risk is that there is one person: no one else can publish a fix. Adding a co-owner (Power Apps, Share, Co-owner) removes it.

@@ -404,3 +404,11 @@ td .pill { border-radius: 0.75rem; white-space: normal; text-align: center; }   
 .ex-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .extag { font-size: 0.85rem; border: 1px solid var(--line); border-radius: 999px; padding: 0 0.5rem; text-decoration: none; }
 .extag:hover { text-decoration: underline; }
+
+/* 1.5.0: what is fixed and what is up to you; where answers come from */
+.pill.own { color: var(--brand); }
+.req.own { border-left-color: var(--accent); }
+.req .fx { display: grid; grid-template-columns: max-content 1fr; gap: 0.25rem 0.75rem; margin: 0.4rem 0; }
+.req .fx dt { font-weight: 700; } .req .fx dd { margin: 0; }
+@media (max-width: 30em) { .req .fx { grid-template-columns: 1fr; } .req .fx dd { margin-bottom: 0.4rem; } }
+.authority { padding-left: 1.5rem; } .authority li { margin: 0.4rem 0; }

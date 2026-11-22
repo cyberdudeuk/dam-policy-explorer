@@ -1,0 +1,286 @@
+{
+ "source": "https://cyberdudeuk.github.io/dam-capability-playbooks/data/playbooks.json",
+ "playbooks_version": "1.16.0",
+ "playbooks_as_of": "2026-11-20",
+ "retrieved": "2026-11-22",
+ "sha256": "d29666e8a5210e8a71a78c56a4619ab5c1afbb1cbb27564a457e51b2b83c0834",
+ "count": 46,
+ "items": [
+  {
+   "t": "Data governance",
+   "x": "Put the authority, roles and routines in place so that every critical data asset has a named, active owner, decisions are made and recorded, and the...",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/governance.html",
+   "k": "Playbook"
+  },
+  {
+   "t": "Data cataloguing",
+   "x": "Find the critical data assets, describe each one to the cross-government metadata standard, keep the descriptions in a catalogue that others can harvest,...",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/cataloguing.html",
+   "k": "Playbook"
+  },
+  {
+   "t": "Data quality",
+   "x": "Know, prove and improve the quality of each critical data asset through a data quality action plan (DQAP), scored with the government issues framework,...",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/quality.html",
+   "k": "Playbook"
+  },
+  {
+   "t": "Delivery and change",
+   "x": "Embedding the DAM Policy in business as usual and in change programmes: business cases, assurance, legacy exits, contracts and handover.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/change.html",
+   "k": "Playbook"
+  },
+  {
+   "t": "Tools and interoperability",
+   "x": "How catalogue, data quality, lineage, master data and governance tools work together, the open standards that connect them, and RFI questions to avoid...",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/tooling.html",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplements",
+   "x": "Sector supplements for health, social care, geospatial, statistics, data sharing, AI and more: governance overlays, catalogue fields and quality rule...",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html",
+   "k": "Playbook"
+  },
+  {
+   "t": "Start from your role",
+   "x": "Routes through the DAM capability playbooks for chief data officers, coordinators, data owners, stewards, catalogue managers and analysts.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/personas.html",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning",
+   "x": "Short learning modules on the DAM Policy, data governance, cataloguing and data quality, with outcomes, activities and checks.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html",
+   "k": "Playbook"
+  },
+  {
+   "t": "Library",
+   "x": "Guidance, standards, templates and tools for data governance, data cataloguing and data quality, with open data downloads.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/library.html",
+   "k": "Playbook"
+  },
+  {
+   "t": "Working together",
+   "x": "How data, records, security, digital, technology, analysis, commercial and delivery professionals can work together on critical data assets.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/community.html",
+   "k": "Playbook"
+  },
+  {
+   "t": "Capability model",
+   "x": "Every capability the DAM Policy and related guidance need, flagged explicit, implicit or inferred, with a data maturity model and self-assessment.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/capability-model.html",
+   "k": "Playbook"
+  },
+  {
+   "t": "Boards, councils and networks",
+   "x": "Boards, councils and networks for data asset management in government: purpose, aims, outcomes, terms of reference and how to take part.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/bodies.html",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplement: Health and care data",
+   "x": "For critical data assets that hold patient-level or care records. Adds the health roles, duties and coding standards the core playbooks do not cover.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html#SUP-HLT",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplement: Adult and children's social care data",
+   "x": "For assets built from council returns, such as adult social care client level data and children's social care census returns, where the source systems sit outside the policy's scope.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html#SUP-SOC",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplement: Geospatial and address data",
+   "x": "For assets that hold addresses, coordinates or map geometry. Adds geospatial metadata, open identifiers and positional quality.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html#SUP-GEO",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplement: Official statistics and administrative sources",
+   "x": "For assets used to produce official statistics. Joins the DQAP to quality assurance of administrative data, so quality is reported once for both purposes.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html#SUP-STA",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplement: Data sharing and legal gateways",
+   "x": "For every critical data asset that includes personal data, because critical data assets are defined by being shared. Adds a legal gateway record to the governance and catalogue records.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html#SUP-SHR",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplement: AI-ready data",
+   "x": "For assets used, or likely to be used, for AI or automated decision support. Turns the GOV.UK AI-ready data guidance into checks at the annual review.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html#SUP-AI",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplement: Fraud and error",
+   "x": "For assets used to detect fraud or error, where identity matching quality decides who is flagged.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html#SUP-FRD",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplement: Justice, policing and national security",
+   "x": "For assets in law enforcement, justice, defence or security settings, where only OFFICIAL assets are in scope and metadata itself may be sensitive.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html#SUP-JUS",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplement: Data about people",
+   "x": "For any asset that holds records about individual people. Makes sure forms and rules let people describe themselves accurately.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html#SUP-PER",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplement: Reference data and identifiers",
+   "x": "For assets that depend on code lists and identifiers maintained by other organisations, such as area codes, organisation codes and company numbers.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html#SUP-REF",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplement: Records, retention and disposal",
+   "x": "For every critical data asset that must be kept, archived or destroyed on a schedule. Joins data asset management to records management.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html#SUP-REC",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplement: Data architecture and models",
+   "x": "For critical data assets whose structure others build on. Describes the entities, how they relate and which system is the authoritative source, and links them to the catalogue.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html#SUP-ARC",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplement: Devolved governments and local government",
+   "x": "For assets that flow to or from the devolved governments or councils, which are not bound by the policy but often depend on it.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html#SUP-DEV",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplement: Environmental, sensor and time-series data",
+   "x": "For monitoring and sensor data where readings arrive continuously and gaps, units and drift matter more than missing fields.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html#SUP-ENV",
+   "k": "Playbook"
+  },
+  {
+   "t": "Sector supplement: Pupil and learner data",
+   "x": "For assets about pupils and learners, which are long-lived and linked across schools, colleges and nations.",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/sectors.html#SUP-EDU",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: The DAM Policy - what it asks of you",
+   "x": "Explain who the policy applies to and what is in scope; Name the core duties: identify and catalogue assets, report them, name an owner and manage quality; Find the requirement behind any step in these playbooks",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M01",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Roles and accountability",
+   "x": "Describe the data owner, data steward and data custodian roles; Explain how the data owner relates to the information asset owner; Choose between the three ownership options",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M02",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Setting up governance with five recipes",
+   "x": "Run the Mandate, Frame, Assign, Operate and Assure recipes in order; Set up a decision log and an exception register; Collect evidence continuously for the GDS return",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M03",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Finding and designating critical data assets",
+   "x": "Build a candidate list from existing registers; Apply the scope tests and the seven purposes; Draw an asset's boundary and record why",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M04",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Describing assets with metadata others can use",
+   "x": "Record the metadata properties in the GOV.UK guidance; Write titles and descriptions in plain English; Map properties to the Metadata Exchange Model",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M05",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Cataloguing, harvesting and reporting to GDS",
+   "x": "Expose records so others can harvest them; Produce the return from catalogue records; Plan the annual review",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M06",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Data quality foundations",
+   "x": "Name the five principles and six dimensions of the Government Data Quality Framework; Explain what a DQAP is for; Recognise when quality differs between groups of people",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M07",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Building a DQAP and scoring issues",
+   "x": "Write rules with targets from the issues framework; Measure a baseline and log issues; Prioritise issues and set resolution dates",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M08",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Running the three capabilities as one yearly cycle",
+   "x": "Use the hand-offs so each fact is recorded once; Plan one annual review per asset; Feed assurance lessons into the next mandate",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M09",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Inclusive data practice",
+   "x": "Apply equality and inclusion checks in each capability; Make data quality statements and records accessible; Involve people the data describes",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M10",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Embedding the policy in delivery and change",
+   "x": "Name the capabilities the policy relies on but does not state; Build DAM checkpoints into a business case and an assurance plan; Plan a legacy exit and a handover to business as usual",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M11",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: What makes a critical data asset AI-ready",
+   "x": "Name the four pillars in the GDS guidelines on AI-ready datasets; Decide whether an asset needs the AI-ready supplement; Explain why AI-readiness is a stewardship question as well as a technical one",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M12",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: From FAIR to AI-ready metadata",
+   "x": "Explain the four FAIR principles in plain English; Add the AI-ready catalogue fields to a record; See how the proposed DCAT-AP-UK profile extends the xGov MEM for AI use",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M13",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Start from the question the data must answer",
+   "x": "Write down the decision or question an AI use of an asset serves; Test that question against the seven purposes in the policy; Record out-of-scope uses before anyone asks for them",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M14",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Connecting data to AI with linked data, knowledge graphs and MCP",
+   "x": "Explain the RDF triple and why linked data helps machines read metadata; Find and reuse this portal's knowledge graph and vocabulary files; Describe how an MCP server lets an AI assistant check metadata against the xGov MEM",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M15",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Making public data AI-ready together",
+   "x": "Look for existing work before building, across public sector code and catalogues; Involve the people the data describes when you judge whether it is fit for AI; Use the shared assurance and community routes rather than working alone",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M16",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Governing AI use of critical data in practice",
+   "x": "Run the AI-ready quality rules on a sample file; Apply the transparency and ethics duties that go with AI use; Plan who monitors drift and bias once AI use begins",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M17",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Leading data asset management - your first year",
+   "x": "Set Must, Should and Could aims for your organisation and the outcomes each brings; Plan the first 30, 60 and 90 days and the 6 and 12 month checkpoints; Choose the maturity model that fits each aim and measure progress against a baseline",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M18",
+   "k": "Playbook"
+  },
+  {
+   "t": "Learning module: Buying tools for data asset management without lock-in",
+   "x": "Pick the requirements that fit the kinds of tool you need, with priorities; Run a request for information and a proof of concept with your own data; Ask for contract clauses that keep your data movable",
+   "u": "https://cyberdudeuk.github.io/dam-capability-playbooks/learning.html#M19",
+   "k": "Playbook"
+  }
+ ]
+}
