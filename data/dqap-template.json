@@ -1,0 +1,209 @@
+{
+ "source": "https://assets.publishing.service.gov.uk/media/690b8da814b040dfe829237f/DQAP_Supporting_Materials_Template.xlsx",
+ "page": "https://www.gov.uk/government/publications/implement-a-data-quality-action-plan",
+ "sha256": "27cf4d8bb2a6a29dafad1551282b4f07d8770fd96b26dda94b5ffd248722f2b9",
+ "bytes": 52533,
+ "retrieved": "2026-11-22",
+ "sheets": [
+  "Cover page",
+  "Details",
+  "RACI Matrix",
+  "Data Criticality Matrix",
+  "Data Issues Log",
+  "Rules",
+  "Results",
+  "Causes",
+  "Actions"
+ ],
+ "tables": {
+  "Data Criticality Matrix": {
+   "step": 1,
+   "first": "Reference",
+   "header": [
+    "Reference",
+    "Data item",
+    "Data steward",
+    "Data quality assessed?",
+    "Business criticality",
+    "Process",
+    "Created, Read, Updated or Deleted (CRUD)",
+    "Business area",
+    "Source",
+    "Purpose"
+   ],
+   "guide": [
+    "Name of the data item in business terms"
+   ],
+   "examples": []
+  },
+  "Data Issues Log": {
+   "step": 1,
+   "first": "Data issue reference",
+   "header": [
+    "Data issue reference",
+    "Date logged",
+    "Description",
+    "Business area",
+    "Data subject",
+    "Reported by",
+    "Related issues",
+    "Impacted systems",
+    "Example",
+    "System owner",
+    "Assigned to",
+    "Status",
+    "Status date",
+    "Comments"
+   ],
+   "guide": [
+    "The unique identifier for the data issue"
+   ],
+   "examples": []
+  },
+  "Rules": {
+   "step": 2,
+   "first": "ID",
+   "header": [
+    "ID",
+    "Purpose",
+    "Part of data",
+    "Requirement",
+    "Data quality dimension",
+    "Rule",
+    "Metric",
+    "Method",
+    "Target",
+    "Notes"
+   ],
+   "guide": [],
+   "examples": [
+    "1 | To allocate the right resources for training",
+    "2 | To ensure that training courses improve DQ knowledge"
+   ]
+  },
+  "Results": {
+   "step": 3,
+   "first": "ID",
+   "header": [
+    "ID",
+    "Rule",
+    "Metric",
+    "Target"
+   ],
+   "guide": [],
+   "examples": [
+    "1 | Trainer name should not be null",
+    "2 | Evaluation date should be within 2 weeks of course date"
+   ]
+  },
+  "Causes": {
+   "step": 5,
+   "first": "Data quality issue",
+   "header": [
+    "Data quality issue",
+    "Priority",
+    "Description of issue",
+    "Contributing factors",
+    "Root cause to address"
+   ],
+   "guide": [
+    "Priority for addresing the issue: - High - Medium - Low"
+   ],
+   "examples": [
+    "Trainers' names should be complete | Medium",
+    "Timeliness for completion of survey responses | Medium"
+   ]
+  },
+  "Actions": {
+   "step": 5,
+   "first": "Data quality issue",
+   "header": [
+    "Data quality issue",
+    "Action to rectify the data quality issue",
+    "Action owner",
+    "Target for completion",
+    "Review date",
+    "Status"
+   ],
+   "guide": [
+    "Detail the step(s) for this action"
+   ],
+   "examples": [
+    "Trainers' names should be complete | Implement standard invite process",
+    "Timeliness for completion of survey responses | Run a regular refresher session for trainers on gathering go",
+    "Timeliness for completion of survey responses | Update guidance on feedback in face-to-face sessions so that"
+   ]
+  }
+ },
+ "details": [
+  "Data set title:",
+  "Scope/Description:",
+  "Technical lead:",
+  "Measurement frequency:",
+  "Next review date:",
+  "Business area:",
+  "Notes:"
+ ],
+ "cover": [
+  [
+   "1",
+   "Identify critical data in the Data Criticality Matrix"
+  ],
+  [
+   "1",
+   "Identify relevant technical and business SMEs"
+  ],
+  [
+   "1",
+   "Log known quality issues in Data Issues Log"
+  ],
+  [
+   "2",
+   "Identify data users and their needs"
+  ],
+  [
+   "2",
+   "Define data quality rules"
+  ],
+  [
+   "2",
+   "Define data quality measurements and targets in the Rules sheet"
+  ],
+  [
+   "3",
+   "Run quality checks based on the rules you have defined"
+  ],
+  [
+   "3",
+   "Document findings in the Results sheet"
+  ],
+  [
+   "4",
+   "Prioritise areas for improvement based on the important, impact and performance"
+  ],
+  [
+   "4",
+   "Set goals for implementing improvements in the Actions sheet"
+  ],
+  [
+   "5",
+   "Assess root cause of quality issues and assign owner for resolution in the Actio"
+  ],
+  [
+   "6",
+   "Identify stakeholders relevant to data quality results"
+  ],
+  [
+   "6",
+   "Communicate results of data quality to relevant stakeholders"
+  ],
+  [
+   "7",
+   "Establish frequency of monitoring data quality checks in the Details sheet"
+  ],
+  [
+   "7",
+   "Record status of issues in the Data Issues Log"
+  ]
+ ]
+}

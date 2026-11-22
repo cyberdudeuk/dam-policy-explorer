@@ -187,6 +187,7 @@ Screens:
                         "support", Navigate(ScrSupport, ScreenTransition.Fade),
                         "feedback", Set(gSupTab, "Feedback"); Navigate(ScrSupport, ScreenTransition.Fade),
                         "contact", Set(gSupTab, "Contact us"),
+                        "site", Launch(nfSite & ThisItem.ref),
                         "web", Launch(nfSite))
                   ShowScrollbar: |-
                     =true

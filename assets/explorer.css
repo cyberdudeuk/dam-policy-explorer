@@ -412,3 +412,23 @@ td .pill { border-radius: 0.75rem; white-space: normal; text-align: center; }   
 .req .fx dt { font-weight: 700; } .req .fx dd { margin: 0; }
 @media (max-width: 30em) { .req .fx { grid-template-columns: 1fr; } .req .fx dd { margin-bottom: 0.4rem; } }
 .authority { padding-left: 1.5rem; } .authority li { margin: 0.4rem 0; }
+/* 1.7.0 data quality action plans */
+.dq-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0 0.9rem; align-items: end; border: 1px solid var(--line); border-radius: var(--radius); padding: 0.6rem 0.8rem; margin: 0.5rem 0; background: var(--card); }
+.dq-row .field { margin: 0.25rem 0; } .dq-row p { margin: 0.25rem 0; }
+.dq-row input, .dq-row select { width: 100%; }
+.btn.small { padding: 0.25rem 0.7rem; font-size: 0.9em; }
+.dq-checks { padding-left: 1.4rem; } .dq-checks li { margin: 0.55rem 0; }
+.dq-checks .dq-fix { display: block; color: var(--text); margin-top: 0.15rem; } .dq-checks .src { font-size: 0.9em; color: var(--muted); }
+.dq-missing .dq-fix::before { content: "What to do: "; font-weight: 700; } .dq-partly .dq-fix::before { content: "What to do: "; font-weight: 700; }
+.warn-box { background: var(--warn-bg); border-left: 5px solid var(--warn); padding: 0.6rem 0.9rem; border-radius: var(--radius); }
+.checks-list li { margin: 0.35rem 0; }
+fieldset.q h4 { margin: 0.9rem 0 0.2rem; }
+@media print { .dq-build, .dq-equiv, #check, #equivalent, #catalogue, #more, .xbanner, .contents, .xfoot { display: none !important; } #dq-result { display: block !important; } }
+.dqv-map code { white-space: normal; word-break: normal; overflow-wrap: normal; }   /* wrap at spaces, never inside dcat:Dataset */
+@media (max-width: 40em) {
+  .dqv-map thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .dqv-map tr { display: block; border-top: 1px solid var(--line); padding: 0.5rem 0; }
+  .dqv-map th, .dqv-map td { display: block; border: 0; padding: 0.15rem 0; }
+  .dqv-map td:nth-of-type(1)::before { content: "In the GOV.UK template: "; font-weight: 700; }
+  .dqv-map td:nth-of-type(2)::before { content: "Term: "; font-weight: 700; }
+}

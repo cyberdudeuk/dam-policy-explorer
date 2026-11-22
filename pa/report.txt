@@ -1,4 +1,4 @@
-page policy: 13 sections, 26212 chars
+page policy: 13 sections, 26201 chars
 page return: 7 sections, 26017 chars
 page track: 5 sections, 3357 chars
 page people: 10 sections, 34557 chars
@@ -8,13 +8,13 @@ page resources: 3 sections, 5286 chars
 page guide: 10 sections, 7985 chars
 page ask: 3 sections, 1833 chars
 page team: 7 sections, 31630 chars
-page about: 13 sections, 11811 chars
+page about: 13 sections, 12422 chars
 page accessibility: 6 sections, 2714 chars
 questions: 66
 examples: 71 (35 agreed)
-glossary: 33
-release flags: 8 items new or updated since 1.4.0
-search index: 308
-formulas: 535542 chars
-screens: 01-ScrHome 92630, 02-ScrPage 53806, 03-ScrRead 29020, 04-ScrQuestions 47845, 05-ScrExamples 49393, 06-ScrGlossary 36319, 07-ScrSearch 38598, 08-ScrTest 70709, 00-ScrSplash 13296, 09-ScrMe 91901, 10-ScrMatch 82712, 11-ScrLearn 53363, 12-ScrSupport 84589, 13-ScrNew 39099
+glossary: 36
+release flags: 6 items new or updated since 1.6.1
+search index: 311
+formulas: 538483 chars
+screens: 01-ScrHome 92750, 02-ScrPage 53806, 03-ScrRead 29020, 04-ScrQuestions 47845, 05-ScrExamples 49393, 06-ScrGlossary 36319, 07-ScrSearch 38598, 08-ScrTest 70709, 00-ScrSplash 13296, 09-ScrMe 91901, 10-ScrMatch 82712, 11-ScrLearn 53363, 12-ScrSupport 84652, 13-ScrNew 39099
 ALL CHECKS PASS

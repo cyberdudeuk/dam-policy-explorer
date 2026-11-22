@@ -101,7 +101,7 @@
   // Tooltips everywhere: glossary words, navigation, buttons, labels and badges. Each shows on hover and on keyboard focus,
   // and Escape hides it (WCAG 1.4.13). Native title attributes are moved into data-tip, so nothing shows twice.
   var NAVTIP = {'index.html': 'Start here: your path, your progress and routes by role', 'policy.html': 'What the policy asks, who it applies to and who does what',
-    'return.html': 'The twelve steps of the return, with your progress saved', 'asset-test.html': 'Check whether a possible asset is in scope', 'examples.html': 'Worked examples: what is in scope, what is not, and how to fill in the return',
+    'return.html': 'The twelve steps of the return, with your progress saved', 'asset-test.html': 'Check whether a possible asset is in scope', 'dqap.html': 'Check, build or self-assess a data quality action plan', 'examples.html': 'Worked examples: what is in scope, what is not, and how to fill in the return',
     'track.html': 'Track where your return has got to, and analyse what you sent', 'questions.html': 'Answers to the questions coordinators asked, with sources',
     'people.html': 'Roles, user stories and journeys', 'capabilities.html': 'The 32 capabilities behind the policy, with playbooks',
     'guide.html': 'How to use the explorer, tours, tutorials and how to set it up', 'resources.html': 'Guidance, templates and tools in one list',

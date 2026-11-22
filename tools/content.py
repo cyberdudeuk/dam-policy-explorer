@@ -12,7 +12,7 @@ Coordinators Working Group, Knowledge Hub, DCAP Working Group, email and meeting
 organisations are removed: each need is paraphrased and counted, never quoted.
 """
 
-VERSION = "1.6.1"
+VERSION = "1.7.0"
 BUILD_DATE = "2026-11-22"
 CONTENT_CHECKED = "2026-11-18"          # date the GOV.UK sources were last re-read
 REGISTER_SNAPSHOT = "2026-11-18"        # Question and Insight Register snapshot used for the needs
@@ -123,8 +123,19 @@ SECTIONS = {
                   "data-from-a-third-party": "Data from a third party",
                   "the-relationship-between-data-ownership-and-information-asset-ownership": "section 8, Data ownership and information asset ownership",
                   "merged-data-sets-and-data-services": "section 7, Merged data sets and data services"},
-    "dqap": {"what-a-dqap-is": "What a DQAP is", "step-1-identify-critical-data": "Steps 1 to 7, from Identify critical data"},
-    "dqissues": {"what-data-quality-rules-and-issues-are": "What data quality rules and issues are"},
+    "dqap": {"what-a-dqap-is": "What a DQAP is", "step-1-identify-critical-data": "Step 1: Identify critical data",
+             "identify-and-log-data-quality-issues": "Step 3, Identify and log data quality issues",
+             "step-2-identify-data-quality-rules": "Step 2: Identify data quality rules", "use-data-quality-dimensions": "Step 2, Use data quality dimensions",
+             "set-realistic-expectations": "Step 2, Set realistic expectations", "the-data-life-cycle": "Step 2, The data life cycle",
+             "step-3-assess-current-data-quality": "Step 3: Assess current data quality", "document-findings": "Step 3, Document findings",
+             "step-4-prioritise-improvements-and-set-goals": "Step 4: Prioritise improvements and set goals",
+             "step-5-identify-root-cause-and-take-action": "Step 5: Identify root cause and take action",
+             "step-6-report-on-data-quality": "Step 6: Report on data quality", "responsibilities-of-data-owners": "Step 6, Responsibilities of data owners",
+             "step-7-repeat-measure-over-time": "Step 7: Repeat measure over time", "plan-for-and-manage-changes": "Step 7, Plan for and manage changes",
+             "resources": "Supporting resources"},
+    "dqissues": {"what-data-quality-rules-and-issues-are": "What data quality rules and issues are", "set-a-data-quality-target": "Set a data quality target",
+                 "assign-a-priority-to-a-data-quality-issue": "Assign a priority to a data quality issue",
+                 "allocate-time-and-resources": "Allocate time and resources"},
     "tcop10": {"plan-how-you-will-manage-your-data-throughout-its-lifecycle": "Plan how you will manage your data throughout its lifecycle"},
 }
 DQF_DOC = ("The Government Data Quality Framework: data quality principles",
@@ -227,7 +238,7 @@ QA = [
      "a": "<p>No. The policy asks you to manage metadata about your assets in your data catalogue and report it to GDS. It does not name a product. GDS ran a catalogue pilot on Microsoft Purview because many organisations already use it, and would repeat the pilot with other tools if there is demand. Peers share how they use their tools at the Data Catalogue and Analysis Platform Working Group.</p>",
      "src": [sec("policy", "identifying-and-reporting-data-assets"), FAQ]},
     {"id": "dqap", "topic": DM, "prov": "gds", "q": "What counts as a data quality action plan \"or equivalent\"?",
-     "a": "<p>Every asset must have a data quality action plan or an equivalent. To count as equivalent, your own process must cover all seven steps of the GDS guide:</p><ol><li>Identify critical data</li><li>Identify data quality rules</li><li>Assess current data quality</li><li>Prioritise improvements and set goals</li><li>Find the root cause and act</li><li>Report on data quality</li><li>Measure again over time</li></ol><p>The policy does not require a particular document or tool. GDS is building a bank of examples.</p>",
+     "a": "<p>Every asset must have a data quality action plan or an equivalent. To count as equivalent, your own process must cover all seven steps of the GDS guide:</p><ol><li>Identify critical data</li><li>Identify data quality rules</li><li>Assess current data quality</li><li>Prioritise improvements and set goals</li><li>Find the root cause and act</li><li>Report on data quality</li><li>Measure again over time</li></ol><p>The policy does not require a particular document or tool. GDS is building a bank of examples.</p><p>To test your own process against the seven steps, or check a plan built on the GOV.UK template, use the <a href=\"dqap.html\">quality plan tool</a>.</p>",
      "src": [sec("policy", "data-quality-action-plans"), sec("dqap", "step-1-identify-critical-data"), sec("dqissues", "what-data-quality-rules-and-issues-are"), DQF_DOC, FAQ]},
     {"id": "owner-kit", "topic": R, "prov": "practice", "q": "Is there practical, day-to-day help for data owners and stewards?",
      "a": "<p>Yes: see the <a href=\"embed.html#owners\">practical kit for data owners and stewards</a>. It has a checklist for each role, what to do first, questions to ask yourself each quarter, and a guide for the regular owner and steward conversation. It is built on the data ownership model and the capability playbooks.</p><p>GDS is also developing training for data owners.</p>",
@@ -399,6 +410,9 @@ GLOSSARY = [
     ("metadata", "Metadata", "Information that describes data: what it is, who owns it, where it comes from and how it can be used."),
     ("official", "OFFICIAL", "The lowest of the government's security classifications. Most government data is OFFICIAL."),
     ("policy-gap", "Policy gap", "Something the policy expects that is not in place yet, such as an asset with no data owner. A gap is not a mistake: GDS accepts it and uses it to decide where to help."),
+    ("dqv", "Data Quality Vocabulary (DQV)", "A W3C vocabulary for describing the quality of a data set: its metrics, measurements, dimensions, policies and quality notes, linked to the data set's DCAT record."),
+    ("dq-dimension", "Data quality dimension", "One aspect of quality you can measure, such as completeness or timeliness. The GOV.UK guide starts from six, defined by DAMA UK."),
+    ("dq-rule", "Data quality rule", "A test that data must pass to be fit for its purpose, measured against a target. For example, a postcode is not blank in at least 98% of records."),
 ]
 
 RESOURCES = [
@@ -423,6 +437,7 @@ AUDIENCES = {"coordinator": "Coordinators", "cdo": "Chief data officers", "owner
 
 # What changed, newest first. Items flagged as new show a "New" marker for 30 days.
 CHANGES = [
+    ("2026-11-22", "1.7.0", "New quality plan tool: check a data quality action plan built on the GOV.UK template, build one step by step, or test your own process against the seven steps, all on your device, with each check linked to the part of the guide that asks for it. Download a plan as W3C Data Quality Vocabulary (DQV) linked to the asset's catalogue record, and see how each part maps to DQV and DCAT. The six data quality dimensions are published as a shared vocabulary. Three new glossary words."),
     ("2026-11-22", "1.6.1", "In the app, on a phone, the text on the opening screen could sit over the artwork and was hard to read. It now sits on a dark panel that keeps it readable."),
     ("2026-11-22", "1.6.0", "From the DAM Policy FAQs (November 2026): three more decisions that are yours (how you organise and resource the work, what you do with data that is critical to you but not in scope, and which other assets you catalogue), who is accountable when there is no chief data officer, and a fuller answer on resourcing. The journey for each role is now tested to stay within three choices of the home page. In the app, a single search result now says 1 result."),
     ("2026-11-22", "1.5.0", "From the coordinator group of 19 November 2026 and a support session for a transformation project on the same day: what the policy fixes and what each organisation decides for itself, read from the policy and its guidance on GOV.UK; where answers come from, and which are still being decided; whether you can leave out commercially or security-sensitive details; and who lists and owns critical data that a supplier holds for you. Search now also finds the main pages, sector supplements and learning modules of the DAM capability playbooks, with a link to each."),
@@ -695,4 +710,113 @@ PATTERNS = [
     ("NSW Government Data Governance Toolkit", "https://data.nsw.gov.au/node/337", "Guidance that works at any level of maturity, with a clear statement of what is required and what is advice."),
     ("Australian DATA Scheme: data sharing for data custodians", "https://www.finance.gov.au/sites/default/files/2026-02/data-sharing-for-data-custodians-fact-sheet.docx", "Step-by-step decisions that leave a record: the asset test's downloadable list of assets left out."),
     ("US Federal CDO Council implementation guidance", "https://fedscoop.com/?p=91490", "Written for the people who implement the policy, not from a policy view: plain answers, routes by role."),
+]
+
+
+# ---------------- Data quality action plans (1.7.0) ----------------
+# Read on GOV.UK on 22 November 2026: the policy (section 6), the DQAP implementation guide and the data quality
+# issues framework, both published 16 April 2026, and the template published with them. W3C: DQV (Group Note),
+# DCAT 3 section 14, and the ldqd dimensions DQV points to. Every check names the section it tests.
+DQAP_TEMPLATE_URL = "https://assets.publishing.service.gov.uk/media/690b8da814b040dfe829237f/DQAP_Supporting_Materials_Template.xlsx"
+DQAP_PAGE_URL = "https://www.gov.uk/government/publications/implement-a-data-quality-action-plan"
+
+DQAP_REQUIREMENT = {
+    "fixed": "Every critical data asset must have a data quality action plan, or an equivalent, so there is a mechanism for managing its quality.",
+    "equivalent": "If you already have a way of managing the quality of your critical data, review it to make sure it covers all the steps in the DQAP implementation guide.",
+    "matters": "Whatever form the plan takes, you need a record of the actions taken, results that are reported, and a set way to keep monitoring quality over time.",
+    "src_fixed": [sec("policy", "data-quality-action-plans")], "src_matters": [sec("dqap", "what-a-dqap-is")],
+}
+
+# Each check: what the plan must show, how the tool tests it, and the section that asks for it.
+DQAP_CHECKS = [
+    {"id": "asset", "step": 0, "title": "Names the asset and what the plan covers",
+     "need": "A plan for one data asset, with its title and scope.", "test": "details",
+     "fix": "Fill in the data set title and its scope on the Details sheet.", "src": [sec("dqap", "what-a-dqap-is")]},
+    {"id": "critical", "step": 1, "title": "Critical data items identified, each with a purpose",
+     "need": "The data items that matter most, and what each is used for.", "test": "items",
+     "fix": "List each critical data item in the Data Criticality Matrix with its purpose and how critical it is.", "src": [sec("dqap", "step-1-identify-critical-data")]},
+    {"id": "issues", "step": 1, "title": "Known quality issues logged",
+     "need": "A log of the quality issues you already know about.", "test": "issues",
+     "fix": "Record known issues in the Data Issues Log, even before you measure.", "src": [sec("dqap", "identify-and-log-data-quality-issues")]},
+    {"id": "rules", "step": 2, "title": "Rules set, each with a dimension, a measure and a target",
+     "need": "Data quality rules tied to user needs, each measured on a dimension against a target.", "test": "rules",
+     "fix": "On the Rules sheet, give every rule a data quality dimension, a metric and a target.",
+     "src": [sec("dqap", "step-2-identify-data-quality-rules"), sec("dqap", "use-data-quality-dimensions"), sec("dqissues", "set-a-data-quality-target")]},
+    {"id": "measured", "step": 3, "title": "Current quality measured against every rule",
+     "need": "A dated result for each rule, so you know where quality stands now.", "test": "results",
+     "fix": "Run each rule and record the result and the date on the Results sheet.", "src": [sec("dqap", "step-3-assess-current-data-quality"), sec("dqap", "document-findings")]},
+    {"id": "prioritised", "step": 4, "title": "Problems prioritised",
+     "need": "Each rule that misses its target is a recorded issue with a priority.", "test": "priority",
+     "fix": "For each rule below target, add the issue to the Causes sheet with a priority of High, Medium or Low.",
+     "src": [sec("dqap", "step-4-prioritise-improvements-and-set-goals"), sec("dqissues", "assign-a-priority-to-a-data-quality-issue")]},
+    {"id": "actions", "step": 5, "title": "Root causes found and actions owned",
+     "need": "A root cause for each issue, and actions with an owner and a date.", "test": "actions",
+     "fix": "Record the root cause on the Causes sheet, and on the Actions sheet give each action an owner and a target date.",
+     "src": [sec("dqap", "step-5-identify-root-cause-and-take-action")]},
+    {"id": "reported", "step": 6, "title": "Results reported",
+     "need": "Results are reported to the people who use and own the data.", "test": "reported",
+     "fix": "Say how and to whom you report results, and tick step 6 on the cover page when it is done.",
+     "src": [sec("dqap", "step-6-report-on-data-quality"), sec("dqap", "responsibilities-of-data-owners")]},
+    {"id": "monitored", "step": 7, "title": "Quality measured again over time",
+     "need": "A measurement frequency and a next review date, and results recorded over time.", "test": "monitor",
+     "fix": "Set the measurement frequency and next review date on the Details sheet, and record each new measurement on the Results sheet.",
+     "src": [sec("dqap", "step-7-repeat-measure-over-time")]},
+    {"id": "examples", "step": 0, "title": "No template examples left in",
+     "need": "The worked examples that come with the template have been replaced by your own rows.", "test": "examples",
+     "fix": "Delete the example rows (about training courses) that came with the template.", "src": []},
+]
+
+# Self-assessment for an equivalent process: the policy asks that it covers all 7 steps.
+DQAP_EQUIV = [
+    {"step": 1, "title": "Identify critical data", "a": "step-1-identify-critical-data",
+     "covers": ["You know which data items matter most and what each is for", "Someone is named as responsible", "Known issues are logged"]},
+    {"step": 2, "title": "Identify data quality rules", "a": "step-2-identify-data-quality-rules",
+     "covers": ["Rules are kept apart from business rules", "Each rule is tied to a dimension and a user need", "Targets are realistic", "Rules cover the whole data life cycle"]},
+    {"step": 3, "title": "Assess current data quality", "a": "step-3-assess-current-data-quality",
+     "covers": ["Checks are run against the rules", "Issues found are logged", "Findings are written down"]},
+    {"step": 4, "title": "Prioritise improvements and set goals", "a": "step-4-prioritise-improvements-and-set-goals",
+     "covers": ["Improvements are prioritised", "Goals for improvement are set"]},
+    {"step": 5, "title": "Identify root cause and take action", "a": "step-5-identify-root-cause-and-take-action",
+     "covers": ["Systemic and one-off issues are told apart", "Actions are chosen, owned and dated", "Costs and benefits are weighed"]},
+    {"step": 6, "title": "Report on data quality", "a": "step-6-report-on-data-quality",
+     "covers": ["Results go to users and decision makers", "Data owners know what they are responsible for"]},
+    {"step": 7, "title": "Repeat measure over time", "a": "step-7-repeat-measure-over-time",
+     "covers": ["Quality is measured again at a set frequency", "Changes to the data or its systems are planned for"]},
+]
+
+# The six dimensions the guide starts from (DAMA UK), published as dqv:Dimension so catalogues can share them.
+# Matches to the W3C ldqd dimensions are close only where the definitions say the same thing.
+DQ_DIMS = [
+    {"id": "completeness", "label": "Completeness", "def": "All required records and critical values in a data asset are present.", "close": "completeness"},
+    {"id": "uniqueness", "label": "Uniqueness", "def": "Each record is unique, with no duplicates in the data asset.", "related": "conciseness"},
+    {"id": "consistency", "label": "Consistency", "def": "Data values do not contradict each other within or across data assets.", "related": "consistency"},
+    {"id": "timeliness", "label": "Timeliness", "def": "Data is up to date and reflects the appropriate period for its intended use.", "close": "timeliness"},
+    {"id": "validity", "label": "Validity", "def": "Data is in the expected range and format, conforming to predefined rules.", "related": "syntacticValidity"},
+    {"id": "accuracy", "label": "Accuracy", "def": "Data correctly represents the real-world entities or events it is intended to describe.", "close": "semanticAccuracy"},
+]
+DQ_DIMS_SRC = [sec("dqap", "use-data-quality-dimensions")]
+
+# How each part of a plan is said in DQV, linked to the catalogue record of the asset (DCAT 3, section 14).
+DQV_MAP = [
+    ("The asset", "Details: data set title", "dcat:Dataset", "The catalogue record the plan is about. Use the identifier your catalogue already gives it."),
+    ("The plan itself", "The whole workbook", "dqv:QualityPolicy (also odrl:Policy)", "DQV's anchor for a policy governed by quality concerns. odrl:target points it at the dcat:Dataset."),
+    ("A rule and its metric", "Rules: rule, metric, method", "dqv:Metric", "skos:prefLabel for the rule, skos:definition for the metric, dqv:expectedDataType xsd:decimal."),
+    ("The dimension", "Rules: data quality dimension", "dqv:Dimension (skos:Concept)", "One of the six GOV.UK dimensions, published here as a SKOS concept scheme. dqv:inDimension links the metric to it."),
+    ("A target", "Rules: target", "odrl:Duty with an odrl:Constraint", "The pattern in DQV section 6.12: the constraint is derived from the metric (prov:wasDerivedFrom), operator odrl:gteq, value the target."),
+    ("A result", "Results: one dated value", "dqv:QualityMeasurement", "dqv:computedOn the dataset, dqv:isMeasurementOf the metric, dqv:value, and dcterms:date the day it was measured. The dataset points to it with dqv:hasQualityMeasurement."),
+    ("An issue, its cause and actions", "Issues log, Causes, Actions", "dqv:QualityAnnotation", "oa:hasTarget the dataset, oa:motivatedBy dqv:qualityAssessment, a textual oa:hasBody with the priority, root cause and actions. The dataset points to it with dqv:hasQualityAnnotation."),
+    ("Who is responsible", "Details: technical lead", "PROV-O", "prov:wasAttributedTo names the role responsible for the measurements. Add prov:generatedAtTime when your tool records the exact time."),
+]
+DQV_SRC = [("Data Quality Vocabulary (DQV), W3C Group Note", "https://www.w3.org/TR/vocab-dqv/"),
+           ("DCAT version 3, section 14: Quality information", "https://www.w3.org/TR/vocab-dcat-3/#quality-information"),
+           ("DQV section 6.12: Express the conformance of a dataset with a quality policy", "https://www.w3.org/TR/vocab-dqv/#h-expressconformancewithpolicy"),
+           ("Linked data quality dimensions (ldqd), W3C", "https://www.w3.org/2016/05/ldqd")]
+# Other open standards that can carry the same information, and when to use them.
+DQ_OTHER = [
+    ("SHACL", "https://www.w3.org/TR/shacl/", "Write a rule so a machine can run it against RDF data. DQV itself suggests it for value constraints."),
+    ("CSV on the Web (CSVW)", "https://www.w3.org/TR/tabular-data-primer/", "Describe the columns of a CSV file and the formats they must follow, so a validator can check them."),
+    ("RDF Data Cube", "https://www.w3.org/TR/vocab-data-cube/", "Every dqv:QualityMeasurement is a Data Cube observation, so a run of results can be published as one table over time."),
+    ("PROV-O", "https://www.w3.org/TR/prov-o/", "Record who measured, with what tool and when, so results can be trusted and repeated."),
+    ("ODRL", "https://www.w3.org/TR/odrl-model/", "Express targets and obligations, as DQV does for quality policies."),
+    ("SKOS", "https://www.w3.org/TR/skos-reference/", "Publish your dimensions and categories so other catalogues can match them."),
 ]

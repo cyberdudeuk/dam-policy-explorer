@@ -389,6 +389,7 @@ def formulas(pages, sections, qas, exs, glo):
             (2, "Worked examples", f"{len(exs)} examples of what is in scope and what is not", "examples", "", "LevelsLayersItems"),
             (2, "Matchmaker", "Is the same or a related data set already in the National Data Library?", "match", "", "Link"),
             (3, "Your return", "The twelve steps of the Baseline Return", "page", "return", "DetailList"),
+            (3, "Quality plan", "Check or build a data quality action plan (opens in your browser)", "site", "dqap.html", "Edit"),
             (3, "Track your return", "What happens after you send it", "page", "track", "RadarActivityMonitor"),
             (3, "Embed it", "Make the policy part of how you work", "page", "embed", "Tools"),
             (4, "Questions and answers", f"{len(qas)} answers, each showing its source", "questions", "", "QuestionMark"),
@@ -783,6 +784,7 @@ def open_item(tr=FADE):
     "support", Navigate(ScrSupport, {tr}),
     "feedback", Set(gSupTab, "Feedback"); Navigate(ScrSupport, {tr}),
     "contact", Set(gSupTab, "Contact us"),
+    "site", Launch(nfSite & ThisItem.ref),
     "web", Launch(nfSite))"""
 
 

@@ -18,7 +18,7 @@ HOME_URL = sys.argv[sys.argv.index("--home-url") + 1] if "--home-url" in sys.arg
 PREVIEW = "--preview" in sys.argv   # claude.ai preview: cannot serve .ics or webmanifest files, and blocks downloads
 
 NAV = [("index.html", "Home", "i-home"), ("policy.html", "The policy", "i-book"), ("return.html", "Your return", "i-list"),
-       ("asset-test.html", "Asset test", "i-target"), ("examples.html", "Examples", "i-layers"), ("track.html", "Track", "i-dashboard"), ("questions.html", "Questions", "i-help"), ("people.html", "Roles", "i-people"),
+       ("asset-test.html", "Asset test", "i-target"), ("dqap.html", "Quality plan", "i-check"), ("examples.html", "Examples", "i-layers"), ("track.html", "Track", "i-dashboard"), ("questions.html", "Questions", "i-help"), ("people.html", "Roles", "i-people"),
        ("capabilities.html", "Capabilities", "i-map")]
 MORE = [("guide.html", "User guide and set-up", "i-book"), ("resources.html", "Resources", "i-folder"), ("ask.html", "Ask", "i-chat"), ("embed.html", "Embed it", "i-layers"), ("glossary.html", "Glossary", "i-tag"), ("team.html", "For the GDS team", "i-inbox"),
         ("about.html", "About this app", "i-info"), ("accessibility.html", "Accessibility", "i-shield")]
@@ -393,6 +393,137 @@ def asset_test():
 <section class="tested" aria-labelledby="tested-h" hidden><h2 id="tested-h">Assets you have tested</h2><div data-tested></div>
 <p><button type="button" class="btn secondary" data-download>{ic("i-download")} Download the assets left out (CSV)</button> <button type="button" class="btn secondary" data-clear>Clear the list</button></p></section>
 """, "Check a possible asset against the DAM Policy scope rules, one question at a time.")
+
+DQ_NS = "https://cyberdudeuk.github.io/dam-policy-explorer/vocab/dq#"
+
+
+def short_src(u):
+    """Short link text for a section citation, for lists where the full document title repeats on every line."""
+    short = {"policy": "The policy", "dqap": "DQAP guide", "dqissues": "Issues framework"}
+    for doc, (_, base) in C.GOVUK.items():
+        if u.startswith(base + "#") and doc in short: return f"{short[doc]}, {C.SECTIONS[doc][u.split('#', 1)[1]]} (GOV.UK)"
+    return u
+
+
+def dqap_data():
+    """What dqap.js needs: the checks with their sources, the self-assessment, the dimensions and the template's shape."""
+    tpl = json.loads((ROOT / "data" / "dqap-template.json").read_text())
+    return {"version": C.VERSION, "ns": DQ_NS, "guide": C.GOVUK["dqap"][1],
+            "checks": [{**{k: c[k] for k in ("id", "step", "title", "need", "test", "fix")}, "src": [{"t": short_src(u), "u": u} for _, u in c["src"]]} for c in C.DQAP_CHECKS],
+            "equiv": [{**e, "u": C.GOVUK["dqap"][1] + "#" + e["a"]} for e in C.DQAP_EQUIV],
+            "dims": C.DQ_DIMS, "template": {k: tpl[k] for k in ("sha256", "retrieved", "sheets", "tables", "details", "cover")}}
+
+
+def dq_vocab():
+    """The six GOV.UK dimensions as a SKOS concept scheme of dqv:Dimension, in Turtle and JSON-LD."""
+    ttl = ["@prefix dqv: <http://www.w3.org/ns/dqv#> .", "@prefix skos: <http://www.w3.org/2004/02/skos/core#> .",
+           "@prefix dcterms: <http://purl.org/dc/terms/> .", "@prefix ldqd: <http://www.w3.org/2016/05/ldqd#> .", f"@prefix dq: <{DQ_NS}> .", "",
+           "dq:scheme a skos:ConceptScheme ;", '  skos:prefLabel "Data quality dimensions in the GOV.UK DQAP implementation guide"@en ;',
+           f'  dcterms:source <{C.GOVUK["dqap"][1]}#use-data-quality-dimensions> ;',
+           '  skos:note "Prototype namespace published by the DAM Policy Explorer, not an official GDS vocabulary. Definitions are from GOV.UK (Open Government Licence)."@en .', "",
+           "dq:damaUK a dqv:Category ;", '  skos:prefLabel "Core dimensions defined by DAMA UK, as listed in the GOV.UK DQAP implementation guide"@en ;', "  skos:inScheme dq:scheme .", ""]
+    en = lambda t: {"@value": t, "@language": "en"}
+    graph = [{"@id": "dq:scheme", "@type": "skos:ConceptScheme", "skos:prefLabel": en("Data quality dimensions in the GOV.UK DQAP implementation guide"),
+              "dcterms:source": {"@id": C.GOVUK["dqap"][1] + "#use-data-quality-dimensions"},
+              "skos:note": en("Prototype namespace published by the DAM Policy Explorer, not an official GDS vocabulary. Definitions are from GOV.UK (Open Government Licence).")},
+             {"@id": "dq:damaUK", "@type": "dqv:Category", "skos:prefLabel": en("Core dimensions defined by DAMA UK, as listed in the GOV.UK DQAP implementation guide"), "skos:inScheme": {"@id": "dq:scheme"}}]
+    for d in C.DQ_DIMS:
+        m = (f' ;\n  skos:closeMatch ldqd:{d["close"]}' if d.get("close") else "") + (f' ;\n  skos:relatedMatch ldqd:{d["related"]}' if d.get("related") else "")
+        ttl += [f'dq:{d["id"]} a dqv:Dimension, skos:Concept ;', f'  skos:prefLabel "{d["label"]}"@en ;', f'  skos:definition "{d["def"]}"@en ;',
+                "  skos:inScheme dq:scheme ;", f"  dqv:inCategory dq:damaUK{m} .", ""]
+        n = {"@id": f'dq:{d["id"]}', "@type": ["dqv:Dimension", "skos:Concept"], "skos:prefLabel": {"@value": d["label"], "@language": "en"},
+             "skos:definition": {"@value": d["def"], "@language": "en"}, "skos:inScheme": {"@id": "dq:scheme"}, "dqv:inCategory": {"@id": "dq:damaUK"}}
+        if d.get("close"): n["skos:closeMatch"] = {"@id": "ldqd:" + d["close"]}
+        if d.get("related"): n["skos:relatedMatch"] = {"@id": "ldqd:" + d["related"]}
+        graph.append(n)
+    ctx = {"dqv": "http://www.w3.org/ns/dqv#", "skos": "http://www.w3.org/2004/02/skos/core#", "dcterms": "http://purl.org/dc/terms/",
+           "ldqd": "http://www.w3.org/2016/05/ldqd#", "dq": DQ_NS}
+    return "\n".join(ttl), json.dumps({"@context": ctx, "@graph": graph}, indent=1)
+
+
+def dqap():
+    R = C.DQAP_REQUIREMENT
+    checks = "".join(f'<li><b>{"Step " + str(c["step"]) + ": " if c["step"] else ""}{E(c["title"])}.</b> {E(c["need"])} '
+                     f'{src_links(c["src"]) if c["src"] else badge("practice")}</li>' for c in C.DQAP_CHECKS)
+    eq = "".join(f'<fieldset class="q eq" data-step="{e["step"]}"><legend><h3 id="eq-{e["step"]}"><span class="qn">{e["step"]}</span> {E(e["title"])}</h3></legend>'
+                 f'<p class="hint">This covers: {E("; ".join(e["covers"]).lower())}. <a href="{C.GOVUK["dqap"][1]}#{e["a"]}">What the guide says (GOV.UK)</a></p>'
+                 f'<label class="opt"><input type="radio" name="eq{e["step"]}" value="yes"> Yes, all of it</label>'
+                 f'<label class="opt"><input type="radio" name="eq{e["step"]}" value="partly"> Partly</label>'
+                 f'<label class="opt"><input type="radio" name="eq{e["step"]}" value="no"> No</label>'
+                 f'<div class="field"><label for="eqe{e["step"]}">Where is the evidence? (optional)</label><input id="eqe{e["step"]}" name="eqe{e["step"]}" type="text" maxlength="200" autocomplete="off"></div></fieldset>'
+                 for e in C.DQAP_EQUIV)
+    dims = "".join(f'<li><b>{E(d["label"])}</b>: {E(d["def"])}</li>' for d in C.DQ_DIMS)
+    rows = "".join(f'<tr><th scope="row">{E(a)}</th><td>{E(b)}</td><td><code>{E(c)}</code></td><td>{E(n)}</td></tr>' for a, b, c, n in C.DQV_MAP)
+    other = "".join(f'<li><a href="{u}">{E(n)}</a>: {E(w)}</li>' for n, u, w in C.DQ_OTHER)
+    dqv_src = " ".join(f'<a href="{u}">{E(t)}</a>.' for t, u in C.DQV_SRC)
+    opts = "".join(f'<option value="{d["id"]}">{E(d["label"])}</option>' for d in C.DQ_DIMS)
+    return page("dqap.html", "Data quality action plan", f"""
+<h1>Data quality action plans</h1>
+<p class="lead">Every critical data asset needs a data quality action plan (DQAP), or an equivalent. Check a plan you have, build one step by step, or test your own process against the seven steps.</p>
+<p class="small">Everything happens on your device: files you open and answers you give are not sent anywhere. This is an aid to get your plan right, not an assessment or approval by GDS.</p>
+
+<h2 id="need">{ic("i-book")} What the policy asks</h2>
+<div class="req">{ic("i-book")}<div><p><b>Fixed.</b> {E(R["fixed"])} {badge("policy")}</p><p class="src">Source: {src_links(R["src_fixed"])}</p></div></div>
+<div class="req own">{ic("i-target")}<div><p><b>Up to you.</b> The form of the plan. {E(R["equivalent"])} {badge("policy")}</p>
+<p>{E(R["matters"])} {badge("gds")}</p><p class="src">Source: {src_links(R["src_fixed"] + R["src_matters"])}</p></div></div>
+<p>A plan is checked against these points:</p><ol class="checks-list">{checks}</ol>
+<p>GDS publishes a <a href="{C.DQAP_TEMPLATE_URL}">DQAP template (Excel, GOV.UK)</a> with the guide. You do not have to use it, but this tool can read it.</p>
+
+<h2 id="check">{ic("i-check")} Check a plan you have</h2>
+<p>Open a filled-in copy of the GOV.UK template. The tool reads it on your device and shows what is in place and what is missing, with the part of the guide that asks for it.</p>
+<div class="field"><label for="dq-file"><b>Your DQAP workbook (.xlsx)</b></label><span class="hint" id="dq-file-hint">The GOV.UK template, filled in. Up to 5 MB. A file protected by a sensitivity label or a password cannot be read: save an unprotected copy first.</span>
+<input id="dq-file" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" aria-describedby="dq-file-hint"></div>
+<p class="small">No workbook? <a href="#build">Build the plan here</a> instead, or <a href="#equivalent">test your own process</a>.</p>
+
+<h2 id="build">{ic("i-list")} Build a plan step by step</h2>
+<p>Fill in each part as you work through the seven steps. Your plan is saved on this device as you type. Check it at any time.</p>
+<form class="dq-build" novalidate>
+<fieldset class="q"><legend><h3 id="b-details"><span class="qn">0</span> The asset</h3></legend>
+<div class="field"><label for="dq-title">Data set title</label><input id="dq-title" name="title" type="text" maxlength="160" autocomplete="off"></div>
+<div class="field"><label for="dq-iri">Its identifier in your catalogue (optional)</label><span class="hint" id="dq-iri-hint">A web address (https) for the catalogue record. It links quality information to the record when you download it.</span><input id="dq-iri" name="iri" type="url" maxlength="300" autocomplete="off" aria-describedby="dq-iri-hint"></div>
+<div class="field"><label for="dq-scope">Scope and description</label><textarea id="dq-scope" name="scope" rows="3" maxlength="1000"></textarea></div>
+<div class="field"><label for="dq-lead">Technical lead (role)</label><input id="dq-lead" name="lead" type="text" maxlength="120" autocomplete="off"></div></fieldset>
+<fieldset class="q"><legend><h3 id="b-items"><span class="qn">1</span> Critical data items</h3></legend><p class="hint">The data items that matter most and what each is used for. <a href="{C.GOVUK["dqap"][1]}#step-1-identify-critical-data">Step 1 (GOV.UK)</a></p>
+<div data-rows="items"></div><p><button type="button" class="btn secondary" data-add="items">Add a data item</button></p></fieldset>
+<fieldset class="q"><legend><h3 id="b-issues"><span class="qn">1</span> Known issues</h3></legend><p class="hint">Quality problems you already know about.</p>
+<div data-rows="issues"></div><p><button type="button" class="btn secondary" data-add="issues">Add an issue</button></p></fieldset>
+<fieldset class="q"><legend><h3 id="b-rules"><span class="qn">2</span> Rules and targets</h3></legend><p class="hint">Each rule tests one dimension against a target. Enter targets and results as percentages, for example 95. <a href="{C.GOVUK["dqap"][1]}#step-2-identify-data-quality-rules">Step 2 (GOV.UK)</a>, <a href="{C.GOVUK["dqissues"][1]}#set-a-data-quality-target">setting a target (GOV.UK)</a></p>
+<div data-rows="rules" data-dims="{E(opts)}"></div><p><button type="button" class="btn secondary" data-add="rules">Add a rule</button></p></fieldset>
+<fieldset class="q"><legend><h3 id="b-results"><span class="qn">3</span> Results</h3></legend><p class="hint">Run each rule and record the result with its date. Add a new result each time you measure again (step 7). <a href="{C.GOVUK["dqap"][1]}#step-3-assess-current-data-quality">Step 3 (GOV.UK)</a></p>
+<div data-rows="results"></div><p><button type="button" class="btn secondary" data-add="results">Add a result</button></p></fieldset>
+<fieldset class="q"><legend><h3 id="b-causes"><span class="qn">4</span> Priorities, causes and actions</h3></legend><p class="hint">For each issue: its priority, the root cause and what you will do. <a href="{C.GOVUK["dqissues"][1]}#assign-a-priority-to-a-data-quality-issue">Assigning a priority (GOV.UK)</a>, <a href="{C.GOVUK["dqap"][1]}#step-5-identify-root-cause-and-take-action">step 5 (GOV.UK)</a></p>
+<div data-rows="causes"></div><p><button type="button" class="btn secondary" data-add="causes">Add an issue to act on</button></p>
+<h4>Actions</h4><div data-rows="actions"></div><p><button type="button" class="btn secondary" data-add="actions">Add an action</button></p></fieldset>
+<fieldset class="q"><legend><h3 id="b-report"><span class="qn">6</span> Reporting and monitoring</h3></legend>
+<div class="field"><label for="dq-report">How and to whom you report results</label><input id="dq-report" name="report" type="text" maxlength="300" autocomplete="off"></div>
+<div class="field"><label for="dq-freq">Measurement frequency</label><input id="dq-freq" name="freq" type="text" maxlength="60" autocomplete="off"></div>
+<div class="field"><label for="dq-review">Next review date</label><input id="dq-review" name="review" type="date"></div></fieldset>
+<p><button type="button" class="btn" data-check>Check this plan</button> <button type="button" class="btn secondary" data-clear-plan>Start again</button></p>
+</form>
+
+<section id="dq-result" class="result" tabindex="-1" aria-labelledby="dq-result-h" hidden><h3 id="dq-result-h">Your plan</h3><div data-dq-out></div>
+<p><button type="button" class="btn secondary" data-dqv>{ic("i-download")} Download as DQV (JSON-LD)</button> <button type="button" class="btn secondary" data-print>Print or save as PDF</button></p></section>
+
+<h2 id="equivalent">{ic("i-target")} Using your own process instead</h2>
+<p>If you already manage quality another way, the policy asks you to check that your process covers all seven steps of the guide. Answer for one critical data asset.</p>
+<form class="dq-equiv" novalidate>{eq}<p><button type="button" class="btn" data-equiv>See the result</button></p></form>
+<section id="eq-result" class="result" tabindex="-1" aria-labelledby="eq-result-h" hidden><h3 id="eq-result-h">Does your process cover the seven steps?</h3><div data-eq-out></div></section>
+
+<h2 id="catalogue">{ic("i-layers")} Join it to your catalogue</h2>
+<p>The GOV.UK metadata guidance for critical data assets has no field for quality, and the return asks only whether a plan is in place. A catalogue can hold the detail with the W3C Data Quality Vocabulary (DQV), which DCAT, the standard most catalogues use, points to for quality. The download above follows this mapping.</p>
+<div class="table-wrap" role="region" aria-labelledby="dqv-cap" tabindex="0"><table class="dqv-map"><caption id="dqv-cap">How each part of a plan is described in DQV</caption><thead><tr><th scope="col">Part of the plan</th><th scope="col">In the GOV.UK template</th><th scope="col">DQV or DCAT term</th><th scope="col">How it is used</th></tr></thead><tbody>{rows}</tbody></table></div>
+<h3 id="dims">The six dimensions</h3>
+<p>The guide starts from six dimensions defined by DAMA UK {badge("policy")}. DQV leaves the choice of dimensions to you, so they are published here as a shared list that catalogues can point to: <a href="vocab/dq.ttl">Turtle</a> or <a href="vocab/dq.jsonld">JSON-LD</a>. Each is matched to the W3C linked data quality dimensions only where the meanings agree.</p>
+<ul>{dims}</ul><p class="src">Source: {src_links(C.DQ_DIMS_SRC)}</p>
+<h3 id="other-standards">Other open standards that help</h3><ul>{other}</ul>
+<p class="src">Sources: {dqv_src}</p>
+
+<h2 id="more">{ic("i-help")} More help</h2>
+<ul><li><a href="{C.DQAP_PAGE_URL}">Implement a data quality action plan (GOV.UK)</a>: the guide, the issues framework and the template.</li>
+<li><a href="https://cyberdudeuk.github.io/dam-capability-playbooks/quality.html">Data quality playbook</a>: the seven steps in practice, with checklists, roles and templates.</li>
+<li><a href="https://cyberdudeuk.github.io/dq-commons/check.html">Check a CSV file against rules in the browser</a> and <a href="https://cyberdudeuk.github.io/dq-commons/guidance.html">score issues with the issues framework</a> (Data Quality Commons).</li></ul>
+""", "Check a data quality action plan, build one step by step, or test your own process against the seven steps, on your device.", scripts=("explorer.js", "dqap.js"))
+
 
 def questions():
     topics = [t for t in C.TOPICS if any(q["topic"] == t for q in C.QA)]
@@ -984,7 +1115,7 @@ def main():
     for f in (ROOT / "assets").iterdir(): shutil.copy(f, OUT / "assets" / f.name)
     pages = {
         "index.html": home(), "policy.html": policy(), "asset-test.html": asset_test(), "questions.html": questions(), "embed.html": embed(),
-        "resources.html": resources(), "examples.html": examples(), "glossary.html": glossary(), "people.html": people(), "capabilities.html": capabilities(), "ask.html": ask(), "track.html": track(), "guide.html": guide(), "about.html": about(), "accessibility.html": accessibility(),
+        "resources.html": resources(), "examples.html": examples(), "glossary.html": glossary(), "people.html": people(), "capabilities.html": capabilities(), "ask.html": ask(), "track.html": track(), "dqap.html": dqap(), "guide.html": guide(), "about.html": about(), "accessibility.html": accessibility(),
         "return.html": rewrap("return.html", "Your return", "Make your organisation's data asset return in twelve steps.", ("checker.js", "page.js", "explorer.js")),
         "team.html": rewrap("team.html", "For the GDS team", "How the GDS team processes returns and answers questions.", ("checker.js", "process.js", "process-ui.js", "page.js", "explorer.js")),
     }
@@ -1020,10 +1151,18 @@ def main():
     index += [{"t": x["name"], "x": x["role"] + " " + " ".join(x["goals"]), "u": "people.html#p-" + x["id"], "k": "Role", "p": "practice"} for x in C.PERSONAS]
     index += [{"t": m, "x": f, "u": "policy.html#myths", "k": "Myth and fact", "p": pv} for m, f, pv in C.MYTHS]
     index += [{"t": e[1], "x": e[3] + ". " + e[4] + " " + e[5], "u": "examples.html#" + e[0].lower(), "k": "Worked example", "p": "gds" if e[7] == X.A else "open"} for e in X.EXAMPLES]
-    index += [{"t": it["t"], "x": it["x"], "u": it["u"], "k": "Playbook", "p": ""} for it in PB_SNAP["items"]]   # no provenance badge: not written for this app
+    index += [{"t": it["t"], "x": it["x"], "u": it["u"], "k": "Playbook", "p": ""} for it in PB_SNAP["items"]]
+    index += [{"t": t, "x": x, "u": "dqap.html#" + u, "k": "Tool", "p": ""} for t, x, u in (
+        ("Check a data quality action plan", "Open a filled-in GOV.UK DQAP template and see what is in place and what is missing, step by step.", "check"),
+        ("Build a data quality action plan step by step", "Critical data items, rules, targets, results, causes, actions, reporting and monitoring for one asset.", "build"),
+        ("Is our own data quality process equivalent to a DQAP?", "Self-assessment against the seven steps of the DQAP implementation guide.", "equivalent"),
+        ("Data quality in the catalogue: DQV and DCAT", "Describe rules, targets, results and issues with the W3C Data Quality Vocabulary, linked to the DCAT record.", "catalogue"))]   # no provenance badge: not written for this app
     data = {"version": C.VERSION, "checked": C.CONTENT_CHECKED, "needs": C.NEEDS, "qa": [{k: v for k, v in q.items() if k != "a"} for q in C.QA], "index": index, "prov": {k: v[0] for k, v in C.PROV.items()},
             "glossary": [{"id": k, "term": t} for k, t, _ in C.GLOSSARY], "pages": list(pages)}
     (OUT / "explorer-data.json").write_text(json.dumps(data, indent=1))
+    (OUT / "dqap-data.json").write_text(json.dumps(dqap_data(), indent=1))
+    (OUT / "vocab").mkdir(exist_ok=True); ttl, jld = dq_vocab()
+    (OUT / "vocab" / "dq.ttl").write_text(ttl + "\n"); (OUT / "vocab" / "dq.jsonld").write_text(jld + "\n")
     # installable app: manifest and offline cache list
     files = sorted(str(f.relative_to(OUT)) for f in OUT.rglob("*") if f.is_file() and f.name != "sw.js")
     (OUT / "manifest.webmanifest").write_text(json.dumps({"name": "DAM Policy Explorer", "short_name": "DAM Explorer", "description": "Everything for the Data Asset Management Policy, in one place.",
