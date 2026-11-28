@@ -1,5 +1,7 @@
 # DAM Policy Explorer
 
+[![gds-dtx readiness: ready with exceptions, 10 of 10 GDS Way MUST checks met](docs/conformance/badge.svg)](docs/conformance/report.md)
+
 A one-stop shop for the UK government Data Asset Management (DAM) Policy, made for DAM Policy coordinators and usable by anyone. Built to the Service Standard, the GDS Way and WCAG 2.2 AA, for delivery on Microsoft 365 (Teams, Outlook, Microsoft 365 app, Copilot) via Azure Static Web Apps.
 
 **Open it:** [cyberdudeuk.github.io/dam-policy-explorer](https://cyberdudeuk.github.io/dam-policy-explorer/) ·
